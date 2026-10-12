@@ -1,6 +1,6 @@
 TextDataPointers:
-	dw TEXT_CB15BC
-	dw TEXT_CB15D1
+	dw TEXT_InitGCOSave
+	dw TEXT_InitTutorial
 	dw TEXT_CB15E6
 	dw TEXT_CB15FB
 	dw TEXT_CB1601
@@ -13,12 +13,12 @@ TextDataPointers:
 	dw TEXT_CB163E
 	dw TEXT_CB164C
 	dw TEXT_CB165A
-	dw TEXT_CB1668
-	dw TEXT_CB167D
+	dw TEXT_InitFirstTime
+	dw TEXT_FirstTimeYesNo
 	dw TEXT_CB168D
 	dw TEXT_CB169D
-	dw TEXT_CB16AD
-	dw TEXT_CB16D7
+	dw TEXT_FirstTimePlaying
+	dw TEXT_ExplainCopy
 	dw TEXT_CB16F9
 	dw TEXT_CB1724
 	dw TEXT_CB174F
@@ -162,67 +162,67 @@ TextDataPointers:
 	dw TEXT_CB347C
 	dw TEXT_CB3480
 	dw TEXT_CB3484
-	dw TEXT_CB3488
-	dw TEXT_CB34B5
-	dw TEXT_CB34BA
-	dw TEXT_CB34CA
-	dw TEXT_CB34D0
-	dw TEXT_CB34D9
-	dw TEXT_CB34DE
-	dw TEXT_CB34EA
-	dw TEXT_CB34F7
-	dw TEXT_CB3503
-	dw TEXT_CB3510
-	dw TEXT_CB351F
-	dw TEXT_CB3529
-	dw TEXT_CB3536
-	dw TEXT_CB3543
-	dw TEXT_CB3550
-	dw TEXT_CB3557
-	dw TEXT_CB3561
-	dw TEXT_CB356C
-	dw TEXT_CB3579
-	dw TEXT_CB357D
-	dw TEXT_CB3589
-	dw TEXT_CB3596
-	dw TEXT_CB35A1
-	dw TEXT_CB35AF
-	dw TEXT_CB35B9
-	dw TEXT_CB35C0
-	dw TEXT_CB35CB
-	dw TEXT_CB35D6
-	dw TEXT_CB35E4
-	dw TEXT_CB35F1
-	dw TEXT_CB3600
-	dw TEXT_CB3609
-	dw TEXT_CB360F
-	dw TEXT_CB361A
-	dw TEXT_CB3627
-	dw TEXT_CB3634
-	dw TEXT_CB3643
-	dw TEXT_CB364E
-	dw TEXT_CB3659
-	dw TEXT_CB3664
-	dw TEXT_CB366F
-	dw TEXT_CB367D
-	dw TEXT_CB3688
-	dw TEXT_CB3691
-	dw TEXT_CB369C
-	dw TEXT_CB36A6
-	dw TEXT_CB36B4
-	dw TEXT_CB36C1
-	dw TEXT_CB36C6
-	dw TEXT_CB36D4
-	dw TEXT_CB36E2
-	dw TEXT_CB36ED
-	dw TEXT_CB36F3
-	dw TEXT_CB36FE
-	dw TEXT_CB3707
-	dw TEXT_CB3712
-	dw TEXT_CB3719
-	dw TEXT_CB3726
-	dw TEXT_CB372F
-	dw TEXT_CB3739
+	dw TEXT_GCOSave
+	dw TEXT_Dime
+	dw TEXT_100DollarCoin
+	dw TEXT_Charm
+	dw TEXT_Saucepan
+	dw TEXT_Whip
+	dw TEXT_KingsCape
+	dw TEXT_BeastsFang
+	dw TEXT_AncientGem
+	dw TEXT_TruthMirror
+	dw TEXT_GlassSlippers
+	dw TEXT_LuckyCat
+	dw TEXT_RaccoonDoll
+	dw TEXT_TreasureBox
+	dw TEXT_EchigoCandy
+	dw TEXT_Katana
+	dw TEXT_Orihalcon
+	dw TEXT_StarStone
+	dw TEXT_CrystalBall
+	dw TEXT_Dud
+	dw TEXT_FishFossil
+	dw TEXT_BeastFossil
+	dw TEXT_AmberRose
+	dw TEXT_PlatinumRing
+	dw TEXT_GoldCoin
+	dw TEXT_Goblet
+	dw TEXT_TutsMask
+	dw TEXT_ZebraMask
+	dw TEXT_RamiasScale
+	dw TEXT_PegasusWing
+	dw TEXT_WarriorShield
+	dw TEXT_Bandanna
+	dw TEXT_Armor
+	dw TEXT_GoldCrown
+	dw TEXT_SpiritCharm
+	dw TEXT_SeiryuSword
+	dw TEXT_UnicornsHorn
+	dw TEXT_Springtime
+	dw TEXT_Summertime
+	dw TEXT_Autumntime
+	dw TEXT_Wintertime
+	dw TEXT_ShellWhistle
+	dw TEXT_StarTiara
+	dw TEXT_SunRing
+	dw TEXT_ModelShip
+	dw TEXT_Mannequin
+	dw TEXT_BrassKnuckle
+	dw TEXT_TurtleShell
+	dw TEXT_Tire
+	dw TEXT_FalconHelmet
+	dw TEXT_KongsBarrel
+	dw TEXT_ScrewBall
+	dw TEXT_Sword
+	dw TEXT_MrSaturn
+	dw TEXT_Triforce
+	dw TEXT_GoldMedal
+	dw TEXT_Bucket
+	dw TEXT_ShinyBamboo
+	dw TEXT_Nunchuks
+	dw TEXT_RiceBowl
+	dw TEXT_XmasTree
 	dw TEXT_CB3743
 	dw TEXT_CB3750
 	dw TEXT_CB375D
@@ -845,12 +845,12 @@ TextDataPointers:
 	dw TEXT_CB7710
 	dw TEXT_CB7751
 	dw TEXT_CB7795
-	dw TEXT_CB77AA
-	dw TEXT_CB781C
-	dw TEXT_CB7831
-	dw TEXT_CB78CB
+	dw TEXT_SoundDebug
+	dw TEXT_InitError
+	dw TEXT_InvalidController
+	dw TEXT_InvalidConsole
 
-TEXT_CB15BC:
+TEXT_InitGCOSave:
 	%TEXT_WriteDataW($000502, $7FFF)
 	%TEXT_WriteDataW($000506, $0000)
 	%TEXT_SetVisibility($01)
@@ -859,7 +859,7 @@ TEXT_CB15BC:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB15D1:
+TEXT_InitTutorial:
 	%TEXT_WriteDataW($000502, $7FFF)
 	%TEXT_WriteDataW($000506, $22C0)
 	%TEXT_SetVisibility($01)
@@ -965,7 +965,7 @@ TEXT_CB165A:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB1668:
+TEXT_InitFirstTime:
 	%TEXT_WriteDataW($000502, $7FFF)
 	%TEXT_WriteDataW($000506, $7D60)
 	%TEXT_SetVisibility($01)
@@ -974,7 +974,7 @@ TEXT_CB1668:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB167D:
+TEXT_FirstTimeYesNo:
 	%TEXT_PositionOffset($32, $40)
 	db "Yes       No"
 	%TEXT_End()
@@ -991,26 +991,26 @@ TEXT_CB169D:
 	%TEXT_WriteDataB($002132, $00)
 	%TEXT_End()
 
-TEXT_CB16AD:
-	%TEXT_RunMacro(TEXT_CB1668)
+TEXT_FirstTimePlaying:
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Is this your first time"
 	%TEXT_NewLine()
 	db "playing?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
-TEXT_CB16D7:
-	%TEXT_RunMacro(TEXT_CB1668)
+TEXT_ExplainCopy:
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Shall we explain"
 	%TEXT_NewLine()
 	db "`copy""?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
 TEXT_CB16F9:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Welcome to"
 	%TEXT_NewLine()
 	db "`The Beginner's Show!"""
@@ -1019,7 +1019,7 @@ TEXT_CB16F9:
 	%TEXT_End()
 
 TEXT_CB1724:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "For all you first time"
 	%TEXT_NewLine()
 	db "players..."
@@ -1028,21 +1028,21 @@ TEXT_CB1724:
 	%TEXT_End()
 
 TEXT_CB174F:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "here's how we play."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB176C:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "This is the controller."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB178D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "It's that gray thing with"
 	%TEXT_NewLine()
 	db "the purple buttons."
@@ -1051,21 +1051,21 @@ TEXT_CB178D:
 	%TEXT_End()
 
 TEXT_CB17C4:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "This is Kirby, our hero!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB163E)
 	%TEXT_End()
 
 TEXT_CB17E6:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "He's a jolly fellow!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB1804:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Move Kirby left and right"
 	%TEXT_NewLine()
 	db "by pressing ← and → on"
@@ -1075,13 +1075,13 @@ TEXT_CB1804:
 	%TEXT_End()
 
 TEXT_CB184D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "C'mon! Give it a try!"
 	%TEXT_NewLine()
 	%TEXT_End()
 
 TEXT_CB1868:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You won't accomplish"
 	%TEXT_NewLine()
 	db "anything just sitting"
@@ -1092,14 +1092,14 @@ TEXT_CB1868:
 	%TEXT_End()
 
 TEXT_CB18A3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "When you see a door..."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1607)
 	%TEXT_End()
 
 TEXT_CB18C3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push ↑ on the + Control"
 	%TEXT_NewLine()
 	db "Pad. This will take you"
@@ -1109,7 +1109,7 @@ TEXT_CB18C3:
 	%TEXT_End()
 
 TEXT_CB190A:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Let's try. Move Kirby to"
 	%TEXT_NewLine()
 	db "the door and push ↑ on"
@@ -1119,14 +1119,14 @@ TEXT_CB190A:
 	%TEXT_End()
 
 TEXT_CB1952:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Jump by pushing B."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB196E:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Jump over enemies and"
 	%TEXT_NewLine()
 	db "obstacles."
@@ -1135,7 +1135,7 @@ TEXT_CB196E:
 	%TEXT_End()
 
 TEXT_CB1998:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Now, let's take the food"
 	%TEXT_NewLine()
 	db "off the obstacle..."
@@ -1145,7 +1145,7 @@ TEXT_CB1998:
 	%TEXT_NewLine()
 
 TEXT_CB19D0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Jump by pushing B."
 	%TEXT_NewLine()
 	%TEXT_Wait($78)
@@ -1160,7 +1160,7 @@ TEXT_CB19D0:
 	%TEXT_End()
 
 TEXT_CB1A2D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "WOW!"
 	%TEXT_NewLine()
 	db "You can fly as well as"
@@ -1171,7 +1171,7 @@ TEXT_CB1A2D:
 	%TEXT_End()
 
 TEXT_CB1A58:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To make Kirby fly,"
 	%TEXT_NewLine()
 	db "press B repeatedly while"
@@ -1190,7 +1190,7 @@ TEXT_CB1A58:
 	%TEXT_End()
 
 TEXT_CB1ADE:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Let's move on to the"
 	%TEXT_NewLine()
 	db "next step."
@@ -1199,14 +1199,14 @@ TEXT_CB1ADE:
 	%TEXT_End()
 
 TEXT_CB1B07:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Food restores energy."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB1B26:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Whenever you find food,"
 	%TEXT_NewLine()
 	db "take it."
@@ -1215,7 +1215,7 @@ TEXT_CB1B26:
 	%TEXT_End()
 
 TEXT_CB1B50:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There is food up in the"
 	%TEXT_NewLine()
 	db "sky."
@@ -1228,14 +1228,14 @@ TEXT_CB1B50:
 	%TEXT_NewLine()
 
 TEXT_CB1B94:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "How to jump..."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB1BAC:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To make Kirby fly,push"
 	%TEXT_NewLine()
 	db "B while he is in the air."
@@ -1244,7 +1244,7 @@ TEXT_CB1BAC:
 	%TEXT_End()
 
 TEXT_CB1BE6:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Take the food by"
 	%TEXT_NewLine()
 	db "continually pressing B."
@@ -1252,7 +1252,7 @@ TEXT_CB1BE6:
 	%TEXT_End()
 
 TEXT_CB1C14:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Good job!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1607)
@@ -1261,7 +1261,7 @@ TEXT_CB1C14:
 	%TEXT_NewLine()
 
 TEXT_CB1C2D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Use the fly function when"
 	%TEXT_NewLine()
 	db "Kirby is about to fall off"
@@ -1272,7 +1272,7 @@ TEXT_CB1C2D:
 	%TEXT_End()
 
 TEXT_CB1C74:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Let's move on to the"
 	%TEXT_NewLine()
 	db "next step."
@@ -1281,7 +1281,7 @@ TEXT_CB1C74:
 	%TEXT_End()
 
 TEXT_CB1C9D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Move Kirby to the door"
 	%TEXT_NewLine()
 	db "and push ↑ on the"
@@ -1293,7 +1293,7 @@ TEXT_CB1C9D:
 	%TEXT_End()
 
 TEXT_CB1CEC:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Kirby loses some energy"
 	%TEXT_NewLine()
 	db "every time he bumps into"
@@ -1304,7 +1304,7 @@ TEXT_CB1CEC:
 	%TEXT_End()
 
 TEXT_CB1D30:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "It's OK to jump over an"
 	%TEXT_NewLine()
 	db "enemy, but you might"
@@ -1317,7 +1317,7 @@ TEXT_CB1D30:
 	%TEXT_End()
 
 TEXT_CB1D83:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "By pushing Y, Kirby will"
 	%TEXT_NewLine()
 	db "inhale almost anything"
@@ -1328,7 +1328,7 @@ TEXT_CB1D83:
 	%TEXT_End()
 
 TEXT_CB1DC9:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Kirby can inhale enemies"
 	%TEXT_NewLine()
 	db "and attack by spitting"
@@ -1339,7 +1339,7 @@ TEXT_CB1DC9:
 	%TEXT_End()
 
 TEXT_CB1E19:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Now, let's practice"
 	%TEXT_NewLine()
 	db "inhaling an enemy."
@@ -1347,13 +1347,13 @@ TEXT_CB1E19:
 	%TEXT_End()
 
 TEXT_CB1E45:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push Y to inhale."
 	%TEXT_NewLine()
 	%TEXT_End()
 
 TEXT_CB1E5C:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Ouch!"
 	%TEXT_NewLine()
 	db "That hurt! Try it again!"
@@ -1361,7 +1361,7 @@ TEXT_CB1E5C:
 	%TEXT_End()
 
 TEXT_CB1E80:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Stand here and inhale"
 	%TEXT_NewLine()
 	db "an enemy. Be careful."
@@ -1369,14 +1369,14 @@ TEXT_CB1E80:
 	%TEXT_End()
 
 TEXT_CB1EB1:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You're not listening!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1601)
 	%TEXT_End()
 
 TEXT_CB1ED0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push Y to inhale an"
 	%TEXT_NewLine()
 	db "enemy."
@@ -1384,14 +1384,14 @@ TEXT_CB1ED0:
 	%TEXT_End()
 
 TEXT_CB1EF0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You did it!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1607)
 	%TEXT_End()
 
 TEXT_CB1F05:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push Y to spit out a star."
 	%TEXT_NewLine()
 	db "This is your attack."
@@ -1400,7 +1400,7 @@ TEXT_CB1F05:
 	%TEXT_End()
 
 TEXT_CB1F3E:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Destroy the target by"
 	%TEXT_NewLine()
 	db "spitting out a star."
@@ -1408,7 +1408,7 @@ TEXT_CB1F3E:
 	%TEXT_End()
 
 TEXT_CB1F6E:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push Y to spit out"
 	%TEXT_NewLine()
 	db "the enemy."
@@ -1416,7 +1416,7 @@ TEXT_CB1F6E:
 	%TEXT_End()
 
 TEXT_CB1F91:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Pushing A or ↓ on the"
 	%TEXT_NewLine()
 	db "+ Control Pad swallows"
@@ -1427,7 +1427,7 @@ TEXT_CB1F91:
 	%TEXT_End()
 
 TEXT_CB1FDA:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Focus on the target"
 	%TEXT_NewLine()
 	db "carefully."
@@ -1437,7 +1437,7 @@ TEXT_CB1FDA:
 	%TEXT_End()
 
 TEXT_CB200C:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Nice job!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1607)
@@ -1446,7 +1446,7 @@ TEXT_CB200C:
 	%TEXT_NewLine()
 
 TEXT_CB2021:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "This time could be a bit"
 	%TEXT_NewLine()
 	db "difficult."
@@ -1454,7 +1454,7 @@ TEXT_CB2021:
 	%TEXT_End()
 
 TEXT_CB204A:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Jump and spit out a star."
 	%TEXT_NewLine()
 	db "Push B, then Y quickly."
@@ -1462,7 +1462,7 @@ TEXT_CB204A:
 	%TEXT_End()
 
 TEXT_CB2081:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "That's all for"
 	%TEXT_NewLine()
 	db "`The Beginner's Show!"""
@@ -1471,7 +1471,7 @@ TEXT_CB2081:
 	%TEXT_End()
 
 TEXT_CB20B0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You'll be fine as long as"
 	%TEXT_NewLine()
 	db "you remember the things"
@@ -1482,7 +1482,7 @@ TEXT_CB20B0:
 	%TEXT_End()
 
 TEXT_CB20FA:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To start playing"
 	%TEXT_NewLine()
 	db "`Spring Breeze,"" jump"
@@ -1492,21 +1492,21 @@ TEXT_CB20FA:
 	%TEXT_End()
 
 TEXT_CB213A:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Good luck and have fun!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB15FB)
 	%TEXT_End()
 
 TEXT_CB215B:
-	%TEXT_RunMacro(TEXT_CB1668)
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Shall we explain `copy""?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
 TEXT_CB217D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Congratulations on"
 	%TEXT_NewLine()
 	db "clearing"
@@ -1517,7 +1517,7 @@ TEXT_CB217D:
 	%TEXT_End()
 
 TEXT_CB21B3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "However, this is"
 	%TEXT_NewLine()
 	db "only beginning."
@@ -1528,7 +1528,7 @@ TEXT_CB21B3:
 	%TEXT_End()
 
 TEXT_CB21F5:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Let's learn how to use"
 	%TEXT_NewLine()
 	db "the copy function."
@@ -1537,7 +1537,7 @@ TEXT_CB21F5:
 	%TEXT_End()
 
 TEXT_CB2228:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Hello!"
 	%TEXT_NewLine()
 	db "Welcome to"
@@ -1548,7 +1548,7 @@ TEXT_CB2228:
 	%TEXT_End()
 
 TEXT_CB225A:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Have you mastered"
 	%TEXT_NewLine()
 	db "inhaling and flying?"
@@ -1557,7 +1557,7 @@ TEXT_CB225A:
 	%TEXT_End()
 
 TEXT_CB228A:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Enemies attack in various"
 	%TEXT_NewLine()
 	db "ways."
@@ -1566,7 +1566,7 @@ TEXT_CB228A:
 	%TEXT_End()
 
 TEXT_CB22B3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "This enemy is called"
 	%TEXT_NewLine()
 	db "`Waddle Doo."""
@@ -1575,7 +1575,7 @@ TEXT_CB22B3:
 	%TEXT_End()
 
 TEXT_CB22DF:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "When Kirby inhales an"
 	%TEXT_NewLine()
 	db "enemy, push A to swallow."
@@ -1583,7 +1583,7 @@ TEXT_CB22DF:
 	%TEXT_End()
 
 TEXT_CB2314:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Press Y to inhale and"
 	%TEXT_NewLine()
 	db "A to swallow."
@@ -1591,7 +1591,7 @@ TEXT_CB2314:
 	%TEXT_End()
 
 TEXT_CB233D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Again, push A to swallow"
 	%TEXT_NewLine()
 	db "an enemy that you've"
@@ -1602,7 +1602,7 @@ TEXT_CB233D:
 	%TEXT_End()
 
 TEXT_CB237D:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Stop goofing around!"
 	%TEXT_NewLine()
 	db "Push Y to inhale and"
@@ -1613,7 +1613,7 @@ TEXT_CB237D:
 	%TEXT_End()
 
 TEXT_CB23BE:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Amazing! You can use"
 	%TEXT_NewLine()
 	db "the energy beam by"
@@ -1624,7 +1624,7 @@ TEXT_CB23BE:
 	%TEXT_End()
 
 TEXT_CB23FA:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There are some enemies"
 	%TEXT_NewLine()
 	db "that WILL NOT give you"
@@ -1635,7 +1635,7 @@ TEXT_CB23FA:
 	%TEXT_End()
 
 TEXT_CB2444:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Enemies with abilities"
 	%TEXT_NewLine()
 	db "will flash."
@@ -1646,7 +1646,7 @@ TEXT_CB2444:
 	%TEXT_End()
 
 TEXT_CB2483:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Here are a few other"
 	%TEXT_NewLine()
 	db "abilities you can copy."
@@ -1655,7 +1655,7 @@ TEXT_CB2483:
 	%TEXT_End()
 
 TEXT_CB24B9:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You can review the copy"
 	%TEXT_NewLine()
 	db "explanation anytime"
@@ -1668,7 +1668,7 @@ TEXT_CB24B9:
 	%TEXT_End()
 
 TEXT_CB2511:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Some abilities have"
 	%TEXT_NewLine()
 	db "limited uses."
@@ -1679,14 +1679,14 @@ TEXT_CB2511:
 	%TEXT_End()
 
 TEXT_CB2557:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There's more..."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB2570:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Two, yes, two people can"
 	%TEXT_NewLine()
 	db "play at the same time."
@@ -1697,7 +1697,7 @@ TEXT_CB2570:
 	%TEXT_End()
 
 TEXT_CB25AF:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "When Kirby is wearing an"
 	%TEXT_NewLine()
 	db "`ability cap,"" push A."
@@ -1706,7 +1706,7 @@ TEXT_CB25AF:
 	%TEXT_End()
 
 TEXT_CB25E8:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Then, if the copied"
 	%TEXT_NewLine()
 	db "character is thrown"
@@ -1717,14 +1717,14 @@ TEXT_CB25E8:
 	%TEXT_End()
 
 TEXT_CB262B:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push A again..."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB2644:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "...and..."
 	%TEXT_NewLine()
 	%TEXT_Wait($78)
@@ -1732,7 +1732,7 @@ TEXT_CB2644:
 	%TEXT_End()
 
 TEXT_CB2656:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "...a second character will"
 	%TEXT_NewLine()
 	db "appear."
@@ -1741,7 +1741,7 @@ TEXT_CB2656:
 	%TEXT_End()
 
 TEXT_CB2682:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "This character is called"
 	%TEXT_NewLine()
 	db "a helper."
@@ -1754,7 +1754,7 @@ TEXT_CB2682:
 	%TEXT_End()
 
 TEXT_CB26CC:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Normally, the helper will"
 	%TEXT_NewLine()
 	db "act by himself."
@@ -1765,7 +1765,7 @@ TEXT_CB26CC:
 	%TEXT_End()
 
 TEXT_CB2716:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "When the helper is"
 	%TEXT_NewLine()
 	db "present, push any button"
@@ -1776,7 +1776,7 @@ TEXT_CB2716:
 	%TEXT_End()
 
 TEXT_CB2762:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "The helper will then be"
 	%TEXT_NewLine()
 	db "controlled by the 2nd"
@@ -1787,7 +1787,7 @@ TEXT_CB2762:
 	%TEXT_End()
 
 TEXT_CB27A1:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "It's a little confusing at"
 	%TEXT_NewLine()
 	db "first, but give it a try"
@@ -1798,7 +1798,7 @@ TEXT_CB27A1:
 	%TEXT_End()
 
 TEXT_CB27F3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Practice with your"
 	%TEXT_NewLine()
 	db "friends and double the"
@@ -1809,7 +1809,7 @@ TEXT_CB27F3:
 	%TEXT_End()
 
 TEXT_CB282B:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "FIRE :"
 	%TEXT_NewLine()
 	db "Spit out some nasty"
@@ -1821,7 +1821,7 @@ TEXT_CB282B:
 	%TEXT_End()
 
 TEXT_CB2859:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "STONE :"
 	%TEXT_NewLine()
 	db "Turn into a stone and do"
@@ -1833,7 +1833,7 @@ TEXT_CB2859:
 	%TEXT_End()
 
 TEXT_CB2895:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "SWORD :"
 	%TEXT_NewLine()
 	db "The King of weapons."
@@ -1843,7 +1843,7 @@ TEXT_CB2895:
 	%TEXT_End()
 
 TEXT_CB28BA:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There are more"
 	%TEXT_NewLine()
 	db "techniques..."
@@ -1852,14 +1852,14 @@ TEXT_CB28BA:
 	%TEXT_End()
 
 TEXT_CB28E0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Throw off the cap..."
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB163E)
 	%TEXT_End()
 
 TEXT_CB28FE:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "...and the helper will put"
 	%TEXT_NewLine()
 	db "it on."
@@ -1868,7 +1868,7 @@ TEXT_CB28FE:
 	%TEXT_End()
 
 TEXT_CB2929:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push A one more time and"
 	%TEXT_NewLine()
 	db "the helper will become the"
@@ -1879,7 +1879,7 @@ TEXT_CB2929:
 	%TEXT_End()
 
 TEXT_CB2973:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "And you can copy the"
 	%TEXT_NewLine()
 	db "ability again."
@@ -1888,7 +1888,7 @@ TEXT_CB2973:
 	%TEXT_End()
 
 TEXT_CB29A0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Here are some special"
 	%TEXT_NewLine()
 	db "instructions."
@@ -1897,7 +1897,7 @@ TEXT_CB29A0:
 	%TEXT_End()
 
 TEXT_CB29CD:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To dash...Push ← or →"
 	%TEXT_NewLine()
 	db "twice. Kirby will move"
@@ -1909,7 +1909,7 @@ TEXT_CB29CD:
 	%TEXT_End()
 
 TEXT_CB2A22:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To slide...Push ↓ and"
 	%TEXT_NewLine()
 	db "B together. You can"
@@ -1919,7 +1919,7 @@ TEXT_CB2A22:
 	%TEXT_End()
 
 TEXT_CB2A67:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "To guard...Push L or R."
 	%TEXT_NewLine()
 	db "It can reduce the enemy's"
@@ -1929,7 +1929,7 @@ TEXT_CB2A67:
 	%TEXT_End()
 
 TEXT_CB2AAC:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "For more details, please"
 	%TEXT_NewLine()
 	db "refer to the instruction"
@@ -1940,7 +1940,7 @@ TEXT_CB2AAC:
 	%TEXT_End()
 
 TEXT_CB2AEF:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Now, let's play"
 	%TEXT_NewLine()
 	db "`DYNA BLADE!"""
@@ -1948,7 +1948,7 @@ TEXT_CB2AEF:
 	%TEXT_End()
 
 TEXT_CB2B12:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Practice, practice,"
 	%TEXT_NewLine()
 	db "practice...and master"
@@ -1961,7 +1961,7 @@ TEXT_CB2B12:
 	%TEXT_End()
 
 TEXT_CB2B65:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Now, let's play"
 	%TEXT_NewLine()
 	db "`Spring Breeze!"""
@@ -1969,16 +1969,16 @@ TEXT_CB2B65:
 	%TEXT_End()
 
 TEXT_CB2B8B:
-	%TEXT_RunMacro(TEXT_CB1668)
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Is this your first time"
 	%TEXT_NewLine()
 	db "playing GOURMET RACE?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
 TEXT_CB2BC2:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Kirby and King Dedede"
 	%TEXT_NewLine()
 	db "race through the obstacle"
@@ -2012,18 +2012,18 @@ TEXT_CB2BC2:
 	%TEXT_End()
 
 TEXT_CB2CD3:
-	%TEXT_RunMacro(TEXT_CB1668)
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Is this your first time"
 	%TEXT_NewLine()
 	db "playing The Great Cave"
 	%TEXT_NewLine()
 	db "Offensive?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
 TEXT_CB2D16:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Find treasures"
 	%TEXT_NewLine()
 	db "throughout the cave."
@@ -2032,14 +2032,14 @@ TEXT_CB2D16:
 	%TEXT_End()
 
 TEXT_CB2D43:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "It's fun and exciting!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
 	%TEXT_End()
 
 TEXT_CB2D63:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You must find as many"
 	%TEXT_NewLine()
 	db "hidden treasures as you"
@@ -2050,7 +2050,7 @@ TEXT_CB2D63:
 	%TEXT_End()
 
 TEXT_CB2D9F:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "If you find a treasure,"
 	%TEXT_NewLine()
 	db "move Kirby to it and"
@@ -2061,7 +2061,7 @@ TEXT_CB2D9F:
 	%TEXT_End()
 
 TEXT_CB2DDE:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Push X to see the"
 	%TEXT_NewLine()
 	db "treasures you've found."
@@ -2070,7 +2070,7 @@ TEXT_CB2DDE:
 	%TEXT_End()
 
 TEXT_CB2E11:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	%TEXT_UNK1D($00)
 	db "There are lots of"
 	%TEXT_NewLine()
@@ -2082,7 +2082,7 @@ TEXT_CB2E11:
 	%TEXT_End()
 
 TEXT_CB2E52:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There are a total of 60"
 	%TEXT_NewLine()
 	db "treasures. How many can"
@@ -2093,7 +2093,7 @@ TEXT_CB2E52:
 	%TEXT_End()
 
 TEXT_CB2EA3:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "....whoops!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
@@ -2101,18 +2101,18 @@ TEXT_CB2EA3:
 	%TEXT_End()
 
 TEXT_CB2EBA:
-	%TEXT_RunMacro(TEXT_CB1668)
+	%TEXT_RunMacro(TEXT_InitFirstTime)
 	db "Is this your first time"
 	%TEXT_NewLine()
 	db "playing MILKY WAY"
 	%TEXT_NewLine()
 	db "WISHES?"
 	%TEXT_NewLine()
-	%TEXT_RunMacro(TEXT_CB167D)
+	%TEXT_RunMacro(TEXT_FirstTimeYesNo)
 	%TEXT_End()
 
 TEXT_CB2EF5:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You can't copy enemies'"
 	%TEXT_NewLine()
 	db "abilities in this game."
@@ -2121,7 +2121,7 @@ TEXT_CB2EF5:
 	%TEXT_End()
 
 TEXT_CB2F2E:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Don't worry."
 	%TEXT_NewLine()
 	db "There is a better way"
@@ -2132,7 +2132,7 @@ TEXT_CB2F2E:
 	%TEXT_End()
 
 TEXT_CB2F64:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "It's called the Deluxe copy"
 	%TEXT_NewLine()
 	db "ability."
@@ -2141,7 +2141,7 @@ TEXT_CB2F64:
 	%TEXT_End()
 
 TEXT_CB2F92:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "By touching the Deluxe"
 	%TEXT_NewLine()
 	db "copy characters, Kirby"
@@ -2154,7 +2154,7 @@ TEXT_CB2F92:
 	%TEXT_End()
 
 TEXT_CB2FE8:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You can select acquired"
 	%TEXT_NewLine()
 	db "abilities by pressing"
@@ -2165,7 +2165,7 @@ TEXT_CB2FE8:
 	%TEXT_End()
 
 TEXT_CB3026:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "There is no limit for using"
 	%TEXT_NewLine()
 	db "abilities. Use them as"
@@ -2176,7 +2176,7 @@ TEXT_CB3026:
 	%TEXT_End()
 
 TEXT_CB3074:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "You can select different"
 	%TEXT_NewLine()
 	db "abilities during play."
@@ -2188,7 +2188,7 @@ TEXT_CB3074:
 	%TEXT_End()
 
 TEXT_CB30D0:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "If you come to a dead"
 	%TEXT_NewLine()
 	db "end and can't break"
@@ -2201,7 +2201,7 @@ TEXT_CB30D0:
 	%TEXT_End()
 
 TEXT_CB3132:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "Now this is the final"
 	%TEXT_NewLine()
 	db "game..."
@@ -2210,7 +2210,7 @@ TEXT_CB3132:
 	%TEXT_End()
 
 TEXT_CB3159:
-	%TEXT_RunMacro(TEXT_CB15D1)
+	%TEXT_RunMacro(TEXT_InitTutorial)
 	db "so concentrate and do"
 	%TEXT_NewLine()
 	db "your best!"
@@ -2374,7 +2374,7 @@ TEXT_CB3446:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB3462:
+TEXT_CB3462:	; Unused?
 	%TEXT_WriteDataW($000502, $7FFF)
 	%TEXT_WriteDataW($000506, $2928)
 	%TEXT_SecondaryColorEnable()
@@ -2384,627 +2384,627 @@ TEXT_CB3462:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB3478:
+TEXT_CB3478:	; Unused?
 	%TEXT_PositionOffset($00, $00)
 	%TEXT_End()
 
-TEXT_CB347C:
+TEXT_CB347C:	; Unused?
 	%TEXT_PositionOffset($00, $40)
 	%TEXT_End()
 
-TEXT_CB3480:
+TEXT_CB3480:	; Unused?
 	%TEXT_PositionOffset($00, $80)
 	%TEXT_End()
 
-TEXT_CB3484:
+TEXT_CB3484:	; Unused?
 	%TEXT_PositionOffset($00, $C0)
 	%TEXT_End()
 
-TEXT_CB3488:
-	%TEXT_RunMacro(TEXT_CB15BC)
+TEXT_GCOSave:
+	%TEXT_RunMacro(TEXT_InitGCOSave)
 	%TEXT_WriteDataW($000506, $2928)
 	db "Save your record?"
 	%TEXT_NewLine()
 	db "      Yes    N o"
 	%TEXT_End()
 
-TEXT_CB34B5:
+TEXT_Dime:
 	db "Dime"
 	%TEXT_End()
 
-TEXT_CB34BA:
+TEXT_100DollarCoin:
 	db "100 dollar coin"
 	%TEXT_End()
 
-TEXT_CB34CA:
+TEXT_Charm:
 	db "Charm"
 	%TEXT_End()
 
-TEXT_CB34D0:
+TEXT_Saucepan:
 	db "Saucepan"
 	%TEXT_End()
 
-TEXT_CB34D9:
+TEXT_Whip:
 	db "Whip"
 	%TEXT_End()
 
-TEXT_CB34DE:
+TEXT_KingsCape:
 	db "King's Cape"
 	%TEXT_End()
 
-TEXT_CB34EA:
+TEXT_BeastsFang:
 	db "Beast's Fang"
 	%TEXT_End()
 
-TEXT_CB34F7:
+TEXT_AncientGem:
 	db "Ancient Gem"
 	%TEXT_End()
 
-TEXT_CB3503:
+TEXT_TruthMirror:
 	db "Truth Mirror"
 	%TEXT_End()
 
-TEXT_CB3510:
+TEXT_GlassSlippers:
 	db "Glass Slippers"
 	%TEXT_End()
 
-TEXT_CB351F:
+TEXT_LuckyCat:
 	db "Lucky Cat"
 	%TEXT_End()
 
-TEXT_CB3529:
+TEXT_RaccoonDoll:
 	db "Raccoon Doll"
 	%TEXT_End()
 
-TEXT_CB3536:
+TEXT_TreasureBox:
 	db "Treasure Box"
 	%TEXT_End()
 
-TEXT_CB3543:
+TEXT_EchigoCandy:
 	db "Echigo Candy"
 	%TEXT_End()
 
-TEXT_CB3550:
+TEXT_Katana:
 	db "Katana"
 	%TEXT_End()
 
-TEXT_CB3557:
+TEXT_Orihalcon:
 	db "Orihalcon"
 	%TEXT_End()
 
-TEXT_CB3561:
+TEXT_StarStone:
 	db "Star Stone"
 	%TEXT_End()
 
-TEXT_CB356C:
+TEXT_CrystalBall:
 	db "Crystal Ball"
 	%TEXT_End()
 
-TEXT_CB3579:
+TEXT_Dud:
 	db "Dud"
 	%TEXT_End()
 
-TEXT_CB357D:
+TEXT_FishFossil:
 	db "Fish Fossil"
 	%TEXT_End()
 
-TEXT_CB3589:
+TEXT_BeastFossil:
 	db "Beast Fossil"
 	%TEXT_End()
 
-TEXT_CB3596:
+TEXT_AmberRose:
 	db "Amber Rose"
 	%TEXT_End()
 
-TEXT_CB35A1:
+TEXT_PlatinumRing:
 	db "Platinum Ring"
 	%TEXT_End()
 
-TEXT_CB35AF:
+TEXT_GoldCoin:
 	db "Gold Coin"
 	%TEXT_End()
 
-TEXT_CB35B9:
+TEXT_Goblet:
 	db "Goblet"
 	%TEXT_End()
 
-TEXT_CB35C0:
+TEXT_TutsMask:
 	db "Tut's Mask"
 	%TEXT_End()
 
-TEXT_CB35CB:
+TEXT_ZebraMask:
 	db "Zebra Mask"
 	%TEXT_End()
 
-TEXT_CB35D6:
+TEXT_RamiasScale:
 	db "Ramia's Scale"
 	%TEXT_End()
 
-TEXT_CB35E4:
+TEXT_PegasusWing:
 	db "Pegasus Wing"
 	%TEXT_End()
 
-TEXT_CB35F1:
+TEXT_WarriorShield:
 	db "Warrior Shield"
 	%TEXT_End()
 
-TEXT_CB3600:
+TEXT_Bandanna:
 	db "Bandanna"
 	%TEXT_End()
 
-TEXT_CB3609:
+TEXT_Armor:
 	db "Armor"
 	%TEXT_End()
 
-TEXT_CB360F:
+TEXT_GoldCrown:
 	db "Gold Crown"
 	%TEXT_End()
 
-TEXT_CB361A:
+TEXT_SpiritCharm:
 	db "Spirit Charm"
 	%TEXT_End()
 
-TEXT_CB3627:
+TEXT_SeiryuSword:
 	db "Seiryu Sword"
 	%TEXT_End()
 
-TEXT_CB3634:
+TEXT_UnicornsHorn:
 	db "Unicorn's Horn"
 	%TEXT_End()
 
-TEXT_CB3643:
+TEXT_Springtime:
 	db "Springtime"
 	%TEXT_End()
 
-TEXT_CB364E:
+TEXT_Summertime:
 	db "Summertime"
 	%TEXT_End()
 
-TEXT_CB3659:
+TEXT_Autumntime:
 	db "Autumntime"
 	%TEXT_End()
 
-TEXT_CB3664:
+TEXT_Wintertime:
 	db "Wintertime"
 	%TEXT_End()
 
-TEXT_CB366F:
+TEXT_ShellWhistle:
 	db "Shell Whistle"
 	%TEXT_End()
 
-TEXT_CB367D:
+TEXT_StarTiara:
 	db "Star Tiara"
 	%TEXT_End()
 
-TEXT_CB3688:
+TEXT_SunRing:
 	db "Sun Ring"
 	%TEXT_End()
 
-TEXT_CB3691:
+TEXT_ModelShip:
 	db "Model Ship"
 	%TEXT_End()
 
-TEXT_CB369C:
+TEXT_Mannequin:
 	db "Mannequin"
 	%TEXT_End()
 
-TEXT_CB36A6:
+TEXT_BrassKnuckle:
 	db "Brass Knuckle"
 	%TEXT_End()
 
-TEXT_CB36B4:
+TEXT_TurtleShell:
 	db "Turtle Shell"
 	%TEXT_End()
 
-TEXT_CB36C1:
+TEXT_Tire:
 	db "Tire"
 	%TEXT_End()
 
-TEXT_CB36C6:
+TEXT_FalconHelmet:
 	db "Falcon Helmet"
 	%TEXT_End()
 
-TEXT_CB36D4:
+TEXT_KongsBarrel:
 	db "Kong's Barrel"
 	%TEXT_End()
 
-TEXT_CB36E2:
+TEXT_ScrewBall:
 	db "Screw Ball"
 	%TEXT_End()
 
-TEXT_CB36ED:
+TEXT_Sword:
 	db "Sword"
 	%TEXT_End()
 
-TEXT_CB36F3:
+TEXT_MrSaturn:
 	db "Mr. Saturn"
 	%TEXT_End()
 
-TEXT_CB36FE:
+TEXT_Triforce:
 	db "Triforce"
 	%TEXT_End()
 
-TEXT_CB3707:
+TEXT_GoldMedal:
 	db "Gold Medal"
 	%TEXT_End()
 
-TEXT_CB3712:
+TEXT_Bucket:
 	db "Bucket"
 	%TEXT_End()
 
-TEXT_CB3719:
+TEXT_ShinyBamboo:
 	db "Shiny Bamboo"
 	%TEXT_End()
 
-TEXT_CB3726:
+TEXT_Nunchuks:
 	db "Nunchuks"
 	%TEXT_End()
 
-TEXT_CB372F:
+TEXT_RiceBowl:
 	db "Rice Bowl"
 	%TEXT_End()
 
-TEXT_CB3739:
+TEXT_XmasTree:
 	db "Xmas Tree"
 	%TEXT_End()
 
 TEXT_CB3743:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34B5)
+	%TEXT_RunMacro(TEXT_Dime)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3750:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34BA)
+	%TEXT_RunMacro(TEXT_100DollarCoin)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB375D:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34CA)
+	%TEXT_RunMacro(TEXT_Charm)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB376A:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34D0)
+	%TEXT_RunMacro(TEXT_Saucepan)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3777:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34D9)
+	%TEXT_RunMacro(TEXT_Whip)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3784:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34DE)
+	%TEXT_RunMacro(TEXT_KingsCape)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3791:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34EA)
+	%TEXT_RunMacro(TEXT_BeastsFang)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB379E:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB34F7)
+	%TEXT_RunMacro(TEXT_AncientGem)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37AB:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3503)
+	%TEXT_RunMacro(TEXT_TruthMirror)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37B8:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3510)
+	%TEXT_RunMacro(TEXT_GlassSlippers)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37C5:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB351F)
+	%TEXT_RunMacro(TEXT_LuckyCat)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37D2:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3529)
+	%TEXT_RunMacro(TEXT_RaccoonDoll)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37DF:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3536)
+	%TEXT_RunMacro(TEXT_TreasureBox)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37EC:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3543)
+	%TEXT_RunMacro(TEXT_EchigoCandy)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB37F9:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3550)
+	%TEXT_RunMacro(TEXT_Katana)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3806:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3557)
+	%TEXT_RunMacro(TEXT_Orihalcon)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3813:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3561)
+	%TEXT_RunMacro(TEXT_StarStone)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3820:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB356C)
+	%TEXT_RunMacro(TEXT_CrystalBall)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB382D:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3579)
+	%TEXT_RunMacro(TEXT_Dud)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB383A:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB357D)
+	%TEXT_RunMacro(TEXT_FishFossil)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3847:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3589)
+	%TEXT_RunMacro(TEXT_BeastFossil)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3854:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3596)
+	%TEXT_RunMacro(TEXT_AmberRose)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3861:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35A1)
+	%TEXT_RunMacro(TEXT_PlatinumRing)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB386E:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35AF)
+	%TEXT_RunMacro(TEXT_GoldCoin)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB387B:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35B9)
+	%TEXT_RunMacro(TEXT_Goblet)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3888:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35C0)
+	%TEXT_RunMacro(TEXT_TutsMask)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3895:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35CB)
+	%TEXT_RunMacro(TEXT_ZebraMask)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38A2:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35D6)
+	%TEXT_RunMacro(TEXT_RamiasScale)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38AF:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35E4)
+	%TEXT_RunMacro(TEXT_PegasusWing)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38BC:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB35F1)
+	%TEXT_RunMacro(TEXT_WarriorShield)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38C9:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3600)
+	%TEXT_RunMacro(TEXT_Bandanna)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38D6:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3609)
+	%TEXT_RunMacro(TEXT_Armor)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38E3:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB360F)
+	%TEXT_RunMacro(TEXT_GoldCrown)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38F0:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB361A)
+	%TEXT_RunMacro(TEXT_SpiritCharm)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB38FD:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3627)
+	%TEXT_RunMacro(TEXT_SeiryuSword)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB390A:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3634)
+	%TEXT_RunMacro(TEXT_UnicornsHorn)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3917:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3643)
+	%TEXT_RunMacro(TEXT_Springtime)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3924:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB364E)
+	%TEXT_RunMacro(TEXT_Summertime)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3931:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3659)
+	%TEXT_RunMacro(TEXT_Autumntime)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB393E:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3664)
+	%TEXT_RunMacro(TEXT_Wintertime)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB394B:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB366F)
+	%TEXT_RunMacro(TEXT_ShellWhistle)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3958:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB367D)
+	%TEXT_RunMacro(TEXT_StarTiara)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3965:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3688)
+	%TEXT_RunMacro(TEXT_SunRing)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3972:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3691)
+	%TEXT_RunMacro(TEXT_ModelShip)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB397F:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB369C)
+	%TEXT_RunMacro(TEXT_Mannequin)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB398C:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36A6)
+	%TEXT_RunMacro(TEXT_BrassKnuckle)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3999:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36B4)
+	%TEXT_RunMacro(TEXT_TurtleShell)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39A6:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36C1)
+	%TEXT_RunMacro(TEXT_Tire)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39B3:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36C6)
+	%TEXT_RunMacro(TEXT_FalconHelmet)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39C0:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36D4)
+	%TEXT_RunMacro(TEXT_KongsBarrel)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39CD:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36E2)
+	%TEXT_RunMacro(TEXT_ScrewBall)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39DA:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36ED)
+	%TEXT_RunMacro(TEXT_Sword)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39E7:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36F3)
+	%TEXT_RunMacro(TEXT_MrSaturn)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB39F4:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB36FE)
+	%TEXT_RunMacro(TEXT_Triforce)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A01:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3707)
+	%TEXT_RunMacro(TEXT_GoldMedal)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A0E:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3712)
+	%TEXT_RunMacro(TEXT_Bucket)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A1B:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3719)
+	%TEXT_RunMacro(TEXT_ShinyBamboo)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A28:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3726)
+	%TEXT_RunMacro(TEXT_Nunchuks)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A35:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB372F)
+	%TEXT_RunMacro(TEXT_RiceBowl)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
 TEXT_CB3A42:
 	%TEXT_RunMacro(TEXT_CB33FE)
-	%TEXT_RunMacro(TEXT_CB3739)
+	%TEXT_RunMacro(TEXT_XmasTree)
 	%TEXT_RunMacro(TEXT_CB3414)
 	%TEXT_End()
 
@@ -3022,361 +3022,361 @@ TEXT_CB3A56:
 TEXT_CB3A64:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34B5)
+	%TEXT_RunMacro(TEXT_Dime)
 	%TEXT_End()
 
 TEXT_CB3A71:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34BA)
+	%TEXT_RunMacro(TEXT_100DollarCoin)
 	%TEXT_End()
 
 TEXT_CB3A7E:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34CA)
+	%TEXT_RunMacro(TEXT_Charm)
 	%TEXT_End()
 
 TEXT_CB3A8B:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34D0)
+	%TEXT_RunMacro(TEXT_Saucepan)
 	%TEXT_End()
 
 TEXT_CB3A98:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34D9)
+	%TEXT_RunMacro(TEXT_Whip)
 	%TEXT_End()
 
 TEXT_CB3AA5:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34DE)
+	%TEXT_RunMacro(TEXT_KingsCape)
 	%TEXT_End()
 
 TEXT_CB3AB2:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34EA)
+	%TEXT_RunMacro(TEXT_BeastsFang)
 	%TEXT_End()
 
 TEXT_CB3ABF:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB34F7)
+	%TEXT_RunMacro(TEXT_AncientGem)
 	%TEXT_End()
 
 TEXT_CB3ACC:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3503)
+	%TEXT_RunMacro(TEXT_TruthMirror)
 	%TEXT_End()
 
 TEXT_CB3AD9:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3510)
+	%TEXT_RunMacro(TEXT_GlassSlippers)
 	%TEXT_End()
 
 TEXT_CB3AE6:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB351F)
+	%TEXT_RunMacro(TEXT_LuckyCat)
 	%TEXT_End()
 
 TEXT_CB3AF3:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3529)
+	%TEXT_RunMacro(TEXT_RaccoonDoll)
 	%TEXT_End()
 
 TEXT_CB3B00:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3536)
+	%TEXT_RunMacro(TEXT_TreasureBox)
 	%TEXT_End()
 
 TEXT_CB3B0D:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3543)
+	%TEXT_RunMacro(TEXT_EchigoCandy)
 	%TEXT_End()
 
 TEXT_CB3B1A:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3550)
+	%TEXT_RunMacro(TEXT_Katana)
 	%TEXT_End()
 
 TEXT_CB3B27:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3557)
+	%TEXT_RunMacro(TEXT_Orihalcon)
 	%TEXT_End()
 
 TEXT_CB3B34:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3561)
+	%TEXT_RunMacro(TEXT_StarStone)
 	%TEXT_End()
 
 TEXT_CB3B41:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB356C)
+	%TEXT_RunMacro(TEXT_CrystalBall)
 	%TEXT_End()
 
 TEXT_CB3B4E:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3579)
+	%TEXT_RunMacro(TEXT_Dud)
 	%TEXT_End()
 
 TEXT_CB3B5B:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB357D)
+	%TEXT_RunMacro(TEXT_FishFossil)
 	%TEXT_End()
 
 TEXT_CB3B68:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3589)
+	%TEXT_RunMacro(TEXT_BeastFossil)
 	%TEXT_End()
 
 TEXT_CB3B75:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3596)
+	%TEXT_RunMacro(TEXT_AmberRose)
 	%TEXT_End()
 
 TEXT_CB3B82:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35A1)
+	%TEXT_RunMacro(TEXT_PlatinumRing)
 	%TEXT_End()
 
 TEXT_CB3B8F:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35AF)
+	%TEXT_RunMacro(TEXT_GoldCoin)
 	%TEXT_End()
 
 TEXT_CB3B9C:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35B9)
+	%TEXT_RunMacro(TEXT_Goblet)
 	%TEXT_End()
 
 TEXT_CB3BA9:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35C0)
+	%TEXT_RunMacro(TEXT_TutsMask)
 	%TEXT_End()
 
 TEXT_CB3BB6:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35CB)
+	%TEXT_RunMacro(TEXT_ZebraMask)
 	%TEXT_End()
 
 TEXT_CB3BC3:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35D6)
+	%TEXT_RunMacro(TEXT_RamiasScale)
 	%TEXT_End()
 
 TEXT_CB3BD0:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35E4)
+	%TEXT_RunMacro(TEXT_PegasusWing)
 	%TEXT_End()
 
 TEXT_CB3BDD:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB35F1)
+	%TEXT_RunMacro(TEXT_WarriorShield)
 	%TEXT_End()
 
 TEXT_CB3BEA:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3600)
+	%TEXT_RunMacro(TEXT_Bandanna)
 	%TEXT_End()
 
 TEXT_CB3BF7:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3609)
+	%TEXT_RunMacro(TEXT_Armor)
 	%TEXT_End()
 
 TEXT_CB3C04:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB360F)
+	%TEXT_RunMacro(TEXT_GoldCrown)
 	%TEXT_End()
 
 TEXT_CB3C11:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB361A)
+	%TEXT_RunMacro(TEXT_SpiritCharm)
 	%TEXT_End()
 
 TEXT_CB3C1E:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3627)
+	%TEXT_RunMacro(TEXT_SeiryuSword)
 	%TEXT_End()
 
 TEXT_CB3C2B:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3634)
+	%TEXT_RunMacro(TEXT_UnicornsHorn)
 	%TEXT_End()
 
 TEXT_CB3C38:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3643)
+	%TEXT_RunMacro(TEXT_Springtime)
 	%TEXT_End()
 
 TEXT_CB3C45:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB364E)
+	%TEXT_RunMacro(TEXT_Summertime)
 	%TEXT_End()
 
 TEXT_CB3C52:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3659)
+	%TEXT_RunMacro(TEXT_Autumntime)
 	%TEXT_End()
 
 TEXT_CB3C5F:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3664)
+	%TEXT_RunMacro(TEXT_Wintertime)
 	%TEXT_End()
 
 TEXT_CB3C6C:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB366F)
+	%TEXT_RunMacro(TEXT_ShellWhistle)
 	%TEXT_End()
 
 TEXT_CB3C79:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB367D)
+	%TEXT_RunMacro(TEXT_StarTiara)
 	%TEXT_End()
 
 TEXT_CB3C86:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3688)
+	%TEXT_RunMacro(TEXT_SunRing)
 	%TEXT_End()
 
 TEXT_CB3C93:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3691)
+	%TEXT_RunMacro(TEXT_ModelShip)
 	%TEXT_End()
 
 TEXT_CB3CA0:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB369C)
+	%TEXT_RunMacro(TEXT_Mannequin)
 	%TEXT_End()
 
 TEXT_CB3CAD:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36A6)
+	%TEXT_RunMacro(TEXT_BrassKnuckle)
 	%TEXT_End()
 
 TEXT_CB3CBA:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36B4)
+	%TEXT_RunMacro(TEXT_TurtleShell)
 	%TEXT_End()
 
 TEXT_CB3CC7:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36C1)
+	%TEXT_RunMacro(TEXT_Tire)
 	%TEXT_End()
 
 TEXT_CB3CD4:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36C6)
+	%TEXT_RunMacro(TEXT_FalconHelmet)
 	%TEXT_End()
 
 TEXT_CB3CE1:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36D4)
+	%TEXT_RunMacro(TEXT_KongsBarrel)
 	%TEXT_End()
 
 TEXT_CB3CEE:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36E2)
+	%TEXT_RunMacro(TEXT_ScrewBall)
 	%TEXT_End()
 
 TEXT_CB3CFB:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36ED)
+	%TEXT_RunMacro(TEXT_Sword)
 	%TEXT_End()
 
 TEXT_CB3D08:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36F3)
+	%TEXT_RunMacro(TEXT_MrSaturn)
 	%TEXT_End()
 
 TEXT_CB3D15:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB36FE)
+	%TEXT_RunMacro(TEXT_Triforce)
 	%TEXT_End()
 
 TEXT_CB3D22:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3707)
+	%TEXT_RunMacro(TEXT_GoldMedal)
 	%TEXT_End()
 
 TEXT_CB3D2F:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3712)
+	%TEXT_RunMacro(TEXT_Bucket)
 	%TEXT_End()
 
 TEXT_CB3D3C:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3719)
+	%TEXT_RunMacro(TEXT_ShinyBamboo)
 	%TEXT_End()
 
 TEXT_CB3D49:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3726)
+	%TEXT_RunMacro(TEXT_Nunchuks)
 	%TEXT_End()
 
 TEXT_CB3D56:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB372F)
+	%TEXT_RunMacro(TEXT_RiceBowl)
 	%TEXT_End()
 
 TEXT_CB3D63:
 	%TEXT_RunMacro(TEXT_CB3446)
 	%TEXT_RunMacro(TEXT_CB3A4F)
-	%TEXT_RunMacro(TEXT_CB3739)
+	%TEXT_RunMacro(TEXT_XmasTree)
 	%TEXT_End()
 
 TEXT_CB3D70:
@@ -3410,420 +3410,420 @@ TEXT_CB3DB4:
 	%TEXT_End()
 
 TEXT_CB3DC1:
-	%TEXT_RunMacro(TEXT_CB34B5)
+	%TEXT_RunMacro(TEXT_Dime)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B5B)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3DCC:
-	%TEXT_RunMacro(TEXT_CB34BA)
+	%TEXT_RunMacro(TEXT_100DollarCoin)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B92)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3DD7:
-	%TEXT_RunMacro(TEXT_CB34CA)
+	%TEXT_RunMacro(TEXT_Charm)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C05)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3DE2:
-	%TEXT_RunMacro(TEXT_CB34D0)
+	%TEXT_RunMacro(TEXT_Saucepan)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B6A)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3DED:
-	%TEXT_RunMacro(TEXT_CB34D9)
+	%TEXT_RunMacro(TEXT_Whip)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B24)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3DF8:
-	%TEXT_RunMacro(TEXT_CB34DE)
+	%TEXT_RunMacro(TEXT_KingsCape)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BEC)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E03:
-	%TEXT_RunMacro(TEXT_CB34EA)
+	%TEXT_RunMacro(TEXT_BeastsFang)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B4C)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E0E:
-	%TEXT_RunMacro(TEXT_CB34F7)
+	%TEXT_RunMacro(TEXT_AncientGem)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B97)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E19:
-	%TEXT_RunMacro(TEXT_CB3503)
+	%TEXT_RunMacro(TEXT_TruthMirror)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BA6)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E24:
-	%TEXT_RunMacro(TEXT_CB3510)
+	%TEXT_RunMacro(TEXT_GlassSlippers)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B60)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E2F:
-	%TEXT_RunMacro(TEXT_CB351F)
+	%TEXT_RunMacro(TEXT_LuckyCat)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B2E)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E3A:
-	%TEXT_RunMacro(TEXT_CB3529)
+	%TEXT_RunMacro(TEXT_RaccoonDoll)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C2D)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E45:
-	%TEXT_RunMacro(TEXT_CB3536)
+	%TEXT_RunMacro(TEXT_TreasureBox)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BDD)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E50:
-	%TEXT_RunMacro(TEXT_CB3543)
+	%TEXT_RunMacro(TEXT_EchigoCandy)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B3D)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E5B:
-	%TEXT_RunMacro(TEXT_CB3550)
+	%TEXT_RunMacro(TEXT_Katana)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C00)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E66:
-	%TEXT_RunMacro(TEXT_CB3557)
+	%TEXT_RunMacro(TEXT_Orihalcon)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C37)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E71:
-	%TEXT_RunMacro(TEXT_CB3561)
+	%TEXT_RunMacro(TEXT_StarStone)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B47)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E7C:
-	%TEXT_RunMacro(TEXT_CB356C)
+	%TEXT_RunMacro(TEXT_CrystalBall)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B29)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E87:
-	%TEXT_RunMacro(TEXT_CB3579)
+	%TEXT_RunMacro(TEXT_Dud)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BA1)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E92:
-	%TEXT_RunMacro(TEXT_CB357D)
+	%TEXT_RunMacro(TEXT_FishFossil)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B79)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3E9D:
-	%TEXT_RunMacro(TEXT_CB3589)
+	%TEXT_RunMacro(TEXT_BeastFossil)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B7E)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EA8:
-	%TEXT_RunMacro(TEXT_CB3596)
+	%TEXT_RunMacro(TEXT_AmberRose)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B74)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EB3:
-	%TEXT_RunMacro(TEXT_CB35A1)
+	%TEXT_RunMacro(TEXT_PlatinumRing)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C3C)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EBE:
-	%TEXT_RunMacro(TEXT_CB35AF)
+	%TEXT_RunMacro(TEXT_GoldCoin)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B1F)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EC9:
-	%TEXT_RunMacro(TEXT_CB35B9)
+	%TEXT_RunMacro(TEXT_Goblet)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B65)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3ED4:
-	%TEXT_RunMacro(TEXT_CB35C0)
+	%TEXT_RunMacro(TEXT_TutsMask)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BCE)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EDF:
-	%TEXT_RunMacro(TEXT_CB35CB)
+	%TEXT_RunMacro(TEXT_ZebraMask)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B42)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EEA:
-	%TEXT_RunMacro(TEXT_CB35D6)
+	%TEXT_RunMacro(TEXT_RamiasScale)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C14)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3EF5:
-	%TEXT_RunMacro(TEXT_CB35E4)
+	%TEXT_RunMacro(TEXT_PegasusWing)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C28)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F00:
-	%TEXT_RunMacro(TEXT_CB35F1)
+	%TEXT_RunMacro(TEXT_WarriorShield)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BBA)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F0B:
-	%TEXT_RunMacro(TEXT_CB3600)
+	%TEXT_RunMacro(TEXT_Bandanna)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B51)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F16:
-	%TEXT_RunMacro(TEXT_CB3609)
+	%TEXT_RunMacro(TEXT_Armor)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BD8)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F21:
-	%TEXT_RunMacro(TEXT_CB360F)
+	%TEXT_RunMacro(TEXT_GoldCrown)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BE7)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F2C:
-	%TEXT_RunMacro(TEXT_CB361A)
+	%TEXT_RunMacro(TEXT_SpiritCharm)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C23)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F37:
-	%TEXT_RunMacro(TEXT_CB3627)
+	%TEXT_RunMacro(TEXT_SeiryuSword)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B33)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F42:
-	%TEXT_RunMacro(TEXT_CB3634)
+	%TEXT_RunMacro(TEXT_UnicornsHorn)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BBF)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F4D:
-	%TEXT_RunMacro(TEXT_CB3643)
+	%TEXT_RunMacro(TEXT_Springtime)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B56)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F58:
-	%TEXT_RunMacro(TEXT_CB364E)
+	%TEXT_RunMacro(TEXT_Summertime)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B8D)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F63:
-	%TEXT_RunMacro(TEXT_CB3659)
+	%TEXT_RunMacro(TEXT_Autumntime)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BC4)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F6E:
-	%TEXT_RunMacro(TEXT_CB3664)
+	%TEXT_RunMacro(TEXT_Wintertime)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BFB)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F79:
-	%TEXT_RunMacro(TEXT_CB366F)
+	%TEXT_RunMacro(TEXT_ShellWhistle)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C32)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F84:
-	%TEXT_RunMacro(TEXT_CB367D)
+	%TEXT_RunMacro(TEXT_StarTiara)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BAB)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F8F:
-	%TEXT_RunMacro(TEXT_CB3688)
+	%TEXT_RunMacro(TEXT_SunRing)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BF6)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3F9A:
-	%TEXT_RunMacro(TEXT_CB3691)
+	%TEXT_RunMacro(TEXT_ModelShip)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BF1)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FA5:
-	%TEXT_RunMacro(TEXT_CB369C)
+	%TEXT_RunMacro(TEXT_Mannequin)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BE2)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FB0:
-	%TEXT_RunMacro(TEXT_CB36A6)
+	%TEXT_RunMacro(TEXT_BrassKnuckle)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B6F)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FBB:
-	%TEXT_RunMacro(TEXT_CB36B4)
+	%TEXT_RunMacro(TEXT_TurtleShell)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BB0)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FC6:
-	%TEXT_RunMacro(TEXT_CB36C1)
+	%TEXT_RunMacro(TEXT_Tire)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C1E)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FD1:
-	%TEXT_RunMacro(TEXT_CB36C6)
+	%TEXT_RunMacro(TEXT_FalconHelmet)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B9C)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FDC:
-	%TEXT_RunMacro(TEXT_CB36D4)
+	%TEXT_RunMacro(TEXT_KongsBarrel)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C0F)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FE7:
-	%TEXT_RunMacro(TEXT_CB36E2)
+	%TEXT_RunMacro(TEXT_ScrewBall)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B38)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FF2:
-	%TEXT_RunMacro(TEXT_CB36ED)
+	%TEXT_RunMacro(TEXT_Sword)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BB5)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB3FFD:
-	%TEXT_RunMacro(TEXT_CB36F3)
+	%TEXT_RunMacro(TEXT_MrSaturn)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BD3)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB4008:
-	%TEXT_RunMacro(TEXT_CB36FE)
+	%TEXT_RunMacro(TEXT_Triforce)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C41)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB4013:
-	%TEXT_RunMacro(TEXT_CB3707)
+	%TEXT_RunMacro(TEXT_GoldMedal)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B1A)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB401E:
-	%TEXT_RunMacro(TEXT_CB3712)
+	%TEXT_RunMacro(TEXT_Bucket)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B88)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB4029:
-	%TEXT_RunMacro(TEXT_CB3719)
+	%TEXT_RunMacro(TEXT_ShinyBamboo)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C19)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB4034:
-	%TEXT_RunMacro(TEXT_CB3726)
+	%TEXT_RunMacro(TEXT_Nunchuks)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4B83)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB403F:
-	%TEXT_RunMacro(TEXT_CB372F)
+	%TEXT_RunMacro(TEXT_RiceBowl)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4BC9)
 	db "G"
 	%TEXT_End()
 
 TEXT_CB404A:
-	%TEXT_RunMacro(TEXT_CB3739)
+	%TEXT_RunMacro(TEXT_XmasTree)
 	%TEXT_NewLine()
 	%TEXT_ReadValue($CF4C0A)
 	db "G"
@@ -7833,12 +7833,14 @@ TEXT_CB7795:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB77AA:
+; Unsure where this would have been used.　Assuming it is printing debug data.
+; There are some Japanese characters that don't exist in the English ROM but are attempted to be printed (they are not mapped to any character for this reason)
+TEXT_SoundDebug:
 	%TEXT_RunMacro(TEXT_CB7795)
-	db "BGMばんごう: "
+	db "BGMばんごう: "				; "BGM Number:"
 	%TEXT_ReadValue($0033CA)
 	%TEXT_NewLine()
-	db "FGMばんごう: "
+	db "FGMばんごう: "				; "FGM Number:"
 	%TEXT_ReadValue($0033CB)
 	%TEXT_NewLine()
 	db "Track  : "
@@ -7850,13 +7852,13 @@ TEXT_CB77AA:
 	db "FlgSub : "
 	%TEXT_ReadValue($00736C)
 	%TEXT_NewLine()
-	db " 『ごめん!!サウンドバグで"
+	db " 『ごめん!!サウンドバグで"	; 『ごめん!!サウンドバグで_まってます。』 Rough translation: "Sorry!! Because of a sound bug, ____ is/are waiting."
 	%TEXT_NewLine()
 	db "  "
 	db $98
-	db "まってます。』"
+	db "まってます。』"	
 	%TEXT_NewLine()
-	db " 『"
+	db " 『"					  ; 『__をおよび_さい。』Rough translation: "Please(?) call ____."
 	db $9A
 	db $99
 	db "をおよび"
@@ -7864,7 +7866,7 @@ TEXT_CB77AA:
 	db "さい。』"
 	%TEXT_End()
 
-TEXT_CB781C:
+TEXT_InitError:
 	%TEXT_WriteDataW($000502, $7FFF)
 	%TEXT_WriteDataW($000506, $4210)
 	%TEXT_SetVisibility($01)
@@ -7873,8 +7875,8 @@ TEXT_CB781C:
 	%TEXT_Clear()
 	%TEXT_End()
 
-TEXT_CB7831:
-	%TEXT_RunMacro(TEXT_CB781C)
+TEXT_InvalidController:
+	%TEXT_RunMacro(TEXT_InitError)
 	db " ------ (Please Note) ------"
 	%TEXT_NewLine()
 	db "     If you are using the"
@@ -7890,8 +7892,8 @@ TEXT_CB7831:
 	db "    Thanks!"
 	%TEXT_End()
 
-TEXT_CB78CB:
-	%TEXT_RunMacro(TEXT_CB781C)
+TEXT_InvalidConsole:
+	%TEXT_RunMacro(TEXT_InitError)
 	%TEXT_SetCharWidth($0C)
 	db " ---( Warning )---"
 	%TEXT_NewLine()
