@@ -1,0 +1,6 @@
+/Tools
+*.sym
+*.sfc
+*.smc
+.editorconfig
+*.exe
