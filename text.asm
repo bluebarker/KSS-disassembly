@@ -879,31 +879,31 @@ TEXT_CB15E6:
 
 TEXT_CB15FB:
 	%TEXT_Wait($F0)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB1601:
 	%TEXT_Wait($1E)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB1607:
 	%TEXT_Wait($78)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB160D:
 	%TEXT_Wait($B4)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB1613:
 	%TEXT_Wait($F0)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
@@ -2008,7 +2008,7 @@ TEXT_CB2BC2:
 	db "and become the champion!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_End()
 
 TEXT_CB2CD3:
@@ -2071,7 +2071,7 @@ TEXT_CB2DDE:
 
 TEXT_CB2E11:
 	%TEXT_RunMacro(TEXT_InitTutorial)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	db "There are lots of"
 	%TEXT_NewLine()
 	db "treasures hidden in"
@@ -2097,7 +2097,7 @@ TEXT_CB2EA3:
 	db "....whoops!"
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB1622)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_End()
 
 TEXT_CB2EBA:
@@ -3836,7 +3836,7 @@ TEXT_CB4055:
 	%TEXT_SetVisibility($01)
 	%TEXT_SetCharWidth($FF)
 	%TEXT_Speed($01, $01)
-	%TEXT_UNK1D($37)
+	%TEXT_ScrollSFX($37)
 	%TEXT_Clear()
 	%TEXT_End()
 
@@ -3851,13 +3851,13 @@ TEXT_CB4076:
 	%TEXT_SetVisibility($01)
 	%TEXT_SetCharWidth($FF)
 	%TEXT_Speed($01, $01)
-	%TEXT_UNK1D($37)
+	%TEXT_ScrollSFX($37)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB408D:
 	%TEXT_Wait($B4)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 
@@ -4046,7 +4046,7 @@ TEXT_CB4237:
 
 TEXT_CB42B7:
 	%TEXT_RunMacro(TEXT_CB4055)
-	%TEXT_PlaySound1($00)
+	%TEXT_PlayMusic($00)
 	%TEXT_RunMacro(TEXT_CB40DF)
 	db "`K...Kirby's here!  He's"
 	%TEXT_NewLine()
@@ -4078,7 +4078,7 @@ TEXT_CB42B7:
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB40A7)
 	%TEXT_RunMacro(TEXT_CB40BD)
-	%TEXT_PlaySound1($33)
+	%TEXT_PlayMusic($33)
 	%TEXT_End()
 
 TEXT_CB43C1:
@@ -4127,7 +4127,7 @@ TEXT_CB4424:
 
 TEXT_CB44BC:
 	%TEXT_RunMacro(TEXT_CB4055)
-	%TEXT_PlaySound1($00)
+	%TEXT_PlayMusic($00)
 	%TEXT_RunMacro(TEXT_CB40D8)
 	db "`Kirby's been blown to"
 	%TEXT_NewLine()
@@ -4151,7 +4151,7 @@ TEXT_CB44BC:
 	%TEXT_NewLine()
 	%TEXT_RunMacro(TEXT_CB40AF)
 	%TEXT_RunMacro(TEXT_CB40BD)
-	%TEXT_PlaySound1($03)
+	%TEXT_PlayMusic($03)
 	%TEXT_End()
 
 TEXT_CB4576:
@@ -4666,7 +4666,7 @@ TEXT_CB5238:
 	%TEXT_Wait($F0)
 	%TEXT_RunMacro(TEXT_CB40B6)
 	%TEXT_Wait($14)
-	%TEXT_PlaySound2($26)
+	%TEXT_PlaySFX($26)
 	%TEXT_Wait($14)
 	%TEXT_RunMacro(TEXT_CB412C)
 	db "`Now, it's your"
@@ -5595,19 +5595,19 @@ TEXT_CB5E48:
 	%TEXT_SetVisibility($01)
 	%TEXT_SetCharWidth($FF)
 	%TEXT_Speed($00, $02)
-	%TEXT_UNK1D($37)
+	%TEXT_ScrollSFX($37)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB5E66:
 	%TEXT_Wait($14)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_SecondaryColorEnable()
 	%TEXT_End()
 
 TEXT_CB5E6C:
 	%TEXT_Wait($1E)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_SecondaryColorEnable()
 	%TEXT_End()
 
@@ -7122,12 +7122,12 @@ TEXT_CB6E82:
 	%TEXT_SetVisibility($01)
 	%TEXT_SetCharWidth($FF)
 	%TEXT_Speed($01, $00)
-	%TEXT_UNK1D($37)
+	%TEXT_ScrollSFX($37)
 	%TEXT_Clear()
 	%TEXT_End()
 
 TEXT_CB6E99:
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Wait($F0)
 	%TEXT_End()
 
@@ -7147,7 +7147,7 @@ TEXT_CB6EA1:
 
 TEXT_CB6EBC:
 	%TEXT_Wait($F0)
-	%TEXT_UNK1D($00)
+	%TEXT_ScrollSFX($00)
 	%TEXT_Clear()
 	%TEXT_End()
 

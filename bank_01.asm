@@ -763,7 +763,7 @@ CODE_018673:
 	RTS                           ;$018673	|
 
 LoadLevelTileset_L:
-	JSR.W LoadLevelTileset          ;$018674	|
+	JSR.W LoadLevelTileset        ;$018674	|
 	RTL                           ;$018677	|
 
 LoadLevelTileset:

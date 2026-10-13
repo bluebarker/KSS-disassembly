@@ -108,15 +108,15 @@ macro TEXT_SkipByte()        ; unsure
     db $1B
 endmacro
 
-macro TEXT_UNK1D(x)
+macro TEXT_ScrollSFX(x)     ; SFX to be played on each text character appearance
     db $1D, <x>
 endmacro
 
-macro TEXT_PlaySound1(x)    ; unsure
+macro TEXT_PlayMusic(x)     ; Starts playing music
     db $1E, <x>
 endmacro
 
-macro TEXT_PlaySound2(x)    ; unsure
+macro TEXT_PlaySFX(x)       ; Plays a SFX
     db $1F, <x>
 endmacro
 
