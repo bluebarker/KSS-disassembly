@@ -50,4 +50,20 @@ DATA_CB00E0:						;$CB00E0	| 2bpp values used to initialize the VWF text buffer 
 	; TODO: $CB00E8 to $CB0F17
 
 ORG $CB0F18
-incsrc "text.asm"
+	incsrc "text.asm"
+
+ORG $CB7944
+	incbin "Graphics/Marx (CB7944).bin" ; Called from subroutine $D5F444
+
+;ORG $CB9066
+;	Marx's red "glow" overlay sprite, 0x456 bytes. Called from subroutine $D5F444. It is decompressed by itself separately, but is also decompressed with the Marx graphics.
+
+;ORG $CB94BC
+; pointers?
+
+ORG $CB94D3
+	LDA $73AC
+	STA $17D7
+	RTL
+
+; unsure what this area could be doing, will return to it later

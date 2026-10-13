@@ -134,4 +134,10 @@
                     ;  incsrc "bank_BD.asm"
                     ;  incsrc "bank_BE.asm"
                     ;  incsrc "bank_BF.asm"
-                      
+
+!checksum = read4($00FFDC)
+if !checksum != $FFFFFFFFC6AA3955 ; not sure why Asar outputs four 0xFF bytes when doing this...
+  print "File compiled with invalid checksum $",hex(!checksum)
+else
+  print "File compiled with valid checksum."
+endif

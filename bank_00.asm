@@ -1970,11 +1970,11 @@ InitializeNewObject:			; X = Object slot
 	ASL A						;$008F15	|
 	TXY							;$008F16	|
 	TAX							;$008F17	|
-	LDA.l DATA_00B895+2,X		;$008F18	|
+	LDA.l AS_Script_Pointers+2,X;$008F18	|
 	TAY							;$008F1C	|
-	LDA.l DATA_00B895,X			;$008F1D	|
+	LDA.l AS_Script_Pointers,X	;$008F1D	|
 	PLX							;$008F21	|
-	JSL InitializeObjectScript			;$008F22	|
+	JSL InitializeObjectScript	;$008F22	|
 	TYA							;$008F26	|
 	STA $61BC,X					;$008F27	|
 	JSR CODE_FL_009180			;$008F2A	|
@@ -8091,7 +8091,7 @@ DATA_00B84D:
 	dl CODE_FL_00A2AC
 	dl CODE_FL_00A2C9
 
-DATA_00B895:					; Pointer table for all AS scripts in the game, though most are just ASM. 4th byte is a flag that is the same usage as RAM address $6818.
+AS_Script_Pointers:			; Pointer table for all AS scripts in the game, though most are just ASM. 4th byte is a flag that is the same usage as RAM address $6818.
 								; It could be nice to develop a macro to auto-populate this list when building ActionScripts instead of it being static in the code. Something to consider.
 	dl AS_Script_0000 : db $02	; 00
 	dl $028000 : db $04			; 01
