@@ -47,7 +47,6 @@ DATA_CB0000:						;$CB0000	| Table of VWF placement info. 8 bytes per option, se
 DATA_CB00E0:						;$CB00E0	| 2bpp values used to initialize the VWF text buffer with the base background color defined by $0065.
 	dw $0000,$00FF,$FF00,$FFFF
 	
-	; TODO: $CB00E8 to $CB0F17
 
 ORG $CB0F18
 	incsrc "text.asm"

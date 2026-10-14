@@ -189,18 +189,21 @@ CODE_81818F:
 	CMP.W #$0003                  ;$0181B6	|
 
 CODE_8181B9:
-	BCS CODE_8181B9               ;$0181B9	|
-	ASL A                         ;$0181BB	|
-	TAX                           ;$0181BC	|
-	JMP.W (DATA8_0181C0,X)        ;$0181BD	|
+    BCS CODE_8181B9               ;$0181B9 |
+    ASL A                         ;$0181BB |
+    TAX                           ;$0181BC |
+    JMP.W (PTR16_0181C0,X)        ;$0181BD |
+PTR16_0181C0:
+    dw CODE_0181C6                ;$0181C0 |
+    dw CODE_JP_018263             ;$0181C2 |
+    dw CODE_018268                ;$0181C4 |
 
-DATA8_0181C0:
-	db $C6,$81,$63,$82,$68,$82    ;$0181C0	|
-	INC.W $332A                   ;$0181C6	|
-	LDY.W #$000B                  ;$0181C9	|
-	LDA.B [$14],Y                 ;$0181CC	|
-	BNE CODE_8181D3               ;$0181CE	|
-	JMP.W CODE_JP_018263          ;$0181D0	|
+CODE_0181C6:
+    INC.W $332A                   ;$0181C6 |
+    LDY.W #$000B                  ;$0181C9 |
+    LDA.B [$14],Y                 ;$0181CC |
+    BNE CODE_8181D3               ;$0181CE |
+    JMP.W CODE_JP_018263          ;$0181D0 |
 
 CODE_8181D3:
 	AND.W #$FF00                  ;$0181D3	|
@@ -263,9 +266,11 @@ CODE_JP_018215:
 	JML.L CreateNewObject2        ;$01825F	|
 
 CODE_JP_018263:
-	LDX.W #$0000                  ;$018263	|
-	BRA CODE_81826B               ;$018266	|
-	LDX.W #$0002                  ;$018268	|
+    LDX.W #$0000                  ;$018263 |
+    BRA CODE_81826B               ;$018266 |
+
+CODE_018268:
+    LDX.W #$0002                  ;$018268 |
 
 CODE_81826B:
 	LDA.W $330A,X                 ;$01826B	|
@@ -415,7 +420,7 @@ CODE_8183A0:
 CODE_8183B8:
 	STA.W $32DC                   ;$0183B8	|
 	RTS                           ;$0183BB	|
-	db $00,$00,$FF,$7F,$00,$00    ;$0183BC	|
+	dw $0000,$7FFF,$0000          ;$0183BC  |
 
 LoadLevelBackground_NoDMA_L:
 	JSR.W LoadLevelBackground_NoDMA;$0183C2	|
@@ -5931,10 +5936,10 @@ PTR16_01ACAD:
     dw CODE_01B476                ;$01ACAF |
     dw CODE_01B488                ;$01ACB1 |
     dw CODE_01B4E5                ;$01ACB3 |
-    dw DATA8_01B502               ;$01ACB5 |
-    dw DATA8_01B524               ;$01ACB7 |
-    dw DATA8_01B541               ;$01ACB9 |
-    dw DATA8_01B560               ;$01ACBB |
+    dw CODE_01B502                ;$01ACB5 |
+    dw CODE_01B524                ;$01ACB7 |
+    dw CODE_01B541                ;$01ACB9 |
+    dw CODE_01B560                ;$01ACBB |
 
 
 CODE_JP_01ACBD:
@@ -6243,39 +6248,39 @@ CODE_01AFA0:
 PTR16_01AFAF:
     dw CODE_01B04F                ;$01AFAF |
     dw CODE_01B08F                ;$01AFB1 |
-    dw DATA8_01B14D               ;$01AFB3 |
-    dw DATA8_01B200               ;$01AFB5 |
+    dw CODE_01B14D                ;$01AFB3 |
+    dw CODE_01B200                ;$01AFB5 |
     dw CODE_01B08F                ;$01AFB7 |
     dw CODE_01B0CE                ;$01AFB9 |
     dw CODE_01B08F                ;$01AFBB |
     dw CODE_01B04F                ;$01AFBD |
-    dw DATA8_01B14D               ;$01AFBF |
+    dw CODE_01B14D                ;$01AFBF |
     dw CODE_01B04F                ;$01AFC1 |
-    dw DATA8_01B200               ;$01AFC3 |
+    dw CODE_01B200                ;$01AFC3 |
     dw CODE_01B0CE                ;$01AFC5 |
     dw CODE_01B08F                ;$01AFC7 |
-    dw DATA8_01B14D               ;$01AFC9 |
+    dw CODE_01B14D                ;$01AFC9 |
     dw CODE_01B08F                ;$01AFCB |
-    dw DATA8_01B200               ;$01AFCD |
+    dw CODE_01B200                ;$01AFCD |
     dw CODE_01B08F                ;$01AFCF |
     dw CODE_01B0CE                ;$01AFD1 |
     dw CODE_01B04F                ;$01AFD3 |
     dw CODE_01B04F                ;$01AFD5 |
     dw CODE_01B0CE                ;$01AFD7 |
     dw CODE_01B10E                ;$01AFD9 |
-    dw DATA8_01B2B3               ;$01AFDB |
-    dw DATA8_01B366               ;$01AFDD |
+    dw CODE_01B2B3                ;$01AFDB |
+    dw CODE_01B366                ;$01AFDD |
     dw CODE_01B0CE                ;$01AFDF |
     dw CODE_01B10E                ;$01AFE1 |
     dw CODE_01B04F                ;$01AFE3 |
     dw CODE_01B10E                ;$01AFE5 |
     dw CODE_01B0CE                ;$01AFE7 |
-    dw DATA8_01B2B3               ;$01AFE9 |
+    dw CODE_01B2B3                ;$01AFE9 |
     dw CODE_01B04F                ;$01AFEB |
-    dw DATA8_01B366               ;$01AFED |
-    dw DATA8_01B2B3               ;$01AFEF |
+    dw CODE_01B366                ;$01AFED |
+    dw CODE_01B2B3                ;$01AFEF |
     dw CODE_01B10E                ;$01AFF1 |
-    dw DATA8_01B366               ;$01AFF3 |
+    dw CODE_01B366                ;$01AFF3 |
     dw CODE_01B10E                ;$01AFF5 |
     dw CODE_01B0CE                ;$01AFF7 |
     dw CODE_01B10E                ;$01AFF9 |
@@ -6300,7 +6305,7 @@ CODE_01B04F:
 	SBC.B $53                     ;$01B052	|
 	JSR.W CODE_FN_01B419          ;$01B054	|
 	BCS CODE_01B062               ;$01B057	|
-	LDA.L DATA8_01B067,X          ;$01B059	|
+	LDA.L DATA16_01B067,X          ;$01B059	|
 	BMI CODE_01B062               ;$01B05D	|
 	STA.B $0C                     ;$01B05F	|
 	RTL                           ;$01B061	|
@@ -6310,12 +6315,12 @@ CODE_01B062:
 	STA.B $64                     ;$01B064	|
 	RTL                           ;$01B066	|
 
-DATA8_01B067:
-    db $02,$00,$FF,$FF,$FF,$FF,$FF,$FF;$01B067 |
-    db $10,$00,$16,$00,$FF,$FF,$FF,$FF;$01B06F |
-    db $22,$00,$FF,$FF,$FF,$FF,$2E,$00;$01B077 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B07F |
-    db $40,$00,$46,$00,$FF,$FF,$FF,$FF;$01B087 |
+DATA16_01B067:
+    dw $0002,$FFFF,$FFFF,$FFFF    ;$01B067 |
+    dw $0010,$0016,$FFFF,$FFFF    ;$01B06F |
+    dw $0022,$FFFF,$FFFF,$002E    ;$01B077 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B07F |
+    dw $0040,$0046,$FFFF,$FFFF    ;$01B087 |
 
 CODE_01B08F:
 	LDA.B $0A                     ;$01B08F	|
@@ -6323,7 +6328,7 @@ CODE_01B08F:
 	INC A                         ;$01B092	|
 	JSR.W CODE_FN_01B419          ;$01B093	|
 	BCS CODE_01B0A1               ;$01B096	|
-	LDA.L DATA8_01B0A6,X          ;$01B098	|
+	LDA.L DATA16_01B0A6,X          ;$01B098	|
 	BMI CODE_01B0A1               ;$01B09C	|
 	STA.B $0C                     ;$01B09E	|
 	RTL                           ;$01B0A0	|
@@ -6333,12 +6338,12 @@ CODE_01B0A1:
 	STA.B $64                     ;$01B0A3	|
 	RTL                           ;$01B0A5	|
 
-DATA8_01B0A6:
-	db $FF,$FF,$04,$00,$FF,$FF,$FF,$FF;$01B0A6	|
-	db $FF,$FF,$14,$00,$FF,$FF,$1C,$00;$01B0AE	|
-	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B0B6	|
-	db $FF,$FF,$34,$00,$FF,$FF,$3C,$00;$01B0BE	|
-	db $FF,$FF,$44,$00,$FF,$FF,$4C,$00;$01B0C6	|
+DATA16_01B0A6:
+    dw $FFFF,$0004,$FFFF,$FFFF    ;$01B0A6 |
+    dw $FFFF,$0014,$FFFF,$001C    ;$01B0AE |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B0B6 |
+    dw $FFFF,$0034,$FFFF,$003C    ;$01B0BE |
+    dw $FFFF,$0044,$FFFF,$004C    ;$01B0C6 |
 
 CODE_01B0CE:
 	LDA.B $0A                     ;$01B0CE	|
@@ -6346,7 +6351,7 @@ CODE_01B0CE:
 	ADC.B $53                     ;$01B0D1	|
 	JSR.W CODE_FN_01B419          ;$01B0D3	|
 	BCS CODE_01B0E1               ;$01B0D6	|
-	LDA.L DATA8_01B0E6,X          ;$01B0D8	|
+	LDA.L DATA16_01B0E6,X         ;$01B0D8 |
 	BMI CODE_01B0E1               ;$01B0DC	|
 	STA.B $0C                     ;$01B0DE	|
 	RTL                           ;$01B0E0	|
@@ -6356,12 +6361,12 @@ CODE_01B0E1:
 	STA.B $64                     ;$01B0E3	|
 	RTL                           ;$01B0E5	|
 
-DATA8_01B0E6:
-	db $00,$00,$FF,$FF,$FF,$FF,$FF,$FF;$01B0E6	|
-	db $FF,$FF,$FF,$FF,$18,$00,$1E,$00;$01B0EE	|
-	db $FF,$FF,$24,$00,$28,$00,$FF,$FF;$01B0F6	|
-	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B0FE	|
-	db $FF,$FF,$FF,$FF,$48,$00,$4E,$00;$01B106	|
+DATA16_01B0E6:
+    dw $0000,$FFFF,$FFFF,$FFFF    ;$01B0E6 |
+    dw $FFFF,$FFFF,$0018,$001E    ;$01B0EE |
+    dw $FFFF,$0024,$0028,$FFFF    ;$01B0F6 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B0FE |
+    dw $FFFF,$FFFF,$0048,$004E    ;$01B106 |
 
 CODE_01B10E:
 	LDA.B $0A                     ;$01B10E	|
@@ -6369,7 +6374,7 @@ CODE_01B10E:
 	DEC A                         ;$01B111	|
 	JSR.W CODE_FN_01B419          ;$01B112	|
 	BCS CODE_01B120               ;$01B115	|
-	LDA.L DATA8_01B125,X          ;$01B117	|
+	LDA.L DATA16_01B125,X         ;$01B117	|
 	BMI CODE_01B120               ;$01B11B	|
 	STA.B $0C                     ;$01B11D	|
 	RTL                           ;$01B11F	|
@@ -6379,112 +6384,240 @@ CODE_01B120:
 	STA.B $64                     ;$01B122	|
 	RTL                           ;$01B124	|
 
-DATA8_01B125:
-    db $FF,$FF,$06,$00,$FF,$FF,$FF,$FF;$01B125 |
-    db $12,$00,$FF,$FF,$1A,$00,$FF,$FF;$01B12D |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B135 |
-    db $32,$00,$FF,$FF,$3A,$00,$FF,$FF;$01B13D |
-    db $42,$00,$FF,$FF,$4A,$00,$FF,$FF;$01B145 |
+DATA16_01B125:
+    dw $FFFF,$0006,$FFFF,$FFFF    ;$01B125 |
+    dw $0012,$FFFF,$001A,$FFFF    ;$01B12D |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B135 |
+    dw $0032,$FFFF,$003A,$FFFF    ;$01B13D |
+    dw $0042,$FFFF,$004A,$FFFF    ;$01B145 |
 
-DATA8_01B14D:
-    db $A5,$0A,$38,$E5,$53,$69,$01,$00;$01B14D |
-    db $20,$19,$B4,$B0,$06,$BF,$88,$B1;$01B155 |
-    db $01,$10,$20,$A5,$64,$E9,$02,$00;$01B15D |
-    db $20,$19,$B4,$B0,$06,$BF,$B0,$B1;$01B165 |
-    db $01,$10,$10,$A5,$0A,$69,$01,$00;$01B16D |
-    db $20,$19,$B4,$B0,$09,$BF,$D8,$B1;$01B175 |
-    db $01,$30,$03,$85,$0C,$6B,$A5,$0A;$01B17D |
-    db $85,$64,$6B,$FF,$FF,$FF,$FF,$08;$01B185 |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B18D |
-    db $FF,$FF,$FF,$FF,$FF,$26,$00,$FF;$01B195 |
-    db $FF,$FF,$FF,$30,$00,$FF,$FF,$FF;$01B19D |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1A5 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1AD |
-    db $FF,$0E,$00,$FF,$FF,$FF,$FF,$FF;$01B1B5 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$2A;$01B1BD |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1C5 |
-    db $FF,$3E,$00,$FF,$FF,$FF,$FF,$FF;$01B1CD |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1D5 |
-    db $FF,$0C,$00,$FF,$FF,$FF,$FF,$FF;$01B1DD |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1E5 |
-    db $FF,$2C,$00,$FF,$FF,$FF,$FF,$38;$01B1ED |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B1F5 |
-    db $FF,$FF,$FF                ;$01B1FD |
+CODE_01B14D:
+    LDA.B $0A                     ;$01B14D |
+    SEC                           ;$01B14F |
+    SBC.B $53                     ;$01B150 |
+    ADC.W #$0001                  ;$01B152 |
+    JSR.W CODE_FN_01B419          ;$01B155 |
+    BCS CODE_01B160               ;$01B158 |
+    LDA.L DATA16_01B188,X         ;$01B15A |
+    BPL CODE_01B180               ;$01B15E |
 
-DATA8_01B200:
-    db $A5,$0A,$18,$65,$53,$69,$02,$00;$01B200 |
-    db $20,$19,$B4,$B0,$06,$BF,$3B,$B2;$01B208 |
-    db $01,$10,$20,$A5,$64,$E9,$02,$00;$01B210 |
-    db $20,$19,$B4,$B0,$06,$BF,$63,$B2;$01B218 |
-    db $01,$10,$10,$A5,$0A,$69,$01,$00;$01B220 |
-    db $20,$19,$B4,$B0,$09,$BF,$8B,$B2;$01B228 |
-    db $01,$30,$03,$85,$0C,$6B,$A5,$0A;$01B230 |
-    db $85,$64,$6B,$FF,$FF,$FF,$FF,$FF;$01B238 |
-    db $FF,$0C,$00,$FF,$FF,$FF,$FF,$FF;$01B240 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B248 |
-    db $FF,$2C,$00,$FF,$FF,$FF,$FF,$38;$01B250 |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B258 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$0A;$01B260 |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B268 |
-    db $FF,$FF,$FF,$20,$00,$FF,$FF,$FF;$01B270 |
-    db $FF,$FF,$FF,$FF,$FF,$36,$00,$FF;$01B278 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B280 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$08;$01B288 |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B290 |
-    db $FF,$FF,$FF,$FF,$FF,$26,$00,$FF;$01B298 |
-    db $FF,$FF,$FF,$30,$00,$FF,$FF,$FF;$01B2A0 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B2A8 |
-    db $FF,$FF,$FF                ;$01B2B0 |
+CODE_01B160:
+    LDA.B $64                     ;$01B160 |
+    SBC.W #$0002                  ;$01B162 |
+    JSR.W CODE_FN_01B419          ;$01B165 |
+    BCS CODE_01B170               ;$01B168 |
+    LDA.L DATA16_01B1B0,X         ;$01B16A |
+    BPL CODE_01B180               ;$01B16E |
 
-DATA8_01B2B3:
-    db $A5,$0A,$18,$65,$53,$E9,$01,$00;$01B2B3 |
-    db $20,$19,$B4,$B0,$06,$BF,$EE,$B2;$01B2BB |
-    db $01,$10,$20,$A5,$64,$69,$01,$00;$01B2C3 |
-    db $20,$19,$B4,$B0,$06,$BF,$16,$B3;$01B2CB |
-    db $01,$10,$10,$A5,$0A,$E9,$02,$00;$01B2D3 |
-    db $20,$19,$B4,$B0,$09,$BF,$3E,$B3;$01B2DB |
-    db $01,$30,$03,$85,$0C,$6B,$A5,$0A;$01B2E3 |
-    db $85,$64,$6B,$FF,$FF,$FF,$FF,$0A;$01B2EB |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B2F3 |
-    db $FF,$FF,$FF,$20,$00,$FF,$FF,$FF;$01B2FB |
-    db $FF,$FF,$FF,$FF,$FF,$36,$00,$FF;$01B303 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B30B |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B313 |
-    db $FF,$0C,$00,$FF,$FF,$FF,$FF,$FF;$01B31B |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B323 |
-    db $FF,$2C,$00,$FF,$FF,$FF,$FF,$38;$01B32B |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B333 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B33B |
-    db $FF,$0E,$00,$FF,$FF,$FF,$FF,$FF;$01B343 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$2A;$01B34B |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B353 |
-    db $FF,$3E,$00,$FF,$FF,$FF,$FF,$FF;$01B35B |
-    db $FF,$FF,$FF                ;$01B363 |
+CODE_01B170:
+    LDA.B $0A                     ;$01B170 |
+    ADC.W #$0001                  ;$01B172 |
+    JSR.W CODE_FN_01B419          ;$01B175 |
+    BCS CODE_01B183               ;$01B178 |
+    LDA.L DATA16_01B1D8,X         ;$01B17A |
+    BMI CODE_01B183               ;$01B17E |
 
-DATA8_01B366:
-    db $A5,$0A,$38,$E5,$53,$E9,$02,$00;$01B366 |
-    db $20,$19,$B4,$B0,$06,$BF,$A1,$B3;$01B36E |
-    db $01,$10,$20,$A5,$64,$69,$01,$00;$01B376 |
-    db $20,$19,$B4,$B0,$06,$BF,$C9,$B3;$01B37E |
-    db $01,$10,$10,$A5,$0A,$E9,$02,$00;$01B386 |
-    db $20,$19,$B4,$B0,$09,$BF,$F1,$B3;$01B38E |
-    db $01,$30,$03,$85,$0C,$6B,$A5,$0A;$01B396 |
-    db $85,$64,$6B,$FF,$FF,$FF,$FF,$FF;$01B39E |
-    db $FF,$0E,$00,$FF,$FF,$FF,$FF,$FF;$01B3A6 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$2A;$01B3AE |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B3B6 |
-    db $FF,$3E,$00,$FF,$FF,$FF,$FF,$FF;$01B3BE |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$08;$01B3C6 |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B3CE |
-    db $FF,$FF,$FF,$FF,$FF,$26,$00,$FF;$01B3D6 |
-    db $FF,$FF,$FF,$30,$00,$FF,$FF,$FF;$01B3DE |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B3E6 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$0A;$01B3EE |
-    db $00,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B3F6 |
-    db $FF,$FF,$FF,$20,$00,$FF,$FF,$FF;$01B3FE |
-    db $FF,$FF,$FF,$FF,$FF,$36,$00,$FF;$01B406 |
-    db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF;$01B40E |
-    db $FF,$FF,$FF                ;$01B416 |
+CODE_01B180:
+    STA.B $0C                     ;$01B180 |
+    RTL                           ;$01B182 |
+
+
+CODE_01B183:
+    LDA.B $0A                     ;$01B183 |
+    STA.B $64                     ;$01B185 |
+    RTL                           ;$01B187 |
+
+
+DATA16_01B188:
+    dw $FFFF,$FFFF,$0008,$FFFF    ;$01B188 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B190 |
+    dw $FFFF,$0026,$FFFF,$FFFF    ;$01B198 |
+    dw $0030,$FFFF,$FFFF,$FFFF    ;$01B1A0 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B1A8 |
+
+DATA16_01B1B0:
+    dw $FFFF,$FFFF,$FFFF,$000E    ;$01B1B0 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B1B8 |
+    dw $FFFF,$FFFF,$002A,$FFFF    ;$01B1C0 |
+    dw $FFFF,$FFFF,$FFFF,$003E    ;$01B1C8 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B1D0 |
+
+DATA16_01B1D8:
+    dw $FFFF,$FFFF,$FFFF,$000C    ;$01B1D8 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B1E0 |
+    dw $FFFF,$FFFF,$FFFF,$002C    ;$01B1E8 |
+    dw $FFFF,$FFFF,$0038,$FFFF    ;$01B1F0 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B1F8 |
+
+CODE_01B200:
+    LDA.B $0A                     ;$01B200 |
+    CLC                           ;$01B202 |
+    ADC.B $53                     ;$01B203 |
+    ADC.W #$0002                  ;$01B205 |
+    JSR.W CODE_FN_01B419          ;$01B208 |
+    BCS CODE_01B213               ;$01B20B |
+    LDA.L DATA16_01B23B,X         ;$01B20D |
+    BPL CODE_01B233               ;$01B211 |
+
+CODE_01B213:
+    LDA.B $64                     ;$01B213 |
+    SBC.W #$0002                  ;$01B215 |
+    JSR.W CODE_FN_01B419          ;$01B218 |
+    BCS CODE_01B223               ;$01B21B |
+    LDA.L DATA16_01B263,X         ;$01B21D |
+    BPL CODE_01B233               ;$01B221 |
+
+CODE_01B223:
+    LDA.B $0A                     ;$01B223 |
+    ADC.W #$0001                  ;$01B225 |
+    JSR.W CODE_FN_01B419          ;$01B228 |
+    BCS CODE_01B236               ;$01B22B |
+    LDA.L DATA16_01B28B,X         ;$01B22D |
+    BMI CODE_01B236               ;$01B231 |
+
+CODE_01B233:
+    STA.B $0C                     ;$01B233 |
+    RTL                           ;$01B235 |
+
+
+CODE_01B236:
+    LDA.B $0A                     ;$01B236 |
+    STA.B $64                     ;$01B238 |
+    RTL                           ;$01B23A |
+
+DATA16_01B23B:
+    dw $FFFF,$FFFF,$FFFF,$000C    ;$01B23B |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B243 |
+    dw $FFFF,$FFFF,$FFFF,$002C    ;$01B24B |
+    dw $FFFF,$FFFF,$0038,$FFFF    ;$01B253 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B25B |
+
+DATA16_01B263:
+    dw $FFFF,$FFFF,$000A,$FFFF    ;$01B263 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B26B |
+    dw $0020,$FFFF,$FFFF,$FFFF    ;$01B273 |
+    dw $FFFF,$0036,$FFFF,$FFFF    ;$01B27B |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B283 |
+
+DATA16_01B28B:
+    dw $FFFF,$FFFF,$0008,$FFFF    ;$01B28B |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B293 |
+    dw $FFFF,$0026,$FFFF,$FFFF    ;$01B29B |
+    dw $0030,$FFFF,$FFFF,$FFFF    ;$01B2A3 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B2AB |
+
+CODE_01B2B3:
+    LDA.B $0A                     ;$01B2B3 |
+    CLC                           ;$01B2B5 |
+    ADC.B $53                     ;$01B2B6 |
+    SBC.W #$0001                  ;$01B2B8 |
+    JSR.W CODE_FN_01B419          ;$01B2BB |
+    BCS CODE_01B2C6               ;$01B2BE |
+    LDA.L DATA16_01B2EE,X         ;$01B2C0 |
+    BPL CODE_01B2E6               ;$01B2C4 |
+
+CODE_01B2C6:
+    LDA.B $64                     ;$01B2C6 |
+    ADC.W #$0001                  ;$01B2C8 |
+    JSR.W CODE_FN_01B419          ;$01B2CB |
+    BCS CODE_01B2D6               ;$01B2CE |
+    LDA.L DATA16_01B316,X         ;$01B2D0 |
+    BPL CODE_01B2E6               ;$01B2D4 |
+
+CODE_01B2D6:
+    LDA.B $0A                     ;$01B2D6 |
+    SBC.W #$0002                  ;$01B2D8 |
+    JSR.W CODE_FN_01B419          ;$01B2DB |
+    BCS CODE_01B2E9               ;$01B2DE |
+    LDA.L DATA16_01B33E,X         ;$01B2E0 |
+    BMI CODE_01B2E9               ;$01B2E4 |
+
+CODE_01B2E6:
+    STA.B $0C                     ;$01B2E6 |
+    RTL                           ;$01B2E8 |
+
+CODE_01B2E9:
+    LDA.B $0A                     ;$01B2E9 |
+    STA.B $64                     ;$01B2EB |
+    RTL                           ;$01B2ED |
+
+DATA16_01B2EE:
+    dw $FFFF,$FFFF,$000A,$FFFF    ;$01B2EE |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B2F6 |
+    dw $0020,$FFFF,$FFFF,$FFFF    ;$01B2FE |
+    dw $FFFF,$0036,$FFFF,$FFFF    ;$01B306 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B30E |
+
+DATA16_01B316:
+    dw $FFFF,$FFFF,$FFFF,$000C    ;$01B316 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B31E |
+    dw $FFFF,$FFFF,$FFFF,$002C    ;$01B326 |
+    dw $FFFF,$FFFF,$0038,$FFFF    ;$01B32E |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B336 |
+
+DATA16_01B33E:
+    dw $FFFF,$FFFF,$FFFF,$000E    ;$01B33E |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B346 |
+    dw $FFFF,$FFFF,$002A,$FFFF    ;$01B34E |
+    dw $FFFF,$FFFF,$FFFF,$003E    ;$01B356 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B35E |
+
+CODE_01B366:
+    LDA.B $0A                     ;$01B366 |
+    SEC                           ;$01B368 |
+    SBC.B $53                     ;$01B369 |
+    SBC.W #$0002                  ;$01B36B |
+    JSR.W CODE_FN_01B419          ;$01B36E |
+    BCS CODE_01B379               ;$01B371 |
+    LDA.L DATA16_01B3A1,X         ;$01B373 |
+    BPL CODE_01B399               ;$01B377 |
+
+CODE_01B379:
+    LDA.B $64                     ;$01B379 |
+    ADC.W #$0001                  ;$01B37B |
+    JSR.W CODE_FN_01B419          ;$01B37E |
+    BCS CODE_01B389               ;$01B381 |
+    LDA.L DATA16_01B3C9,X         ;$01B383 |
+    BPL CODE_01B399               ;$01B387 |
+
+CODE_01B389:
+    LDA.B $0A                     ;$01B389 |
+    SBC.W #$0002                  ;$01B38B |
+    JSR.W CODE_FN_01B419          ;$01B38E |
+    BCS CODE_01B39C               ;$01B391 |
+    LDA.L DATA16_01B3F1,X         ;$01B393 |
+    BMI CODE_01B39C               ;$01B397 |
+
+CODE_01B399:
+    STA.B $0C                     ;$01B399 |
+    RTL                           ;$01B39B |
+
+
+CODE_01B39C:
+    LDA.B $0A                     ;$01B39C |
+    STA.B $64                     ;$01B39E |
+    RTL                           ;$01B3A0 |
+
+DATA16_01B3A1:
+    dw $FFFF,$FFFF,$FFFF,$000E    ;$01B3A1 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B3A9 |
+    dw $FFFF,$FFFF,$002A,$FFFF    ;$01B3B1 |
+    dw $FFFF,$FFFF,$FFFF,$003E    ;$01B3B9 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B3C1 |
+
+DATA16_01B3C9:
+    dw $FFFF,$FFFF,$0008,$FFFF    ;$01B3C9 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B3D1 |
+    dw $FFFF,$0026,$FFFF,$FFFF    ;$01B3D9 |
+    dw $0030,$FFFF,$FFFF,$FFFF    ;$01B3E1 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B3E9 |
+
+DATA16_01B3F1:
+    dw $FFFF,$FFFF,$000A,$FFFF    ;$01B3F1 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B3F9 |
+    dw $0020,$FFFF,$FFFF,$FFFF    ;$01B401 |
+    dw $FFFF,$0036,$FFFF,$FFFF    ;$01B409 |
+    dw $FFFF,$FFFF,$FFFF,$FFFF    ;$01B411 |
 
 CODE_FN_01B419:
     STA.B $64                     ;$01B419 |
@@ -6602,7 +6735,7 @@ CODE_01B4E4:
     RTS                           ;$01B4E4 |
 
 CODE_01B4E5:
-    JSR.W DATA8_01B5FE            ;$01B4E5 |	This code is read as data?
+    JSR.W CODE_FN_01B5FE          ;$01B4E5 |	This code is read as data?
     LDA.B $0A                     ;$01B4E8 |
     SEC                           ;$01B4EA |
     SBC.W #$0100                  ;$01B4EB |
@@ -6614,55 +6747,156 @@ CODE_01B4E5:
     ORA.W #$0104                  ;$01B4FA |
     STA.B $00                     ;$01B4FD |
 
+
 CODE_01B4FF:
     JMP.W CODE_81AC55             ;$01B4FF |
 
-DATA8_01B502:
-    db $20,$FE,$B5,$A5,$0A,$18,$69,$00;$01B502 |
-    db $01,$85,$0A,$C9,$00,$02,$D0,$0F;$01B50A |
-    db $A9,$00,$01,$85,$0A,$A5,$00,$29;$01B512 |
-    db $00,$40,$09,$05,$01,$85,$00,$4C;$01B51A |
-    db $55,$AC                    ;$01B522 |
 
-DATA8_01B524:
-    db $20,$FE,$B5,$A5,$0A,$38,$E9,$80;$01B524 |
-    db $00,$85,$0A,$C9,$00,$FF,$D0,$0A;$01B52C |
-    db $A5,$00,$29,$00,$40,$09,$06,$01;$01B534 |
-    db $85,$00,$4C,$55,$AC        ;$01B53C |
+CODE_01B502:
+    JSR.W CODE_FN_01B5FE          ;$01B502 |
+    LDA.B $0A                     ;$01B505 |
+    CLC                           ;$01B507 |
+    ADC.W #$0100                  ;$01B508 |
+    STA.B $0A                     ;$01B50B |
+    CMP.W #$0200                  ;$01B50D |
+    BNE CODE_01B521               ;$01B510 |
+    LDA.W #$0100                  ;$01B512 |
+    STA.B $0A                     ;$01B515 |
+    LDA.B $00                     ;$01B517 |
+    AND.W #$4000                  ;$01B519 |
+    ORA.W #$0105                  ;$01B51C |
+    STA.B $00                     ;$01B51F |
 
-DATA8_01B541:
-    db $20,$FE,$B5,$A5,$0A,$18,$69,$80;$01B541 |
-    db $00,$85,$0A,$C9,$00,$01,$D0,$0C;$01B549 |
-    db $64,$0A,$A5,$00,$29,$00,$40,$09;$01B551 |
-    db $07,$01,$85,$00,$4C,$55,$AC;$01B559 |
+CODE_01B521:
+    JMP.W CODE_81AC55             ;$01B521 |
 
-DATA8_01B560:
-    db $A6,$08,$A5,$0A,$18,$7F,$CE,$B5;$01B560 |
-    db $01,$DF,$DE,$B5,$01,$90,$04,$BF;$01B568 |
-    db $DE,$B5,$01,$85,$0A,$BF,$EE,$B5;$01B570 |
-    db $01,$A6,$0A,$22,$C6,$9C,$05,$A5;$01B578 |
-    db $04,$EB,$29,$00,$FF,$18,$65,$14;$01B580 |
-    db $85,$14,$A5,$04,$29,$00,$FF,$10;$01B588 |
-    db $03,$09,$FF,$00,$EB,$65,$16,$85;$01B590 |
-    db $16,$A5,$06,$EB,$29,$00,$FF,$18;$01B598 |
-    db $65,$18,$85,$18,$A5,$06,$29,$00;$01B5A0 |
-    db $FF,$10,$03,$09,$FF,$00,$EB,$65;$01B5A8 |
-    db $1A,$85,$1A,$A5,$16,$CD,$66,$33;$01B5B0 |
-    db $B0,$07,$A5,$1A,$CD,$62,$33,$90;$01B5B8 |
-    db $0A,$A5,$00,$29,$00,$40,$09,$01;$01B5C0 |
-    db $20,$85,$00,$4C,$55,$AC,$10,$00;$01B5C8 |
-    db $10,$00,$10,$00,$10,$00,$20,$00;$01B5D0 |
-    db $20,$00,$20,$00,$20,$00,$00,$02;$01B5D8 |
-    db $00,$02,$00,$02,$00,$02,$00,$04;$01B5E0 |
-    db $00,$04,$00,$04,$00,$04,$00,$00;$01B5E8 |
-    db $00,$40,$00,$80,$00,$C0,$00,$00;$01B5F0 |
-    db $00,$40,$00,$80,$00,$C0    ;$01B5F8 |
 
-DATA8_01B5FE:
-    db $A5,$0A,$EB,$29,$00,$FF,$18,$65;$01B5FE |
-    db $18,$85,$18,$A5,$0A,$29,$00,$FF;$01B606 |
-    db $10,$03,$09,$FF,$00,$EB,$65,$1A;$01B60E |
-    db $85,$1A,$60                ;$01B616 |
+CODE_01B524:
+    JSR.W CODE_FN_01B5FE          ;$01B524 |
+    LDA.B $0A                     ;$01B527 |
+    SEC                           ;$01B529 |
+    SBC.W #$0080                  ;$01B52A |
+    STA.B $0A                     ;$01B52D |
+    CMP.W #$FF00                  ;$01B52F |
+    BNE CODE_01B53E               ;$01B532 |
+    LDA.B $00                     ;$01B534 |
+    AND.W #$4000                  ;$01B536 |
+    ORA.W #$0106                  ;$01B539 |
+    STA.B $00                     ;$01B53C |
+
+CODE_01B53E:
+    JMP.W CODE_81AC55             ;$01B53E |
+
+
+CODE_01B541:
+    JSR.W CODE_FN_01B5FE          ;$01B541 |
+    LDA.B $0A                     ;$01B544 |
+    CLC                           ;$01B546 |
+    ADC.W #$0080                  ;$01B547 |
+    STA.B $0A                     ;$01B54A |
+    CMP.W #$0100                  ;$01B54C |
+    BNE CODE_01B55D               ;$01B54F |
+    STZ.B $0A                     ;$01B551 |
+    LDA.B $00                     ;$01B553 |
+    AND.W #$4000                  ;$01B555 |
+    ORA.W #$0107                  ;$01B558 |
+    STA.B $00                     ;$01B55B |
+
+CODE_01B55D:
+    JMP.W CODE_81AC55             ;$01B55D |
+
+
+CODE_01B560:
+    LDX.B $08                     ;$01B560 |
+    LDA.B $0A                     ;$01B562 |
+    CLC                           ;$01B564 |
+    ADC.L DATA16_01B5CE,X         ;$01B565 |
+    CMP.L DATA16_01B5DE,X         ;$01B569 |
+    BCC CODE_01B573               ;$01B56D |
+    LDA.L DATA16_01B5DE,X         ;$01B56F |
+
+CODE_01B573:
+    STA.B $0A                     ;$01B573 |
+    LDA.L DATA16_01B5EE,X         ;$01B575 |
+    LDX.B $0A                     ;$01B579 |
+    JSL.L CODE_FL_059CC6          ;$01B57B |
+    LDA.B $04                     ;$01B57F |
+    XBA                           ;$01B581 |
+    AND.W #$FF00                  ;$01B582 |
+    CLC                           ;$01B585 |
+    ADC.B $14                     ;$01B586 |
+    STA.B $14                     ;$01B588 |
+    LDA.B $04                     ;$01B58A |
+    AND.W #$FF00                  ;$01B58C |
+    BPL CODE_01B594               ;$01B58F |
+    ORA.W #$00FF                  ;$01B591 |
+
+CODE_01B594:
+    XBA                           ;$01B594 |
+    ADC.B $16                     ;$01B595 |
+    STA.B $16                     ;$01B597 |
+    LDA.B $06                     ;$01B599 |
+    XBA                           ;$01B59B |
+    AND.W #$FF00                  ;$01B59C |
+    CLC                           ;$01B59F |
+    ADC.B $18                     ;$01B5A0 |
+    STA.B $18                     ;$01B5A2 |
+    LDA.B $06                     ;$01B5A4 |
+    AND.W #$FF00                  ;$01B5A6 |
+    BPL CODE_01B5AE               ;$01B5A9 |
+    ORA.W #$00FF                  ;$01B5AB |
+
+CODE_01B5AE:
+    XBA                           ;$01B5AE |
+    ADC.B $1A                     ;$01B5AF |
+    STA.B $1A                     ;$01B5B1 |
+    LDA.B $16                     ;$01B5B3 |
+    CMP.W $3366                   ;$01B5B5 |
+    BCS CODE_01B5C1               ;$01B5B8 |
+    LDA.B $1A                     ;$01B5BA |
+    CMP.W $3362                   ;$01B5BC |
+    BCC CODE_01B5CB               ;$01B5BF |
+
+CODE_01B5C1:
+    LDA.B $00                     ;$01B5C1 |
+    AND.W #$4000                  ;$01B5C3 |
+    ORA.W #$2001                  ;$01B5C6 |
+    STA.B $00                     ;$01B5C9 |
+
+CODE_01B5CB:
+    JMP.W CODE_81AC55             ;$01B5CB |
+
+
+DATA16_01B5CE:
+    dw $0010,$0010,$0010,$0010    ;$01B5CE |
+    dw $0020,$0020,$0020,$0020    ;$01B5D6 |
+
+DATA16_01B5DE:
+    dw $0200,$0200,$0200,$0200    ;$01B5DE |
+    dw $0400,$0400,$0400,$0400    ;$01B5E6 |
+
+DATA16_01B5EE:
+    dw $0000,$4000,$8000,$C000    ;$01B5EE |
+    dw $0000,$4000,$8000,$C000    ;$01B5F6 |
+
+CODE_FN_01B5FE:
+    LDA.B $0A                     ;$01B5FE |
+    XBA                           ;$01B600 |
+    AND.W #$FF00                  ;$01B601 |
+    CLC                           ;$01B604 |
+    ADC.B $18                     ;$01B605 |
+    STA.B $18                     ;$01B607 |
+    LDA.B $0A                     ;$01B609 |
+    AND.W #$FF00                  ;$01B60B |
+    BPL CODE_01B613               ;$01B60E |
+    ORA.W #$00FF                  ;$01B610 |
+
+CODE_01B613:
+    XBA                           ;$01B613 |
+    ADC.B $1A                     ;$01B614 |
+    STA.B $1A                     ;$01B616 |
+    RTS                           ;$01B618 |
+
 
 CODE_JP_01B619:
 	LDY.W #$0000                  ;$01B619	|
@@ -7458,7 +7692,7 @@ CODE_01BBD6:
 	AND.W #$00FF                  ;$01BC24	|
 	ASL A                         ;$01BC27	|
 	TAX                           ;$01BC28	|
-	LDA.L DATA16_01BC92,X          ;$01BC29	|
+	LDA.L DATA16_01BC92,X         ;$01BC29	|
 	STA.W $10FC,Y                 ;$01BC2D	|
 	BRA CODE_01BC3B               ;$01BC30	|
 
@@ -7658,7 +7892,7 @@ CODE_81BDA3:
 	CLC                           ;$01BDA3	|
 	RTS                           ;$01BDA4	|
 	LDX.B $00                     ;$01BDA5	|
-	LDA.L DATA16_01DA07,X          ;$01BDA7	|
+	LDA.L DATA16_01DA07,X         ;$01BDA7	|
 	STA.B $0E                     ;$01BDAB	|
 	STZ.B $0C                     ;$01BDAD	|
 	LDX.B $02                     ;$01BDAF	|
@@ -7872,7 +8106,7 @@ CODE_01BF6A:
     dw CODE_01BF85                ;$01BF7E |
     dw CODE_01BFCD                ;$01BF80 |
     dw CODE_01BED0                ;$01BF82 |
-    db $01                        ;$01BF84 |
+    db $01                        ;$01BF84 |	???
 
 CODE_01BF85:
     LDX.W #$0018                  ;$01BF85 |
@@ -7958,7 +8192,7 @@ CODE_FL_01C02A:
 	BMI CODE_01C039               ;$01C02D	|
 	LDA.W #$C039                  ;$01C02F	|
 	LDX.W #$0001                  ;$01C032	|
-	JML.L SNES_ExecuteSA1               ;$01C035	|
+	JML.L SNES_ExecuteSA1         ;$01C035	|
 
 CODE_01C039:
 	LDY.B $39                     ;$01C039	|
@@ -8013,7 +8247,7 @@ CODE_01C094:
 	JSL.L CODE_FL_01CE46          ;$01C09B	|
 	LDA.W #$C0A9                  ;$01C09F	|
 	LDX.W #$0001                  ;$01C0A2	|
-	JML.L SA1_ExecuteSNES              ;$01C0A5	|
+	JML.L SA1_ExecuteSNES         ;$01C0A5	|
 	LDY.B $53                     ;$01C0A9	|
 	LDA.B [$64],Y                 ;$01C0AB	|
 	AND.W #$03FF                  ;$01C0AD	|
@@ -10191,6 +10425,7 @@ DATA16_01D086:
     dw $000A,$000B,$000C,$000D    ;$01D16E |
     dw $000E,$0006,$0000,$0000    ;$01D176 |
     dw $0000,$0000,$0000,$0000    ;$01D17E |
+
     LDY.W #$0004                  ;$01D186 |	this was read as data, maybe this is written to ram and ran there?
     BRA CODE_01D18E               ;$01D189 |
 
