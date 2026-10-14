@@ -1,3 +1,6 @@
+!CurrentSubgame = $32EA
+!SB_GCO_Boss_Status = $7AE5
+
 ; temp
 CODE_FL_03A2D4 = $03A2D4
 CODE_FL_039814 = $039814

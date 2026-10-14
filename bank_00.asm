@@ -8422,7 +8422,7 @@ CODE_FL_00BD0E:
 	JSL $05971F					;$00BD12	|
 	JSR CODE_FL_00BD3B			;$00BD16	|
 	JSL $03ECEB					;$00BD19	|
-	LDA $32EA					;$00BD1D	|
+	LDA !CurrentSubgame					;$00BD1D	|
 	CMP #$0001					;$00BD20	|
 	BEQ CODE_FL_00BD29			;$00BD23	|
 	JSL $048184					;$00BD25	|
@@ -8586,7 +8586,7 @@ CODE_FL_00BE82:					;			|
 	JSL CODE_FL_00BCDE			;$00BE82	|
 	LDA $7392					;$00BE86	|
 	BEQ CODE_FL_00BE82			;$00BE89	|
-	LDX $32EA					;$00BE8B	|
+	LDX !CurrentSubgame					;$00BE8B	|
 	LDA.l DATA_00BE99,X			;$00BE8E	|
 	AND #$00FF					;$00BE92	|
 	STA $7390					;$00BE95	|
@@ -8606,7 +8606,7 @@ CODE_FL_00BEAC:					;			|
 	JSL CODE_FL_00BCDE			;$00BEAC	|
 	LDA $7392					;$00BEB0	|
 	BEQ CODE_FL_00BEAC			;$00BEB3	|
-	LDX $32EA					;$00BEB5	|
+	LDX !CurrentSubgame					;$00BEB5	|
 	LDA.l DATA_00BEC3,X			;$00BEB8	|
 	AND #$00FF					;$00BEBC	|
 	STA $7390					;$00BEBF	|
@@ -8648,11 +8648,11 @@ CODE_FL_00BEFC:
 	LDA $32D4					;$00BF08	|
 	AND #$0040					;$00BF0B	|
 	BEQ CODE_FL_00BEDD			;$00BF0E	|
-	LDA $32EA					;$00BF10	|
+	LDA !CurrentSubgame					;$00BF10	|
 	CMP #$0006					;$00BF13	|
 	BEQ CODE_FL_00BEDA			;$00BF16	|
 CODE_FL_00BF18:					;			|
-	LDA $32EA					;$00BF18	|
+	LDA !CurrentSubgame					;$00BF18	|
 	CMP #$0003					;$00BF1B	|
 	BEQ CODE_FL_00BF26			;$00BF1E	|
 	JSL CODE_FL_00CC7B			;$00BF20	|
@@ -8681,7 +8681,7 @@ CODE_FL_00BF45:
 	RTL							;$00BF53	|
 
 CODE_FL_00BF54:
-	LDX $32EA					;$00BF54	|
+	LDX !CurrentSubgame					;$00BF54	|
 	CPX #$0002					;$00BF57	|
 	BNE CODE_FL_00BF63			;$00BF5A	|
 	LDA $7B2D					;$00BF5C	|
@@ -8702,7 +8702,7 @@ CODE_FL_00BF75:
 	AND #$00FF					;$00BF75	|
 	STA $7390					;$00BF78	|
 	JSL $03A04A					;$00BF7B	|
-	LDA $32EA					;$00BF7F	|
+	LDA !CurrentSubgame					;$00BF7F	|
 	CMP #$0004					;$00BF82	|
 	BNE CODE_FL_00BFAD			;$00BF85	|
 	LDA #$001E					;$00BF87	|
@@ -8749,7 +8749,7 @@ CODE_FL_00BFD2:
 	JSL CODE_FL_00BCDE			;$00BFD2	|
 	LDA $7392					;$00BFD6	|
 	BEQ CODE_FL_00BFD2			;$00BFD9	|
-	LDA $32EA					;$00BFDB	|\ 
+	LDA !CurrentSubgame					;$00BFDB	|\ 
 	CMP #$0009					;$00BFDE	|| Hardlock the game if outside the defined range? Although the range is actually up to 6, not 8.
   - BCS -						;$00BFE1	|/
 	ASL A						;$00BFE3	|
@@ -8836,7 +8836,7 @@ CODE_FL_00C095:
 	LDA #$8479					;$00C09C	|| Load the DMA table at $018479.
 	JSL LoadDMATable			;$00C09F	|/
 	LDA #$0001					;$00C0A3	|
-	STA $32EA					;$00C0A6	|
+	STA !CurrentSubgame					;$00C0A6	|
 	JMP CODE_FL_00BFC8			;$00C0A9	|
 
 CODE_FL_00C0AC:
@@ -8958,7 +8958,7 @@ CODE_FL_00C1B9:					;			|
 
 CODE_FL_00C1CA:
 	LDA #$0001					;$00C1CA	|
-	STA $32EA					;$00C1CD	|
+	STA !CurrentSubgame					;$00C1CD	|
 	JSL $01E921					;$00C1D0	|
 	JML $01EA69					;$00C1D4	|
 
@@ -8981,7 +8981,7 @@ CODE_FL_00C1DC:					;			|
 	STZ $7394					;$00C204	|
 	JSL CODE_FL_00CBF4			;$00C207	|
 	STZ $7392					;$00C20B	|
-	LDA $32EA					;$00C20E	|
+	LDA !CurrentSubgame					;$00C20E	|
 	CMP #$0004					;$00C211	|
 	BNE CODE_FL_00C219			;$00C214	|
 	STZ $73A4					;$00C216	|
@@ -9005,7 +9005,7 @@ CODE_FL_00C219:					;			|
 	LDA $7396					;$00C245	|
 	BNE CODE_FL_00C26B			;$00C248	|
 	INC $7396					;$00C24A	|
-	LDA $32EA					;$00C24D	|
+	LDA !CurrentSubgame					;$00C24D	|
 	CMP #$0002					;$00C250	|
 	BEQ CODE_FL_00C264			;$00C253	|
 	CMP #$0004					;$00C255	|
@@ -9059,7 +9059,7 @@ CODE_FL_00C2A8:
 
 CODE_FL_00C2B2:					;-----------| Normal level, submode 0
 	JSL CODE_FL_00D87F			;$00C2B2	|
-	LDA $32EA					;$00C2B6	|
+	LDA !CurrentSubgame					;$00C2B6	|
 	CMP #$0004					;$00C2B9	|
 	BEQ CODE_FL_00C2C1			;$00C2BC	|
 	JMP CODE_FL_00C365			;$00C2BE	|
@@ -9153,7 +9153,7 @@ DATA_00C3A6:					;$00C3A6	| Empty word, used above to clear data.
 CODE_FL_00C3A8:					;-----------| Normal level, submode 3
 	JSL $059A1A					;$00C3A8	|
 	JSL $059A20					;$00C3AC	|
-	LDA $32EA					;$00C3B0	|\ 
+	LDA !CurrentSubgame					;$00C3B0	|\ 
 	CMP #$0009					;$00C3B3	||\ Hardlock the game if outside the defined range.
   -	BCS -						;$00C3B6	||/
 	ASL A						;$00C3B8	||
@@ -9269,7 +9269,7 @@ CODE_FL_00C496:					;			|
 
 
 CODE_FL_00C49A:					;-----------| Normal level, submode 4
-	LDA $32EA					;$00C49A	|
+	LDA !CurrentSubgame					;$00C49A	|
 	CMP #$0003					;$00C49D	|
 	BEQ CODE_FL_00C4C6			;$00C4A0	|
 	CMP #$0004					;$00C4A2	|
@@ -9429,7 +9429,7 @@ CODE_FL_00C5FD:					;-----------| Game Mode 09 - Dynablade cannon game, Milky Wa
 	JSL CODE_FL_00D93B			;$00C608	|
 	JSL CODE_FL_00D9C4			;$00C60C	|
 	INC $7B57					;$00C610	|
-	LDA $32EA					;$00C613	|
+	LDA !CurrentSubgame					;$00C613	|
 	STA $73B0					;$00C616	|
 	LDA $32EE					;$00C619	|
 	STA $73B2					;$00C61C	|
@@ -9438,7 +9438,7 @@ CODE_FL_00C5FD:					;-----------| Game Mode 09 - Dynablade cannon game, Milky Wa
 	STA $7B33					;$00C625	|
 CODE_FL_00C628:					;			|
 	JSL CODE_FL_00BD0E			;$00C628	|
-	LDA $32EA					;$00C62C	|
+	LDA !CurrentSubgame					;$00C62C	|
 	CMP #$0001					;$00C62F	|
 	BEQ CODE_FL_00C63E			;$00C632	|
 	JSL CODE_FL_00CBCC			;$00C634	|
@@ -9449,7 +9449,7 @@ CODE_FL_00C63E:					;			|
 	BEQ CODE_FL_00C628			;$00C641	|
 	STZ $7B57					;$00C643	|
 	LDA $73B0					;$00C646	|
-	STA $32EA					;$00C649	|
+	STA !CurrentSubgame					;$00C649	|
 	LDA #$0006					;$00C64C	|
 	STA $7390					;$00C64F	|
 	RTL							;$00C652	|
@@ -9464,7 +9464,7 @@ CODE_FL_00C653:					;-----------| Game Mode 02 - "Is this your first time?"
 	STA $73A6					;$00C65C	|
 	LDA $7B25					;$00C65F	|
 	BEQ CODE_FL_00C672			;$00C662	|
-	LDX $32EA					;$00C664	|
+	LDX !CurrentSubgame					;$00C664	|
 	LDA.l DATA_00C73F,X			;$00C667	|
 	AND #$00FF					;$00C66B	|
 	STA $7390					;$00C66E	|
@@ -9478,7 +9478,7 @@ CODE_FL_00C672:
 	STA $73B2					;$00C67E	|
 	LDA $32F2					;$00C681	|
 	STA $73B4					;$00C684	|
-	LDX $32EA					;$00C687	|
+	LDX !CurrentSubgame					;$00C687	|
 	STX $73B0					;$00C68A	|
 	LDA #$0008					;$00C68D	|
 	LDY #$0000					;$00C690	|
@@ -9596,7 +9596,7 @@ CODE_FL_00C79F:					;			|
 	LDA $7B35					;$00C7A9	|
 	ORA $7368					;$00C7AC	|
 	BNE CODE_FL_00C7D3			;$00C7AF	|
-	LDA $32EA					;$00C7B1	|
+	LDA !CurrentSubgame					;$00C7B1	|
 	CMP #$0006					;$00C7B4	|
 	BNE CODE_FL_00C7C9			;$00C7B7	|
 	LDA $32EE					;$00C7B9	|
@@ -9635,7 +9635,7 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	JSR CODE_FL_00C9C1			;$00C806	|
 	LDA.l DATA_00C9D1+1,X		;$00C809	|
 	AND #$00FF					;$00C80D	|
-	STA $32EA					;$00C810	|
+	STA !CurrentSubgame					;$00C810	|
 	ASL A						;$00C813	|
 	STA $32EC					;$00C814	|
 	LDA.l DATA_00C9D1+2,X		;$00C817	|
@@ -9645,7 +9645,7 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	STA $32F0					;$00C822	|
 	LDA.l DATA_00C9D1+3,X		;$00C825	|
 	AND #$00FF					;$00C829	|
-	LDY $32EA					;$00C82C	|
+	LDY !CurrentSubgame					;$00C82C	|
 	CPY #$0002					;$00C82F	|
 	BNE CODE_FL_00C839			;$00C832	|
 	STA $7B2D					;$00C834	|
@@ -9771,7 +9771,7 @@ CODE_FL_00C95C:
 
 
 CODE_FL_00C963:					;-----------| Title screen subroutine 2
-	LDA $32EA					;$00C963	|
+	LDA !CurrentSubgame					;$00C963	|
 	STA $73AA					;$00C966	|
 	LDA #$0010					;$00C969	|
 	STA $7390					;$00C96C	|
@@ -9962,7 +9962,7 @@ CODE_FL_00CBC6:
 
 
 CODE_FL_00CBCC:					;-----------|
-	LDA $32EA					;$00CBCC	|
+	LDA !CurrentSubgame					;$00CBCC	|
 	CMP #$0003					;$00CBCF	|
 	BEQ CODE_FL_00CBD6			;$00CBD2	|
 	BRA CODE_FL_00CBDB			;$00CBD4	|
@@ -11633,7 +11633,7 @@ CODE_FL_00D95C:					;			|
 	LDA #$0001					;$00D97E	|
 	STA $770B					;$00D981	|
 	STZ $7744					;$00D984	|
-	LDA $32EA					;$00D987	|
+	LDA !CurrentSubgame					;$00D987	|
 	CMP #$0004					;$00D98A	|
 	BNE CODE_FL_00D993			;$00D98D	|
 	JSL CODE_FL_00DAA3			;$00D98F	|
@@ -11740,7 +11740,7 @@ CODE_FL_00DA66:
 	RTL							;$00DA96	|
 
 CODE_FL_00DA97:
-	STA $32EA					;$00DA97	|
+	STA !CurrentSubgame					;$00DA97	|
 	STX $32EE					;$00DA9A	|
 	STY $32F2					;$00DA9D	|
 	LDY $39						;$00DAA0	|
@@ -13458,11 +13458,11 @@ CODE_FL_00E6AA:
 	STA $303F					;$00E6AE	|
 	RTL							;$00E6B1	|
 
-CODE_FL_00E6B2:
-	LDX $39						;$00E6B2	|
+DestroyUsedObject:				;			| Destroy an object in the instance where it has been "used"
+	LDX $39						;$00E6B2	| e.g. food was eaten, boss was already defeated, etc.
 	LDA #$A6EC					;$00E6B4	|
 	STA $66AA,X					;$00E6B7	|
-	JSL RemoveTickCallback_L			;$00E6BA	|
+	JSL RemoveTickCallback_L	;$00E6BA	|
 	JML DestroyObject_L			;$00E6BE	|
 
 CODE_FL_00E6C2:
@@ -13961,15 +13961,15 @@ CODE_FL_00EA2A:
 	STY $16						;$00EA2E	|
 	LDA #$EA3D					;$00EA30	|\ 
 	LDX #$0000					;$00EA33	|| Execute the below on the SNES.
-	JSL SA1_ExecuteSNES			;$00EA36	|/
+	JSL SA1_ExecuteSNES			;$00EA36	|
 	LDA $28						;$00EA3A	|
 	RTL							;$00EA3C	|
 CODE_FL_00EA3D:					;			|
 	LDA $28						;$00EA3D	|
 	BRA CODE_FL_00EA45			;$00EA3F	|
-CODE_FL_00EA41:					;			|
+CheckObjectUsageStatus:			;			| Subroutine for checking entities that only spawn a single time (food, chests, minibosses, bosses, etc)
 	STZ $16						;$00EA41	|
-	STX $14						;$00EA43	|
+	STX $14						;$00EA43	| Store object status address into scrap RAM
 CODE_FL_00EA45:					;			|
 	JSR CODE_FL_00EA71			;$00EA45	|
 	AND [$14],Y					;$00EA48	|
@@ -13997,30 +13997,30 @@ CODE_FL_00EA66:					;			|
 	STA [$14],Y					;$00EA6E	|
 	RTL							;$00EA70	|
 
-CODE_FL_00EA71:
-	LDX #$0022					;$00EA71	|
-CODE_FL_00EA74:					;			|
-	DEX							;$00EA74	|
-	DEX							;$00EA75	|
-	CMP.l DATA_00EA8E,X			;$00EA76	|
-	BCC CODE_FL_00EA74			;$00EA7A	|
+CODE_FL_00EA71:								| A = the index number of the dataset. 
+	LDX #$0022					;$00EA71	| This will return the status of a specific bit within a set of data across multiple bytes.
+	.loop:						;			|
+		DEX						;$00EA74	|\ Determine which byte the data is in.
+		DEX						;$00EA75	||
+		CMP.l n_times_8,X		;$00EA76	||
+		BCC .loop				;$00EA7A	|/
+											|
 	TXY							;$00EA7C	|
-	AND #$0007					;$00EA7D	|
+	AND #%00000111				;$00EA7D	|
 	TAX							;$00EA80	|
 	TYA							;$00EA81	|
 	LSR A						;$00EA82	|
 	TAY							;$00EA83	|
 	LDA #$0001					;$00EA84	|
-CODE_FL_00EA87:					;			|
-	DEX							;$00EA87	|
-	BMI CODE_FL_00EA8D			;$00EA88	|
-	ASL A						;$00EA8A	|
-	BRA CODE_FL_00EA87			;$00EA8B	|
-CODE_FL_00EA8D:					;			|
-	RTS							;$00EA8D	|
+	.loop2:						;			|
+		DEX						;$00EA87	|
+		BMI .end				;$00EA88	|
+		ASL A					;$00EA8A	|
+		BRA CODE_FL_00EA87		;$00EA8B	|
+	.end:						;			|
+		RTS						;$00EA8D	|
 
-
-DATA_00EA8E:
+n_times_8:
 	dw $0000,$0008,$0010,$0018
 	dw $0020,$0028,$0030,$0038
 	dw $0040,$0048,$0050,$0058
@@ -14062,7 +14062,7 @@ CODE_FL_00EAC8:
 
 
 CODE_FL_00EADE:
-	LDA $7AE5					;$00EADE	|
+	LDA !SB_GCO_Boss_Status					;$00EADE	|
 	STA $7F0A,Y					;$00EAE1	|
 	LDA $7A93					;$00EAE4	|
 	STA $7F0F,Y					;$00EAE7	|
@@ -14184,7 +14184,7 @@ CODE_FL_00EBD9:
 
 
 CODE_FL_00EBE7:
-	LDA $32EA					;$00EBE7	|
+	LDA !CurrentSubgame					;$00EBE7	|
 	CMP #$0005					;$00EBEA	|
 	BEQ CODE_FL_00EC26			;$00EBED	|
 	CMP #$0004					;$00EBEF	|
@@ -14243,7 +14243,7 @@ CODE_FL_00EC4F:
 
 CODE_FL_00EC53:
 	LDA $7F0A,Y					;$00EC53	|
-	STA $7AE5					;$00EC56	|
+	STA !SB_GCO_Boss_Status					;$00EC56	|
 	LDA $7F0C,Y					;$00EC59	|
 	STA $7AE7					;$00EC5C	|
 	LDA $7F0D,Y					;$00EC5F	|
@@ -14355,13 +14355,13 @@ CODE_FL_00ED7D:					;			|
 
 
 CODE_FL_00ED81:
-	LDX $32EA					;$00ED81	|
+	LDX !CurrentSubgame			;$00ED81	|
 	CPX #$0006					;$00ED84	|
 	BEQ CODE_FL_00EDAE			;$00ED87	|
 	PHA							;$00ED89	|
 	LDX #$7AE7					;$00ED8A	|
 	JSL CODE_FL_00EA1E			;$00ED8D	|
-	LDA $32EA					;$00ED91	|
+	LDA !CurrentSubgame			;$00ED91	|
 	CMP #$0003					;$00ED94	|
 	BNE CODE_FL_00ED9C			;$00ED97	|
 	PLA							;$00ED99	|
@@ -14383,14 +14383,14 @@ CODE_FL_00EDB3:					;			|
 	RTL							;$00EDB5	|
 
 CODE_FL_00EDB6:
-	LDX $32EA					;$00EDB6	|
+	LDX !CurrentSubgame			;$00EDB6	|
 	LDA.l DATA_00EDE5,X			;$00EDB9	|
 	AND #$00FF					;$00EDBD	|
 	TSB $7A93					;$00EDC0	|
-	LDX $32EA					;$00EDC3	|
+	LDX !CurrentSubgame			;$00EDC3	|
 	LDA.l DATA_00EDDE,X			;$00EDC6	|
 	AND #$00FF					;$00EDCA	|
-	LDX #$7AE5					;$00EDCD	|
+	LDX #!SB_GCO_Boss_Status					;$00EDCD	|
 	JSL CODE_FL_00EA1E			;$00EDD0	|
 	LDA #$0000					;$00EDD4	|
 	JSL CODE_FL_00EAB0			;$00EDD7	|
@@ -14407,17 +14407,17 @@ DATA_00EDE5:					;$00EDE5	|
 
 
 
-CODE_FL_00EDEC:
-	PHA							;$00EDEC	|
+CODE_FL_00EDEC:					
+	PHA							;$00EDEC	|	; Routine for calculating boss health
 	PHX							;$00EDED	|
 	PHY							;$00EDEE	|
-	LDA $32EA					;$00EDEF	|
+	LDA !CurrentSubgame			;$00EDEF	|	; Check if Spring Breeze
 	CMP #$0000					;$00EDF2	|
 	BNE CODE_FL_00EE08			;$00EDF5	|
 	LDA #$0000					;$00EDF7	|
-	LDX #$7AE5					;$00EDFA	|
-	JSL CODE_FL_00EA41			;$00EDFD	|
-	BNE CODE_FL_00EE08			;$00EE01	|
+	LDX #!SB_GCO_Boss_Status	;$00EDFA	|
+	JSL CheckObjectUsageStatus			;$00EDFD	|
+	BNE CODE_FL_00EE08			;$00EE01	|	; Set Spring Breeze boss health to be 
 	PLY							;$00EE03	|
 	PLX							;$00EE04	|
 	PLA							;$00EE05	|
@@ -14438,8 +14438,8 @@ CODE_FL_00EE0D:
 CODE_FL_00EE11:
 	STX $2A						;$00EE11	|
 	STY $2C						;$00EE13	|
-	LDX #$7AE5					;$00EE15	|
-	JSL CODE_FL_00EA41			;$00EE18	|
+	LDX #!SB_GCO_Boss_Status	;$00EE15	|
+	JSL CheckObjectUsageStatus			;$00EE18	|
 	PHP							;$00EE1C	|
 	LDX $2A						;$00EE1D	|
 	LDY $2C						;$00EE1F	|
@@ -14631,7 +14631,7 @@ CODE_FL_00EF79:					;			|
 
 CODE_FL_00EF86:
 	LDX $7AE3					;$00EF86	|
-	LDA $32EA					;$00EF89	|
+	LDA !CurrentSubgame					;$00EF89	|
 	SEP #$20					;$00EF8C	|
 	STA $7F06,X					;$00EF8E	|
 	REP #$20					;$00EF91	|

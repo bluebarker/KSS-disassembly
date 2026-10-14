@@ -8030,7 +8030,7 @@ CODE_01BE9A:
 CODE_01BED0:
     LDA.W #$0000                  ;$01BED0 |
     JSL.L CODE_FL_CF7BCD          ;$01BED3 |
-    JML.L CODE_FL_00E6B2          ;$01BED7 |
+    JML.L DestroyUsedObject          ;$01BED7 |
     JSL.L CODE_FL_00E1BF          ;$01BEDB |
     JSL.L CODE_FL_00E465          ;$01BEDF |
     LDA.W #$0413                  ;$01BEE3 |
@@ -8041,7 +8041,7 @@ CODE_01BED0:
     TYX                           ;$01BEF2 |
     INC.W $6436,X                 ;$01BEF3 |
     JSL.L CODE_FL_00E0A3          ;$01BEF6 |
-    JML.L CODE_FL_00E6B2          ;$01BEFA |
+    JML.L DestroyUsedObject          ;$01BEFA |
     LDX.W $6986,Y                 ;$01BEFE |
     LDA.W $6A00,Y                 ;$01BF01 |
     CMP.W #$3362                  ;$01BF04 |
