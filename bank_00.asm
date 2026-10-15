@@ -1175,7 +1175,7 @@ DecompressData:					;-----------| Routine to decompress data, using exhal decomp
 	STA $02						;$0088EB	|/
 	TXY							;$0088ED	|\ 
 	TAX							;$0088EE	|| Return with:
-	LDA $04						;$0088EF	||   A - Bank byte of data?
+	LDA $04						;$0088EF	||   A - Bank byte of data
 	PLD							;$0088F1	||   X - Pointer to the byte after the compressed data. Also stored in $4B and $02.
 	PLB							;$0088F2	||   Y - Number of decompressed bytes written. Also stored in $4D.
 	STY $4D						;$0088F3	||
@@ -2008,7 +2008,7 @@ CODE_FL_008F57:					;			|
 	LDA $62BC,X					;$008F57	|
 	AND #$8000					;$008F5A	|
 	STA $62BC,X					;$008F5D	|
-	JSR RemoveTickCallback			;$008F60	|
+	JSR RemoveTickCallback		;$008F60	|
 	RTL							;$008F63	|
 
 CODE_FL_008F64:					;-----------|
@@ -2027,7 +2027,7 @@ CODE_FL_008F75:					;			|
 	PLY							;$008F75	|
 	PLX							;$008F76	|
 	PLA							;$008F77	|
-	JSL InitializeObjectScript			;$008F78	|
+	JSL InitializeObjectScript	;$008F78	|
 	TXA							;$008F7C	|
 	RTL							;$008F7D	|
 
@@ -2036,7 +2036,7 @@ CODE_FL_008F7E:
 	PLY							;$008F81	|
 	PLX							;$008F82	|
 	PLA							;$008F83	|
-	JSL InitializeObjectScript			;$008F84	|
+	JSL InitializeObjectScript	;$008F84	|
 	LDA $62BC,X					;$008F88	|
 	BMI CODE_FL_008F91			;$008F8B	|
 	CPX $39						;$008F8D	|
@@ -2068,10 +2068,10 @@ CODE_FL_008FB4:					;			|
 	JMP (CODE_FL_008FB7,X)		;$008FB4	|
 
 CODE_FL_008FB7:					;$008FB7	|
-	dw CODE_FL_008FBF				; 00 - 
-	dw CODE_FL_008FC9				; 02 - 
-	dw CODE_FL_008FDF				; 04 - 
-	dw CODE_FL_008FBF				; 06 - 
+	dw CODE_FL_008FBF			; 00 - 
+	dw CODE_FL_008FC9			; 02 - 
+	dw CODE_FL_008FDF			; 04 - 
+	dw CODE_FL_008FBF			; 06 - 
 
 CODE_FL_008FBF:
 	PLX							;$008FBF	|
@@ -2111,7 +2111,7 @@ CODE_FL_008FDF:
 ProcessObjects:
 	LDA #$2000					;$008FF2	|
 	STA $3012					;$008FF5	|
-	PEA CODE_FL_008FFE-1			;$008FF8	|
+	PEA CODE_FL_008FFE-1		;$008FF8	|
 	JMP ($6020)					;$008FFB	|
 CODE_FL_008FFE:					;			|
 	LDA #$C000					;$008FFE	|
@@ -2727,8 +2727,8 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw AS_MovVarAbs				; 11
 	dw AS_MovAbsImm8			; 12
 	dw AS_MovAbsImm16			; 13
-	dw CODE_FL_009652				; 14
-	dw CODE_FL_009668				; 15
+	dw CODE_FL_009652			; 14
+	dw CODE_FL_009668			; 15
 	dw AS_MovVarReg				; 16
 	dw AS_MovRegVar				; 17
 	dw AS_Unk33					; 18
@@ -2743,27 +2743,27 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw AS_IncPose				; 21
 	dw AS_DecPose				; 22
 	dw AS_SetPoseImm16			; 23
-	dw CODE_FL_0098D1				; 24
-	dw CODE_FL_009902				; 25
-	dw CODE_FL_009936				; 26
+	dw CODE_FL_0098D1			; 24
+	dw CODE_FL_009902			; 25
+	dw CODE_FL_009936			; 26
 	dw AS_AsmCall				; 27
 	dw AS_PresetCall			; 28
-	dw AS_UnkEx				; 29
-	dw AS_UnkFx				; 2A
-	dw CODE_FL_009A21				; 2B
-	dw CODE_FL_009A31				; 2C
-	dw CODE_FL_009A3D				; 2D
-	dw CODE_FL_009A49				; 2E
-	dw CODE_FL_009A55				; 2F
-	dw CODE_FL_009A61				; 30
-	dw CODE_FL_009A71				; 31
-	dw CODE_FL_009A7D				; 32
-	dw CODE_FL_009A89				; 33
-	dw CODE_FL_009A95				; 34
-	dw CODE_FL_009AA1				; 35
-	dw CODE_FL_009AAD				; 36
-	dw CODE_FL_009AB9				; 37
-	dw CODE_FL_009AC5				; 38
+	dw AS_UnkEx					; 29
+	dw AS_UnkFx					; 2A
+	dw CODE_FL_009A21			; 2B
+	dw CODE_FL_009A31			; 2C
+	dw CODE_FL_009A3D			; 2D
+	dw CODE_FL_009A49			; 2E
+	dw CODE_FL_009A55			; 2F
+	dw CODE_FL_009A61			; 30
+	dw CODE_FL_009A71			; 31
+	dw CODE_FL_009A7D			; 32
+	dw CODE_FL_009A89			; 33
+	dw CODE_FL_009A95			; 34
+	dw CODE_FL_009AA1			; 35
+	dw CODE_FL_009AAD			; 36
+	dw CODE_FL_009AB9			; 37
+	dw CODE_FL_009AC5			; 38
 
 
 
@@ -8336,8 +8336,8 @@ CODE_FL_00BC29:					;-----------| SA-1: continue point after SNES finishes loadi
 	LDA.w #CheckStartErrs		;$00BC47	|\ 
 	LDX.w #CheckStartErrs>>16	;$00BC4A	|| Execute $00CCB1 on the SNES.
 	JSL SA1_ExecuteSNES			;$00BC4D	|/
-	LDA #$0000					;$00BC51	|
-	STA $7390					;$00BC54	|
+	LDA !GS_TitleScreen			;$00BC51	|
+	STA !CurrentGameState		;$00BC54	|
 	STZ $7396					;$00BC57	|
 	INC $7396					;$00BC5A	|
 	STZ $7398					;$00BC5D	|
@@ -8350,7 +8350,7 @@ CODE_FL_00BC69:					;			|
 	STZ $33C6					;$00BC69	|
 	INC $33C6					;$00BC6C	|
 	STZ $3330					;$00BC6F	|
-	LDA $7390					;$00BC72	|\ 
+	LDA !CurrentGameState		;$00BC72	|\ 
 	CMP #$0011					;$00BC75	||\ If attempting to switch to game mode 11+, hardlock the game here.
   - BCS -						;$00BC78	||/
 	STA $6028					;$00BC7A	||\ 
@@ -8422,8 +8422,8 @@ CODE_FL_00BD0E:
 	JSL $05971F					;$00BD12	|
 	JSR CODE_FL_00BD3B			;$00BD16	|
 	JSL $03ECEB					;$00BD19	|
-	LDA !CurrentSubgame					;$00BD1D	|
-	CMP #$0001					;$00BD20	|
+	LDA !CurrentSubGame			;$00BD1D	|
+	CMP !SG_DynaBlade			;$00BD20	|
 	BEQ CODE_FL_00BD29			;$00BD23	|
 	JSL $048184					;$00BD25	|
 CODE_FL_00BD29:					;			|
@@ -8547,8 +8547,8 @@ CODE_FL_00BE18:					;			|
 	JSL CODE_FL_00CC67			;$00BE26	|
 	INC $739A					;$00BE2A	|
 	JSL CODE_FL_00D87F			;$00BE2D	|
-	LDA #$000F					;$00BE31	|
-	STA $7390					;$00BE34	|
+	LDA !GS_TitleSubgamePreview	;$00BE31	|
+	STA !CurrentGameState		;$00BE34	|
 	STZ $7396					;$00BE37	|
 	JSL CODE_FL_00BC66			;$00BE3A	|
 	JSL CODE_FL_00D87F			;$00BE3E	|
@@ -8558,8 +8558,8 @@ CODE_FL_00BE18:					;			|
 	JMP CODE_FL_00BDE3			;$00BE4A	|
 
 CODE_FL_00BE4D:
-	LDA #$0001					;$00BE4D	|
-	STA $7390					;$00BE50	|
+	LDA !SG_DynaBlade			;$00BE4D	|
+	STA !CurrentGameState		;$00BE50	|
 	LDA $7F00					;$00BE53	|
 	AND #$00FF					;$00BE56	|
 	TAX							;$00BE59	|
@@ -8586,13 +8586,13 @@ CODE_FL_00BE82:					;			|
 	JSL CODE_FL_00BCDE			;$00BE82	|
 	LDA $7392					;$00BE86	|
 	BEQ CODE_FL_00BE82			;$00BE89	|
-	LDX !CurrentSubgame					;$00BE8B	|
-	LDA.l DATA_00BE99,X			;$00BE8E	|
+	LDX !CurrentSubGame			;$00BE8B	|
+	LDA.l GameStateLUT,X		;$00BE8E	| Set game state based on subgame selected (most are to the subgame title screen state)
 	AND #$00FF					;$00BE92	|
-	STA $7390					;$00BE95	|
+	STA !CurrentGameState		;$00BE95	|
 	RTL							;$00BE98	|
 
-DATA_00BE99:
+GameStateLUT:
 	db $05,$05,$05
 	db $05,$05,$05
 	db $05,$0A,$0B
@@ -8606,13 +8606,13 @@ CODE_FL_00BEAC:					;			|
 	JSL CODE_FL_00BCDE			;$00BEAC	|
 	LDA $7392					;$00BEB0	|
 	BEQ CODE_FL_00BEAC			;$00BEB3	|
-	LDX !CurrentSubgame					;$00BEB5	|
-	LDA.l DATA_00BEC3,X			;$00BEB8	|
+	LDX !CurrentSubGame			;$00BEB5	|
+	LDA.l ReturnGameStateLUT,X	;$00BEB8	| Return to this game state after the credits sequence (most are to the corkboard state)
 	AND #$00FF					;$00BEBC	|
-	STA $7390					;$00BEBF	|
+	STA !CurrentGameState		;$00BEBF	|
 	RTL							;$00BEC2	|
 
-DATA_00BEC3:
+ReturnGameStateLUT:
 	db $01,$01,$05
 	db $01,$01,$01
 
@@ -8648,12 +8648,12 @@ CODE_FL_00BEFC:
 	LDA $32D4					;$00BF08	|
 	AND #$0040					;$00BF0B	|
 	BEQ CODE_FL_00BEDD			;$00BF0E	|
-	LDA !CurrentSubgame					;$00BF10	|
-	CMP #$0006					;$00BF13	|
+	LDA !CurrentSubGame			;$00BF10	|
+	CMP !SG_Arena				;$00BF13	|
 	BEQ CODE_FL_00BEDA			;$00BF16	|
 CODE_FL_00BF18:					;			|
-	LDA !CurrentSubgame					;$00BF18	|
-	CMP #$0003					;$00BF1B	|
+	LDA !CurrentSubGame			;$00BF18	|
+	CMP !SG_GCO					;$00BF1B	|
 	BEQ CODE_FL_00BF26			;$00BF1E	|
 	JSL CODE_FL_00CC7B			;$00BF20	|
 	BRA CODE_FL_00BF2A			;$00BF24	|
@@ -8662,8 +8662,8 @@ CODE_FL_00BF26:
 	JSL CODE_FL_00CC67			;$00BF26	|
 CODE_FL_00BF2A:					;			|
 	JSL CODE_FL_00D87F			;$00BF2A	|
-	LDA #$0007					;$00BF2E	|
-	STA $7390					;$00BF31	|
+	LDA !SubgameOpening			;$00BF2E	|
+	STA !CurrentGameState		;$00BF31	|
 	JSL CODE_FL_00BC66			;$00BF34	|
 	JSL CODE_FL_00D87F			;$00BF38	|
 	LDA $739A					;$00BF3C	|
@@ -8676,13 +8676,13 @@ CODE_FL_00BF45:
 	LDA $7396					;$00BF45	|
 	BNE CODE_FL_00BF54			;$00BF48	|
 	INC $7396					;$00BF4A	|
-	LDA #$0001					;$00BF4D	|
-	STA $7390					;$00BF50	|
+	LDA !GS_Corkboard			;$00BF4D	|
+	STA !CurrentGameState		;$00BF50	|
 	RTL							;$00BF53	|
 
 CODE_FL_00BF54:
-	LDX !CurrentSubgame					;$00BF54	|
-	CPX #$0002					;$00BF57	|
+	LDX !CurrentSubGame			;$00BF54	|
+	CPX !SG_GourmetRace			;$00BF57	|
 	BNE CODE_FL_00BF63			;$00BF5A	|
 	LDA $7B2D					;$00BF5C	|
 	BEQ CODE_FL_00BF71			;$00BF5F	|
@@ -8700,10 +8700,10 @@ CODE_FL_00BF71:
 	LDA.l DATA_00BFBC,X			;$00BF71	|
 CODE_FL_00BF75:
 	AND #$00FF					;$00BF75	|
-	STA $7390					;$00BF78	|
+	STA !CurrentGameState		;$00BF78	|
 	JSL $03A04A					;$00BF7B	|
-	LDA !CurrentSubgame					;$00BF7F	|
-	CMP #$0004					;$00BF82	|
+	LDA !CurrentSubGame			;$00BF7F	|
+	CMP !SG_RoMK				;$00BF82	|
 	BNE CODE_FL_00BFAD			;$00BF85	|
 	LDA #$001E					;$00BF87	|
 CODE_FL_00BF8A:					;			|
@@ -8749,8 +8749,8 @@ CODE_FL_00BFD2:
 	JSL CODE_FL_00BCDE			;$00BFD2	|
 	LDA $7392					;$00BFD6	|
 	BEQ CODE_FL_00BFD2			;$00BFD9	|
-	LDA !CurrentSubgame					;$00BFDB	|\ 
-	CMP #$0009					;$00BFDE	|| Hardlock the game if outside the defined range? Although the range is actually up to 6, not 8.
+	LDA !CurrentSubGame			;$00BFDB	|\ 
+	CMP #$0009					;$00BFDE	|| Hardlock the game if outside the defined range
   - BCS -						;$00BFE1	|/
 	ASL A						;$00BFE3	|
 	TAX							;$00BFE4	|
@@ -8766,8 +8766,8 @@ CODE_FL_00BFE8:
 	dw CODE_FL_00BFF6				; 06
 
 CODE_FL_00BFF6:
-	LDA #$0003					;$00BFF6	|
-	STA $7390					;$00BFF9	|
+	LDA !GS_MainLevel			;$00BFF6	|
+	STA !CurrentGameState		;$00BFF9	|
 	RTL							;$00BFFC	|
 
 CODE_FL_00BFFD:
@@ -8776,29 +8776,29 @@ CODE_FL_00BFFD:
 	LDA $32EE					;$00C002	|
 	CMP #$0005					;$00C005	|
 	BCS CODE_FL_00C011			;$00C008	|
-	LDA #$0003					;$00C00A	|
-	STA $7390					;$00C00D	|
+	LDA !GS_MainLevel			;$00C00A	|
+	STA !CurrentGameState		;$00C00D	|
 	RTL							;$00C010	|
 
 CODE_FL_00C011:
 	LDA $7A63					;$00C011	|
 	AND #$00FF					;$00C014	|
 	STA $73B2					;$00C017	|
-	LDA #$000D					;$00C01A	|
-	STA $7390					;$00C01D	|
+	LDA !DynaSecret				;$00C01A	|
+	STA !CurrentGameState		;$00C01D	|
 	JSL CODE_FL_00D87F			;$00C020	|
 	JSL CODE_FL_00BC66			;$00C024	|
 	LDA $7394					;$00C028	|
 	CMP #$0002					;$00C02B	|
 	BNE CODE_FL_00C04D			;$00C02E	|
-	LDA #$0004					;$00C030	|
-	STA $7390					;$00C033	|
+	LDA !GS_GameOver			;$00C030	|
+	STA !CurrentGameState		;$00C033	|
 	JSL CODE_FL_00D87F			;$00C036	|
 	JSL CODE_FL_00BC66			;$00C03A	|
 	LDA $7396					;$00C03E	|
 	BNE CODE_FL_00C04D			;$00C041	|
-	LDA #$0001					;$00C043	|
-	STA $7390					;$00C046	|
+	LDA !GS_Corkboard			;$00C043	|
+	STA !CurrentGameState		;$00C046	|
 	INC $7396					;$00C049	|
 	RTL							;$00C04C	|
 
@@ -8812,21 +8812,21 @@ CODE_FL_00C04D:
 
 CODE_FL_00C05E:
 	JSL CODE_FL_00CC7B			;$00C05E	|
-	LDA #$000E					;$00C062	|
-	STA $7390					;$00C065	|
+	LDA !GS_DynaMapFight		;$00C062	|
+	STA !CurrentGameState		;$00C065	|
 	JSL CODE_FL_00D87F			;$00C068	|
 	JSL CODE_FL_00BC66			;$00C06C	|
 	LDA $7394					;$00C070	|
 	CMP #$0002					;$00C073	|
 	BNE CODE_FL_00C095			;$00C076	|
-	LDA #$0004					;$00C078	|
-	STA $7390					;$00C07B	|
+	LDA !GS_GameOver			;$00C078	|
+	STA !CurrentGameState		;$00C07B	|
 	JSL CODE_FL_00D87F			;$00C07E	|
 	JSL CODE_FL_00BC66			;$00C082	|
 	LDA $7396					;$00C086	|
 	BNE CODE_FL_00C095			;$00C089	|
-	LDA #$0001					;$00C08B	|
-	STA $7390					;$00C08E	|
+	LDA !GS_Corkboard			;$00C08B	|
+	STA !CurrentGameState		;$00C08E	|
 	INC $7396					;$00C091	|
 	RTL							;$00C094	|
 
@@ -8835,18 +8835,18 @@ CODE_FL_00C095:
 	LDX #$0001					;$00C099	|\ 
 	LDA #$8479					;$00C09C	|| Load the DMA table at $018479.
 	JSL LoadDMATable			;$00C09F	|/
-	LDA #$0001					;$00C0A3	|
-	STA !CurrentSubgame					;$00C0A6	|
+	LDA !SG_DynaBlade			;$00C0A3	|
+	STA !CurrentSubGame			;$00C0A6	|
 	JMP CODE_FL_00BFC8			;$00C0A9	|
 
 CODE_FL_00C0AC:
-	LDA #$0003					;$00C0AC	|
-	STA $7390					;$00C0AF	|
+	LDA !GS_MainLevel			;$00C0AC	|
+	STA !CurrentGameState		;$00C0AF	|
 	RTL							;$00C0B2	|
 
 CODE_FL_00C0B3:
-	LDA #$0003					;$00C0B3	|
-	STA $7390					;$00C0B6	|
+	LDA !GS_MainLevel			;$00C0B3	|
+	STA !CurrentGameState		;$00C0B6	|
 	RTL							;$00C0B9	|
 
 
@@ -8957,8 +8957,8 @@ CODE_FL_00C1B9:					;			|
 	RTL							;$00C1C9	|
 
 CODE_FL_00C1CA:
-	LDA #$0001					;$00C1CA	|
-	STA !CurrentSubgame					;$00C1CD	|
+	LDA !SG_DynaBlade			;$00C1CA	|
+	STA !CurrentSubGame			;$00C1CD	|
 	JSL $01E921					;$00C1D0	|
 	JML $01EA69					;$00C1D4	|
 
@@ -8981,8 +8981,8 @@ CODE_FL_00C1DC:					;			|
 	STZ $7394					;$00C204	|
 	JSL CODE_FL_00CBF4			;$00C207	|
 	STZ $7392					;$00C20B	|
-	LDA !CurrentSubgame					;$00C20E	|
-	CMP #$0004					;$00C211	|
+	LDA !CurrentSubGame			;$00C20E	|
+	CMP !SG_RoMK				;$00C211	|
 	BNE CODE_FL_00C219			;$00C214	|
 	STZ $73A4					;$00C216	|
 CODE_FL_00C219:					;			|
@@ -8999,26 +8999,26 @@ CODE_FL_00C219:					;			|
 	LDA $7A19					;$00C236	|
 	PHA							;$00C239	|
 	STZ $7A19					;$00C23A	|
-	JSL $CF98A9					;$00C23D	|
+	JSL ExecuteGamePause		;$00C23D	|
 	PLA							;$00C241	|
 	STA $7A19					;$00C242	|
-	LDA $7396					;$00C245	|
+	LDA $7396					;$00C245	|	; This will be set to 0 if the player chooses to leave a level
 	BNE CODE_FL_00C26B			;$00C248	|
 	INC $7396					;$00C24A	|
-	LDA !CurrentSubgame					;$00C24D	|
-	CMP #$0002					;$00C250	|
+	LDA !CurrentSubGame			;$00C24D	|
+	CMP !SG_GourmetRace			;$00C250	|
 	BEQ CODE_FL_00C264			;$00C253	|
-	CMP #$0004					;$00C255	|
+	CMP !SG_RoMK				;$00C255	|
 	BNE CODE_FL_00C25D			;$00C258	|
 	STZ $32F4					;$00C25A	|
 CODE_FL_00C25D:					;			|
-	LDA #$0006					;$00C25D	|
-	STA $7390					;$00C260	|
+	LDA !GS_SubgameMap			;$00C25D	|
+	STA !CurrentGameState		;$00C260	|
 	RTL							;$00C263	|
 
 CODE_FL_00C264:
-	LDA #$0005					;$00C264	|
-	STA $7390					;$00C267	|
+	LDA !GS_SubgameTitle			;$00C264	|
+	STA !CurrentGameState		;$00C267	|
 	RTL							;$00C26A	|
 
 CODE_FL_00C26B:
@@ -9059,8 +9059,8 @@ CODE_FL_00C2A8:
 
 CODE_FL_00C2B2:					;-----------| Normal level, submode 0
 	JSL CODE_FL_00D87F			;$00C2B2	|
-	LDA !CurrentSubgame					;$00C2B6	|
-	CMP #$0004					;$00C2B9	|
+	LDA !CurrentSubGame			;$00C2B6	|
+	CMP !SG_RoMK				;$00C2B9	|
 	BEQ CODE_FL_00C2C1			;$00C2BC	|
 	JMP CODE_FL_00C365			;$00C2BE	|
 
@@ -9153,7 +9153,7 @@ DATA_00C3A6:					;$00C3A6	| Empty word, used above to clear data.
 CODE_FL_00C3A8:					;-----------| Normal level, submode 3
 	JSL $059A1A					;$00C3A8	|
 	JSL $059A20					;$00C3AC	|
-	LDA !CurrentSubgame					;$00C3B0	|\ 
+	LDA !CurrentSubGame					;$00C3B0	|\ 
 	CMP #$0009					;$00C3B3	||\ Hardlock the game if outside the defined range.
   -	BCS -						;$00C3B6	||/
 	ASL A						;$00C3B8	||
@@ -9172,13 +9172,13 @@ CODE_FL_00C3BD:
 	dw CODE_FL_00C3D6				; 08
 
 CODE_FL_00C3CF:					;-----------| Normal level, submode 3, routine 6
-	LDA #$0001					;$00C3CF	|
-	STA $7390					;$00C3D2	|
+	LDA !GS_Corkboard			;$00C3CF	|
+	STA !CurrentGameState		;$00C3D2	|
 	RTL							;$00C3D5	|
 
 CODE_FL_00C3D6:					;-----------| Normal level, submode 3, routine 7/8
-	LDA #$0000					;$00C3D6	|
-	STA $7390					;$00C3D9	|
+	LDA !GS_TitleScreen			;$00C3D6	|
+	STA !CurrentGameState		;$00C3D9	|
 	RTL							;$00C3DC	|
 
 CODE_FL_00C3DD:					;-----------| Normal level, submode 3, routine 0
@@ -9209,8 +9209,8 @@ CODE_FL_00C412:					;			|
 	JSL CODE_FL_00F161			;$00C412	|
 	LDA #$0001					;$00C416	|
 	JSL CODE_FL_00EAB0			;$00C419	|
-	LDA #$0009					;$00C41D	|
-	STA $7390					;$00C420	|
+	LDA !GS_DynaGoal				;$00C41D	|
+	STA !CurrentGameState		;$00C420	|
 	RTL							;$00C423	|
 
 CODE_FL_00C424:					;-----------| Normal level, submode 3, routine 2
@@ -9218,8 +9218,8 @@ CODE_FL_00C424:					;-----------| Normal level, submode 3, routine 2
 	BEQ CODE_FL_00C42C			;$00C427	|
 	JMP CODE_FL_00C1D8			;$00C429	|
 CODE_FL_00C42C:					;			|
-	LDA #$0005					;$00C42C	|
-	STA $7390					;$00C42F	|
+	LDA !GS_SubgameTitle			;$00C42C	|
+	STA !CurrentGameState		;$00C42F	|
 	RTL							;$00C432	|
 
 CODE_FL_00C433:					;-----------| Normal level, submode 3, routine 4
@@ -9244,8 +9244,8 @@ CODE_FL_00C449:					;			|
 	LDA #$0006					;$00C45B	|
 	JSL CODE_FL_00EAB0			;$00C45E	|
 CODE_FL_00C462:					;			|
-	LDA #$0006					;$00C462	|
-	STA $7390					;$00C465	|
+	LDA !GS_SubgameMap				;$00C462	|
+	STA !CurrentGameState		;$00C465	|
 	RTL							;$00C468	|
 
 CODE_FL_00C469:					;-----------| Normal level, submode 3, routine 5
@@ -9256,23 +9256,23 @@ CODE_FL_00C469:					;-----------| Normal level, submode 3, routine 5
 	JSL CODE_FL_00EAB0			;$00C476	|
 	LDA #$0009					;$00C47A	|
 	JSL CODE_FL_00EAB0			;$00C47D	|
-	LDA #$0009					;$00C481	|
+	LDA !GS_DynaGoal				;$00C481	|
 	LDX $32EE					;$00C484	|
 	CPX #$0007					;$00C487	|
 	BNE CODE_FL_00C496			;$00C48A	|
 	LDA #$0001					;$00C48C	|
 	JSL CODE_FL_00EAB0			;$00C48F	|
-	LDA #$0006					;$00C493	|
+	LDA !GS_SubgameMap				;$00C493	|
 CODE_FL_00C496:					;			|
-	STA $7390					;$00C496	|
+	STA !CurrentGameState		;$00C496	|
 	RTL							;$00C499	|
 
 
 CODE_FL_00C49A:					;-----------| Normal level, submode 4
-	LDA !CurrentSubgame					;$00C49A	|
-	CMP #$0003					;$00C49D	|
+	LDA !CurrentSubGame			;$00C49A	|
+	CMP !SG_GCO					;$00C49D	|
 	BEQ CODE_FL_00C4C6			;$00C4A0	|
-	CMP #$0004					;$00C4A2	|
+	CMP !SG_RoMK				;$00C4A2	|
 	BNE CODE_FL_00C4E6			;$00C4A5	|
 	LDA $7B19					;$00C4A7	|
 	LDX $7B1B					;$00C4AA	|
@@ -9300,15 +9300,15 @@ CODE_FL_00C4C6:
 	LDA #$0001					;$00C4DF	|
 	JSL CODE_FL_00EAB0			;$00C4E2	|
 CODE_FL_00C4E6:					;			|
-	LDA #$0008					;$00C4E6	|
-	STA $7390					;$00C4E9	|
+	LDA !GS_SubgameCredits		;$00C4E6	|
+	STA !CurrentGameState		;$00C4E9	|
 	RTL							;$00C4EC	|
 
 
 CODE_FL_00C4ED:					;-----------| Normal level, submode 2
 	JSL CODE_FL_00D87F			;$00C4ED	|
-	LDA #$0004					;$00C4F1	|
-	STA $7390					;$00C4F4	|
+	LDA !GS_GameOver			;$00C4F1	|
+	STA !CurrentGameState		;$00C4F4	|
 	JSL CODE_FL_00BC66			;$00C4F7	|
 	LDA $7396					;$00C4FB	|
 	BEQ CODE_FL_00C507			;$00C4FE	|
@@ -9318,8 +9318,8 @@ CODE_FL_00C4ED:					;-----------| Normal level, submode 2
 CODE_FL_00C507:
 	LDA #$0000					;$00C507	|
 	JSL CODE_FL_00EC42			;$00C50A	|
-	LDA #$0001					;$00C50E	|
-	STA $7390					;$00C511	|
+	LDA !GS_Corkboard			;$00C50E	|
+	STA !CurrentGameState		;$00C511	|
 	INC $7396					;$00C514	|
 	RTL							;$00C517	|
 
@@ -9335,7 +9335,7 @@ CODE_FL_00C518:					;-----------| Normal level, submode 1
 	TAX							;$00C52E	|
 	TAY							;$00C52F	|
 	LDA #$0000					;$00C530	|
-	JSL CreateNewObject2			;$00C533	|
+	JSL CreateNewObject2		;$00C533	|
 	LDA #$0000					;$00C537	|
 	STA $73AE					;$00C53A	|
 	LDA $32F2					;$00C53D	|
@@ -9429,7 +9429,7 @@ CODE_FL_00C5FD:					;-----------| Game Mode 09 - Dynablade cannon game, Milky Wa
 	JSL CODE_FL_00D93B			;$00C608	|
 	JSL CODE_FL_00D9C4			;$00C60C	|
 	INC $7B57					;$00C610	|
-	LDA !CurrentSubgame					;$00C613	|
+	LDA !CurrentSubGame					;$00C613	|
 	STA $73B0					;$00C616	|
 	LDA $32EE					;$00C619	|
 	STA $73B2					;$00C61C	|
@@ -9438,8 +9438,8 @@ CODE_FL_00C5FD:					;-----------| Game Mode 09 - Dynablade cannon game, Milky Wa
 	STA $7B33					;$00C625	|
 CODE_FL_00C628:					;			|
 	JSL CODE_FL_00BD0E			;$00C628	|
-	LDA !CurrentSubgame					;$00C62C	|
-	CMP #$0001					;$00C62F	|
+	LDA !CurrentSubGame			;$00C62C	|
+	CMP !SG_DynaBlade			;$00C62F	|
 	BEQ CODE_FL_00C63E			;$00C632	|
 	JSL CODE_FL_00CBCC			;$00C634	|
 	BEQ CODE_FL_00C63E			;$00C638	|
@@ -9449,9 +9449,9 @@ CODE_FL_00C63E:					;			|
 	BEQ CODE_FL_00C628			;$00C641	|
 	STZ $7B57					;$00C643	|
 	LDA $73B0					;$00C646	|
-	STA !CurrentSubgame					;$00C649	|
-	LDA #$0006					;$00C64C	|
-	STA $7390					;$00C64F	|
+	STA !CurrentSubGame			;$00C649	|
+	LDA !GS_SubgameMap			;$00C64C	|
+	STA !CurrentGameState		;$00C64F	|
 	RTL							;$00C652	|
 
 
@@ -9464,10 +9464,10 @@ CODE_FL_00C653:					;-----------| Game Mode 02 - "Is this your first time?"
 	STA $73A6					;$00C65C	|
 	LDA $7B25					;$00C65F	|
 	BEQ CODE_FL_00C672			;$00C662	|
-	LDX !CurrentSubgame					;$00C664	|
+	LDX !CurrentSubGame			;$00C664	|
 	LDA.l DATA_00C73F,X			;$00C667	|
 	AND #$00FF					;$00C66B	|
-	STA $7390					;$00C66E	|
+	STA !CurrentGameState		;$00C66E	|
 	RTL							;$00C671	|
 
 CODE_FL_00C672:
@@ -9478,7 +9478,7 @@ CODE_FL_00C672:
 	STA $73B2					;$00C67E	|
 	LDA $32F2					;$00C681	|
 	STA $73B4					;$00C684	|
-	LDX !CurrentSubgame					;$00C687	|
+	LDX !CurrentSubGame			;$00C687	|
 	STX $73B0					;$00C68A	|
 	LDA #$0008					;$00C68D	|
 	LDY #$0000					;$00C690	|
@@ -9529,10 +9529,10 @@ CODE_FL_00C6F6:					;			|
 	AND #$00FF					;$00C715	|
 	LDX $7396					;$00C718	|
 	BNE CODE_FL_00C723			;$00C71B	|
-	LDA #$0005					;$00C71D	|
+	LDA !GS_SubgameTitle		;$00C71D	|
 	INC $7396					;$00C720	|
 CODE_FL_00C723:					;			|
-	STA $7390					;$00C723	|
+	STA !CurrentGameState		;$00C723	|
 	STZ $7A99					;$00C726	|
 	LDA #$0001					;$00C729	|
 	STA $7ADF					;$00C72C	|
@@ -9554,8 +9554,8 @@ CODE_FL_00C750:					;			|
 	JSL CODE_FL_00BCDE			;$00C750	|
 	LDA $7392					;$00C754	|
 	BEQ CODE_FL_00C750			;$00C757	|
-	LDA #$0001					;$00C759	|
-	STA $7390					;$00C75C	|
+	LDA !GS_Corkboard			;$00C759	|
+	STA !CurrentGameState		;$00C75C	|
 	RTL							;$00C75F	|
 
 
@@ -9569,8 +9569,8 @@ CODE_FL_00C76A:					;			|
 	JSL CODE_FL_00BCDE			;$00C76A	|
 	LDA $7392					;$00C76E	|
 	BEQ CODE_FL_00C76A			;$00C771	|
-	LDA #$0001					;$00C773	|
-	STA $7390					;$00C776	|
+	LDA !GS_Corkboard			;$00C773	|
+	STA !CurrentGameState		;$00C776	|
 	RTL							;$00C779	|
 
 
@@ -9596,8 +9596,8 @@ CODE_FL_00C79F:					;			|
 	LDA $7B35					;$00C7A9	|
 	ORA $7368					;$00C7AC	|
 	BNE CODE_FL_00C7D3			;$00C7AF	|
-	LDA !CurrentSubgame					;$00C7B1	|
-	CMP #$0006					;$00C7B4	|
+	LDA !CurrentSubGame			;$00C7B1	|
+	CMP !SG_Arena				;$00C7B4	|
 	BNE CODE_FL_00C7C9			;$00C7B7	|
 	LDA $32EE					;$00C7B9	|
 	CMP #$0000					;$00C7BC	|
@@ -9618,8 +9618,8 @@ CODE_FL_00C7D3:					;			|
 	STZ $7B33					;$00C7E0	|
 	LDA #$0001					;$00C7E3	|
 	STA $73A6					;$00C7E6	|
-	LDA #$0001					;$00C7E9	|
-	STA $7390					;$00C7EC	|
+	LDA !GS_Corkboard			;$00C7E9	|
+	STA !CurrentGameState		;$00C7EC	|
 	RTL							;$00C7EF	|
 
 
@@ -9635,7 +9635,7 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	JSR CODE_FL_00C9C1			;$00C806	|
 	LDA.l DATA_00C9D1+1,X		;$00C809	|
 	AND #$00FF					;$00C80D	|
-	STA !CurrentSubgame					;$00C810	|
+	STA !CurrentSubGame			;$00C810	|
 	ASL A						;$00C813	|
 	STA $32EC					;$00C814	|
 	LDA.l DATA_00C9D1+2,X		;$00C817	|
@@ -9645,7 +9645,7 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	STA $32F0					;$00C822	|
 	LDA.l DATA_00C9D1+3,X		;$00C825	|
 	AND #$00FF					;$00C829	|
-	LDY !CurrentSubgame					;$00C82C	|
+	LDY !CurrentSubGame			;$00C82C	|
 	CPY #$0002					;$00C82F	|
 	BNE CODE_FL_00C839			;$00C832	|
 	STA $7B2D					;$00C834	|
@@ -9671,8 +9671,8 @@ CODE_FL_00C852:
 	dw CODE_FL_00C963				; 02
 
 CODE_FL_00C858:					;-----------| Title screen subroutine 0
-	LDA #$0005					;$00C858	|
-	STA $7390					;$00C85B	|
+	LDA !GS_SubgameTitle		;$00C858	|
+	STA !CurrentGameState		;$00C85B	|
 	STA $7A8B					;$00C85E	|
 	STZ $7A89					;$00C861	|
 	JSL CODE_FL_00BC66			;$00C864	|
@@ -9717,7 +9717,7 @@ CODE_FL_00C8B4:					;			|
 	JSL CODE_FL_00CBF4			;$00C8DD	|
 	STZ $7392					;$00C8E1	|
 	STZ $7396					;$00C8E4	|
-	STZ $7390					;$00C8E7	|
+	STZ !CurrentGameState					;$00C8E7	|
 	JSR CODE_FL_00C9C1			;$00C8EA	|
 	LDA.l DATA_00C9D1+4,X		;$00C8ED	|
 	AND #$00FF					;$00C8F1	|
@@ -9771,10 +9771,10 @@ CODE_FL_00C95C:
 
 
 CODE_FL_00C963:					;-----------| Title screen subroutine 2
-	LDA !CurrentSubgame					;$00C963	|
+	LDA !CurrentSubGame			;$00C963	|
 	STA $73AA					;$00C966	|
-	LDA #$0010					;$00C969	|
-	STA $7390					;$00C96C	|
+	LDA !GS_TitleMinigamePreview;$00C969	|
+	STA !CurrentGameState		;$00C96C	|
 	JSL CODE_FL_00BC66			;$00C96F	|
 CODE_FL_00C973:					;			|
 	JSR CODE_FL_00C9C1			;$00C973	|
@@ -9962,8 +9962,8 @@ CODE_FL_00CBC6:
 
 
 CODE_FL_00CBCC:					;-----------|
-	LDA !CurrentSubgame					;$00CBCC	|
-	CMP #$0003					;$00CBCF	|
+	LDA !CurrentSubGame			;$00CBCC	|
+	CMP !SG_GCO					;$00CBCF	|
 	BEQ CODE_FL_00CBD6			;$00CBD2	|
 	BRA CODE_FL_00CBDB			;$00CBD4	|
 
@@ -11633,8 +11633,8 @@ CODE_FL_00D95C:					;			|
 	LDA #$0001					;$00D97E	|
 	STA $770B					;$00D981	|
 	STZ $7744					;$00D984	|
-	LDA !CurrentSubgame					;$00D987	|
-	CMP #$0004					;$00D98A	|
+	LDA !CurrentSubGame			;$00D987	|
+	CMP !SG_RoMK				;$00D98A	|
 	BNE CODE_FL_00D993			;$00D98D	|
 	JSL CODE_FL_00DAA3			;$00D98F	|
 CODE_FL_00D993:					;			|
@@ -11740,7 +11740,7 @@ CODE_FL_00DA66:
 	RTL							;$00DA96	|
 
 CODE_FL_00DA97:
-	STA !CurrentSubgame					;$00DA97	|
+	STA !CurrentSubGame			;$00DA97	|
 	STX $32EE					;$00DA9A	|
 	STY $32F2					;$00DA9D	|
 	LDY $39						;$00DAA0	|
@@ -13961,7 +13961,7 @@ CODE_FL_00EA2A:
 	STY $16						;$00EA2E	|
 	LDA #$EA3D					;$00EA30	|\ 
 	LDX #$0000					;$00EA33	|| Execute the below on the SNES.
-	JSL SA1_ExecuteSNES			;$00EA36	|
+	JSL SA1_ExecuteSNES			;$00EA36	|/
 	LDA $28						;$00EA3A	|
 	RTL							;$00EA3C	|
 CODE_FL_00EA3D:					;			|
@@ -14000,11 +14000,10 @@ CODE_FL_00EA66:					;			|
 CODE_FL_00EA71:								| A = the index number of the dataset. 
 	LDX #$0022					;$00EA71	| This will return the status of a specific bit within a set of data across multiple bytes.
 	.loop:						;			|
-		DEX						;$00EA74	|\ Determine which byte the data is in.
+		DEX						;$00EA74	|\ Determine which byte the data is in based on A.
 		DEX						;$00EA75	||
 		CMP.l n_times_8,X		;$00EA76	||
 		BCC .loop				;$00EA7A	|/
-											|
 	TXY							;$00EA7C	|
 	AND #%00000111				;$00EA7D	|
 	TAX							;$00EA80	|
@@ -14028,9 +14027,6 @@ n_times_8:
 	dw $0080
 
 
-
-
-
 CODE_FL_00EAB0:
 	TAX							;$00EAB0	|
 	LDA $739A					;$00EAB1	|
@@ -14042,7 +14038,7 @@ CODE_FL_00EABA:
 	TXA							;$00EABA	|
 	LDY $7AE3					;$00EABB	|\ 
 	CMP #$000B					;$00EABE	|| Jump to the routine.
-  -	BCS -						;$00EAC1	||] Hardlock the game if a vlue >= 0xB is used.
+  -	BCS -						;$00EAC1	||] Hardlock the game if a value >= 0xB is used.
 	ASL A						;$00EAC3	||
 	TAX							;$00EAC4	||
 	JMP (CODE_FL_00EAC8,X)		;$00EAC5	|/
@@ -14184,8 +14180,8 @@ CODE_FL_00EBD9:
 
 
 CODE_FL_00EBE7:
-	LDA !CurrentSubgame					;$00EBE7	|
-	CMP #$0005					;$00EBEA	|
+	LDA !CurrentSubGame			;$00EBE7	|
+	CMP !SG_MWW					;$00EBEA	|
 	BEQ CODE_FL_00EC26			;$00EBED	|
 	CMP #$0004					;$00EBEF	|
 	BEQ CODE_FL_00EC1E			;$00EBF2	|
@@ -14355,14 +14351,14 @@ CODE_FL_00ED7D:					;			|
 
 
 CODE_FL_00ED81:
-	LDX !CurrentSubgame			;$00ED81	|
-	CPX #$0006					;$00ED84	|
+	LDX !CurrentSubGame			;$00ED81	|
+	CPX !SG_Arena				;$00ED84	|
 	BEQ CODE_FL_00EDAE			;$00ED87	|
 	PHA							;$00ED89	|
 	LDX #$7AE7					;$00ED8A	|
 	JSL CODE_FL_00EA1E			;$00ED8D	|
-	LDA !CurrentSubgame			;$00ED91	|
-	CMP #$0003					;$00ED94	|
+	LDA !CurrentSubGame			;$00ED91	|
+	CMP !SG_GCO					;$00ED94	|
 	BNE CODE_FL_00ED9C			;$00ED97	|
 	PLA							;$00ED99	|
 	BRA CODE_FL_00EDB3			;$00ED9A	|
@@ -14383,14 +14379,14 @@ CODE_FL_00EDB3:					;			|
 	RTL							;$00EDB5	|
 
 CODE_FL_00EDB6:
-	LDX !CurrentSubgame			;$00EDB6	|
+	LDX !CurrentSubGame			;$00EDB6	|
 	LDA.l DATA_00EDE5,X			;$00EDB9	|
 	AND #$00FF					;$00EDBD	|
 	TSB $7A93					;$00EDC0	|
-	LDX !CurrentSubgame			;$00EDC3	|
+	LDX !CurrentSubGame			;$00EDC3	|
 	LDA.l DATA_00EDDE,X			;$00EDC6	|
 	AND #$00FF					;$00EDCA	|
-	LDX #!SB_GCO_Boss_Status					;$00EDCD	|
+	LDX #!SB_GCO_Boss_Status	;$00EDCD	|
 	JSL CODE_FL_00EA1E			;$00EDD0	|
 	LDA #$0000					;$00EDD4	|
 	JSL CODE_FL_00EAB0			;$00EDD7	|
@@ -14411,13 +14407,13 @@ CODE_FL_00EDEC:
 	PHA							;$00EDEC	|	; Routine for calculating boss health
 	PHX							;$00EDED	|
 	PHY							;$00EDEE	|
-	LDA !CurrentSubgame			;$00EDEF	|	; Check if Spring Breeze
-	CMP #$0000					;$00EDF2	|
+	LDA !CurrentSubGame			;$00EDEF	|
+	CMP !SG_SpringBreeze		;$00EDF2	|
 	BNE CODE_FL_00EE08			;$00EDF5	|
 	LDA #$0000					;$00EDF7	|
 	LDX #!SB_GCO_Boss_Status	;$00EDFA	|
-	JSL CheckObjectUsageStatus			;$00EDFD	|
-	BNE CODE_FL_00EE08			;$00EE01	|	; Set Spring Breeze boss health to be 
+	JSL CheckObjectUsageStatus	;$00EDFD	|
+	BNE CODE_FL_00EE08			;$00EE01	|	; Set Spring Breeze boss health 
 	PLY							;$00EE03	|
 	PLX							;$00EE04	|
 	PLA							;$00EE05	|
@@ -14439,7 +14435,7 @@ CODE_FL_00EE11:
 	STX $2A						;$00EE11	|
 	STY $2C						;$00EE13	|
 	LDX #!SB_GCO_Boss_Status	;$00EE15	|
-	JSL CheckObjectUsageStatus			;$00EE18	|
+	JSL CheckObjectUsageStatus	;$00EE18	|
 	PHP							;$00EE1C	|
 	LDX $2A						;$00EE1D	|
 	LDY $2C						;$00EE1F	|
@@ -14631,7 +14627,7 @@ CODE_FL_00EF79:					;			|
 
 CODE_FL_00EF86:
 	LDX $7AE3					;$00EF86	|
-	LDA !CurrentSubgame					;$00EF89	|
+	LDA !CurrentSubGame			;$00EF89	|
 	SEP #$20					;$00EF8C	|
 	STA $7F06,X					;$00EF8E	|
 	REP #$20					;$00EF91	|

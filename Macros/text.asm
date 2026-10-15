@@ -1,6 +1,6 @@
-; Kirby Super Star text macros
+; Kirby Super Star vwf text macros
 
-; When printing text data, the game listens for specific bytes and initiates specific commands when read
+; When printing variable width text data, the game listens for specific bytes and initiates specific commands when read
 
 macro TEXT_End()
     db $00
