@@ -9633,17 +9633,17 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	REP #$20					;$00C800	|
 	JSL CODE_FL_00D87F			;$00C802	|
 	JSR CODE_FL_00C9C1			;$00C806	|
-	LDA.l DATA_00C9D1+1,X		;$00C809	|
+	LDA.l DemoScreenData+1,X	;$00C809	|
 	AND #$00FF					;$00C80D	|
 	STA !CurrentSubGame			;$00C810	|
 	ASL A						;$00C813	|
 	STA $32EC					;$00C814	|
-	LDA.l DATA_00C9D1+2,X		;$00C817	|
+	LDA.l DemoScreenData+2,X	;$00C817	|
 	AND #$00FF					;$00C81B	|
 	STA $32EE					;$00C81E	|
 	ASL A						;$00C821	|
 	STA $32F0					;$00C822	|
-	LDA.l DATA_00C9D1+3,X		;$00C825	|
+	LDA.l DemoScreenData+3,X	;$00C825	|
 	AND #$00FF					;$00C829	|
 	LDY !CurrentSubGame			;$00C82C	|
 	CPY #$0002					;$00C82F	|
@@ -9657,7 +9657,7 @@ CODE_FL_00C839:
 	ASL A						;$00C83D	|
 	STA $32F4					;$00C83E	|
 CODE_FL_00C841:					;			|
-	LDA.l DATA_00C9D1,X			;$00C841	|\ 
+	LDA.l DemoScreenData,X		;$00C841	|\ 
 	AND #$00FF					;$00C845	||
 	CMP #$0003					;$00C848	||\ Hardlock the game if outside the defined range.
   - BCS -						;$00C84B	||/
@@ -9683,10 +9683,10 @@ CODE_FL_00C86B:					;-----------| Title screen subroutine 1
 	LDX #$0000					;$00C86E	|| Execute $00CAFD on the SNES.
 	JSL SA1_ExecuteSNES			;$00C871	|/
 	JSR CODE_FL_00C9C1			;$00C875	|
-	LDA.l DATA_00C9D1+5,X		;$00C878	|
+	LDA.l DemoScreenData+5,X	;$00C878	|
 	AND #$00FF					;$00C87C	|
 	STA $750B					;$00C87F	|
-	LDA.l DATA_00C9D1+6,X		;$00C882	|
+	LDA.l DemoScreenData+6,X	;$00C882	|
 	AND #$00FF					;$00C886	|
 	STA $750D					;$00C889	|
 	JSL CODE_FL_00D93B			;$00C88C	|
@@ -9694,10 +9694,10 @@ CODE_FL_00C86B:					;-----------| Title screen subroutine 1
 	LDA #$00FF					;$00C894	|
 	JSL CODE_FL_00CE67			;$00C897	|
 	JSR CODE_FL_00C9C1			;$00C89B	|
-	LDA.l DATA_00C9D1+7,X		;$00C89E	|
+	LDA.l DemoScreenData+7,X	;$00C89E	|
 	BMI CODE_FL_00C8B4			;$00C8A2	|
 	STA $330C					;$00C8A4	|
-	LDA.l DATA_00C9D1+9,X		;$00C8A7	|
+	LDA.l DemoScreenData+9,X	;$00C8A7	|
 	STA $3310					;$00C8AB	|
 	LDA #$0002					;$00C8AE	|
 	STA $332A					;$00C8B1	|
@@ -9717,9 +9717,9 @@ CODE_FL_00C8B4:					;			|
 	JSL CODE_FL_00CBF4			;$00C8DD	|
 	STZ $7392					;$00C8E1	|
 	STZ $7396					;$00C8E4	|
-	STZ !CurrentGameState					;$00C8E7	|
+	STZ !CurrentGameState		;$00C8E7	|
 	JSR CODE_FL_00C9C1			;$00C8EA	|
-	LDA.l DATA_00C9D1+4,X		;$00C8ED	|
+	LDA.l DemoScreenData+4,X	;$00C8ED	|
 	AND #$00FF					;$00C8F1	|
 	CMP #$00FF					;$00C8F4	|
 	BNE CODE_FL_00C8FE			;$00C8F7	|
@@ -9778,7 +9778,7 @@ CODE_FL_00C963:					;-----------| Title screen subroutine 2
 	JSL CODE_FL_00BC66			;$00C96F	|
 CODE_FL_00C973:					;			|
 	JSR CODE_FL_00C9C1			;$00C973	|
-	LDA.l DATA_00C9D1+11,X		;$00C976	|\ 
+	LDA.l DemoScreenData+11,X	;$00C976	|\ 
 	AND #$00FF					;$00C97A	||
 	CMP #$0004					;$00C97D	||\ Hardlock if outside the defined range. 
   - BCS -						;$00C980	||/
@@ -9834,7 +9834,20 @@ CODE_FL_00C9C1:					;-----------| Title screen subroutine to get an index to the
 	TAX							;$00C9CF	|/
 	RTS							;$00C9D0	|
 
-DATA_00C9D1:					;$00C9D1	| Table used for the title screen. 12 bytes per row.
+DemoScreenData:					;$00C9D1	| Table used for the title screen. 12 bytes per row.
+;		00 = Game State: Subgame Title ($00), Level ($01), Minigame ($02)
+;		01 = Subgame
+;		02 = Stage/Chapter/Planet number
+;		03 = Room number
+;		04 = Demo timer
+;		05 = Kirby Ability
+;		06 = Helper Ability
+;		07 = X coordinate 1
+;		08 = X coordinate 2
+;		09 = Y coordinate 1
+;		0A = Y coordinate 2
+;		0B = Behavior when demo timer expires
+;	    00  01  02  03  04  05  06  07  08  09  0A  0B
 	db $00,$00,$00,$00,$FF,$00,$00,$FF,$FF,$FF,$FF,$00
 	db $01,$00,$00,$01,$0C,$00,$00,$2B,$00,$2A,$00,$00
 	db $01,$00,$00,$05,$0A,$08,$0B,$3C,$00,$54,$00,$00
