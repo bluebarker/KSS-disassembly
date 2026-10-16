@@ -36,6 +36,6 @@ DATA8_E12E30 = $E12E30
 !GS_Minigame                = #$000B
 !GS_Arena                   = #$000C
 !GS_DynaSecret              = #$000D
-!GS_DynaMaam                = #$000E
+!GS_DynaMapFight            = #$000E
 !GS_TitleSubgamePreview     = #$000F
 !GS_TitleMinigamePreview    = #$0010

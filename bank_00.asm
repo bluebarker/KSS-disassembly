@@ -2155,11 +2155,11 @@ CODE_FL_00904F:					;			|
 	BEQ CODE_FL_00905F			;$009059	|
 	JSL $05EBC9					;$00905B	|
 CODE_FL_00905F:					;			|
-	JSL $01A27D					;$00905F	|
+	JSL CODE_FL_01A27D			;$00905F	|
 	PEA.w CODE_FL_009069-1		;$009063	|
 	JMP ($6026)					;$009066	|
 CODE_FL_009069:					;			|
-	JSL $01A995					;$009069	|
+	JSL CODE_FL_01A995			;$009069	|
 	PEA.w CODE_FL_009073-1		;$00906D	|
 	JMP ($6024)					;$009070	|
 CODE_FL_009073:					;			|
@@ -8662,7 +8662,7 @@ CODE_FL_00BF26:
 	JSL CODE_FL_00CC67			;$00BF26	|
 CODE_FL_00BF2A:					;			|
 	JSL CODE_FL_00D87F			;$00BF2A	|
-	LDA !SubgameOpening			;$00BF2E	|
+	LDA !GS_SubgameOpening			;$00BF2E	|
 	STA !CurrentGameState		;$00BF31	|
 	JSL CODE_FL_00BC66			;$00BF34	|
 	JSL CODE_FL_00D87F			;$00BF38	|
@@ -8784,7 +8784,7 @@ CODE_FL_00C011:
 	LDA $7A63					;$00C011	|
 	AND #$00FF					;$00C014	|
 	STA $73B2					;$00C017	|
-	LDA !DynaSecret				;$00C01A	|
+	LDA !GS_DynaSecret				;$00C01A	|
 	STA !CurrentGameState		;$00C01D	|
 	JSL CODE_FL_00D87F			;$00C020	|
 	JSL CODE_FL_00BC66			;$00C024	|
@@ -8855,7 +8855,7 @@ CODE_FL_00C0BA:					;-----------| Game Mode 0D - Dynablade trial room
 	JSL CODE_FL_00D93B			;$00C0BA	|
 	JSL UpdateVramSprSize		;$00C0BE	|
 	JSL CODE_FL_00D9C4			;$00C0C2	|
-	JSL $018000					;$00C0C6	|
+	JSL CODE_FL_018000			;$00C0C6	|
 	JSL $D4FB90					;$00C0CA	|
 	LDA #$0001					;$00C0CE	|
 	STA $73A6					;$00C0D1	|
@@ -8889,7 +8889,7 @@ CODE_FL_00C108:					;-----------| Game Mode 0E - Dynablade overworld enemy battl
 	JSL CODE_FL_00D93B			;$00C115	|
 	JSL CODE_FL_00A94B			;$00C119	|
 	JSL CODE_FL_00D9C4			;$00C11D	|
-	JSL $018000					;$00C121	|
+	JSL CODE_FL_018000			;$00C121	|
 	LDA #$C1CA					;$00C125	|\ 
 	LDX #$0000					;$00C128	|| Execute $00C1CA on the SNES.
 	JSL SA1_ExecuteSNES			;$00C12B	|/
@@ -8959,8 +8959,8 @@ CODE_FL_00C1B9:					;			|
 CODE_FL_00C1CA:
 	LDA !SG_DynaBlade			;$00C1CA	|
 	STA !CurrentSubGame			;$00C1CD	|
-	JSL $01E921					;$00C1D0	|
-	JML $01EA69					;$00C1D4	|
+	JSL SetupStatusBar_L		;$00C1D0	|
+	JML HandleStatusBar_L		;$00C1D4	|
 
 
 
@@ -8969,7 +8969,7 @@ CODE_FL_00C1D8:					;-----------| Game Mode 03 - Normal level (including Nova ba
 CODE_FL_00C1DC:					;			|
 	JSL UpdateVramSprSize		;$00C1DC	|
 	JSL CODE_FL_00D9C4			;$00C1E0	|
-	JSL $018000					;$00C1E4	|
+	JSL CODE_FL_018000			;$00C1E4	|
 	JSL $D4FB90					;$00C1E8	|
 	LDA #$0001					;$00C1EC	|
 	STA $73A6					;$00C1EF	|
@@ -9102,7 +9102,7 @@ CODE_FL_00C2DF:
 	STA $7A27					;$00C317	|
 	LDX #$03A6					;$00C31A	|
 	LDA #$0013					;$00C31D	|
-	JSL $01DE76					;$00C320	|
+	JSL CODE_FL_01DE76				;$00C320	|
 	JSL CODE_FL_00C36C			;$00C324	|
 	JSL CODE_FL_00C36C			;$00C328	|
 	LDA #$000F					;$00C32C	|
@@ -9387,7 +9387,7 @@ CODE_FL_00C59C:
 	ASL A						;$00C5A6	|
 	ASL A						;$00C5A7	|
 	STA $32F4					;$00C5A8	|
-	JSL $018088					;$00C5AB	|
+	JSL CODE_FL_018088			;$00C5AB	|
 	LDA #$8078					;$00C5AF	|\ 
 	LDX #$0001					;$00C5B2	|| Execute $018078 on the SNES.
 	JSL SA1_ExecuteSNES			;$00C5B5	|/
@@ -9704,7 +9704,7 @@ CODE_FL_00C86B:					;-----------| Title screen subroutine 1
 CODE_FL_00C8B4:					;			|
 	LDA #$0001					;$00C8B4	|
 	STA $331A					;$00C8B7	|
-	JSL $018000					;$00C8BA	|
+	JSL CODE_FL_018000			;$00C8BA	|
 	JSL $D4FB90					;$00C8BE	|
 	LDA #$0001					;$00C8C2	|
 	STA $73A6					;$00C8C5	|
@@ -10005,7 +10005,7 @@ CODE_FL_00CBF4:					;-----------|
 	LDA #$0010					;$00CBF4	|
 CODE_FL_00CBF7:					;			|
 	PHA							;$00CBF7	|
-	JSL FadeIn_Step			;$00CBF8	|
+	JSL FadeIn_Step				;$00CBF8	|
 	JSL UpdtLyrsCtrl			;$00CBFC	|
 	LDA $739A					;$00CC00	|
 	BEQ CODE_FL_00CC11			;$00CC03	|
@@ -10041,7 +10041,7 @@ CODE_FL_00CC44:					;			|
 	CLC							;$00CC4B	|
 	ADC #$000F					;$00CC4C	|
 	JSL CODE_FL_00CE67			;$00CC4F	|
-	JSL FadeIn_Step			;$00CC53	|
+	JSL FadeIn_Step				;$00CC53	|
 	JSL CODE_FL_00BCDE			;$00CC57	|
 	PLA							;$00CC5B	|
 	DEC A						;$00CC5C	|
@@ -10148,7 +10148,7 @@ CheckStartErrs:					;-----------| Routine to check for controller/system errors 
 	JSL UpdtLyrsCtrlBrght		;$00CD37	| Transfer screen brightness and fetch controller inputs.
 	PLX							;$00CD3B	|
 	LDA #$0014					;$00CD3C	|
-	JSL $01DE76					;$00CD3F	|
+	JSL CODE_FL_01DE76			;$00CD3F	|
 	SEP #$20					;$00CD43	|
 	LDA #$06					;$00CD45	|\ Main screen: layers 2/3
 	STA $3072					;$00CD47	|/
@@ -10165,7 +10165,7 @@ CheckStartErrs:					;-----------| Routine to check for controller/system errors 
 	REP #$20					;$00CD63	|
   .loop:						;			|
 	JSL UpdtLyrsCtrl			;$00CD65	| Update controller inputs and layer positions.
-	JSL $01DFC6					;$00CD69	|
+	JSL VWF_TextLoopEntry		;$00CD69	|
 	JMP .loop					;$00CD6D	|
 	
   .ErrorDMAs:					;$00CD70	| Table of DMA data for the startup warning screen, specifically for graphics.
@@ -10252,7 +10252,7 @@ CODE_FL_00CE3B:					;```````````|
 	LDA #$0001					;$00CE3B	|
 	BRA CODE_FL_00CE43			;$00CE3E	|
 CODE_FL_00CE40:					;```````````|
-	JSR AS_ReadByte			;$00CE40	|
+	JSR AS_ReadByte				;$00CE40	|
 CODE_FL_00CE43:					;			|
 	SEP #$20					;$00CE43	|
 	AND #$01					;$00CE45	|
@@ -10269,7 +10269,7 @@ CODE_FL_00CE43:					;			|
 	RTL							;$00CE63	|
 
 CODE_FL_00CE64:					;-----------|
-	JSR AS_ReadByte			;$00CE64	|
+	JSR AS_ReadByte				;$00CE64	|
 CODE_FL_00CE67:					;			|
 	SEP #$20					;$00CE67	|
 	STA $33CC					;$00CE69	|
@@ -10277,7 +10277,7 @@ CODE_FL_00CE67:					;			|
 	LDA #$CEA0					;$00CE6E	|
 	LDX #$0000					;$00CE71	|
 	JML SA1_ExecuteSNES			;$00CE74	|
-	JSR AS_ReadByte			;$00CE78	|
+	JSR AS_ReadByte				;$00CE78	|
 	SEP #$30					;$00CE7B	|
 	CLC							;$00CE7D	|
 	TAX							;$00CE7E	|
@@ -10316,7 +10316,7 @@ CODE_FL_00CEB6:					;			|
 	AND #$00FF					;$00CEB9	|
 	STA $00						;$00CEBC	|
 	LDA #$0003					;$00CEBE	|
-	JSL $018101					;$00CEC1	|
+	JSL CODE_FL_018101			;$00CEC1	|
 	LDA [$14]					;$00CEC5	|
 	AND #$00FF					;$00CEC7	|
 	BEQ CODE_FL_00CEDA			;$00CECA	|
@@ -10327,7 +10327,7 @@ CODE_FL_00CEB6:					;			|
 	JSL SA1_ExecuteSNES			;$00CED6	|
 CODE_FL_00CEDA:					;			|
 	LDA #$0002					;$00CEDA	|
-	JSL $018101					;$00CEDD	|
+	JSL CODE_FL_018101			;$00CEDD	|
 	SEP #$20					;$00CEE1	|
 	LDA [$14]					;$00CEE3	|
 	AND #$7F					;$00CEE5	|
@@ -10341,7 +10341,7 @@ CODE_FL_00CEDA:					;			|
 	AND #$00FF					;$00CEFC	|
 	STA $00						;$00CEFF	|
 	LDA #$0003					;$00CF01	|
-	JSL $018101					;$00CF04	|
+	JSL CODE_FL_018101			;$00CF04	|
 	LDA [$14]					;$00CF08	|
 	AND #$00FF					;$00CF0A	|
 	BEQ CODE_FL_00CF17			;$00CF0D	|
@@ -10350,7 +10350,7 @@ CODE_FL_00CEDA:					;			|
 	JSL CODE_FL_00D2FD			;$00CF13	|
 CODE_FL_00CF17:					;			|
 	LDA #$0002					;$00CF17	|
-	JSL $018101					;$00CF1A	|
+	JSL CODE_FL_018101			;$00CF1A	|
 	LDA [$14]					;$00CF1E	|
 	AND #$0080					;$00CF20	|
 	BEQ CODE_FL_00CF34			;$00CF23	|
@@ -10400,7 +10400,7 @@ CODE_FL_00CF6B:
 	LDX #$0000					;$00CF6E	|| Run $00CF3F on the SNES.
 	JSL SA1_ExecuteSNES			;$00CF71	|/
 	LDA #$0002					;$00CF75	|
-	JSL $018101					;$00CF78	|
+	JSL CODE_FL_018101			;$00CF78	|
 	SEP #$20					;$00CF7C	|
 	LDA [$14]					;$00CF7E	|
 	AND #$7F					;$00CF80	|
@@ -10470,7 +10470,7 @@ CODE_FL_00CFF6:					;-----------|
 	RTL							;$00CFFF	|
 
 CODE_FL_00D000:					;-----------| Alt entry to the below?
-	JSR AS_ReadByte			;$00D000	|
+	JSR AS_ReadByte				;$00D000	|
 CODE_FL_00D003:					;-----------| Routine to load music?
 	SEP #$20					;$00D003	|
 	CMP #$42					;$00D005	|\ 
@@ -10641,8 +10641,8 @@ CODE_FL_00D12D:					;-----------|
 	STA $33CF					;$00D13E	|
 	STA $33D0					;$00D141	|
 	REP #$30					;$00D144	|
-	LDA.w #CODE_FL_00D1C0			;$00D146	|\ 
-	LDX.w #CODE_FL_00D1C0>>16		;$00D149	|| Execute $00D1C0 on the SNES.
+	LDA.w #CODE_FL_00D1C0		;$00D146	|\ 
+	LDX.w #CODE_FL_00D1C0>>16	;$00D149	|| Execute $00D1C0 on the SNES.
 	JML SA1_ExecuteSNES			;$00D14C	|/
 
 CODE_FL_00D150:
@@ -10699,8 +10699,8 @@ CODE_FL_00D1AA:					;			|
 	STA $33D5					;$00D1B1	|
 CODE_FL_00D1B4:					;			|
 	REP #$10					;$00D1B4	|
-	LDA.w #CODE_FL_00D1C0			;$00D1B6	|\ 
-	LDX.w #CODE_FL_00D1C0>>16		;$00D1B9	|| Execute the below routine on the SNES.
+	LDA.w #CODE_FL_00D1C0		;$00D1B6	|\ 
+	LDX.w #CODE_FL_00D1C0>>16	;$00D1B9	|| Execute the below routine on the SNES.
 	JML SA1_ExecuteSNES			;$00D1BC	|/
 
 
@@ -10859,7 +10859,7 @@ CODE_FL_00D2E3:					;			|
 CODE_FL_00D2F3:
 	LDA #$0000					;$00D2F3	|
 	JSL CODE_FL_00D12D			;$00D2F6	|
-	JSR AS_ReadByte			;$00D2FA	|
+	JSR AS_ReadByte				;$00D2FA	|
 CODE_FL_00D2FD:					;			|
 	STA $49						;$00D2FD	|
 	LDA #$D309					;$00D2FF	|
@@ -10882,7 +10882,7 @@ CODE_FL_00D317:
 	PLD							;$00D321	|
 	REP #$30					;$00D322	|
 	RTL							;$00D324	|
-	JSR AS_ReadByte			;$00D325	|
+	JSR AS_ReadByte				;$00D325	|
 	STA $49						;$00D328	|
 	LDA #$D334					;$00D32A	|
 	LDX #$0000					;$00D32D	|
@@ -14010,7 +14010,7 @@ CODE_FL_00EA66:					;			|
 	STA [$14],Y					;$00EA6E	|
 	RTL							;$00EA70	|
 
-CODE_FL_00EA71:								| A = the index number of the dataset. 
+CODE_FL_00EA71:					;			| A = the index number of the dataset. 
 	LDX #$0022					;$00EA71	| This will return the status of a specific bit within a set of data across multiple bytes.
 	.loop:						;			|
 		DEX						;$00EA74	|\ Determine which byte the data is in based on A.
@@ -14018,7 +14018,7 @@ CODE_FL_00EA71:								| A = the index number of the dataset.
 		CMP.l n_times_8,X		;$00EA76	||
 		BCC .loop				;$00EA7A	|/
 	TXY							;$00EA7C	|
-	AND #%00000111				;$00EA7D	|
+	AND #%0000000000000111		;$00EA7D	|
 	TAX							;$00EA80	|
 	TYA							;$00EA81	|
 	LSR A						;$00EA82	|
@@ -14028,7 +14028,7 @@ CODE_FL_00EA71:								| A = the index number of the dataset.
 		DEX						;$00EA87	|
 		BMI .end				;$00EA88	|
 		ASL A					;$00EA8A	|
-		BRA CODE_FL_00EA87		;$00EA8B	|
+		BRA .loop2				;$00EA8B	|
 	.end:						;			|
 		RTS						;$00EA8D	|
 

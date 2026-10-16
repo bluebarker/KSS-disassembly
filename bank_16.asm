@@ -2,8 +2,9 @@
 ; Although this bank is technically mapped at $168000, the Super MMC maps it to the lower half of bank CB.
 ;  As KSS always references it in this way, all address values will be treated as such.
 
-;table CharMaps/vwf.map		Asar2.0 uses charmaps differently so commenting this out
 incsrc "CharMaps/vwf.asm"
+incsrc "Macros/text.asm"
+
 org $CB0000
 
 ; VWF placement info format:

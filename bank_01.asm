@@ -6,11 +6,11 @@ CODE_FL_018000:
 	JSR.W CODE_FN_018C74          ;$018003	|
 	LDA.W #$8E52                  ;$018006	|
 	LDX.W #$0001                  ;$018009	|
-	JSL.L SA1_ExecuteSNES              ;$01800C	|
+	JSL.L SA1_ExecuteSNES         ;$01800C	|
 	JSR.W CODE_FN_018307          ;$018010	|
 	LDA.W #$806B                  ;$018013	|
 	LDX.W #$0001                  ;$018016	|
-	JSL.L SA1_ExecuteSNES              ;$018019	|
+	JSL.L SA1_ExecuteSNES         ;$018019	|
 	JSL.L CODE_FL_03A2D4          ;$01801D	|
 	BCS CODE_818027               ;$018021	|
 	JSL.L CODE_FL_00CEAB          ;$018023	|
@@ -44,8 +44,8 @@ CODE_818027:
 	JSR.W LoadLevelTileset        ;$018071	|
 	JSR.W CODE_FN_018698          ;$018074	|
 	RTL                           ;$018077	|
-	JSR.W CODE_FL_01E925          ;$018078	|
-	JSR.W CODE_FL_01EA6D          ;$01807B	|
+	JSR.W SetupStatusBar          ;$018078	|
+	JSR.W HandleStatusBar          ;$01807B	|
 	JSR.W CODE_FN_01A743          ;$01807E	|
 	JSR.W CODE_FN_01859A          ;$018081	|
 	JML.L CODE_JL_D0234E          ;$018084	|
@@ -55,11 +55,11 @@ CODE_FL_018088:
 	JSR.W CODE_FN_018C74          ;$01808C	|
 	LDA.W #$8E52                  ;$01808F	|
 	LDX.W #$0001                  ;$018092	|
-	JSL.L SA1_ExecuteSNES              ;$018095	|
+	JSL.L SA1_ExecuteSNES         ;$018095	|
 	JSR.W CODE_FN_018307          ;$018099	|
 	LDA.W #$806B                  ;$01809C	|
 	LDX.W #$0001                  ;$01809F	|
-	JSL.L SA1_ExecuteSNES              ;$0180A2	|
+	JSL.L SA1_ExecuteSNES         ;$0180A2	|
 	JSL.L CODE_FL_D01566          ;$0180A6	|
 	LDA.W $3330                   ;$0180AA	|
 	PHA                           ;$0180AD	|
@@ -4541,7 +4541,7 @@ CODE_81A298:
 	JML.L SA1_ExecuteSNES              ;$01A2AF	|
 	JSL.L CODE_FL_01A1E1          ;$01A2B3	|
 	JSR.W CODE_FN_019A01          ;$01A2B7	|
-	JSR.W CODE_FL_01EA6D          ;$01A2BA	|
+	JSR.W HandleStatusBar          ;$01A2BA	|
 	JSL.L CODE_FL_D00771          ;$01A2BD	|
 	LDA.W $7B33                   ;$01A2C1	|
 	BNE CODE_81A2C9               ;$01A2C4	|
@@ -11867,15 +11867,15 @@ CODE_FL_01DF53: ;			|
 	STA $0066					;$01DF89	|
 	REP #$20					;$01DF8C	|
 	STZ $33C6					;$01DF8E	|
-	JMP Consume_0_Params			;$01DF91	|
+	JMP VWF_TextLoopEntry			;$01DF91	|
 	
 DATA_01DF94: ;$01DF94	| Used for a fixed-transfer DMA to a specified VRAM location.
 	db $00,$20
 
 
 
-CODE_FL_01DF96: ;-----------|
-	LDA.l TextDataPointers,X			;$01DF96	|\ 
+CODE_FL_01DF96: 				;-----------|
+	LDA.l TextDataPointers,X	;$01DF96	|\ 
 	STA $45						;$01DF9A	|| Get pointer to the text string being read.
 	LDA #$00CB					;$01DF9C	||
 	STA $47						;$01DF9F	|/
@@ -11884,12 +11884,12 @@ CODE_FL_01DF96: ;-----------|
 	BPL CODE_FL_01DFB3			;$01DFA7	||
 	LDA #$DFB3					;$01DFA9	|| Run the below on the SNES.
 	LDX #$0001					;$01DFAC	||
-	JML $008C92					;$01DFAF	|/
+	JML SA1_ExecuteSNES			;$01DFAF	|/
 
 CODE_FL_01DFB3:					;```````````| On the SNES now.
 	STZ $0083					;$01DFB3	|
 	STZ $0061					;$01DFB6	|
-	JMP Consume_0_Params			;$01DFB9	|
+	JMP VWF_TextLoopEntry		;$01DFB9	|
 
 
 Consume_5_Params: 				;-----------| Alt entry to the below: increments text pointer by 5 before moving on. (command takes 5 parameters)
@@ -11902,7 +11902,7 @@ Consume_2_Params:				;```````````| ...by 2.	(command takes 2 parameters)
 	INC $45						;$01DFC2	|
 Consume_1_Param:				;```````````| ...by 1.	(command takes 1 parameter)
 	INC $45						;$01DFC4	|
-Consume_0_Params: 				;-----------| Main entry to the VWF text loop. Reads and prepares text to be written to the screen.
+VWF_TextLoopEntry: 				;-----------| Main entry to the VWF text loop. Reads and prepares text to be written to the screen.
 	LDA $33C6					;$01DFC6	|
 	BNE CODE_FL_01DFEA			;$01DFC9	|
 	LDA $30A3					;$01DFCB	|
@@ -11952,13 +11952,13 @@ Pointers01DFFE: ;$01DFFE	| Pointers to routines for special text commands.
 	dw CODE_FL_01E6B0				; 13 - Disable text cursor
 	dw CODE_FL_01E6B9				; 14 - Enable secondary color
 	dw CODE_FL_01E6C2				; 15 - Disable secondary color
-	dw Consume_0_Params				; 16 - Unused?
-	dw Consume_0_Params				; 17 - Unused?
+	dw VWF_TextLoopEntry				; 16 - Unused?
+	dw VWF_TextLoopEntry				; 17 - Unused?
 	dw CODE_FL_01E067				; 18 - Write character 1xx
 	dw CODE_FL_01E05B				; 19 - Write character 2xx
-	dw Consume_0_Params				; 1A - Unused?
+	dw VWF_TextLoopEntry				; 1A - Unused?
 	dw CODE_FL_01E35F				; 1B - Skip next byte?
-	dw Consume_0_Params				; 1C - Unused?
+	dw VWF_TextLoopEntry				; 1C - Unused?
 	dw CODE_FL_01E6D3				; 1D - 
 	dw CODE_FL_01E6DE				; 1E - 
 	dw CODE_FL_01E6EA				; 1F - 
@@ -11977,7 +11977,7 @@ CODE_FL_01E04B: ;			|| Increment text position by the specified space width.
 	STA $0057					;$01E04F	|/
 	LDA $005D					;$01E052	|\ ?
 	STA $0061					;$01E055	|/
-	JMP Consume_0_Params			;$01E058	|
+	JMP VWF_TextLoopEntry			;$01E058	|
 
 
 
@@ -12342,7 +12342,7 @@ CODE_FL_01E32A:
 	LSR A						;$01E332	|
 	CLC							;$01E333	|
 	ADC $00						;$01E334	|
-CODE_FL_01E336: ;			|
+CODE_FL_01E336: 				;			|
 	CLC							;$01E336	|
 	ADC $0057					;$01E337	|
 	STA $0057					;$01E33A	|
@@ -12351,15 +12351,15 @@ CODE_FL_01E336: ;			|
 	EOR #$8000					;$01E342	|
 	STA $0067					;$01E345	|
 	BPL CODE_FL_01E34E			;$01E348	|
-	JSL $00D12D					;$01E34A	|
-CODE_FL_01E34E: ;			|
+	JSL CODE_FL_00D12D			;$01E34A	|
+CODE_FL_01E34E: 				;			|
 	LDA $005D					;$01E34E	|
 	STA $0061					;$01E351	|
 	BEQ CODE_FL_01E35C			;$01E354	|
 	JSR CODE_FL_01E795			;$01E356	|
 	JSR CODE_FL_01E756			;$01E359	|
-CODE_FL_01E35C: ;			|
-	JMP Consume_0_Params			;$01E35C	|
+CODE_FL_01E35C: 				;			|
+	JMP VWF_TextLoopEntry			;$01E35C	|
 
 
 
@@ -12379,7 +12379,7 @@ CODE_FL_01E362: ;-----------| Text command 00 - End of text
 	STA $45						;$01E370	||
 	LDA $0087,X					;$01E372	||
 	STA $47						;$01E375	||
-	JMP Consume_0_Params			;$01E377	|/
+	JMP VWF_TextLoopEntry			;$01E377	|/
 
   .endOfText:					;```````````| Actual end of message.
 	JSR CODE_FL_01E795			;$01E37A	| ?????
@@ -12492,7 +12492,7 @@ CODE_FL_01E434: ;			|
 	TSB $3072					;$01E472	|
 	LDA #$8000					;$01E475	|
 	TRB $0067					;$01E478	|
-	JMP Consume_0_Params			;$01E47B	|
+	JMP VWF_TextLoopEntry			;$01E47B	|
 
 
 
@@ -12515,7 +12515,7 @@ CODE_FL_01E489: 					;			|
 	STA $0057					;$01E4A5	|
 	LDA $005B					;$01E4A8	|
 	STA $0061					;$01E4AB	|
-	JMP Consume_0_Params			;$01E4AE	|
+	JMP VWF_TextLoopEntry			;$01E4AE	|
 
 
 
@@ -12609,12 +12609,12 @@ CODE_FL_01E52D: ;-----------| Text command 09 - ???
 CODE_FL_01E543: ;-----------| Text command 0A - ???
 	LDA #$0080					;$01E543	|
 	TRB $0066					;$01E546	|
-	JMP Consume_0_Params			;$01E549	|
+	JMP VWF_TextLoopEntry			;$01E549	|
 
 CODE_FL_01E54C: ;-----------| Text command 0B - ???
 	LDA #$0080					;$01E54C	|
 	TSB $0066					;$01E54F	|
-	JMP Consume_0_Params			;$01E552	|
+	JMP VWF_TextLoopEntry			;$01E552	|
 
 
 
@@ -12665,7 +12665,7 @@ CODE_FL_01E588: ;-----------| Text command 0E - Use data from pointer $ZZYYXX
 	LDA [$45]					;$01E5A5	|| Fetch next three bytes as the return address.
 	STA $45						;$01E5A7	||
 	STY $47						;$01E5A9	|/
-	JMP Consume_0_Params			;$01E5AB	|
+	JMP VWF_TextLoopEntry			;$01E5AB	|
 
 
 
@@ -12756,7 +12756,7 @@ CODE_FL_01E64C: ;			|
 	CLC							;$01E650	|
 	ADC #$0021					;$01E651	|
 	STA [$14]					;$01E654	|
-	JMP Consume_0_Params			;$01E656	|
+	JMP VWF_TextLoopEntry			;$01E656	|
 
 DATA_01E659: ;$01E659	| ???
 	dw $000A,$0064,$03E8,$2710
@@ -12801,23 +12801,23 @@ CODE_FL_01E694: ;-----------| Text command 11 - Write 16-bit value to RAM addres
 CODE_FL_01E6A7: ;-----------| Text command 12 - Enable text cursor
 	LDA #$0001					;$01E6A7	|
 	TSB $006B					;$01E6AA	|
-	JMP Consume_0_Params			;$01E6AD	|
+	JMP VWF_TextLoopEntry			;$01E6AD	|
 
 CODE_FL_01E6B0: ;-----------| Text command 13 - Disable text cursor
 	LDA #$0001					;$01E6B0	|
 	TRB $006B					;$01E6B3	|
-	JMP Consume_0_Params			;$01E6B6	|
+	JMP VWF_TextLoopEntry			;$01E6B6	|
 
 
 
 CODE_FL_01E6B9: ;-----------| Text command 14 - Enable secondary color
 	LDA #$0001					;$01E6B9	|
 	STA $006D					;$01E6BC	|
-	JMP Consume_0_Params			;$01E6BF	|
+	JMP VWF_TextLoopEntry			;$01E6BF	|
 
 CODE_FL_01E6C2: ;-----------| Text command 15 - Disable secondary color
 	STZ $006D					;$01E6C2	|
-	JMP Consume_0_Params			;$01E6C5	|
+	JMP VWF_TextLoopEntry			;$01E6C5	|
 
 
 
@@ -12876,11 +12876,11 @@ CODE_FL_01E727:
 	LDA $006B					;$01E727	|
 	BPL CODE_FL_01E736			;$01E72A	|
 	TRB $006B					;$01E72C	|
-CODE_FL_01E72F: ;			|
+CODE_FL_01E72F: 				;			|
 	LDA #$2001					;$01E72F	|
-CODE_FL_01E732: ;			|
-	JSL $00880C					;$01E732	|
-CODE_FL_01E736: ;			|
+CODE_FL_01E732: 				;			|
+	JSL WriteTile				;$01E732	|
+CODE_FL_01E736: 				;			|
 	RTL							;$01E736	|
 
 
@@ -13087,11 +13087,11 @@ DATA_01E8C1: ;$01E8C1	|
 ;  /////   Rest of this bank handles the status bar.   ///////////////////////////////
 ;  ///////////////////////////////////////////////////////////////////////////////////
 
-CODE_FL_01E921: ;-----------| Routine to run setup for the status bar.
-	JSR CODE_FL_01E925			;$01E921	|
+SetupStatusBar_L: 				;-----------| Routine to run setup for the status bar.
+	JSR SetupStatusBar			;$01E921	|
 	RTL							;$01E924	|
 
-CODE_FL_01E925: 
+SetupStatusBar: 
 	LDA $0500					;$01E925	|\ Copy the back area color? Although $1517 is unused...? Maybe.
 	STA $1517					;$01E928	|/
 	LDA #$0200					;$01E92B	|\ Set main/sub screen designation for the status bar.
@@ -13216,14 +13216,14 @@ CODE_FL_01EA1F: 				;-----------| IRQ routine for the in-game HUD.
 	STA $2105					;$01EA60	|/
 	PLX							;$01EA63	|
 	PLA							;$01EA64	|
-	JML $0084BB					;$01EA65	| Return IRQ.
+	JML IRQ_SNES_noIRQ			;$01EA65	| Return IRQ.
 
 
-CODE_FL_01EA69: 				;-----------| Status bar handler routine.
-	JSR CODE_FL_01EA6D			;$01EA69	|
+HandleStatusBar_L: 				;-----------| Status bar handler routine.
+	JSR HandleStatusBar			;$01EA69	|
 	RTL							;$01EA6C	|
 
-CODE_FL_01EA6D: 
+HandleStatusBar: 
 	LDA $7A1B					;$01EA6D	|\ 
 	BPL CODE_FL_01EA75			;$01EA70	|| If a boss isn't active, ???
 	STZ $7A1F					;$01EA72	|/
@@ -15536,8 +15536,8 @@ CODE_FL_01FC43:					;```````````| Subroutine used by the above.
 	AND #$0003					;$01FC54	|
 	BNE CODE_FL_01FC60			;$01FC57	|
 	LDA #$0046					;$01FC59	|
-	JSL $00D12D					;$01FC5C	|
-CODE_FL_01FC60: ;			|
+	JSL CODE_FL_00D12D			;$01FC5C	|
+CODE_FL_01FC60: 				;			|
 	PLA							;$01FC60	|
 	RTS							;$01FC61	|
 
