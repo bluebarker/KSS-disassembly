@@ -118,7 +118,7 @@ CODE_FN_01810D:
 	AND.W #$00FF                  ;$018116	|
 	BEQ CODE_818139               ;$018119	|
 	STA.W $331A                   ;$01811B	|
-	LDA.W $32F2                   ;$01811E	|
+	LDA.W !Respawn_Room                   ;$01811E	|
 	STA.W $3312                   ;$018121	|
 	LDA.W $332A                   ;$018124	|
 	STA.W $3318                   ;$018127	|
@@ -138,7 +138,7 @@ CODE_FN_01813A:
 	BNE CODE_818169               ;$01813D	|
 	INC.W $331A                   ;$01813F	|
 	LDA.W $3312                   ;$018142	|
-	STA.W $32F2                   ;$018145	|
+	STA.W !Respawn_Room                   ;$018145	|
 	LDA.W $3318                   ;$018148	|
 	STA.W $332A                   ;$01814B	|
 	DEC A                         ;$01814E	|
@@ -334,7 +334,7 @@ CODE_8182A6:
 	JSL.L CreateNewObject2        ;$0182F7	|
 	TAX                           ;$0182FB	|
 	LDA.W #$0020                  ;$0182FC	|
-	STA.W $737E                   ;$0182FF	|
+	STA.W !Helper_HP                   ;$0182FF	|
 	RTL                           ;$018302	|
 
 CODE_FL_018303:
@@ -663,18 +663,18 @@ PTR16_018574:
     dw CODE_01858B                ;$018578 |
 
 CODE_01857A:
-    LDA.W $32F2                   ;$01857A |
+    LDA.W !Respawn_Room                   ;$01857A |
     AND.W #$000F                  ;$01857D |
     RTS                           ;$018580 |
 
 CODE_018581:
-    LDA.W $32F2                   ;$018581 |
+    LDA.W !Respawn_Room                   ;$018581 |
     AND.W #$000F                  ;$018584 |
     ORA.W #$0010                  ;$018587 |
     RTS                           ;$01858A |
 
 CODE_01858B:
-    LDA.W $32F2                   ;$01858B |
+    LDA.W !Respawn_Room                   ;$01858B |
     AND.W #$000F                  ;$01858E |
     LSR A                         ;$018591 |
     ORA.W #$0020                  ;$018592 |
@@ -759,7 +759,7 @@ CODE_JP_01865F:
 	LDA.W $32EE                   ;$01865F	|
 	CMP.W #$0007                  ;$018662	|
 	BNE CODE_018673               ;$018665	|
-	LDA.W $32F2                   ;$018667	|
+	LDA.W !Respawn_Room                   ;$018667	|
 	CMP.W #$0001                  ;$01866A	|
 	BNE CODE_018673               ;$01866D	|
 	JSL.L CODE_FL_D5999E          ;$01866F	|
@@ -1418,9 +1418,9 @@ CODE_818B30:
 	ASL A                         ;$018B57	|
 	STA.W $3338                   ;$018B58	|
 	LDA.W #$0014                  ;$018B5B	|
-	STA.W $3364                   ;$018B5E	|
+	STA.W !Room_Bound_Offset_X                   ;$018B5E	|
 	LDA.W #$0014                  ;$018B61	|
-	STA.W $3360                   ;$018B64	|
+	STA.W !Room_Bound_Offset_Y                   ;$018B64	|
 	LDA.B $51                     ;$018B67	|
 	STY.W $2251                   ;$018B69	|
 	STA.W $2253                   ;$018B6C	|
@@ -1439,7 +1439,7 @@ CODE_818B82:
 	STA.W $336A                   ;$018B82	|
 	CLC                           ;$018B85	|
 	ADC.W #$00F4                  ;$018B86	|
-	STA.W $3366                   ;$018B89	|
+	STA.W !Room_Size_X                   ;$018B89	|
 	LDA.B $57                     ;$018B8C	|
 	STA.W $2253                   ;$018B8E	|
 	SEC                           ;$018B91	|
@@ -1457,7 +1457,7 @@ CODE_818BA4:
 	STA.W $3368                   ;$018BA4	|
 	CLC                           ;$018BA7	|
 	ADC.W #$00B0                  ;$018BA8	|
-	STA.W $3362                   ;$018BAB	|
+	STA.W !Room_Size_Y                   ;$018BAB	|
 	LDA.W #$0001                  ;$018BAE	|
 	STA.W $2250                   ;$018BB1	|
 	LDA.W #$4000                  ;$018BB4	|
@@ -1472,7 +1472,7 @@ CODE_818BA4:
 	BEQ CODE_818BD6               ;$018BCB	|
 	LDA.W #$7F00                  ;$018BCD	|
 	STA.W $336A                   ;$018BD0	|
-	STA.W $3366                   ;$018BD3	|
+	STA.W !Room_Size_X                   ;$018BD3	|
 
 CODE_818BD6:
 	RTL                           ;$018BD6	|
@@ -1598,7 +1598,7 @@ CODE_FN_018C74:
 	LDA.W $32EE                   ;$018CBA	|
 	ASL A                         ;$018CBD	|
 	STA.W $32F0                   ;$018CBE	|
-	LDA.W $32F2                   ;$018CC1	|
+	LDA.W !Respawn_Room                   ;$018CC1	|
 	ASL A                         ;$018CC4	|
 	ASL A                         ;$018CC5	|
 	STA.W $32F4                   ;$018CC6	|
@@ -1849,7 +1849,7 @@ CODE_FN_018E99:
 	ADC.W $2308                   ;$018EFD	|
 	ASL A                         ;$018F00	|
 	TAX                           ;$018F01	|
-	LDA.L DATA16_018F2E,X          ;$018F02	|
+	LDA.L DATA16_018F2E,X         ;$018F02	|
 	STA.W $3378                   ;$018F06	|
 	LDA.W $2306                   ;$018F09	|
 	ASL A                         ;$018F0C	|
@@ -2013,7 +2013,7 @@ CODE_FL_019031:
 	BPL CODE_819062               ;$019056	|
 	LDA.W #$9062                  ;$019058	|
 	LDX.W #$0001                  ;$01905B	|
-	JML.L SA1_ExecuteSNES              ;$01905E	|
+	JML.L SA1_ExecuteSNES         ;$01905E	|
 
 CODE_819062:
 	PEA.W $007F                   ;$019062	|
@@ -2073,10 +2073,10 @@ CODE_8190B6:
 	STA.B $32                     ;$0190CD	|
 	LDA.B $00                     ;$0190CF	|
 	STA.B $37                     ;$0190D1	|
-	JML.L WriteToDMABuffer     ;$0190D3	|
+	JML.L WriteToDMABuffer        ;$0190D3	|
 	STZ.B $00                     ;$0190D7	|
 	INC.B $00                     ;$0190D9	|
-	LDA.W $7394                   ;$0190DB	|
+	LDA.W !Load_Special_Dest      ;$0190DB	|
 	CMP.W #$0000                  ;$0190DE	|
 	BNE CODE_819145               ;$0190E1	|
 	STZ.B $14                     ;$0190E3	|
@@ -2094,10 +2094,10 @@ CODE_8190B6:
 	TAY                           ;$0190FE	|
 	LDA.B [$14],Y                 ;$0190FF	|
 	CLC                           ;$019101	|
-	ADC.W $32F2                   ;$019102	|
-	ADC.W $32F2                   ;$019105	|
-	ADC.W $32F2                   ;$019108	|
-	ADC.W $32F2                   ;$01910B	|
+	ADC.W !Respawn_Room           ;$019102	|
+	ADC.W !Respawn_Room           ;$019105	|
+	ADC.W !Respawn_Room           ;$019108	|
+	ADC.W !Respawn_Room           ;$01910B	|
 	TAY                           ;$01910E	|
 	LDA.B [$14],Y                 ;$01910F	|
 	STA.B $18                     ;$019111	|
@@ -2133,7 +2133,7 @@ CODE_819145:
 	RTL                           ;$019145	|
 
 CODE_FL_019146:
-	LDY.W $7392                   ;$019146	|
+	LDY.W !Reload_Room            ;$019146	|
 	BNE CODE_8191AF               ;$019149	|
 	LDY.W $3334                   ;$01914B	|
 	BEQ CODE_8191AF               ;$01914E	|
@@ -2143,7 +2143,7 @@ CODE_FL_019146:
 	LSR A                         ;$019155	|
 	SEP #$20                      ;$019156	|
 	STA.W $30A1                   ;$019158	|
-	STA.W $305F                   ;$01915B	|
+	STA.W !Screen_Brightness      ;$01915B	|
 	REP #$20                      ;$01915E	|
 	TYA                           ;$019160	|
 	BMI CODE_819193               ;$019161	|
@@ -2151,7 +2151,7 @@ CODE_FL_019146:
 	PHY                           ;$019164	|
 	LDA.W #$90D7                  ;$019165	|
 	LDX.W #$0001                  ;$019168	|
-	JSL.L SA1_ExecuteSNES              ;$01916B	|
+	JSL.L SA1_ExecuteSNES         ;$01916B	|
 	JSL.L CODE_FL_03A2D4          ;$01916F	|
 	BCC CODE_819177               ;$019173	|
 	STZ.B $00                     ;$019175	|
@@ -2164,12 +2164,12 @@ CODE_819177:
 	ASL A                         ;$01917D	|
 	ASL A                         ;$01917E	|
 	ASL A                         ;$01917F	|
-	JSL.L CODE_FL_00CE67         	  ;$019180	|
+	JSL.L CODE_FL_00CE67          ;$019180	|
 	LDA.W $33CC                   ;$019184	|
 	AND.W #$00FF                  ;$019187	|
 	BNE CODE_819193               ;$01918A	|
 	LDA.W #$0000                  ;$01918C	|
-	JSL.L CODE_FL_00D12D          ;$01918F	|
+	JSL.L PlaySFX          		  ;$01918F	|
 
 CODE_819193:
 	STY.W $3334                   ;$019193	|
@@ -2181,7 +2181,7 @@ CODE_819193:
 	STZ.W $3334                   ;$0191A2	|
 	STZ.W $73A4                   ;$0191A5	|
 	JSR.W CODE_FN_01A5B9          ;$0191A8	|
-	INC.W $7392                   ;$0191AB	|
+	INC.W !Reload_Room                   ;$0191AB	|
 
 CODE_8191AE:
 	RTL                           ;$0191AE	|
@@ -2218,10 +2218,10 @@ CODE_0191C6:
 CODE_JP_0191E1:
 	LDY.W #$0006                  ;$0191E1	|
 	LDA.B [$14],Y                 ;$0191E4	|
-	STA.W $330C                   ;$0191E6	|
+	STA.W !Kirby_X_Respawn        ;$0191E6	|
 	LDY.W #$0008                  ;$0191E9	|
 	LDA.B [$14],Y                 ;$0191EC	|
-	STA.W $3310                   ;$0191EE	|
+	STA.W !Kirby_Y_Respawn        ;$0191EE	|
 	LDA.B [$14]                   ;$0191F1	|
 	BMI CODE_819254               ;$0191F3	|
 	LDY.W #$0002                  ;$0191F5	|
@@ -2274,8 +2274,8 @@ CODE_81924B:
 	LDX.W #$0003                  ;$01924B	|
 
 CODE_81924E:
-	STX.W $7394                   ;$01924E	|
-	STA.W $32F2                   ;$019251	|
+	STX.W !Load_Special_Dest     ;$01924E	|
+	STA.W !Respawn_Room           ;$019251	|
 
 CODE_819254:
 	LDA.W #$000F                  ;$019254	|
@@ -2508,7 +2508,7 @@ CODE_8193F7:
 	RTL                           ;$0193FD	|
 
 CODE_8193FE:
-	LDA.W $7368                   ;$0193FE	|
+	LDA.W !Camera_Lock                   ;$0193FE	|
 	BEQ CODE_819404               ;$019401	|
 	RTL                           ;$019403	|
 
@@ -2643,16 +2643,16 @@ CODE_0194CA:
 	CLC                           ;$0194EC	|
 	ADC.B $00                     ;$0194ED	|
 	STA.W $3350                   ;$0194EF	|
-	LDA.W $3364                   ;$0194F2	|
+	LDA.W !Room_Bound_Offset_X                   ;$0194F2	|
 	CMP.B $55                     ;$0194F5	|
 	BCC CODE_019508               ;$0194F7	|
 	CLC                           ;$0194F9	|
 	ADC.B $00                     ;$0194FA	|
-	STA.W $3364                   ;$0194FC	|
-	LDA.W $3366                   ;$0194FF	|
+	STA.W !Room_Bound_Offset_X                   ;$0194FC	|
+	LDA.W !Room_Size_X                   ;$0194FF	|
 	CLC                           ;$019502	|
 	ADC.B $00                     ;$019503	|
-	STA.W $3366                   ;$019505	|
+	STA.W !Room_Size_X                   ;$019505	|
 
 CODE_019508:
 	LDA.W $3370                   ;$019508	|
@@ -3389,7 +3389,7 @@ CODE_819A47:
 	LDX.W #$0001                  ;$019A59	|
 	JSL.L SNES_ExecuteSA1         ;$019A5C	|
 	LDA.W #$0003                  ;$019A60	|
-	JSL.L CODE_FL_00D12D          ;$019A63	|
+	JSL.L PlaySFX          ;$019A63	|
 
 CODE_819A67:
 	LDX.B $2A                     ;$019A67	|
@@ -3560,11 +3560,11 @@ CODE_FL_019B9F:
 
 CODE_819BA7:
 	PHX                           ;$019BA7	|
-	LDA.W $6A02                   ;$019BA8	|
+	LDA.W !Kirby_Y_Pos                   ;$019BA8	|
 	CLC                           ;$019BAB	|
 	ADC.L DATA16_019C56,X          ;$019BAC	|
 	TAY                           ;$019BB0	|
-	LDA.W $6988                   ;$019BB1	|
+	LDA.W !Kirby_X_Pos                   ;$019BB1	|
 	CLC                           ;$019BB4	|
 	ADC.L DATA16_019C48,X          ;$019BB5	|
 	TAX                           ;$019BB9	|
@@ -3585,22 +3585,22 @@ CODE_819BCD:
 	PLX                           ;$019BD7	|
 	LDA.B $49                     ;$019BD8	|
 	BEQ CODE_819C13               ;$019BDA	|
-	LDA.W $6A02                   ;$019BDC	|
+	LDA.W !Kirby_Y_Pos                   ;$019BDC	|
 	CLC                           ;$019BDF	|
 	ADC.L DATA16_019C56,X          ;$019BE0	|
 	TAY                           ;$019BE4	|
-	LDA.W $6988                   ;$019BE5	|
+	LDA.W !Kirby_X_Pos                   ;$019BE5	|
 	CLC                           ;$019BE8	|
 	ADC.L DATA16_019C48,X          ;$019BE9	|
 	BRA CODE_819C35               ;$019BED	|
 
 CODE_819BEF:
 	PHX                           ;$019BEF	|
-	LDA.W $6A02                   ;$019BF0	|
+	LDA.W !Kirby_Y_Pos                   ;$019BF0	|
 	CLC                           ;$019BF3	|
 	ADC.L DATA16_019C56,X          ;$019BF4	|
 	TAY                           ;$019BF8	|
-	LDA.W $6988                   ;$019BF9	|
+	LDA.W !Kirby_X_Pos                   ;$019BF9	|
 	SEC                           ;$019BFC	|
 	SBC.L DATA16_019C48,X          ;$019BFD	|
 	TAX                           ;$019C01	|
@@ -3624,11 +3624,11 @@ CODE_819C15:
 	PLX                           ;$019C1F	|
 	LDA.B $49                     ;$019C20	|
 	BEQ CODE_819C13               ;$019C22	|
-	LDA.W $6A02                   ;$019C24	|
+	LDA.W !Kirby_Y_Pos                   ;$019C24	|
 	CLC                           ;$019C27	|
 	ADC.L DATA16_019C56,X          ;$019C28	|
 	TAY                           ;$019C2C	|
-	LDA.W $6988                   ;$019C2D	|
+	LDA.W !Kirby_X_Pos                   ;$019C2D	|
 	SEC                           ;$019C30	|
 	SBC.L DATA16_019C48,X          ;$019C31	|
 
@@ -4525,7 +4525,7 @@ CODE_81A287:
 CODE_81A288:
 	LDA.W $7A97                   ;$01A288	|
 	BNE CODE_81A298               ;$01A28B	|
-	LDA.W $7368                   ;$01A28D	|
+	LDA.W !Camera_Lock                   ;$01A28D	|
 	BNE CODE_81A298               ;$01A290	|
 	JSR.W CODE_FN_01A2FD          ;$01A292	|
 	JSR.W CODE_FN_01A42F          ;$01A295	|
@@ -5047,7 +5047,7 @@ CODE_81A5DC:
 	STA.W $3370                   ;$01A5DC	|
 	CLC                           ;$01A5DF	|
 	ADC.W #$000C                  ;$01A5E0	|
-	STA.W $3364                   ;$01A5E3	|
+	STA.W !Room_Bound_Offset_X                   ;$01A5E3	|
 	LDA.W $3372                   ;$01A5E6	|
 	CLC                           ;$01A5E9	|
 	ADC.W $790E,Y                 ;$01A5EA	|
@@ -5059,7 +5059,7 @@ CODE_81A5F5:
 	STA.W $3372                   ;$01A5F5	|
 	CLC                           ;$01A5F8	|
 	ADC.W #$00F4                  ;$01A5F9	|
-	STA.W $3366                   ;$01A5FC	|
+	STA.W !Room_Size_X                   ;$01A5FC	|
 	RTL                           ;$01A5FF	|
 
 CODE_FL_01A600:
@@ -5085,9 +5085,9 @@ CODE_81A619:
 	STA.W $3372                   ;$01A61F	|
 	CLC                           ;$01A622	|
 	ADC.W #$000C                  ;$01A623	|
-	STA.W $3364                   ;$01A626	|
+	STA.W !Room_Bound_Offset_X                   ;$01A626	|
 	ADC.W #$00E8                  ;$01A629	|
-	STA.W $3366                   ;$01A62C	|
+	STA.W !Room_Size_X                   ;$01A62C	|
 	RTL                           ;$01A62F	|
 
 CODE_FL_01A630:
@@ -5110,11 +5110,11 @@ CODE_81A645:
 	STA.W $336E                   ;$01A64B	|
 	CLC                           ;$01A64E	|
 	ADC.W #$000C                  ;$01A64F	|
-	STA.W $3360                   ;$01A652	|
+	STA.W !Room_Bound_Offset_Y                   ;$01A652	|
 	LDA.W $336E                   ;$01A655	|
 	CLC                           ;$01A658	|
 	ADC.W #$00B0                  ;$01A659	|
-	STA.W $3362                   ;$01A65C	|
+	STA.W !Room_Size_Y                   ;$01A65C	|
 	RTL                           ;$01A65F	|
 
 CODE_FL_01A660:
@@ -5136,15 +5136,15 @@ CODE_FN_01A66F:
 	STA.W $336E                   ;$01A67E	|
 	CLC                           ;$01A681	|
 	ADC.W #$00B0                  ;$01A682	|
-	STA.W $3362                   ;$01A685	|
+	STA.W !Room_Size_Y                   ;$01A685	|
 	LDA.W $336A                   ;$01A688	|
 	STA.W $3372                   ;$01A68B	|
 	ADC.W #$00F4                  ;$01A68E	|
-	STA.W $3366                   ;$01A691	|
+	STA.W !Room_Size_X                   ;$01A691	|
 	LDA.W #$0014                  ;$01A694	|
-	STA.W $3364                   ;$01A697	|
+	STA.W !Room_Bound_Offset_X                   ;$01A697	|
 	LDA.W #$0014                  ;$01A69A	|
-	STA.W $3360                   ;$01A69D	|
+	STA.W !Room_Bound_Offset_Y                   ;$01A69D	|
 	RTS                           ;$01A6A0	|
 
 CODE_FL_01A6A1:
@@ -5172,7 +5172,7 @@ CODE_01A6C3:
 	STA.W $336C                   ;$01A6C3	|
 	CLC                           ;$01A6C6	|
 	ADC.W #$000C                  ;$01A6C7	|
-	STA.W $3360                   ;$01A6CA	|
+	STA.W !Room_Bound_Offset_Y                   ;$01A6CA	|
 	RTL                           ;$01A6CD	|
 	LDA.B $2C                     ;$01A6CE	|
 	CMP.W $3368                   ;$01A6D0	|
@@ -5183,7 +5183,7 @@ CODE_01A6D8:
 	STA.W $336E                   ;$01A6D8	|
 	CLC                           ;$01A6DB	|
 	ADC.W #$00BC                  ;$01A6DC	|
-	STA.W $3362                   ;$01A6DF	|
+	STA.W !Room_Size_Y                   ;$01A6DF	|
 	RTL                           ;$01A6E2	|
 	LDA.B $2A                     ;$01A6E3	|
 	BMI CODE_01A6EC               ;$01A6E5	|
@@ -5197,7 +5197,7 @@ CODE_01A6EF:
 	STA.W $3370                   ;$01A6EF	|
 	CLC                           ;$01A6F2	|
 	ADC.W #$000C                  ;$01A6F3	|
-	STA.W $3364                   ;$01A6F6	|
+	STA.W !Room_Bound_Offset_X                   ;$01A6F6	|
 	RTL                           ;$01A6F9	|
 	LDA.B $2A                     ;$01A6FA	|
 	CMP.W $336A                   ;$01A6FC	|
@@ -5208,7 +5208,7 @@ CODE_01A704:
 	STA.W $3372                   ;$01A704	|
 	CLC                           ;$01A707	|
 	ADC.W #$00F4                  ;$01A708	|
-	STA.W $3366                   ;$01A70B	|
+	STA.W !Room_Size_X                   ;$01A70B	|
 	RTL                           ;$01A70E	|
 
 CODE_FL_01A70F:
@@ -5218,9 +5218,9 @@ CODE_FL_01A70F:
 	STA.W $3372                   ;$01A718	|
 	CLC                           ;$01A71B	|
 	ADC.W #$00F4                  ;$01A71C	|
-	STA.W $3366                   ;$01A71F	|
+	STA.W !Room_Size_X                   ;$01A71F	|
 	LDA.W #$0014                  ;$01A722	|
-	STA.W $3364                   ;$01A725	|
+	STA.W !Room_Bound_Offset_X                   ;$01A725	|
 	RTL                           ;$01A728	|
 
 CODE_FL_01A729:
@@ -5230,9 +5230,9 @@ CODE_FL_01A729:
 	STA.W $336E                   ;$01A732	|
 	CLC                           ;$01A735	|
 	ADC.W #$00B0                  ;$01A736	|
-	STA.W $3362                   ;$01A739	|
+	STA.W !Room_Size_Y                   ;$01A739	|
 	LDA.W #$0014                  ;$01A73C	|
-	STA.W $3360                   ;$01A73F	|
+	STA.W !Room_Bound_Offset_Y                   ;$01A73F	|
 	RTL                           ;$01A742	|
 
 CODE_FN_01A743:
@@ -5568,7 +5568,7 @@ CODE_JP_01A9EB:
 	JMP.W CODE_JP_01AA9B          ;$01A9F2	|
 
 CODE_81A9F5:
-	LDA.W $7368                   ;$01A9F5	|
+	LDA.W !Camera_Lock                   ;$01A9F5	|
 	BNE CODE_01AA36               ;$01A9F8	|
 	LDA.W $73E9,Y                 ;$01A9FA	|
 	LDX.W #$0000                  ;$01A9FD	|
@@ -5769,7 +5769,7 @@ DATA16_01AB65:
     dw $0108,$00F0,$00D8,$00C0    ;$01AB65 |
 
 CODE_JP_01AB6D:
-	LDA.W $7368                   ;$01AB6D	|
+	LDA.W !Camera_Lock                   ;$01AB6D	|
 	BEQ CODE_81AB75               ;$01AB70	|
 	JMP.W CODE_81AC01             ;$01AB72	|
 
@@ -5895,7 +5895,7 @@ CODE_81AC68:
 	JMP.W CODE_JP_01B619          ;$01AC68	|
 
 CODE_01AC6B:
-	LDA.W $7368                   ;$01AC6B	|
+	LDA.W !Camera_Lock                   ;$01AC6B	|
 	BNE CODE_81AC55               ;$01AC6E	|
 	LDA.B $00                     ;$01AC70	|
 	AND.W #$1FFF                  ;$01AC72	|
@@ -6851,10 +6851,10 @@ CODE_01B5AE:
     ADC.B $1A                     ;$01B5AF |
     STA.B $1A                     ;$01B5B1 |
     LDA.B $16                     ;$01B5B3 |
-    CMP.W $3366                   ;$01B5B5 |
+    CMP.W !Room_Size_X                   ;$01B5B5 |
     BCS CODE_01B5C1               ;$01B5B8 |
     LDA.B $1A                     ;$01B5BA |
-    CMP.W $3362                   ;$01B5BC |
+    CMP.W !Room_Size_Y                   ;$01B5BC |
     BCC CODE_01B5CB               ;$01B5BF |
 
 CODE_01B5C1:
@@ -6925,7 +6925,7 @@ CODE_01B61C:
 	STA.W $3031                   ;$01B64A	|
 	LDA.W #$0001                  ;$01B64D	|
 	JSL.L CODE_FL_00AD79          ;$01B650	|
-	LDA.W $7368                   ;$01B654	|
+	LDA.W !Camera_Lock                   ;$01B654	|
 	BNE CODE_JP_01B66F            ;$01B657	|
 	LDA.B $00                     ;$01B659	|
 	AND.W #$FFFC                  ;$01B65B	|
@@ -7128,7 +7128,7 @@ CODE_01B7AB:
 
 CODE_01B7B8:
     LDA.W #$000D                  ;$01B7B8 |
-    JSL.L CODE_FL_00D12D          ;$01B7BB |
+    JSL.L PlaySFX          ;$01B7BB |
     JMP.W CODE_JP_01B66F          ;$01B7BF |
 
 CODE_01B7C2:
@@ -7228,7 +7228,7 @@ CODE_01B85F:
 
 CODE_01B86E:
     LDA.W #$000D                  ;$01B86E |
-    JSL.L CODE_FL_00D12D          ;$01B871 |
+    JSL.L PlaySFX          ;$01B871 |
     JMP.W CODE_JP_01B66F          ;$01B875 |
 
 CODE_01B878:
@@ -7332,12 +7332,12 @@ CODE_01B919:
 
 CODE_01B928:
 	LDA.W #$000D                  ;$01B928	|
-	JSL.L CODE_FL_00D12D          ;$01B92B	|
+	JSL.L PlaySFX          ;$01B92B	|
 	JMP.W CODE_JP_01B66F          ;$01B92F	|
 
 CODE_01B932:
 	LDA.W #$0007                  ;$01B932	|
-	JSL.L CODE_FL_00D12D          ;$01B935	|
+	JSL.L PlaySFX          ;$01B935	|
 	JMP.W CODE_JP_01B66F          ;$01B939	|
 
 CODE_FN_01B93C:
@@ -8044,7 +8044,7 @@ CODE_01BED0:
     JML.L DestroyUsedObject          ;$01BEFA |
     LDX.W $6986,Y                 ;$01BEFE |
     LDA.W $6A00,Y                 ;$01BF01 |
-    CMP.W #$3362                  ;$01BF04 |
+    CMP.W #!Room_Size_Y                  ;$01BF04 |
     BCC CODE_01BF0E               ;$01BF07 |
     TYX                           ;$01BF09 |
     JML.L DestroyObject_L         ;$01BF0A |
@@ -8155,7 +8155,7 @@ CODE_01BFCD:
     JMP.W CODE_JP_01C01B          ;$01BFE5 |
     LDX.W $6986,Y                 ;$01BFE8 |
     LDA.W $6A00,Y                 ;$01BFEB |
-    CMP.W #$3362                  ;$01BFEE |
+    CMP.W #!Room_Size_Y                  ;$01BFEE |
     BCC CODE_01BFF8               ;$01BFF1 |
     TYX                           ;$01BFF3 |
     JML.L DestroyObject_L         ;$01BFF4 |
@@ -8398,7 +8398,7 @@ CODE_01C1F4:
 	RTS                           ;$01C216	|
 
 CODE_FN_01C217:
-	LDA.W $7368                   ;$01C217	|
+	LDA.W !Camera_Lock                   ;$01C217	|
 	BNE CODE_81C239               ;$01C21A	|
 	LDA.W $3324                   ;$01C21C	|
 	BMI CODE_81C239               ;$01C21F	|
@@ -12351,7 +12351,7 @@ CODE_FL_01E336: 				;			|
 	EOR #$8000					;$01E342	|
 	STA $0067					;$01E345	|
 	BPL CODE_FL_01E34E			;$01E348	|
-	JSL CODE_FL_00D12D			;$01E34A	|
+	JSL PlaySFX			;$01E34A	|
 CODE_FL_01E34E: 				;			|
 	LDA $005D					;$01E34E	|
 	STA $0061					;$01E351	|
@@ -12836,13 +12836,13 @@ CODE_FL_01E6D3: ;-----------| Text command 1D - ???
 CODE_FL_01E6DE: ;-----------| Text command 1E - Play song?
 	LDA [$45]					;$01E6DE	|
 	AND #$00FF					;$01E6E0	|
-	JSL CODE_FL_00D003			;$01E6E3	|
+	JSL PlayMusic			;$01E6E3	|
 	JMP Consume_1_Param			;$01E6E7	|
 
 CODE_FL_01E6EA: ;-----------| Text command 1F - Play song?
 	LDA [$45]					;$01E6EA	|
 	AND #$00FF					;$01E6EC	|
-	JSL CODE_FL_00D12D			;$01E6EF	|
+	JSL PlaySFX			;$01E6EF	|
 	JMP Consume_1_Param			;$01E6F3	|
 
 
@@ -13142,7 +13142,7 @@ CODE_FL_01E970: 				;			||
 	LDA #$20					;$01E999	|\ Enable IRQ.
 	TSB $3091					;$01E99B	|/
 	REP #$30					;$01E99E	|
-	STZ $7A19					;$01E9A0	|
+	STZ !Boss_HP					;$01E9A0	|
 	STZ $7A2D					;$01E9A3	|
 	STZ $7A2F					;$01E9A6	|
 	STZ $7A29					;$01E9A9	|
@@ -13153,7 +13153,7 @@ CODE_FL_01E970: 				;			||
 	STZ $00BF					;$01E9B8	|
 	LDA #$FFFF					;$01E9BB	|
 	STA $00B3					;$01E9BE	|
-	STA $7A1B					;$01E9C1	|
+	STA !Boss_Max_HP					;$01E9C1	|
 	STA $00B5					;$01E9C4	|
 	STA $00B7					;$01E9C7	|
 	STA $00B9					;$01E9CA	|
@@ -13224,7 +13224,7 @@ HandleStatusBar_L: 				;-----------| Status bar handler routine.
 	RTL							;$01EA6C	|
 
 HandleStatusBar: 
-	LDA $7A1B					;$01EA6D	|\ 
+	LDA !Boss_Max_HP					;$01EA6D	|\ 
 	BPL CODE_FL_01EA75			;$01EA70	|| If a boss isn't active, ???
 	STZ $7A1F					;$01EA72	|/
 CODE_FL_01EA75: 				;			|
@@ -13674,7 +13674,7 @@ CODE_FL_01EE53: 				;			|
 
 
 CODE_FL_01EE5C: 				;-----------| Status bar subroutine.
-	LDA $7A19					;$01EE5C	|
+	LDA !Boss_HP					;$01EE5C	|
 	BEQ CODE_FL_01EEAE			;$01EE5F	|
 CODE_FL_01EE61:
 	SEP #$20					;$01EE61	|
@@ -13714,7 +13714,7 @@ CODE_FL_01EE92: 				;			|
 	STA $7A2F					;$01EEA1	|
 	LDA #$3B					;$01EEA4	|
 	STA $7A2E					;$01EEA6	|
-	STZ $7A19					;$01EEA9	|
+	STZ !Boss_HP					;$01EEA9	|
 CODE_FL_01EEAC: 				;			|
 	REP #$20					;$01EEAC	|
 CODE_FL_01EEAE: 				;			|
@@ -13930,7 +13930,7 @@ CODE_FL_01F008: ;-----------| Status bar routine for The Great Cave Offensive.
 	BMI CODE_FL_01F01F			;$01F01A	||
 	ORA #$0004					;$01F01C	|| Get the layout to use.
 CODE_FL_01F01F:					;			|| Start with X = 0;
-	LDY $7A1B					;$01F01F	||  If a partner is active, add 4.
+	LDY !Boss_Max_HP					;$01F01F	||  If a partner is active, add 4.
 	BMI CODE_FL_01F027			;$01F022	||  If a boss is active, add 2.
 	ORA #$0002					;$01F024	||
 CODE_FL_01F027: ;			||
@@ -14085,7 +14085,7 @@ CODE_FL_01F15D: ;-----------| Status bar routine for Revenge of Meta-Knight.
 	BMI CODE_FL_01F168			;$01F163	||
 	ORA #$0004					;$01F165	|| Get the layout to use.
 CODE_FL_01F168:					;			|| Start with X = 0;
-	LDY $7A1B					;$01F168	||  If a partner is active, add 4.
+	LDY !Boss_Max_HP					;$01F168	||  If a partner is active, add 4.
 	BMI CODE_FL_01F170			;$01F16B	||  If a boss is active, add 2.
 	ORA #$0002					;$01F16D	||
 CODE_FL_01F170: ;			||
@@ -14234,7 +14234,7 @@ CODE_FL_01F27A: ;-----------| Revenge of Meta-Knight status bar routine 4 - Text
 	STA $157B					;$01F29F	|| Set color 0x32 (Kirby's HP bar) to #$0010 (a dark red).
 	LDA #$40E0					;$01F2A2	|| Set color 0x52 (boss HP bar) to #$40E0 (a dark blue).
 	STA $15BB					;$01F2A5	|/
-	LDA $7A1B					;$01F2A8	|\ 
+	LDA !Boss_Max_HP					;$01F2A8	|\ 
 	BPL CODE_FL_01F2B8			;$01F2AB	||
 	LDX #$056D					;$01F2AD	||
 	LDA #$00EB					;$01F2B0	|| Load the base tilemap from either
@@ -14253,7 +14253,7 @@ CODE_FL_01F2C1: ;			|
 	LDX #$165D					;$01F2CF	|\ Update Kirby's HP bar.
 	JSR WriteHPBar				;$01F2D2	|/
 CODE_FL_01F2D5: ;			|
-	LDA $7A1B					;$01F2D5	|\ Branch if a boss is active.
+	LDA !Boss_Max_HP					;$01F2D5	|\ Branch if a boss is active.
 	BPL CODE_FL_01F2E2			;$01F2D8	|/
 	LDX #$16A8					;$01F2DA	|\ Write the score.
 	JSR CODE_FL_01F947			;$01F2DD	|/
@@ -14385,7 +14385,7 @@ CODE_FL_01F3C8: ;			|
 
 CODE_FL_01F3D3: ;-----------| Status bar subroutine for Revenge of Meta-Knight.
 	SEP #$10					;$01F3D3	|
-	LDA $73A0					;$01F3D5	|
+	LDA !RoMK_Timer					;$01F3D5	|
 	STA $4204					;$01F3D8	|
 	LDX #$03					;$01F3DB	|
 	STX $4206					;$01F3DD	|
@@ -14447,7 +14447,7 @@ CODE_FL_01F436: ;-----------| Status bar routine for Milky Way Wishes.
 	BMI CODE_FL_01F441			;$01F43C	||
 	ORA #$0004					;$01F43E	|| Get the layout to use.
 CODE_FL_01F441:					;			|| Start with A = 0;
-	LDY $7A1B					;$01F441	||  If a partner is active, add 4.
+	LDY !Boss_Max_HP					;$01F441	||  If a partner is active, add 4.
 	BMI CODE_FL_01F449			;$01F444	||  If a boss is active, add 2.
 	ORA #$0002					;$01F446	||
 CODE_FL_01F449: ;			||
@@ -14636,7 +14636,7 @@ CODE_FL_01F5C9: ;-----------| Status bar routine for The Arena, Sound Test, Guid
 	BMI CODE_FL_01F5D4			;$01F5CF	|| Get the layout to use.
 	ORA #$0004					;$01F5D1	|| Start with A = 0;
 CODE_FL_01F5D4: ;			||  If a partner is active, add 4.
-	LDY $7A1B					;$01F5D4	||  If a boss is active, add 2.
+	LDY !Boss_Max_HP					;$01F5D4	||  If a boss is active, add 2.
 	BMI CODE_FL_01F5DC			;$01F5D7	||
 	ORA #$0002					;$01F5D9	|/
 CODE_FL_01F5DC: ;			|
@@ -14938,7 +14938,7 @@ CODE_FL_01F81F: ;-----------| Subroutine used by Spring Breeze/Dyna Blade to get
 	BMI CODE_FL_01F82A			;$01F825	|| If the player has a partner, add 2.
 	ORA #$0002					;$01F827	|/
 CODE_FL_01F82A: ;			|
-	LDY $7A1B					;$01F82A	|\ 
+	LDY !Boss_Max_HP					;$01F82A	|\ 
 	BMI CODE_FL_01F832			;$01F82D	|| If a boss is active, add 4.
 	ORA #$0004					;$01F82F	|/
 CODE_FL_01F832: ;			|
@@ -15035,11 +15035,11 @@ CODE_FL_01F8B6: ;			|
 
 
 CODE_FL_01F8B7:					;-----------| Subroutine to write the player's life count into the status bar. X = address to write to4.
-	LDA $737A					;$01F8B7	|
+	LDA !Lives					;$01F8B7	|
 	CMP #$0064					;$01F8BA	|
 	BCC CODE_FL_01F8C5			;$01F8BD	|
 	LDA #$0063					;$01F8BF	|
-	STA $737A					;$01F8C2	|
+	STA !Lives					;$01F8C2	|
 CODE_FL_01F8C5: ;			|
 	CMP $00B9					;$01F8C5	|
 	BEQ CODE_FL_01F8ED			;$01F8C8	|
@@ -15464,7 +15464,7 @@ WriteStatusPal: ;-----------| Subroutine to write N colors to the status bar pal
 
 CODE_FL_01FBD0:					;-----------| Subroutine which most likely checks whether to update Kirby's HP bar.
 	STX $14						;$01FBD0	|
-	LDA $737C					;$01FBD2	|
+	LDA !Kirby_HP					;$01FBD2	|
 	BPL CODE_FL_01FBDA			;$01FBD5	|
 	LDA #$0000					;$01FBD7	|
 CODE_FL_01FBDA: ;			|
@@ -15527,7 +15527,7 @@ CODE_FL_01FC40: ;			|
 
 CODE_FL_01FC43:					;```````````| Subroutine used by the above.
 	PHA							;$01FC43	|
-	LDA $305F					;$01FC44	|
+	LDA !Screen_Brightness					;$01FC44	|
 	AND #$0080					;$01FC47	|
 	BNE CODE_FL_01FC60			;$01FC4A	|
 	LDA $7A97					;$01FC4C	|
@@ -15536,7 +15536,7 @@ CODE_FL_01FC43:					;```````````| Subroutine used by the above.
 	AND #$0003					;$01FC54	|
 	BNE CODE_FL_01FC60			;$01FC57	|
 	LDA #$0046					;$01FC59	|
-	JSL CODE_FL_00D12D			;$01FC5C	|
+	JSL PlaySFX			;$01FC5C	|
 CODE_FL_01FC60: 				;			|
 	PLA							;$01FC60	|
 	RTS							;$01FC61	|
@@ -15545,7 +15545,7 @@ CODE_FL_01FC60: 				;			|
 
 CODE_FL_01FC62:					;-----------| Subroutine which most likely checks whether to update the partner's HP bar.
 	STX $14						;$01FC62	|
-	LDA $737E					;$01FC64	|
+	LDA !Helper_HP					;$01FC64	|
 	BPL CODE_FL_01FC6C			;$01FC67	|
 	LDA #$0000					;$01FC69	|
 CODE_FL_01FC6C: ;			|
@@ -15608,7 +15608,7 @@ CODE_FL_01FCD2: ;			|
 
 
 CODE_FL_01FCD5:					;-----------| Subroutine which most likely checks whether to update the boss's HP bar.
-	LDA $7A1B					;$01FCD5	|\ Branch if a boss is actually active.
+	LDA !Boss_Max_HP					;$01FCD5	|\ Branch if a boss is actually active.
 	BPL CODE_FL_01FCE2			;$01FCD8	|/
 CODE_FL_01FCDA: ;			|
 	STZ $00D3					;$01FCDA	|
@@ -15625,12 +15625,12 @@ CODE_FL_01FCE9:
 	STZ $00DF					;$01FCE9	|
 CODE_FL_01FCEC: ;			|
 	STX $14						;$01FCEC	|
-	CMP $7A1D					;$01FCEE	|
+	CMP !Boss_HP_Meter					;$01FCEE	|
 	BCC CODE_FL_01FCF6			;$01FCF1	|
-	LDA $7A1D					;$01FCF3	|
+	LDA !Boss_HP_Meter					;$01FCF3	|
 CODE_FL_01FCF6: ;			|
 	STA $49						;$01FCF6	|
-	LDA $7A1D					;$01FCF8	|
+	LDA !Boss_HP_Meter					;$01FCF8	|
 	STA $4B						;$01FCFB	|
 	LDA #$FD52					;$01FCFD	|\ 
 	LDX #$0001					;$01FD00	|| Wait for the SA-1 chip to execute $01FD52.
