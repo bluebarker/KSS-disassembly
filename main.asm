@@ -136,6 +136,3 @@ incsrc "bank_16.asm"
 ;  incsrc "bank_BD.asm"
 ;  incsrc "bank_BE.asm"
 ;  incsrc "bank_BF.asm"
-
-;!checksum = read4($00FFDC)
-;print "Checksum: $",hex(!checksum)

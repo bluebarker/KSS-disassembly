@@ -1661,7 +1661,7 @@ SNES_ExecuteSA1:				;-----------| Subroutine to pass the SA-1 chip a routine to 
 	BIT $300A					;$008C64	|\ 
 	BPL .sa1Ready				;$008C67	||
 	PHA							;$008C69	|| Let the SA-1 finish if it's already doing something.
-	JSL $000026					;$008C6A	||
+	JSL RAM_ResponseWaitLoop	;$008C6A	||
 	PLA							;$008C6E	|/
   .sa1Ready:					;			|
 	STA $3008					;$008C6F	|\ 
@@ -1673,7 +1673,7 @@ SNES_ExecuteSA1:				;-----------| Subroutine to pass the SA-1 chip a routine to 
 	BIT $300A					;$008C7C	|\ 
 	BPL .sa1Done				;$008C7F	||
 	PHA							;$008C81	|| Wait for the SA-1 to finish... again?
-	JSL $000026					;$008C82	||
+	JSL RAM_ResponseWaitLoop	;$008C82	||
 	PLA							;$008C86	|/
   .sa1Done:						;			|
 	STA $3008					;$008C87	|\ 
@@ -14939,7 +14939,7 @@ SNES_Header:					;$00FFC0	| Internal ROM header.
 	db $33									; $00FFDA - (Fixed value; always $33)
 	db $00									; $00FFDB -    Version: 1.0
 	dw $3955								; $00FFDC - Complement checksum
-	dw $C6AA								; $00FFDE - Checksum
+	dw $C6AA								; $00FFDE - Checksum	(This checksum is overwritten by asar calculation)
 
 Interrupt_Vectors_Nat:			;$00FFE0	| Native mode interrupt vectors
 	dw $0000,$0000							; $00FFE0 - (unused)
