@@ -18,7 +18,7 @@ skip 12
 ; When jumped to, waits until both a message is received from the chip (via $2130) and a negative value is stored at $300F,
 ;  at which point it jumps to the routine pointed to by $300C (24-bit).
 ; This routine should be RTL-ended; after completing execution, it will return back to the start of this routine.
-SA1_CommandWaitLoop: skip 24
+RAM_CommandWaitLoop: skip 24
 
 ; === $7E0026 ===
 ; 14 bytes
@@ -26,7 +26,7 @@ SA1_CommandWaitLoop: skip 24
 ; When jumped to, waits until both a message is received from the chip (via $2300) and a positive 16-bit value is stored to $300A,
 ;  at which point it simply returns back to the caller.
 ; (Note: $300A is not automatically initialized) 
-SA1_ResponseWaitLoop: skip 14
+RAM_ResponseWaitLoop: skip 14
 
 ; Unidentified
 skip 2

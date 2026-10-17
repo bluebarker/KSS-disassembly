@@ -1,6 +1,3 @@
-!WaitForCommandLocation = $000E
-!WaitForResponseLocation = $0026
-
 ORG $008000
 
 RomStart:
@@ -143,11 +140,11 @@ CODE_0080AC:
 	STX $4315					;$008115	||
 	LDA #$02					;$008118	||
 	STA HW_MDMAEN				;$00811A	|/
-	LDX #!WaitForCommandLocation	;$00811D	|\ 
+	LDX.W #RAM_CommandWaitLoop	;$00811D	|\ 
 	STX HW_WMADD				;$008120	||
 	STZ $2183					;$008123	|| Transfer 24 bytes from $00818C to $0E-$25.
 	STZ $4310					;$008126	||  This sets up a loop to wait for requests from the SA-1.
-	LDX #$818C					;$008129	||  When the message is received, it jumps to the pointer in $300C.
+	LDX #SNES_WaitForCommand	;$008129	||  When the message is received, it jumps to the pointer in $300C.
 	STX $4312					;$00812C	||
 	STZ $4314					;$00812F	||
 	LDA #$80					;$008132	||
@@ -156,9 +153,9 @@ CODE_0080AC:
 	STX $4315					;$00813A	||
 	LDA #$02					;$00813D	||
 	STA HW_MDMAEN				;$00813F	|/
-	LDX #!WaitForResponseLocation	;$008142	|\ 
+	LDX.W #RAM_ResponseWaitLoop	;$008142	|\ 
 	STX HW_WMADD				;$008145	||
-	LDX #$81A3					;$008148	|| Transfer 14 bytes from $0081A3 to $26-$34.
+	LDX #SNES_WaitForResponse	;$008148	|| Transfer 14 bytes from $0081A3 to $26-$34.
 	STX $4312					;$00814B	||  This sets up a loop to wait for a response form the SA-1.
 	LDX #$000E					;$00814E	||  When a response is received, it returns to the routine that called it.
 	STX $4315					;$008151	||
@@ -187,8 +184,9 @@ CODE_0080AC:
 	JMP $000E					;$008189	| Wait for a command from the SA-1 chip (see the below routine).
 
 
-base !WaitForCommandLocation
-SNES_WaitForCommand:			;-----------| Wait routine for commands from the SA-1 chip. Written into RAM at $7E000E.
+SNES_WaitForCommand:
+base RAM_CommandWaitLoop
+			;-----------| Wait routine for commands from the SA-1 chip. Written into RAM at $7E000E.
 	STZ $300E					;$00818C	|\ 
 	LDA #$000F					;$008189	||
   .waitForMessage:				;			||
@@ -199,9 +197,11 @@ SNES_WaitForCommand:			;-----------| Wait routine for commands from the SA-1 chi
 	PHK							;$00819C	|\ 
 	PEA $000D					;$00819D	|| Jump to the routine specified by $300C.
 	JMP [$300C]					;$0081A0	|/
+base off
 
-base !WaitForResponseLocation
-SNES_WaitForResponse:			;-----------| Wait routine for a response from the SA-1 chip. Written into RAM at $7E0026.
+SNES_WaitForResponse:
+base RAM_ResponseWaitLoop
+			;-----------| Wait routine for a response from the SA-1 chip. Written into RAM at $7E0026.
 	LDA #$000F					;$0081A3	|\ 
   .waitForMessage				;			||
 	BIT $2300					;$0081A6	|| Wait for a response from the SA-1 chip.
