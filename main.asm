@@ -2,6 +2,9 @@ sa1rom
 check bankcross off
 
 incsrc "defines.asm"
+incsrc "rammap.asm"
+incsrc "rammap1.asm"
+incsrc "hardware_registers.asm"
 incsrc "labels.asm"
 incsrc "macros/actionscript.asm"
 

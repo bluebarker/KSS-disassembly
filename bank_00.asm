@@ -1,7 +1,13 @@
+!WaitForCommandLocation = $000E
+!WaitForResponseLocation = $0026
+
 ORG $008000
 
-RomStart:						;$008000	| ...Unused?
-	db $EA,$EA,$EA,$EA
+RomStart:
+	NOP							;$008000	|
+	NOP							;$008001	|
+	NOP							;$008002	|
+	NOP							;$008003	|
 
 Reset_SNES:						;-----------| SNES RESET vector; game boots to here.
 	SEI							;$008004	| Disable IRQ.
@@ -13,9 +19,9 @@ Reset_SNES:						;-----------| SNES RESET vector; game boots to here.
 	TXS							;$00800E	|/
 	PHK							;$00800F	|
 	PLB							;$008010	|
-	STZ $4200					;$008011	| Disable IRQ, NMI and joypad reading.
-	
-	PEA $2100					;$008014	|\ Change DP to $21xx.
+	STZ HW_NMITIMEN				;$008011	| Disable IRQ, NMI and joypad reading.
+
+	PEA HW_INIDISP				;$008014	|\ Change DP to $21xx.
 	PLD							;$008017	|/
 	LDA #$8F					;$008018	|\ Enable force blank.
 	STA $00						;$00801A	|/
@@ -78,7 +84,7 @@ Reset_SNES:						;-----------| SNES RESET vector; game boots to here.
 	LDA #$E0					;$00808C	|\ Initialized fixed color to black.
 	STA $32						;$00808E	|/
 	STZ $33						;$008090	| Disable all special screen modes.
-	PEA $4200					;$008092	|\ Change DP to $42xx.
+	PEA HW_NMITIMEN				;$008092	|\ Change DP to $42xx.
 	PLD							;$008095	|/
 	LDA #$FF					;$008096	|\ Initialize programmable I/O port to #$FF.
 	STA $01						;$008098	|/
@@ -124,7 +130,7 @@ CODE_0080AC:
 	STZ $2200					;$0080F3	| Enable SA-1.
 	
 	LDX #$0000					;$0080F6	|\ 
-	STX $2181					;$0080F9	||
+	STX HW_WMADD				;$0080F9	||
 	STZ $2183					;$0080FC	|| Use a DMA to clear out $7E0000-$7E2000.
 	LDA #$08					;$0080FF	|| Specifically, it uses the value at $00FFFE.
 	STA $4310					;$008101	||
@@ -136,9 +142,9 @@ CODE_0080AC:
 	LDX #$2000					;$008112	||
 	STX $4315					;$008115	||
 	LDA #$02					;$008118	||
-	STA $420B					;$00811A	|/
-	LDX #$000E					;$00811D	|\ 
-	STX $2181					;$008120	||
+	STA HW_MDMAEN				;$00811A	|/
+	LDX #!WaitForCommandLocation	;$00811D	|\ 
+	STX HW_WMADD				;$008120	||
 	STZ $2183					;$008123	|| Transfer 24 bytes from $00818C to $0E-$25.
 	STZ $4310					;$008126	||  This sets up a loop to wait for requests from the SA-1.
 	LDX #$818C					;$008129	||  When the message is received, it jumps to the pointer in $300C.
@@ -149,19 +155,19 @@ CODE_0080AC:
 	LDX #$0017					;$008137	||
 	STX $4315					;$00813A	||
 	LDA #$02					;$00813D	||
-	STA $420B					;$00813F	|/
-	LDX #$0026					;$008142	|\ 
-	STX $2181					;$008145	||
+	STA HW_MDMAEN				;$00813F	|/
+	LDX #!WaitForResponseLocation	;$008142	|\ 
+	STX HW_WMADD				;$008145	||
 	LDX #$81A3					;$008148	|| Transfer 14 bytes from $0081A3 to $26-$34.
 	STX $4312					;$00814B	||  This sets up a loop to wait for a response form the SA-1.
 	LDX #$000E					;$00814E	||  When a response is received, it returns to the routine that called it.
 	STX $4315					;$008151	||
 	LDA #$02					;$008154	||
-	STA $420B					;$008156	|/
+	STA HW_MDMAEN				;$008156	|/
 	LDA #$7E					;$008159	|\ Set bank byte for decompressed data pointer.
 	STA $3014					;$00815B	|/
 	LDA #$80					;$00815E	|
-	STA !Screen_Brightness					;$008160	|
+	STA Screen_Brightness		;$008160	|
 	STA $30A2					;$008163	|
 	LDA #$FF					;$008166	|
 	STA $3093					;$008168	|
@@ -169,20 +175,19 @@ CODE_0080AC:
   .waitForSA1					;			|
 	LDA $3000					;$00816D	|\ Wait for the SA-1 chip to boot up.
 	BPL .waitForSA1				;$008170	|/
-	JSL StartSPC700			;$008172	| Start the SPC700 chip.
+	JSL StartSPC700				;$008172	| Start the SPC700 chip.
 	SEP #$20					;$008176	|
 	LDA $3091					;$008178	|
 	ORA #$81					;$00817B	|
 	STA $3091					;$00817D	|
-	STA $4200					;$008180	|
+	STA HW_NMITIMEN				;$008180	|
 	REP #$20					;$008183	|
 	CLI							;$008185	|
 	DEC $300A					;$008186	|] Signal the SA-1 chip to resume.
 	JMP $000E					;$008189	| Wait for a command from the SA-1 chip (see the below routine).
 
 
-
-base $000E
+base !WaitForCommandLocation
 SNES_WaitForCommand:			;-----------| Wait routine for commands from the SA-1 chip. Written into RAM at $7E000E.
 	STZ $300E					;$00818C	|\ 
 	LDA #$000F					;$008189	||
@@ -195,7 +200,7 @@ SNES_WaitForCommand:			;-----------| Wait routine for commands from the SA-1 chi
 	PEA $000D					;$00819D	|| Jump to the routine specified by $300C.
 	JMP [$300C]					;$0081A0	|/
 
-base $0026
+base !WaitForResponseLocation
 SNES_WaitForResponse:			;-----------| Wait routine for a response from the SA-1 chip. Written into RAM at $7E0026.
 	LDA #$000F					;$0081A3	|\ 
   .waitForMessage				;			||
@@ -205,9 +210,6 @@ SNES_WaitForResponse:			;-----------| Wait routine for a response from the SA-1 
 	BMI .waitForMessage			;$0081AE	|/
 	RTL							;$0081B0	|
 base off
-
-
-
 
 
 NMI_SNES:						;-----------| SNES NMI routine.
@@ -222,14 +224,14 @@ NMI_SNES:						;-----------| SNES NMI routine.
 	PHK							;$0081BC	|
 	PLB							;$0081BD	|
 	SEP #$20					;$0081BE	|
-	LDA $4210					;$0081C0	| Read to clear the NMI flag.
+	LDA HW_RDNMI				;$0081C0	| Read to clear the NMI flag.
 	LDA $5F						;$0081C3	|\ 
 	STA $A2						;$0081C5	|| Store brightness.
-	STA $2100					;$0081C7	||  If in force blank, skip updating most SNES registers.
+	STA HW_INIDISP				;$0081C7	||  If in force blank, skip updating most SNES registers.
 	BPL .notForceBlank			;$0081CA	|/
-	STZ $420C					;$0081CC	| Disable all HDMA.
+	STZ HW_HDMAEN				;$0081CC	| Disable all HDMA.
 	LDA #$81					;$0081CF	|\ Enable NMI/joypad read, but disable IRQ.
-	STA $4200					;$0081D1	|/
+	STA HW_NMITIMEN				;$0081D1	|/
 	REP #$20					;$0081D4	|
 	STZ $15						;$0081D6	|\ 
 	STZ $17						;$0081D8	|| Clear the VRAM DMA queue/buffer sizes.
@@ -242,35 +244,35 @@ NMI_SNES:						;-----------| SNES NMI routine.
 	LDA $9F						;$0081E4	|\\ Skip sprite DMAs if $9F is zero?
 	BEQ .noSpriteDMA			;$0081E6	||/
 	JSR ExecVramQueue			;$0081E8	||] Execute pending DMAs to VRAM from the queue ($0900).
-	STZ $2102					;$0081EB	||\ 
+	STZ HW_OAMADD				;$0081EB	||\ 
 	SEP #$20					;$0081EE	|||
-	STZ $4300					;$0081F0	|||
+	STZ HW_DMAPARAM				;$0081F0	|||
 	STZ $4304					;$0081F3	|||
 	LDA #$04					;$0081F6	||| Execute DMA to upload OAM.
-	STA $4301					;$0081F8	|||  (0x220 bytes from $30A4 -> $2104)
+	STA HW_DMAREG				;$0081F8	|||  (0x220 bytes from $30A4 -> $2104)
 	LDX #$0220					;$0081FB	|||
-	STX $4305					;$0081FE	|||
+	STX HW_DMACNT				;$0081FE	|||
 	LDX #$30A4					;$008201	|||
-	STX $4302					;$008204	|||
+	STX HW_DMAADDR				;$008204	|||
 	LDA #$01					;$008207	|||
-	STA $420B					;$008209	|//
+	STA HW_MDMAEN				;$008209	|//
   .noSpriteDMA:					;			|
 	SEP #$20					;$00820C	|
-	STZ $2121					;$00820E	|\ 
-	STZ $4300					;$008211	|| Set up the base for a DMA to CGRAM ($2122).
+	STZ HW_CGADD				;$00820E	|\ 
+	STZ HW_DMAPARAM				;$008211	|| Set up the base for a DMA to CGRAM ($2122).
 	LDA #$22					;$008214	||
-	STA $4301					;$008216	|/
+	STA HW_DMAREG				;$008216	|/
 	LDA $32DC					;$008219	|\ Branch if set to upload a special palette.
 	BPL .altPalette				;$00821C	|/
 	LDX $9F						;$00821E	|\ Skip the CGRAM DMA completely if $9F is zero?
 	BEQ .noCgramDMA				;$008220	|/
 	LDX #$0500					;$008222	|\ 
-	STX $4302					;$008225	||
+	STX HW_DMAADDR				;$008225	||
 	STZ $4304					;$008228	|| Execute a 0x200 byte DMA from $0500 to CGRAM.
 	LDY #$0200					;$00822B	||
-	STY $4305					;$00822E	||
+	STY HW_DMACNT				;$00822E	||
 	LDA #$01					;$008231	||
-	STA $420B					;$008233	|/
+	STA HW_MDMAEN				;$008233	|/
   .noCgramDMA:					;			|
 	JMP .doneCGRAM				;$008236	|
 	
@@ -279,34 +281,34 @@ NMI_SNES:						;-----------| SNES NMI routine.
 	ADC $32DC					;$00823A	|| Multiply index by 3.
 	TAX							;$00823D	|/
 	LDY #$0500					;$00823E	|\\ 
-	STY $4302					;$008241	|||
+	STY HW_DMAADDR				;$008241	|||
 	STZ $4304					;$008244	|||
 	LDY #$0008					;$008247	||| Execute a 0x8 byte DMA from $0500 to colors $00-$03.
-	STY $4305					;$00824A	|||
+	STY HW_DMACNT				;$00824A	|||
 	LDA #$01					;$00824D	|||
-	STA $420B					;$00824F	||/
+	STA HW_MDMAEN				;$00824F	||/
 	LDY FG_Pals,X				;$008252	||\ 
-	STY $4302					;$008255	|||
+	STY HW_DMAADDR				;$008255	|||
 	LDA FG_Pals+2,X				;$008258	|||
 	STA $4304					;$00825B	||| Execute a 0xF8 byte DMA from the specified palette to colors $04-$7F.
 	LDY #$00F8					;$00825E	|||
-	STY $4305					;$008261	|||
+	STY HW_DMACNT				;$008261	|||
 	LDA #$01					;$008264	|||
-	STA $420B					;$008266	|//
+	STA HW_MDMAEN				;$008266	|//
 	LDY #$0600					;$008269	|\\ 
-	STY $4302					;$00826C	|||
+	STY HW_DMAADDR				;$00826C	|||
 	STZ $4304					;$00826F	||| Execute a 0x60 byte DMA from $0600 to colors $80-$AF.
 	LDY #$0060					;$008272	|||
-	STY $4305					;$008275	|||
-	STA $420B					;$008278	||/
+	STY HW_DMACNT				;$008275	|||
+	STA HW_MDMAEN				;$008278	||/
 	LDY Sprite_Pals,X			;$00827B	||\ 
-	STY $4302					;$00827E	|||
+	STY HW_DMAADDR				;$00827E	|||
 	LDA Sprite_Pals+2,X			;$008281	|||
 	STA $4304					;$008284	||| Execute a 0xA0 byte DMA from the specified palette to colors $B0-$FF.
 	LDY #$00A0					;$008287	|||
-	STY $4305					;$00828A	|||
+	STY HW_DMACNT				;$00828A	|||
 	LDA #$01					;$00828D	|||
-	STA $420B					;$00828F	|//
+	STA HW_MDMAEN				;$00828F	|//
   .doneCGRAM:					;			|
 	REP #$20					;$008292	|
 	STZ $9F						;$008294	|
@@ -323,81 +325,81 @@ NMI_SNES:						;-----------| SNES NMI routine.
 	LSR A						;$0082AA	||
 	BCC .noBrightnessDMA		;$0082AB	||
 	LDA #$40					;$0082AD	||\ 
-	STA $4300					;$0082AF	|||
+	STA HW_DMAPARAM				;$0082AF	|||
 	LDA #$00					;$0082B2	||| If there's an HDMA active on channel 0,
-	STA $4301					;$0082B4	|||  set it to an indirect HDMA on channel 0
-	LDY #$841C					;$0082B7	|||  to $2100 (screen brightness) from $00841C.
-	STY $4302					;$0082BA	|||
+	STA HW_DMAREG				;$0082B4	|||  set it to an indirect HDMA on channel 0
+	LDY #$841C					;$0082B7	|||  to HW_INIDISP (screen brightness) from $00841C.
+	STY HW_DMAADDR				;$0082BA	|||
 	LDA #$00					;$0082BD	|||
 	STA $4304					;$0082BF	|||
-	STA $4307					;$0082C2	||/
+	STA HW_HDMABANK				;$0082C2	||/
   .noBrightnessDMA:				;			||
 	TXA							;$0082C5	||
-	STA $420C					;$0082C6	|/
+	STA HW_HDMAEN				;$0082C6	|/
 	REP #$20					;$0082C9	|
 	LDA $5F						;$0082CB	|\ Screen brightness
-	STA $2100					;$0082CD	|/  Sprite tile sizes, sprite GFX VRAM location
+	STA HW_INIDISP				;$0082CD	|/  Sprite tile sizes, sprite GFX VRAM location
 	LDA $61						;$0082D0	|\ BG mode and character size
-	STA $2105					;$0082D2	|/  Mosaic size
+	STA HW_BGMODE				;$0082D2	|/  Mosaic size
 	LDA $63						;$0082D5	|\\ BG1 tilemap VRAM address and size
-	STA $2107					;$0082D7	||/ BG2 tilemap VRAM address and size
+	STA HW_BG1SC				;$0082D7	||/ BG2 tilemap VRAM address and size
 	LDA $65						;$0082DA	||\ BG3 tilemap VRAM address and size
-	STA $2109					;$0082DC	|// BG4 tilemap VRAM address and size
+	STA HW_BG3SC				;$0082DC	|// BG4 tilemap VRAM address and size
 	LDA $67						;$0082DF	|\ BG1/2 GFX VRAM address
-	STA $210B					;$0082E1	|/  BG3/4 GFX VRAM address
+	STA HW_BG12NBA				;$0082E1	|/  BG3/4 GFX VRAM address
 	LDA $69						;$0082E4	|\ BG1/2 mask settings
-	STA $2123					;$0082E6	|/  BG3/4 mask settings
+	STA HW_W12SEL				;$0082E6	|/  BG3/4 mask settings
 	LDA $6C						;$0082E9	|\ Window 1 left position
-	STA $2126					;$0082EB	||  Window 1 right position
+	STA HW_WH0					;$0082EB	||  Window 1 right position
 	LDA $6E						;$0082EE	|| Window 2 left position
-	STA $2128					;$0082F0	|/  Window 2 right position
+	STA HW_WH2					;$0082F0	|/  Window 2 right position
 	LDA $70						;$0082F3	|\ Window mask logic (BGs)
-	STA $212A					;$0082F5	|/  Window mask logic (objects/color)
+	STA HW_WBGLOG				;$0082F5	|/  Window mask logic (objects/color)
 	LDA $72						;$0082F8	|\ Main screen designation
-	STA $212C					;$0082FA	|/  Sub screen designation
+	STA HW_TM					;$0082FA	|/  Sub screen designation
 	LDA $74						;$0082FD	|\ Window designation for main screen
-	STA $212E					;$0082FF	|/  Window designation for sub screen
+	STA HW_TMW					;$0082FF	|/  Window designation for sub screen
 	LDA $76						;$008302	|\ Color addition select
-	STA $2130					;$008304	|/  Color math designation
+	STA HW_CGSWSEL				;$008304	|/  Color math designation
 	SEP #$20					;$008307	|
 	LDA $72						;$008309	|\ Mirror the main screen designation.
 	STA $A3						;$00830B	|/
 	LDA $78						;$00830D	|\ 
-	STA $2132					;$00830F	||
+	STA HW_COLDATA				;$00830F	||
 	LDA $79						;$008312	|| Fixed background color
-	STA $2132					;$008314	||
+	STA HW_COLDATA				;$008314	||
 	LDA $7A						;$008317	||
-	STA $2132					;$008319	|/
+	STA HW_COLDATA				;$008319	|/
 	LDA $91						;$00831C	|\ Interrupt enable 
-	STA $4200					;$00831E	|/
+	STA HW_NMITIMEN				;$00831E	|/
 	LDA $6B						;$008321	|\ Obj/color mask settings
-	STA $2125					;$008323	|/
+	STA HW_WOBJSEL				;$008323	|/
 	LDA $7B						;$008326	|\ Mode 7 settings
-	STA $211A					;$008328	|/
+	STA HW_M7SEL				;$008328	|/
 	LDA $8B						;$00832B	|\ 
-	STA $211F					;$00832D	|| Mode 7 center X
+	STA HW_M7X					;$00832D	|| Mode 7 center X
 	LDA $8C						;$008330	||
-	STA $211F					;$008332	|/
+	STA HW_M7X					;$008332	|/
 	LDA $8D						;$008335	|\ 
-	STA $2120					;$008337	|| Mode 7 center Y
+	STA HW_M7Y					;$008337	|| Mode 7 center Y
 	LDA $8E						;$00833A	||
-	STA $2120					;$00833C	|/
+	STA HW_M7Y					;$00833C	|/
 	LDA $83						;$00833F	|\ 
-	STA $211B					;$008341	|| Mode 7 matrix A
+	STA HW_M7A					;$008341	|| Mode 7 matrix A
 	LDA $84						;$008344	||
-	STA $211B					;$008346	|/
+	STA HW_M7A					;$008346	|/
 	LDA $85						;$008349	|\ 
-	STA $211C					;$00834B	|| Mode 7 matrix B
+	STA HW_M7B					;$00834B	|| Mode 7 matrix B
 	LDA $86						;$00834E	||
-	STA $211C					;$008350	|/
+	STA HW_M7B					;$008350	|/
 	LDA $87						;$008353	|\ 
-	STA $211D					;$008355	|| Mode 7 matrix C
+	STA HW_M7C					;$008355	|| Mode 7 matrix C
 	LDA $88						;$008358	||
-	STA $211D					;$00835A	|/
+	STA HW_M7C					;$00835A	|/
 	LDA $89						;$00835D	|\ 
-	STA $211E					;$00835F	|| Mode 7 matrix D
+	STA HW_M7D					;$00835F	|| Mode 7 matrix D
 	LDA $8A						;$008362	||
-	STA $211E					;$008364	|/
+	STA HW_M7D					;$008364	|/
 	LDX $32DE					;$008367	|\ 
 	BMI .noHDMA					;$00836A	||
 	LDA.w DATA_0083E6,X			;$00836C	||
@@ -410,29 +412,29 @@ NMI_SNES:						;-----------| SNES NMI routine.
   .noHDMA						;			|
 	SEP #$20					;$008381	|
 	LDA $4F						;$008383	|\ 
-	STA $210D					;$008385	|| BG1 X position
+	STA HW_BG1HOFS					;$008385	|| BG1 X position
 	LDA $50						;$008388	||
-	STA $210D					;$00838A	|/
+	STA HW_BG1HOFS					;$00838A	|/
 	LDA $55						;$00838D	|\ 
-	STA $210E					;$00838F	|| BG1 Y position
+	STA HW_BG1VOFS					;$00838F	|| BG1 Y position
 	LDA $56						;$008382	||
-	STA $210E					;$008384	|/
+	STA HW_BG1VOFS					;$008384	|/
 	LDA $51						;$008387	|\ 
-	STA $210F					;$008399	|| BG2 X position
+	STA HW_BG2HOFS					;$008399	|| BG2 X position
 	LDA $52						;$00839C	||
-	STA $210F					;$00839E	|/
+	STA HW_BG2HOFS					;$00839E	|/
 	LDA $57						;$0083A1	|\ 
-	STA $2110					;$0083A3	|| BG2 Y position
+	STA HW_BG2VOFS					;$0083A3	|| BG2 Y position
 	LDA $58						;$0083A6	||
-	STA $2110					;$0083A8	|/
+	STA HW_BG2VOFS					;$0083A8	|/
 	LDA $53						;$0083AB	|\ 
-	STA $2111					;$0083AD	|| BG3 X position
+	STA HW_BG3HOFS					;$0083AD	|| BG3 X position
 	LDA $54						;$0083B0	||
-	STA $2111					;$0083B2	|/
+	STA HW_BG3HOFS					;$0083B2	|/
 	LDA $59						;$0083B5	|\ 
-	STA $2112					;$0083B7	|| BG3 Y position
+	STA HW_BG3VOFS					;$0083B7	|| BG3 Y position
 	LDA $5A						;$0083BA	||
-	STA $2112					;$0083BC	|/
+	STA HW_BG3VOFS					;$0083BC	|/
 	REP #$20					;$0083BF	|
   .ForceBlank:					;```````````| If in force blank, that joins back here.
 	SEP #$10					;$0083C1	|
@@ -546,7 +548,7 @@ CODE_FL_008486:					;			|
 	STA $4321					;$00848D	||  This points to CGRAM ($2122) starting at color $04, with data in bank 0.
 	STZ $4324					;$008490	|| The DMA is intended to be activated by IRQ, for the status bar palette.
 	LDA #$04					;$008493	||
-	STA $2121					;$008495	|/
+	STA HW_CGADD					;$008495	|/
 	REP #$30					;$008498	|
 	INC $10						;$00849A	| NMI is done, so signal the SA-1.
 	PLB							;$00849C	|
@@ -568,7 +570,7 @@ IRQ_SNES:						;-----------| SNES IRQ routine.
 	SEP #$20					;$0084A6	|
 	BIT $30A2					;$0084A8	|\ Return if in force blank.
 	BMI .noIRQ					;$0084AB	|/
-	BIT $4211					;$0084AD	|\ Return if this is not an SNES IRQ.
+	BIT HW_TIMEUP					;$0084AD	|\ Return if this is not an SNES IRQ.
 	BPL .noIRQ					;$0084B0	|/
 	REP #$30					;$0084B2	|
 	PEA $3700					;$0084B4	|\ Set DP to $37xx.
@@ -588,7 +590,7 @@ UpdateVramSprSize:				;-----------| Routine to update sprite tile sizes and GFX 
 	SEP #$20					;$0084BE	|
 	LDA $30A1					;$0084C0	|\ 
 	ORA #$80					;$0084C3	|| Activate force blank if not already enabled.
-	STA !Screen_Brightness					;$0084C5	|/
+	STA Screen_Brightness					;$0084C5	|/
 	REP #$20					;$0084C8	|
 	JSL WaitForSnesNMI			;$0084CA	| Wait for the SNES to execute NMI.
 	LDA.w #.RunOnSNES			;$0084CE	|\ 
@@ -598,17 +600,17 @@ UpdateVramSprSize:				;-----------| Routine to update sprite tile sizes and GFX 
   .RunOnSNES:					;```````````| Routine to update the sprite size/GFX base on the SNES side ($2101).
 	SEP #$10					;$0084D8	|  For some reason, done through a DMA instead of just storing directly.
 	LDX #$08					;$0084DA	|\ 
-	STX $4300					;$0084DC	||
+	STX HW_DMAPARAM					;$0084DC	||
 	LDA #$0001					;$0084DF	||
-	STA $4305					;$0084E2	||
+	STA HW_DMACNT					;$0084E2	||
 	LDA #$3060					;$0084E5	|| 
-	STA $4302					;$0084E8	|| DMA a single byte from $3060 to $2101.
+	STA HW_DMAADDR					;$0084E8	|| DMA a single byte from $3060 to $2101.
 	LDX #$00					;$0084EB	||
 	STX $4304					;$0084ED	||
 	LDX #$01					;$0084F0	||
-	STX $4301					;$0084F2	||
+	STX HW_DMAREG					;$0084F2	||
 	LDX #$01					;$0084F5	||
-	STX $420B					;$0084F7	|/
+	STX HW_MDMAEN					;$0084F7	|/
 	REP #$10					;$0084FA	|
 	RTL							;$0084FC	|
 
@@ -617,7 +619,7 @@ UpdateVramSprSize:				;-----------| Routine to update sprite tile sizes and GFX 
 UpdtLyrsCtrlBrght:				;-----------| Routine which updates controllers, layer positions, and screen brightness.
 	SEP #$20					;$0084FD	|
 	LDA $30A1					;$0084FF	|
-	STA !Screen_Brightness					;$008502	|
+	STA Screen_Brightness					;$008502	|
 	REP #$20					;$008505	|
 	JMP UpdtLyrsCtrl			;$008507	|
 
@@ -654,7 +656,7 @@ UpdateVramSpriteTileSize:		;-----------| Routine to change the sprite tile sizes
 	LSR A						;$00852D	||
 	ORA $3060					;$00852E	|/
 	STA $3060					;$008531	|\ Update both the mirror and actual register.
-	STA $2101					;$008534	|/
+	STA HW_OBJSEL					;$008534	|/
 	REP #$20					;$008537	|
 	RTL							;$008539	|
 
@@ -670,7 +672,7 @@ UpdateVramSpritePageSize:		;-----------| Routine to change the distance between 
 	PLA							;$008547	|
 	ORA $3060					;$008548	|\ 
 	STA $3060					;$00854B	|| Update with the new bits.
-	STA $2101					;$00854E	|/
+	STA HW_OBJSEL					;$00854E	|/
 	REP #$20					;$008551	|
 	RTL							;$008553	|
 
@@ -761,8 +763,8 @@ CODE_FL_0085D1:					;			|
 	LDA #$0F					;$0085D5	|
 CODE_FL_0085D7:					;			|
 	STA $30A1					;$0085D7	|
-	BIT !Screen_Brightness					;$0085DA	|
-	STA !Screen_Brightness					;$0085DD	|
+	BIT Screen_Brightness					;$0085DA	|
+	STA Screen_Brightness					;$0085DD	|
 	BMI CODE_FL_0085E5			;$0085E0	|
 	REP #$20					;$0085E2	|
 	RTL							;$0085E4	|
@@ -784,9 +786,9 @@ ExecVramBuffer:					;-----------| Routine to execute buffered DMAs from $0100 to
 	LDA $00,X					;$0085F4	|\ If the first two bytes are zero, then we're writing a single entry in VRAM.
 	BNE .vramDMA				;$0085F6	|/  Else, we should branch to perform a DMA.
 	LDA $02,X					;$0085F8	|\ 
-	STA $2116					;$0085FA	|| Write a single entry into VRAM.
+	STA HW_VMADD					;$0085FA	|| Write a single entry into VRAM.
 	LDA $04,X					;$0085FD	||
-	STA $2118					;$0085FF	|/
+	STA HW_VMDATA					;$0085FF	|/
 	TXA							;$008602	|\ 
 	CLC							;$008603	||
 	ADC #$0008					;$008604	|| Increment index by 8.
@@ -800,20 +802,20 @@ ExecVramBuffer:					;-----------| Routine to execute buffered DMAs from $0100 to
 	AND #$00FF					;$008612	|
 	TAY							;$008615	|
 	LDA VramDMAOpts-3,Y			;$008616	|\ Set transfer settings.
-	STA $4300					;$008619	|/
+	STA HW_DMAPARAM					;$008619	|/
 	LDA $03,X					;$00861C	|\ 
-	STA $4302					;$00861E	|| Set source address (or destination when reading).
+	STA HW_DMAADDR					;$00861E	|| Set source address (or destination when reading).
 	LDA $05,X					;$008621	||
 	STA $4304					;$008623	|/
 	LDA $01,X					;$008626	|\ Set size.
-	STA $4305					;$008628	|/
+	STA HW_DMACNT					;$008628	|/
 	LDA $06,X					;$00862B	|\ Set destination VRAM address (or source when reading).
-	STA $2116					;$00862D	|/
+	STA HW_VMADD					;$00862D	|/
 	SEP #$20					;$008630	|
 	LDA VramDMAOpts-1,Y			;$008632	|\ Set write control settings.
-	STA $2115					;$008635	|/
+	STA HW_VMAINC					;$008635	|/
 	LDA #$01					;$008638	|\ Enable DMA.
-	STA $420B					;$00863A	|/
+	STA HW_MDMAEN					;$00863A	|/
 	REP #$20					;$00863D	|
 	TXA							;$00863F	|\ 
 	CLC							;$008640	||
@@ -839,20 +841,20 @@ ExecVramQueue:					;-----------| Routine to execute queued DMAs from $0900 to VR
 	LDX #$0000					;$00865C	|
   .loop:						;			|
 	LDA VramDMAOpts				;$00865F	|\ Assume a normal 16-bit write to VRAM.
-	STA $4300					;$008662	|/
+	STA HW_DMAPARAM					;$008662	|/
 	LDA $0903,X					;$008665	|\ 
-	STA $4302					;$008668	|| Set source address.
+	STA HW_DMAADDR					;$008668	|| Set source address.
 	LDA $0905,X					;$00866B	||
 	STA $4304					;$00866E	|/
 	LDA $0901,X					;$008671	|\ Set size.
-	STA $4305					;$008674	|/
+	STA HW_DMACNT					;$008674	|/
 	LDA $0906,X					;$008677	|\ Set destination VRAM address.
-	STA $2116					;$00867A	|/
+	STA HW_VMADD					;$00867A	|/
 	SEP #$20					;$00867D	|
 	LDA VramDMAOpts+2			;$00867F	|\ Assume a 16-bit horizontal write.
-	STA $2115					;$008682	|/
+	STA HW_VMAINC					;$008682	|/
 	LDA #$01					;$008685	|\ Enable DMA.
-	STA $420B					;$008687	|/
+	STA HW_MDMAEN					;$008687	|/
 	REP #$20					;$00868A	|
 	TXA							;$00868C	|\ 
 	CLC							;$00868D	||
@@ -870,8 +872,8 @@ ExecVramQueue:					;-----------| Routine to execute queued DMAs from $0900 to VR
 VramDMAOpts:					;$00869D	| Table of DMA settings for writing/reading VRAM, ordered $43x0, $43x1, $2115.
 	db $01,$18,$80				; 03 - Write-H - 2-byte normal
 	db $09,$18,$80				; 06 - Write-H - 2-byte fixed
-	db $00,$18,$00				; 09 - Write-H - 1-byte normal, $2118 only
-	db $08,$18,$00				; 0C - Write-H - 1-byte fixed,  $2118 only
+	db $00,$18,$00				; 09 - Write-H - 1-byte normal, HW_VMDATA only
+	db $08,$18,$00				; 0C - Write-H - 1-byte fixed,  HW_VMDATA only
 	db $00,$19,$80				; 0F - Write-H - 1-byte normal, $2119 only
 	db $08,$19,$80				; 12 - Write-H - 1-byte fixed,  $2119 only
 	db $81,$39,$80				; 15 -  Read-H - 2 bytes
@@ -879,8 +881,8 @@ VramDMAOpts:					;$00869D	| Table of DMA settings for writing/reading VRAM, orde
 	db $80,$3A,$80				; 1B -  Read-H - 1 byte, $213A only
 	db $01,$18,$81				; 1E - Write-V - 2-byte normal
 	db $09,$18,$81				; 21 - Write-V - 2-byte fixed
-	db $00,$18,$01				; 24 - Write-V - 1-byte normal, $2118 only
-	db $08,$18,$01				; 27 - Write-V - 1-byte fixed,  $2118 only
+	db $00,$18,$01				; 24 - Write-V - 1-byte normal, HW_VMDATA only
+	db $08,$18,$01				; 27 - Write-V - 1-byte fixed,  HW_VMDATA only
 	db $00,$19,$81				; 2A - Write-V - 1-byte normal, $2119 only
 	db $08,$19,$81				; 2D - Write-V - 1-byte fixed,  $2119 only
 	db $81,$39,$81				; 30 -  Read-V - 2 bytes
@@ -1031,7 +1033,7 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
 	LDA.w VramDMAOpts-3,X		;$0087DE	||
 	STA $4310					;$0087E1	|| Write the DMA control settings.
 	LDY.w VramDMAOpts-1,X		;$0087E4	||
-	STY $2115					;$0087E7	|/
+	STY HW_VMAINC					;$0087E7	|/
 	LDA $34						;$0087EA	|\ 
 	STA $4312					;$0087EC	|| Write the source.
 	LDX $36						;$0087EF	||
@@ -1039,9 +1041,9 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
 	LDA $32						;$0087F4	|\ Write the length.
 	STA $4315					;$0087F6	|/
 	LDA $37						;$0087F9	|\ Write the destination VRAM address.
-	STA $2116					;$0087FB	|/
+	STA HW_VMADD					;$0087FB	|/
 	LDX #$02					;$0087FE	|\ Enable DMA.
-	STX $420B					;$008800	|/
+	STX HW_MDMAEN					;$008800	|/
 	LDA #$2000					;$008803	|\ Clear the decompressed data buffer, since its data was just uploaded.
 	STA $3012					;$008806	|/
 	REP #$10					;$008809	|
@@ -1111,8 +1113,8 @@ WriteTile:						;-----------| Subroutine to write a single tile into the DMA buf
 	LDX $4B						;$008889	||
 	LDA $49						;$00888B	|/
   ..alreadyOnSNES:				;			|
-	STX $2116					;$00888D	|\ Write the data directly to VRAM.
-	STA $2118					;$008890	|/
+	STX HW_VMADD					;$00888D	|\ Write the data directly to VRAM.
+	STA HW_VMDATA					;$008890	|/
 	RTL							;$008893	|
 
 
@@ -1424,18 +1426,18 @@ UpdtLyrsCtrl:					;-----------| Routine to update layer positions and fetch cont
 	BEQ .OnSNES					;$008A59	|/
 	LDA #$0001					;$008A5B	|\ 
   .waitForJoypad:				;			|| Wait for auto-joypad read to finish.
-	BIT $4212					;$008A5E	||
+	BIT HW_HVBJOY					;$008A5E	||
 	BNE .waitForJoypad			;$008A61	|/
 	LDX #$0002					;$008A63	|\ 
   .controllerLoop:				;			|| Get controller inputs.
-	LDA $32C4,X					;$008A66	||\ 
-	EOR #$FFF0					;$008A69	||| Get newly-pressed buttons.
-	AND $4218,X					;$008A6C	|||
+	LDA P1_Hold,X	;$008A66	||\ 
+	EOR #!BTN_ALL				;$008A69	||| Get newly-pressed buttons.
+	AND HW_CNTRL1,X					;$008A6C	|||
 	STA $32D4,X					;$008A6F	||/
 	TAY							;$008A72	||
-	LDA $4218,X					;$008A73	||\ 
-	CMP $32C4,X					;$008A76	||| Get held buttons.
-	STA $32C4,X					;$008A79	||/
+	LDA HW_CNTRL1,X					;$008A73	||\ 
+	CMP P1_Hold,X	;$008A76	||| Get held buttons.
+	STA P1_Hold,X	;$008A79	||/
 	BEQ .sameInput				;$008A7C	||\ 
 	LDY #$0014					;$008A7E	||| Handle timer for controller having the same input as before.
 	BRA .timerReset				;$008A81	||| If this frame's input is different from the previous, set the held timer to 0x14.
@@ -1456,9 +1458,9 @@ UpdtLyrsCtrl:					;-----------| Routine to update layer positions and fetch cont
 	BPL .controllerLoop			;$008A99	|/
 	LDX #$0002					;$008A9B	|\ 
   .fixLoop:						;			||
-	LDA $32C4,X					;$008A9E	||
+	LDA P1_Hold,X	;$008A9E	||
 	JSL FixDpadInput			;$008AA1	||
-	STA $32C4,X					;$008AA5	||
+	STA P1_Hold,X	;$008AA5	||
 	LDA $32D4,X					;$008AA8	|| Fix directional input conflicts, i.e. no U+D / L+R.
 	JSL FixDpadInput			;$008AAB	||  If either combination is pressed, directional input is dropped.
 	STA $32D4,X					;$008AAF	||
@@ -1777,27 +1779,40 @@ FixDpadInput:					;-----------| Directional input conflict handler. Prevents U+D
 	PHX							;$008D37	|
 	PHY							;$008D38	|
 	PHA							;$008D39	|
-	AND #$F0FF					;$008D3A	|\ Get non-directional inputs.
+	AND #~(!BTN_UP|!BTN_DOWN|!BTN_LEFT|!BTN_RIGHT)	;$008D3A	|\ Get non-directional inputs.
 	STA $00						;$008D3D	|/
 	PLA							;$008D3F	|
-	AND #$0F00					;$008D40	|\ 
+	AND #!BTN_UP|!BTN_DOWN|!BTN_LEFT|!BTN_RIGHT		;$008D40	|\ 
 	XBA							;$008D43	||
 	ASL A						;$008D44	|| Get adjusted directional input value, then return that with the non-directional inputs.
 	TAX							;$008D45	||
-	LDA.l DATA_008D4F,X			;$008D46	||
+	LDA.l .FixConflictLUT,X		;$008D46	||
 	ORA $00						;$008D4A	|/
 	PLY							;$008D4C	|
 	PLX							;$008D4D	|
 	RTL							;$008D4E	|
 	
-DATA_008D4F:					;$008D4F	| Directional input conflict handlers. Indexed by directional inputs (UDLR), times 2.
-	dw $0000,$0100,$0200,$0000				; The returned value is the directional input that will actually be read.
-	dw $0400,$0500,$0600,$0000
-	dw $0800,$0900,$0A00,$0000
-	dw $0000,$0000,$0000,$0000
+  .FixConflictLUT:				;$008D4F	| Directional input conflict handlers. Indexed by directional inputs (UDLR), times 2.
+								; The returned value is the directional input that will actually be read.
+	dw !BTN_NONE
+	dw !BTN_RIGHT
+	dw !BTN_LEFT	
+	dw !BTN_NONE
 
+	dw !BTN_DOWN			; down
+	dw !BTN_DOWN|!BTN_RIGHT	; down right 
+	dw !BTN_DOWN|!BTN_LEFT	; down left 
+	dw !BTN_NONE
 
+	dw !BTN_UP				; up
+	dw !BTN_UP|!BTN_RIGHT	; up right
+	dw !BTN_UP|!BTN_LEFT	; up left
+	dw !BTN_NONE
 
+	dw !BTN_NONE
+	dw !BTN_NONE
+	dw !BTN_NONE
+	dw !BTN_NONE
 
 
 ObjectVariablePointers:			;$008D6F	|
@@ -1894,7 +1909,7 @@ CODE_FL_008E3D:					;			|
 	BPL CODE_FL_008E3D			;$008E57	|
 	STZ $305B					;$008E59	|
 	STZ $305D					;$008E5C	|
-	STZ !Camera_Lock					;$008E5F	|
+	STZ Camera_Lock					;$008E5F	|
 	JSR CODE_FL_00A985			;$008E62	|
 	JSR CODE_FL_00A9C5			;$008E65	|
 	SEP #$20					;$008E68	|
@@ -4254,16 +4269,16 @@ CODE_FL_009DDE:					;-----------|
 CODE_FL_009DF6:					;			|
 	SEP #$20					;$009DF6	|
 	STA $4304,X					;$009DF8	|
-	STA $4307,X					;$009DFB	|
+	STA HW_HDMABANK,X					;$009DFB	|
 	PLA							;$009DFE	|
-	STA $4302,X					;$009DFF	|
+	STA HW_DMAADDR,X					;$009DFF	|
 	PLA							;$009E02	|
 	STA $4303,X					;$009E03	|
 	PLA							;$009E06	|
-	STA $4301,X					;$009E07	|
+	STA HW_DMAREG,X					;$009E07	|
 	PLA							;$009E0A	|
 	PLA							;$009E0B	|
-	STA $4300,X					;$009E0C	|
+	STA HW_DMAPARAM,X					;$009E0C	|
 	PLA							;$009E0F	|
 	PLX							;$009E10	|
 	LDA.w All_Bits8,X			;$009E11	|
@@ -4953,21 +4968,21 @@ CODE_FL_00A27D:					;-----------|
 	LDA $724A,X					;$00A27F	|
 	ASL A						;$00A282	|
 	TAX							;$00A283	|
-	JSR AS_ReadWord			;$00A284	|
+	JSR AS_ReadWord				;$00A284	|
 	STA $28						;$00A287	|
-	LDA $32C4,X					;$00A289	|
+	LDA P1_Hold,X	;$00A289	|
 	AND $28						;$00A28C	|
 	RTL							;$00A28E	|
 
 CODE_FL_00A28F:					;-----------|
 	PHB							;$00A28F	|
-	JSR AS_ReadWord			;$00A290	|
+	JSR AS_ReadWord				;$00A290	|
 	TAX							;$00A293	|
-	JSR AS_ReadByte			;$00A294	|
+	JSR AS_ReadByte				;$00A294	|
 	PHA							;$00A297	|
-	JSR AS_ReadWord			;$00A298	|
+	JSR AS_ReadWord				;$00A298	|
 	TAY							;$00A29B	|
-	JSR AS_ReadByte			;$00A29C	|
+	JSR AS_ReadByte				;$00A29C	|
 	SEP #$20					;$00A29F	|
 	PHA							;$00A2A1	|
 	PLB							;$00A2A2	|
@@ -4978,9 +4993,9 @@ CODE_FL_00A28F:					;-----------|
 	RTL							;$00A2AB	|
 
 CODE_FL_00A2AC:					;-----------|
-	JSR AS_ReadWord			;$00A2AC	|
+	JSR AS_ReadWord				;$00A2AC	|
 	STA $28						;$00A2AF	|
-	JSR AS_ReadWord			;$00A2B1	|
+	JSR AS_ReadWord				;$00A2B1	|
 	CMP ($28)					;$00A2B4	|
 	BEQ CODE_FL_00A2C8			;$00A2B6	|
 	LDA $3D						;$00A2B8	|
@@ -4994,35 +5009,35 @@ CODE_FL_00A2C8:					;			|
 	RTL							;$00A2C8	|
 
 CODE_FL_00A2C9:					;-----------|
-	JSR AS_ReadWord			;$00A2C9	|
+	JSR AS_ReadWord				;$00A2C9	|
 	STA $28						;$00A2CC	|
-	JSR AS_ReadWord			;$00A2CE	|
+	JSR AS_ReadWord				;$00A2CE	|
 	SEC							;$00A2D1	|
 	SBC ($28)					;$00A2D2	|
 	RTL							;$00A2D4	|
 
 CODE_FL_00A2D5:					;-----------|
-	JSR AS_ReadWord			;$00A2D5	|
+	JSR AS_ReadWord				;$00A2D5	|
 	STA $28						;$00A2D8	|
-	JSR AS_ReadWord			;$00A2DA	|
+	JSR AS_ReadWord				;$00A2DA	|
 	LDY $39						;$00A2DD	|
 	SEC							;$00A2DF	|
 	SBC ($28),Y					;$00A2E0	|
 	RTL							;$00A2E2	|
 
 CODE_FL_00A2E3:					;-----------|
-	JSR AS_ReadWord			;$00A2E3	|
+	JSR AS_ReadWord				;$00A2E3	|
 	STA $28						;$00A2E6	|
-	JSR AS_ReadWord			;$00A2E8	|
+	JSR AS_ReadWord				;$00A2E8	|
 	LDY $39						;$00A2EB	|
 	SEC							;$00A2ED	|
 	SBC ($28),Y					;$00A2EE	|
 	RTL							;$00A2F0	|
 
 CODE_FL_00A2F1:					;-----------|
-	JSR AS_ReadWord			;$00A2F1	|
+	JSR AS_ReadWord				;$00A2F1	|
 	STA $28						;$00A2F4	|
-	JSR AS_ReadByte			;$00A2F6	|
+	JSR AS_ReadByte				;$00A2F6	|
 	ASL A						;$00A2F9	|
 	TAX							;$00A2FA	|
 	LDA ($28)					;$00A2FB	|
@@ -5030,7 +5045,7 @@ CODE_FL_00A2F1:					;-----------|
 	RTL							;$00A301	|
 
 CODE_FL_00A302:					;-----------|
-	JSR AS_ReadWord			;$00A302	|
+	JSR AS_ReadWord				;$00A302	|
 	TAX							;$00A305	|
 	LDY #$0000					;$00A306	|
 	LDA $0000,X					;$00A309	|
@@ -5041,27 +5056,27 @@ CODE_FL_00A30F:					;			|
 	RTL							;$00A310	|
 
 CODE_FL_00A311:					;-----------|
-	JSR AS_ReadWord			;$00A311	|
+	JSR AS_ReadWord				;$00A311	|
 	STA $28						;$00A314	|
-	JSR AS_ReadWord			;$00A316	|
+	JSR AS_ReadWord				;$00A316	|
 	LDY $39						;$00A319	|
 	STA ($28),Y					;$00A31B	|
 	RTL							;$00A31D	|
 
 CODE_FL_00A31E:					;-----------|
-	JSR AS_ReadWord			;$00A31E	|
+	JSR AS_ReadWord				;$00A31E	|
 	STA $28						;$00A321	|
-	JSR AS_ReadWord			;$00A323	|
+	JSR AS_ReadWord				;$00A323	|
 	LDY $39						;$00A326	|
 	STA ($28),Y					;$00A328	|
 	RTL							;$00A32A	|
 
 CODE_FL_00A32B:					;-----------|
-	JSR AS_ReadByte			;$00A32B	|
+	JSR AS_ReadByte				;$00A32B	|
 	JMP CallRNG_ModA			;$00A32E	|
 
 CODE_FL_00A331:					;-----------|
-	INC !Camera_Lock					;$00A331	|
+	INC Camera_Lock			;$00A331	|
 	LDA $6014					;$00A334	|
 CODE_FL_00A337:					;			|
 	TAX							;$00A337	|
@@ -5089,7 +5104,7 @@ CODE_FL_00A35D:					;			|
 	LDA $603C,X					;$00A35D	|
 	BPL CODE_FL_00A34F			;$00A360	|
 	LDY $39						;$00A362	|
-	STZ !Camera_Lock					;$00A364	|
+	STZ Camera_Lock			;$00A364	|
 	SEC							;$00A367	|
 	RTL							;$00A368	|
 
@@ -5138,7 +5153,7 @@ CODE_FL_00A3AC:					;			|
 	STZ $770F					;$00A3B2	|
 	RTL							;$00A3B5	|
 
-HideAllObjectsExceptA:					;-----------|
+HideAllObjectsExceptA:			;-----------|
 	STA $00						;$00A3B6	|
 CODE_FL_00A3B8:					;			|
 	LDA $623C,X					;$00A3B8	|
@@ -5153,7 +5168,7 @@ CODE_FL_00A3C6:					;			|
 	BCC CODE_FL_00A3B8			;$00A3CA	|
 	RTL							;$00A3CC	|
 
-UnhideCurrentObject:					;-----------|
+UnhideCurrentObject:			;-----------|
 	LDX $39						;$00A3CD	|
 UnhideObject:					;			|
 	LDA $65B0,X					;$00A3CF	|
@@ -5161,26 +5176,26 @@ UnhideObject:					;			|
 	STA $65B0,X					;$00A3D5	|
 	RTL							;$00A3D8	|
 
-HideCurrentObject:					;-----------|
+HideCurrentObject:				;-----------|
 	LDX $39						;$00A3D9	|
-HideObject:					;			|
+HideObject:						;			|
 	LDA $65B0,X					;$00A3DB	|
 	ORA #$8000					;$00A3DE	|
 	STA $65B0,X					;$00A3E1	|
 	RTL							;$00A3E4	|
 
 CODE_FL_00A3E5:					;-----------|
-	JSR AS_ReadByte			;$00A3E5	|
+	JSR AS_ReadByte				;$00A3E5	|
 	TAX							;$00A3E8	|
 	BRA UnhideObject			;$00A3E9	|
-	JSR AS_ReadByte			;$00A3EB	|
+	JSR AS_ReadByte				;$00A3EB	|
 	TAX							;$00A3EE	|
-	BRA HideObject			;$00A3EF	|
+	BRA HideObject				;$00A3EF	|
 
 CODE_FL_00A3F1:
-	JSR AS_ReadWord			;$00A3F1	|
+	JSR AS_ReadWord				;$00A3F1	|
 	TAX							;$00A3F4	|
-	JSR AS_ReadWord			;$00A3F5	|
+	JSR AS_ReadWord				;$00A3F5	|
 	JSL CODE_FL_009AEB			;$00A3F8	|
 	RTL							;$00A3FC	|
 
@@ -5200,7 +5215,7 @@ CODE_FL_00A40B:					;-----------|
 	RTL							;$00A418	|
 
 CODE_FL_00A419:					;-----------|
-	JSR AS_ReadByte			;$00A419	|
+	JSR AS_ReadByte				;$00A419	|
 	TAY							;$00A41C	|
 	LDX $39						;$00A41D	|
 	LDA $6892,Y					;$00A41F	|
@@ -7069,7 +7084,7 @@ CODE_FL_00B0FA:					;-----------|
 	LDA $6438					;$00B0FA	|
 	ASL A						;$00B0FD	|
 	PHA							;$00B0FE	|
-	LDY !Kirby_Ability					;$00B0FF	|
+	LDY Kirby_Ability					;$00B0FF	|
 	BEQ CODE_FL_00B10C			;$00B102	|
 	LDA $763F					;$00B104	|
 	BNE CODE_FL_00B110			;$00B107	|
@@ -8336,10 +8351,10 @@ CODE_FL_00BC29:					;-----------| SA-1: continue point after SNES finishes loadi
 	LDA.w #CheckStartErrs		;$00BC47	|\ 
 	LDX.w #CheckStartErrs>>16	;$00BC4A	|| Execute $00CCB1 on the SNES.
 	JSL SA1_ExecuteSNES			;$00BC4D	|/
-	LDA !GS_TitleScreen			;$00BC51	|
-	STA !CurrentGameState		;$00BC54	|
-	STZ !Reload_Map_Unpause					;$00BC57	|
-	INC !Reload_Map_Unpause					;$00BC5A	|
+	LDA #$00!GAMESTATE_TITLESCREEN			;$00BC51	|
+	STA CurrentGameState		;$00BC54	|
+	STZ Reload_Map_On_Unpause					;$00BC57	|
+	INC Reload_Map_On_Unpause					;$00BC5A	|
 	STZ $7398					;$00BC5D	|
 CODE_FL_00BC60:					;-----------| Routine to handle switching game modes. Cutscenes/previews enter at the point below.
 	JSL CODE_FL_00D87F			;$00BC60	|
@@ -8350,7 +8365,7 @@ CODE_FL_00BC69:					;			|
 	STZ $33C6					;$00BC69	|
 	INC $33C6					;$00BC6C	|
 	STZ $3330					;$00BC6F	|
-	LDA !CurrentGameState		;$00BC72	|\ 
+	LDA CurrentGameState		;$00BC72	|\ 
 	CMP #$0011					;$00BC75	||\ If attempting to switch to game mode 11+, hardlock the game here.
   - BCS -						;$00BC78	||/
 	STA $6028					;$00BC7A	||\ 
@@ -8400,7 +8415,7 @@ CODE_FL_00BCDA:					;			|
 CODE_FL_00BCDE:					;-----------| 
 	JSL UpdtLyrsCtrl			;$00BCDE	|
 	JSL $05971F					;$00BCE2	|
-	JSR CODE_FL_00BD3B			;$00BCE6	|
+	JSR CheckSoftReset			;$00BCE6	|
 	JSL $03ECEB					;$00BCE9	|
 	JSL $048184					;$00BCED	|
 	JSR CODE_FL_00BD60			;$00BCF1	|
@@ -8413,17 +8428,17 @@ CODE_FL_00BCDE:					;-----------|
 
 CODE_FL_00BD03:
 	JSL UpdtLyrsCtrl			;$00BD03	|
-	JSR CODE_FL_00BD3B			;$00BD07	|
+	JSR CheckSoftReset			;$00BD07	|
 	JSR CODE_FL_00BD60			;$00BD0A	|
 	RTL							;$00BD0D	|
 
 CODE_FL_00BD0E:
 	JSL UpdtLyrsCtrl			;$00BD0E	|
 	JSL $05971F					;$00BD12	|
-	JSR CODE_FL_00BD3B			;$00BD16	|
+	JSR CheckSoftReset			;$00BD16	|
 	JSL $03ECEB					;$00BD19	|
-	LDA !CurrentSubGame			;$00BD1D	|
-	CMP !SG_DynaBlade			;$00BD20	|
+	LDA CurrentSubGame			;$00BD1D	|
+	CMP #$00!SUBGAME_DYNABLADE			;$00BD20	|
 	BEQ CODE_FL_00BD29			;$00BD23	|
 	JSL $048184					;$00BD25	|
 CODE_FL_00BD29:					;			|
@@ -8434,19 +8449,19 @@ CODE_FL_00BD29:					;			|
 	JSL SA1_ExecuteSNES			;$00BD36	|/
 	RTL							;$00BD3A	|
 
-CODE_FL_00BD3B:
-	LDA $32C4					;$00BD3B	|
-	CMP #$3030					;$00BD3E	|
-	BEQ CODE_FL_00BD44			;$00BD41	|
+CheckSoftReset:
+	LDA P1_Hold	;$00BD3B	|
+	CMP #!BTN_L|!BTN_R|!BTN_START|!BTN_SELECT	;$00BD3E	|	Press to reset the game. This check runs every frame.
+	BEQ SoftReset				;$00BD41	|
 	RTS							;$00BD43	|
 
-CODE_FL_00BD44:
+SoftReset:
 	LDA #$0000					;$00BD44	|
-	JSL PlaySFX			;$00BD47	|
+	JSL PlaySFX					;$00BD47	|
 	LDA #$0000					;$00BD4B	|
-	JSL PlayMusic			;$00BD4E	|
+	JSL PlayMusic				;$00BD4E	|
 	JSL UpdtLyrsCtrl			;$00BD52	|
-	LDA #$8004					;$00BD56	|\ 
+	LDA #Reset_SNES				;$00BD56	|\ 
 	LDX #$0000					;$00BD59	|| Execute $008004 on the SNES.
 	JML SA1_ExecuteSNES			;$00BD5C	|/
 
@@ -8470,51 +8485,51 @@ CODE_FL_00BD7B:					;			|
 	RTL							;$00BD81	|
 
 AS_Script_0000:
-       %AS_MOV_REG_VAR($0)
-       %AS_MULTIJMP($BDA0,
-              $BDA7,
-              $BDC7,
-              $BDCB,
-              $BDAB,
-              $BDB3,
-              $BDB7,
-              $BDBE,
-              $BDCF,
-              $BDD3,
-              $BDD7,
-              $BDDB,
-              $BDDF)
+	%AS_MOV_REG_VAR($0)
+	%AS_MULTIJMP(AS_00BDA0,
+			AS_00BDA7,
+			AS_00BDC7,
+			AS_00BDCB,
+			AS_00BDAB,
+			AS_00BDB3,
+			AS_00BDB7,
+			AS_00BDBE,
+			AS_00BDCF,
+			AS_00BDD3,
+			AS_00BDD7,
+			AS_00BDDB,
+			AS_00BDDF)
 AS_00BDA0:
-       %AS_ASMCALL($00A47B, $01)
-       dl $CADCF1
+	%AS_ASMCALL(CODE_FL_00A47B, $01)
+	dl $CADCF1
 AS_00BDA7:
-       %AS_JML($078807)
+	%AS_JML($078807)
 AS_00BDAB:
-       %AS_MOV_VAR_IMM16($00, $0000)
-       %AS_JML($D1A39A)
+	%AS_MOV_VAR_IMM16($00, $0000)
+	%AS_JML($D1A39A)
 AS_00BDB3:
-       %AS_JML($CAAC12)
+	%AS_JML($CAAC12)
 AS_00BDB7:
-       %AS_ASMCALL($00A47B, $01)
-       dl $07D5CD
+	%AS_ASMCALL(CODE_FL_00A47B, $01)
+	dl $07D5CD
 AS_00BDBE:
-       %AS_MOV_REG_ABS($738E)
-       %AS_MOV_VAR_REG($00)
-       %AS_JML($CAD6DF)
+	%AS_MOV_REG_ABS($738E)
+	%AS_MOV_VAR_REG($00)
+	%AS_JML($CAD6DF)
 AS_00BDC7:
-       %AS_JML($CB94BC)
+	%AS_JML($CB94BC)
 AS_00BDCB:
-       %AS_JML($CA5F47)
+	%AS_JML($CA5F47)
 AS_00BDCF:
-       %AS_JML($CBD21B)
+	%AS_JML($CBD21B)
 AS_00BDD3:
-       %AS_JML($C90000)
+	%AS_JML($C90000)
 AS_00BDD7:
-       %AS_JML($C90018)
+	%AS_JML($C90018)
 AS_00BDDB:
-       %AS_JML($CF9235)
+	%AS_JML($CF9235)
 AS_00BDDF:
-       %AS_JML($D1DB83)
+	%AS_JML($D1DB83)
 
 
 CODE_FL_00BDE3:					;-----------| Game Mode 0 - Main opening cutscene/title
@@ -8524,7 +8539,7 @@ CODE_FL_00BDE3:					;-----------| Game Mode 0 - Main opening cutscene/title
 	STA $3093					;$00BDEB	|
 	REP #$20					;$00BDEE	|
 	LDA #$0000					;$00BDF0	|
-	JSL PlayMusic			;$00BDF3	|
+	JSL PlayMusic				;$00BDF3	|
 	LDA #$0000					;$00BDF7	|
 	JSL CODE_FL_00BD70			;$00BDFA	|
 	BRA CODE_FL_00BE12			;$00BDFE	|
@@ -8532,41 +8547,41 @@ CODE_FL_00BDE3:					;-----------| Game Mode 0 - Main opening cutscene/title
 CODE_FL_00BE00:
 	JSL UpdateVramSprSize		;$00BE00	|
 	LDA #$0000					;$00BE04	|
-	JSL PlayMusic			;$00BE07	|
+	JSL PlayMusic				;$00BE07	|
 	LDA #$0001					;$00BE0B	|
 	JSL CODE_FL_00BD70			;$00BE0E	|
 CODE_FL_00BE12:					;			|
-	STZ !Reload_Map_Unpause					;$00BE12	|
-	STZ !Reload_Room					;$00BE15	|
+	STZ Reload_Map_On_Unpause	;$00BE12	|
+	STZ Reload_Room			;$00BE15	|
 CODE_FL_00BE18:					;			|
 	JSL CODE_FL_00BCDE			;$00BE18	|
-	LDA !Reload_Room					;$00BE1C	|
+	LDA Reload_Room			;$00BE1C	|
 	BEQ CODE_FL_00BE18			;$00BE1F	|
-	LDA !Reload_Map_Unpause					;$00BE21	|
+	LDA Reload_Map_On_Unpause	;$00BE21	|
 	BEQ CODE_FL_00BE4D			;$00BE24	|
 	JSL CODE_FL_00CC67			;$00BE26	|
 	INC $739A					;$00BE2A	|
 	JSL CODE_FL_00D87F			;$00BE2D	|
-	LDA !GS_TitleSubgamePreview	;$00BE31	|
-	STA !CurrentGameState		;$00BE34	|
-	STZ !Reload_Map_Unpause					;$00BE37	|
+	LDA #$00!GAMESTATE_TITLESUBGAMEPREVIEW	;$00BE31	|
+	STA CurrentGameState		;$00BE34	|
+	STZ Reload_Map_On_Unpause	;$00BE37	|
 	JSL CODE_FL_00BC66			;$00BE3A	|
 	JSL CODE_FL_00D87F			;$00BE3E	|
 	STZ $739A					;$00BE42	|
-	LDA !Reload_Map_Unpause					;$00BE45	|
+	LDA Reload_Map_On_Unpause	;$00BE45	|
 	BNE CODE_FL_00BE00			;$00BE48	|
 	JMP CODE_FL_00BDE3			;$00BE4A	|
 
 CODE_FL_00BE4D:
-	LDA !SG_DynaBlade			;$00BE4D	|
-	STA !CurrentGameState		;$00BE50	|
-	LDA $7F00					;$00BE53	|
+	LDA #$00!SUBGAME_DYNABLADE			;$00BE4D	|
+	STA CurrentGameState		;$00BE50	|
+	LDA SaveFile_Number		;$00BE53	|
 	AND #$00FF					;$00BE56	|
 	TAX							;$00BE59	|
 	LDA.l SaveIndices,X			;$00BE5A	|
 	AND #$00FF					;$00BE5E	|
 	TAX							;$00BE61	|
-	LDA $7F06,X					;$00BE62	|
+	LDA SaveFile_Subgame,X		;$00BE62	|
 	AND #$00FF					;$00BE65	|
 	CMP #$00FF					;$00BE68	|
 	BNE CODE_FL_00BE70			;$00BE6B	|
@@ -8581,15 +8596,15 @@ CODE_FL_00BE74:					;-----------| Game Mode 01 - Game select menu
 	JSL CODE_FL_00D8DE			;$00BE74	|
 	LDA #$0005					;$00BE78	|
 	JSL CODE_FL_00BD70			;$00BE7B	|
-	STZ !Reload_Room					;$00BE7F	|
+	STZ Reload_Room			;$00BE7F	|
 CODE_FL_00BE82:					;			|
 	JSL CODE_FL_00BCDE			;$00BE82	|
-	LDA !Reload_Room					;$00BE86	|
+	LDA Reload_Room			;$00BE86	|
 	BEQ CODE_FL_00BE82			;$00BE89	|
-	LDX !CurrentSubGame			;$00BE8B	|
+	LDX CurrentSubGame			;$00BE8B	|
 	LDA.l GameStateLUT,X		;$00BE8E	| Set game state based on subgame selected (most are to the subgame title screen state)
 	AND #$00FF					;$00BE92	|
-	STA !CurrentGameState		;$00BE95	|
+	STA CurrentGameState		;$00BE95	|
 	RTL							;$00BE98	|
 
 GameStateLUT:
@@ -8601,15 +8616,15 @@ GameStateLUT:
 CODE_FL_00BEA2:					;-----------| Game Mode 08 - Subgame credits / Gourmet Race score tally
 	LDA #$000A					;$00BEA2	|
 	JSL CODE_FL_00BD70			;$00BEA5	|
-	STZ !Reload_Room					;$00BEA9	|
+	STZ Reload_Room			;$00BEA9	|
 CODE_FL_00BEAC:					;			|
 	JSL CODE_FL_00BCDE			;$00BEAC	|
-	LDA !Reload_Room					;$00BEB0	|
+	LDA Reload_Room			;$00BEB0	|
 	BEQ CODE_FL_00BEAC			;$00BEB3	|
-	LDX !CurrentSubGame			;$00BEB5	|
+	LDX CurrentSubGame			;$00BEB5	|
 	LDA.l ReturnGameStateLUT,X	;$00BEB8	| Return to this game state after the credits sequence (most are to the corkboard state)
 	AND #$00FF					;$00BEBC	|
-	STA !CurrentGameState		;$00BEBF	|
+	STA CurrentGameState		;$00BEBF	|
 	RTL							;$00BEC2	|
 
 ReturnGameStateLUT:
@@ -8622,25 +8637,25 @@ CODE_FL_00BEC9:					;-----------| Game Mode 05 - Subgame title screen
 	JSL CODE_FL_00D8EB			;$00BEC9	|
 	LDA #$0006					;$00BECD	|
 	JSL CODE_FL_00BD70			;$00BED0	|
-	STZ !Reload_Map_Unpause					;$00BED4	|
-	INC !Reload_Map_Unpause					;$00BED7	|
+	STZ Reload_Map_On_Unpause	;$00BED4	|
+	INC Reload_Map_On_Unpause	;$00BED7	|
 CODE_FL_00BEDA:					;			|
-	STZ !Reload_Room					;$00BEDA	|
+	STZ Reload_Room			;$00BEDA	|
 CODE_FL_00BEDD:					;			|
 	JSL CODE_FL_00BCDE			;$00BEDD	|
-	LDA #$BFC3					;$00BEE1	|\ 
+	LDA #CODE_FL_00BFC3			;$00BEE1	|\ 
 	LDX #$0000					;$00BEE4	|| Execute $00BFC3 on the SNES.
 	JSL SA1_ExecuteSNES			;$00BEE7	|/
 	LDA $739A					;$00BEEB	|
 	BEQ CODE_FL_00BEFC			;$00BEEE	|
-	LDA $32C4					;$00BEF0	|
-	AND #$FFF0					;$00BEF3	|
+	LDA P1_Hold	;$00BEF0	|
+	AND #!BTN_ALL				;$00BEF3	|
 	BEQ CODE_FL_00BEFC			;$00BEF6	|
-	INC !Reload_Map_Unpause					;$00BEF8	|
+	INC Reload_Map_On_Unpause	;$00BEF8	|
 	RTL							;$00BEFB	|
 
 CODE_FL_00BEFC:
-	LDA !Reload_Room					;$00BEFC	|
+	LDA Reload_Room			;$00BEFC	|
 	BMI CODE_FL_00BF18			;$00BEFF	|
 	BNE CODE_FL_00BF45			;$00BF01	|
 	LDA $7A31					;$00BF03	|
@@ -8648,12 +8663,12 @@ CODE_FL_00BEFC:
 	LDA $32D4					;$00BF08	|
 	AND #$0040					;$00BF0B	|
 	BEQ CODE_FL_00BEDD			;$00BF0E	|
-	LDA !CurrentSubGame			;$00BF10	|
-	CMP !SG_Arena				;$00BF13	|
+	LDA CurrentSubGame			;$00BF10	|
+	CMP #$00!SUBGAME_ARENA				;$00BF13	|
 	BEQ CODE_FL_00BEDA			;$00BF16	|
 CODE_FL_00BF18:					;			|
-	LDA !CurrentSubGame			;$00BF18	|
-	CMP !SG_GCO					;$00BF1B	|
+	LDA CurrentSubGame			;$00BF18	|
+	CMP #$00!SUBGAME_GCO					;$00BF1B	|
 	BEQ CODE_FL_00BF26			;$00BF1E	|
 	JSL CODE_FL_00CC7B			;$00BF20	|
 	BRA CODE_FL_00BF2A			;$00BF24	|
@@ -8662,8 +8677,8 @@ CODE_FL_00BF26:
 	JSL CODE_FL_00CC67			;$00BF26	|
 CODE_FL_00BF2A:					;			|
 	JSL CODE_FL_00D87F			;$00BF2A	|
-	LDA !GS_SubgameOpening		;$00BF2E	|
-	STA !CurrentGameState		;$00BF31	|
+	LDA #$00!GAMESTATE_SUBGAMEOPENING		;$00BF2E	|
+	STA CurrentGameState		;$00BF31	|
 	JSL CODE_FL_00BC66			;$00BF34	|
 	JSL CODE_FL_00D87F			;$00BF38	|
 	LDA $739A					;$00BF3C	|
@@ -8673,16 +8688,16 @@ CODE_FL_00BF44:					;			|
 	RTL							;$00BF44	|
 
 CODE_FL_00BF45:
-	LDA !Reload_Map_Unpause					;$00BF45	|
+	LDA Reload_Map_On_Unpause	;$00BF45	|
 	BNE CODE_FL_00BF54			;$00BF48	|
-	INC !Reload_Map_Unpause					;$00BF4A	|
-	LDA !GS_Corkboard			;$00BF4D	|
-	STA !CurrentGameState		;$00BF50	|
+	INC Reload_Map_On_Unpause	;$00BF4A	|
+	LDA #$00!GAMESTATE_CORKBOARD			;$00BF4D	|
+	STA CurrentGameState		;$00BF50	|
 	RTL							;$00BF53	|
 
 CODE_FL_00BF54:
-	LDX !CurrentSubGame			;$00BF54	|
-	CPX !SG_GourmetRace			;$00BF57	|
+	LDX CurrentSubGame			;$00BF54	|
+	CPX #$00!SUBGAME_GOURMETRACE			;$00BF57	|
 	BNE CODE_FL_00BF63			;$00BF5A	|
 	LDA $7B2D					;$00BF5C	|
 	BEQ CODE_FL_00BF71			;$00BF5F	|
@@ -8690,7 +8705,7 @@ CODE_FL_00BF54:
 
 CODE_FL_00BF63:
 	LDA $32EE					;$00BF63	|
-	ORA !Respawn_Room					;$00BF66	|
+	ORA Respawn_Room			;$00BF66	|
 	BNE CODE_FL_00BF71			;$00BF69	|
 CODE_FL_00BF6B:					;			|
 	LDA.l DATA_00BFB5,X			;$00BF6B	|
@@ -8700,10 +8715,10 @@ CODE_FL_00BF71:
 	LDA.l DATA_00BFBC,X			;$00BF71	|
 CODE_FL_00BF75:
 	AND #$00FF					;$00BF75	|
-	STA !CurrentGameState		;$00BF78	|
+	STA CurrentGameState		;$00BF78	|
 	JSL $03A04A					;$00BF7B	|
-	LDA !CurrentSubGame			;$00BF7F	|
-	CMP !SG_RoMK				;$00BF82	|
+	LDA CurrentSubGame			;$00BF7F	|
+	CMP #$00!SUBGAME_ROMK				;$00BF82	|
 	BNE CODE_FL_00BFAD			;$00BF85	|
 	LDA #$001E					;$00BF87	|
 CODE_FL_00BF8A:					;			|
@@ -8716,14 +8731,14 @@ CODE_FL_00BF8A:					;			|
 	CMP #$0007					;$00BF96	|
 	BNE CODE_FL_00BFAD			;$00BF99	|
 	LDA #$000D					;$00BF9B	|
-	STA !Helper_Ability					;$00BF9E	|
+	STA Helper_Ability			;$00BF9E	|
 	LDA #$0000					;$00BFA1	|
 	STA $7495					;$00BFA4	|
 	LDA #$0001					;$00BFA7	|
-	STA !Helper_HP					;$00BFAA	|
+	STA Helper_HP				;$00BFAA	|
 CODE_FL_00BFAD:					;			|
 	LDA #$0000					;$00BFAD	|
-	JSL PlaySFX			;$00BFB0	|
+	JSL PlaySFX					;$00BFB0	|
 	RTL							;$00BFB4	|
 
 DATA_00BFB5:
@@ -8743,13 +8758,13 @@ CODE_FL_00BFC3:					;```````````| SNES-side subroutine used above to waste some 
 CODE_FL_00BFC8:					;-----------| Game Mode 06 - Overworld map (Dynablade, Metaknight, Milky Way)
 	LDA #$0003					;$00BFC8	|
 	JSL CODE_FL_00BD70			;$00BFCB	|
-	STZ !Reload_Room					;$00BFCF	|
+	STZ Reload_Room					;$00BFCF	|
 
 CODE_FL_00BFD2:
 	JSL CODE_FL_00BCDE			;$00BFD2	|
-	LDA !Reload_Room					;$00BFD6	|
+	LDA Reload_Room					;$00BFD6	|
 	BEQ CODE_FL_00BFD2			;$00BFD9	|
-	LDA !CurrentSubGame			;$00BFDB	|\ 
+	LDA CurrentSubGame			;$00BFDB	|\ 
 	CMP #$0009					;$00BFDE	|| Hardlock the game if outside the defined range
   - BCS -						;$00BFE1	|/
 	ASL A						;$00BFE3	|
@@ -8766,40 +8781,40 @@ CODE_FL_00BFE8:
 	dw CODE_FL_00BFF6				; 06
 
 CODE_FL_00BFF6:
-	LDA !GS_MainLevel			;$00BFF6	|
-	STA !CurrentGameState		;$00BFF9	|
+	LDA #$00!GAMESTATE_MAINLEVEL			;$00BFF6	|
+	STA CurrentGameState		;$00BFF9	|
 	RTL							;$00BFFC	|
 
 CODE_FL_00BFFD:
-	LDA !Reload_Room					;$00BFFD	|
+	LDA Reload_Room					;$00BFFD	|
 	BMI CODE_FL_00C05E			;$00C000	|
 	LDA $32EE					;$00C002	|
 	CMP #$0005					;$00C005	|
 	BCS CODE_FL_00C011			;$00C008	|
-	LDA !GS_MainLevel			;$00C00A	|
-	STA !CurrentGameState		;$00C00D	|
+	LDA #$00!GAMESTATE_MAINLEVEL			;$00C00A	|
+	STA CurrentGameState		;$00C00D	|
 	RTL							;$00C010	|
 
 CODE_FL_00C011:
 	LDA $7A63					;$00C011	|
 	AND #$00FF					;$00C014	|
 	STA $73B2					;$00C017	|
-	LDA !GS_DynaSecret		 	;$00C01A	|
-	STA !CurrentGameState		;$00C01D	|
+	LDA #$00!GAMESTATE_DYNASECRET		 	;$00C01A	|
+	STA CurrentGameState		;$00C01D	|
 	JSL CODE_FL_00D87F			;$00C020	|
 	JSL CODE_FL_00BC66			;$00C024	|
-	LDA !Load_Special_Dest		;$00C028	|
+	LDA Load_Special_Dest		;$00C028	|
 	CMP #$0002					;$00C02B	|
 	BNE CODE_FL_00C04D			;$00C02E	|
-	LDA !GS_GameOver			;$00C030	|
-	STA !CurrentGameState		;$00C033	|
+	LDA #$00!GAMESTATE_GAMEOVER			;$00C030	|
+	STA CurrentGameState		;$00C033	|
 	JSL CODE_FL_00D87F			;$00C036	|
 	JSL CODE_FL_00BC66			;$00C03A	|
-	LDA !Reload_Map_Unpause		;$00C03E	|
+	LDA Reload_Map_On_Unpause		;$00C03E	|
 	BNE CODE_FL_00C04D			;$00C041	|
-	LDA !GS_Corkboard			;$00C043	|
-	STA !CurrentGameState		;$00C046	|
-	INC !Reload_Map_Unpause		;$00C049	|
+	LDA #$00!GAMESTATE_CORKBOARD			;$00C043	|
+	STA CurrentGameState		;$00C046	|
+	INC Reload_Map_On_Unpause		;$00C049	|
 	RTL							;$00C04C	|
 
 CODE_FL_00C04D:
@@ -8812,22 +8827,22 @@ CODE_FL_00C04D:
 
 CODE_FL_00C05E:
 	JSL CODE_FL_00CC7B			;$00C05E	|
-	LDA !GS_DynaMapFight		;$00C062	|
-	STA !CurrentGameState		;$00C065	|
+	LDA #$00!GAMESTATE_DYNAMAPFIGHT		;$00C062	|
+	STA CurrentGameState		;$00C065	|
 	JSL CODE_FL_00D87F			;$00C068	|
 	JSL CODE_FL_00BC66			;$00C06C	|
-	LDA !Load_Special_Dest		;$00C070	|
+	LDA Load_Special_Dest		;$00C070	|
 	CMP #$0002					;$00C073	|
 	BNE CODE_FL_00C095			;$00C076	|
-	LDA !GS_GameOver			;$00C078	|
-	STA !CurrentGameState		;$00C07B	|
+	LDA #$00!GAMESTATE_GAMEOVER			;$00C078	|
+	STA CurrentGameState		;$00C07B	|
 	JSL CODE_FL_00D87F			;$00C07E	|
 	JSL CODE_FL_00BC66			;$00C082	|
-	LDA !Reload_Map_Unpause		;$00C086	|
+	LDA Reload_Map_On_Unpause		;$00C086	|
 	BNE CODE_FL_00C095			;$00C089	|
-	LDA !GS_Corkboard			;$00C08B	|
-	STA !CurrentGameState		;$00C08E	|
-	INC !Reload_Map_Unpause		;$00C091	|
+	LDA #$00!GAMESTATE_CORKBOARD			;$00C08B	|
+	STA CurrentGameState		;$00C08E	|
+	INC Reload_Map_On_Unpause		;$00C091	|
 	RTL							;$00C094	|
 
 CODE_FL_00C095:
@@ -8835,18 +8850,18 @@ CODE_FL_00C095:
 	LDX #$0001					;$00C099	|\ 
 	LDA #$8479					;$00C09C	|| Load the DMA table at $018479.
 	JSL LoadDMATable			;$00C09F	|/
-	LDA !SG_DynaBlade			;$00C0A3	|
-	STA !CurrentSubGame			;$00C0A6	|
+	LDA #$00!SUBGAME_DYNABLADE			;$00C0A3	|
+	STA CurrentSubGame			;$00C0A6	|
 	JMP CODE_FL_00BFC8			;$00C0A9	|
 
 CODE_FL_00C0AC:
-	LDA !GS_MainLevel			;$00C0AC	|
-	STA !CurrentGameState		;$00C0AF	|
+	LDA #$00!GAMESTATE_MAINLEVEL			;$00C0AC	|
+	STA CurrentGameState		;$00C0AF	|
 	RTL							;$00C0B2	|
 
 CODE_FL_00C0B3:
-	LDA !GS_MainLevel			;$00C0B3	|
-	STA !CurrentGameState		;$00C0B6	|
+	LDA #$00!GAMESTATE_MAINLEVEL			;$00C0B3	|
+	STA CurrentGameState		;$00C0B6	|
 	RTL							;$00C0B9	|
 
 
@@ -8859,21 +8874,21 @@ CODE_FL_00C0BA:					;-----------| Game Mode 0D - Dynablade trial room
 	JSL $D4FB90					;$00C0CA	|
 	LDA #$0001					;$00C0CE	|
 	STA $73A6					;$00C0D1	|
-	STA !Reload_Room			;$00C0D4	|
+	STA Reload_Room			;$00C0D4	|
 	JSL CODE_FL_00BCDE			;$00C0D7	|
 	JSL CODE_FL_00BCDE			;$00C0DB	|
 	JSL CODE_FL_00BCDE			;$00C0DF	|
 	STZ $73A6					;$00C0E3	|
-	STZ !Load_Special_Dest		;$00C0E6	|
+	STZ Load_Special_Dest		;$00C0E6	|
 	JSL CODE_FL_00CBF4			;$00C0E9	|
-	STZ !Reload_Room			;$00C0ED	|
+	STZ Reload_Room			;$00C0ED	|
 CODE_FL_00C0F0:					;			|
 	JSL CODE_FL_00BCDE			;$00C0F0	|
 	JSL CODE_FL_00CBCC			;$00C0F4	|
 	BEQ CODE_FL_00C0FE			;$00C0F8	|
 	JSL $CF98A9					;$00C0FA	|
 CODE_FL_00C0FE:					;			|
-	LDA !Reload_Room			;$00C0FE	|
+	LDA Reload_Room			;$00C0FE	|
 	BEQ CODE_FL_00C0F0			;$00C101	|
 	JSL CODE_FL_00CC7B			;$00C103	|
 	RTL							;$00C107	|
@@ -8903,8 +8918,8 @@ CODE_FL_00C108:					;-----------| Game Mode 0E - Dynablade overworld enemy battl
 	JSL CODE_FL_00BCDE			;$00C147	|
 	JSL CODE_FL_00CBF4			;$00C14B	|
 	STZ $73A6					;$00C14F	|
-	STZ !Reload_Room			;$00C152	|
-	STZ !Load_Special_Dest		;$00C155	|
+	STZ Reload_Room			;$00C152	|
+	STZ Load_Special_Dest		;$00C155	|
 	SEP #$20					;$00C158	|
 	STZ $7A67					;$00C15A	|
 	REP #$20					;$00C15D	|
@@ -8914,7 +8929,7 @@ CODE_FL_00C15F:					;			|
 	BMI CODE_FL_00C15F			;$00C166	|
 	LDA $623C,X					;$00C168	|
 	BMI CODE_FL_00C1AC			;$00C16B	|
-	LDA !Kirby_HP					;$00C16D	|
+	LDA Kirby_HP					;$00C16D	|
 	BMI CODE_FL_00C199			;$00C170	|
 	BEQ CODE_FL_00C199			;$00C172	|
 	LDA $30A1					;$00C174	|
@@ -8924,7 +8939,7 @@ CODE_FL_00C15F:					;			|
 	JSL CODE_FL_00CBCC			;$00C17F	|
 	BEQ CODE_FL_00C15F			;$00C183	|
 	LDA $7B35					;$00C185	|
-	ORA !Camera_Lock					;$00C188	|
+	ORA Camera_Lock					;$00C188	|
 	BNE CODE_FL_00C15F			;$00C18B	|
 	INC $7B33					;$00C18D	|
 	JSL $CF98A9					;$00C190	|
@@ -8933,7 +8948,7 @@ CODE_FL_00C15F:					;			|
 
 CODE_FL_00C199:
 	JSL CODE_FL_00BCDE			;$00C199	|
-	LDA !Reload_Room					;$00C19D	|
+	LDA Reload_Room					;$00C19D	|
 	BEQ CODE_FL_00C199			;$00C1A0	|
 	SEP #$20					;$00C1A2	|
 	LDA #$01					;$00C1A4	|
@@ -8952,13 +8967,13 @@ CODE_FL_00C1B9:					;			|
 	PLA							;$00C1BE	|
 	DEC A						;$00C1BF	|
 	BNE CODE_FL_00C1B9			;$00C1C0	|
-	STZ !Reload_Room					;$00C1C2	|
+	STZ Reload_Room					;$00C1C2	|
 	JSL CODE_FL_00CC7B			;$00C1C5	|
 	RTL							;$00C1C9	|
 
 CODE_FL_00C1CA:
-	LDA !SG_DynaBlade			;$00C1CA	|
-	STA !CurrentSubGame			;$00C1CD	|
+	LDA #$00!SUBGAME_DYNABLADE			;$00C1CA	|
+	STA CurrentSubGame			;$00C1CD	|
 	JSL SetupStatusBar_L		;$00C1D0	|
 	JML HandleStatusBar_L		;$00C1D4	|
 
@@ -8973,16 +8988,16 @@ CODE_FL_00C1DC:					;			|
 	JSL $D4FB90					;$00C1E8	|
 	LDA #$0001					;$00C1EC	|
 	STA $73A6					;$00C1EF	|
-	STA !Reload_Room			;$00C1F2	|
+	STA Reload_Room			;$00C1F2	|
 	JSL CODE_FL_00BCDE			;$00C1F5	|
 	JSL CODE_FL_00BCDE			;$00C1F9	|
 	JSL CODE_FL_00BCDE			;$00C1FD	|
 	STZ $73A6					;$00C201	|
-	STZ !Load_Special_Dest		;$00C204	|
+	STZ Load_Special_Dest		;$00C204	|
 	JSL CODE_FL_00CBF4			;$00C207	|
-	STZ !Reload_Room			;$00C20B	|
-	LDA !CurrentSubGame			;$00C20E	|
-	CMP !SG_RoMK				;$00C211	|
+	STZ Reload_Room			;$00C20B	|
+	LDA CurrentSubGame			;$00C20E	|
+	CMP #$00!SUBGAME_ROMK				;$00C211	|
 	BNE CODE_FL_00C219			;$00C214	|
 	STZ $73A4					;$00C216	|
 CODE_FL_00C219:					;			|
@@ -8994,38 +9009,38 @@ CODE_FL_00C219:					;			|
 	JSL CODE_FL_00CBCC			;$00C228	|
 	BEQ CODE_FL_00C26B			;$00C22C	|
 	LDA $7B35					;$00C22E	|
-	ORA !Camera_Lock					;$00C231	|
+	ORA Camera_Lock					;$00C231	|
 	BNE CODE_FL_00C26B			;$00C234	|
-	LDA !Boss_HP					;$00C236	|
+	LDA Boss_HP					;$00C236	|
 	PHA							;$00C239	|
-	STZ !Boss_HP					;$00C23A	|
+	STZ Boss_HP					;$00C23A	|
 	JSL ExecuteGamePause		;$00C23D	|
 	PLA							;$00C241	|
-	STA !Boss_HP					;$00C242	|
-	LDA !Reload_Map_Unpause					;$00C245	|	; This will be set to 0 if the player chooses to leave a level
+	STA Boss_HP					;$00C242	|
+	LDA Reload_Map_On_Unpause					;$00C245	|	; This will be set to 0 if the player chooses to leave a level
 	BNE CODE_FL_00C26B			;$00C248	|
-	INC !Reload_Map_Unpause					;$00C24A	|
-	LDA !CurrentSubGame			;$00C24D	|
-	CMP !SG_GourmetRace			;$00C250	|
+	INC Reload_Map_On_Unpause					;$00C24A	|
+	LDA CurrentSubGame			;$00C24D	|
+	CMP #$00!SUBGAME_GOURMETRACE			;$00C250	|
 	BEQ CODE_FL_00C264			;$00C253	|
-	CMP !SG_RoMK				;$00C255	|
+	CMP #$00!SUBGAME_ROMK				;$00C255	|
 	BNE CODE_FL_00C25D			;$00C258	|
 	STZ $32F4					;$00C25A	|
 CODE_FL_00C25D:					;			|
-	LDA !GS_SubgameMap			;$00C25D	|
-	STA !CurrentGameState		;$00C260	|
+	LDA #$00!GAMESTATE_SUBGAMEMAP			;$00C25D	|
+	STA CurrentGameState		;$00C260	|
 	RTL							;$00C263	|
 
 CODE_FL_00C264:
-	LDA !GS_SubgameTitle			;$00C264	|
-	STA !CurrentGameState		;$00C267	|
+	LDA #$00!GAMESTATE_SUBGAMETITLE			;$00C264	|
+	STA CurrentGameState		;$00C267	|
 	RTL							;$00C26A	|
 
 CODE_FL_00C26B:
 	LDA $73A4					;$00C26B	|
-	ORA !Camera_Lock			;$00C26E	|
+	ORA Camera_Lock			;$00C26E	|
 	BNE CODE_FL_00C293			;$00C271	|
-	LDA !RoMK_Timer				;$00C273	|
+	LDA RoMK_Timer				;$00C273	|
 	BEQ CODE_FL_00C293			;$00C276	|
 	CMP #$00B4					;$00C278	|
 	BCS CODE_FL_00C288			;$00C27B	|
@@ -9034,16 +9049,16 @@ CODE_FL_00C26B:
 	LDA #$0014					;$00C282	|
 	STA $73A2					;$00C285	|
 CODE_FL_00C288:					;			|
-	DEC !RoMK_Timer				;$00C288	|
+	DEC RoMK_Timer				;$00C288	|
 	JSL $CF63B6					;$00C28B	|
 	JSL $CF63F8					;$00C28F	|
 CODE_FL_00C293:					;			|
-	LDA !Reload_Room			;$00C293	|
+	LDA Reload_Room			;$00C293	|
 	BNE CODE_FL_00C29B			;$00C296	|
 	JMP CODE_FL_00C219			;$00C298	|
 
 CODE_FL_00C29B:
-	LDA !Load_Special_Dest		;$00C29B	|\ 
+	LDA Load_Special_Dest		;$00C29B	|\ 
 	CMP #$0005					;$00C29E	||\ Hardlock the game if outside the defined range. 
   - BCS -						;$00C2A1	||/
 	ASL A						;$00C2A3	||
@@ -9059,8 +9074,8 @@ CODE_FL_00C2A8:
 
 CODE_FL_00C2B2:					;-----------| Normal level, submode 0
 	JSL CODE_FL_00D87F			;$00C2B2	|
-	LDA !CurrentSubGame			;$00C2B6	|
-	CMP !SG_RoMK				;$00C2B9	|
+	LDA CurrentSubGame			;$00C2B6	|
+	CMP #$00!SUBGAME_ROMK				;$00C2B9	|
 	BEQ CODE_FL_00C2C1			;$00C2BC	|
 	JMP CODE_FL_00C365			;$00C2BE	|
 
@@ -9071,7 +9086,7 @@ CODE_FL_00C2C1:
 	JMP CODE_FL_00C365			;$00C2C9	|
 
 CODE_FL_00C2CC:
-	LDA !Respawn_Room					;$00C2CC	|
+	LDA Respawn_Room					;$00C2CC	|
 	CMP #$0003					;$00C2CF	|
 	BEQ CODE_FL_00C2D7			;$00C2D2	|
 	JMP CODE_FL_00C365			;$00C2D4	|
@@ -9153,7 +9168,7 @@ DATA_00C3A6:					;$00C3A6	| Empty word, used above to clear data.
 CODE_FL_00C3A8:					;-----------| Normal level, submode 3
 	JSL $059A1A					;$00C3A8	|
 	JSL $059A20					;$00C3AC	|
-	LDA !CurrentSubGame					;$00C3B0	|\ 
+	LDA CurrentSubGame					;$00C3B0	|\ 
 	CMP #$0009					;$00C3B3	||\ Hardlock the game if outside the defined range.
   -	BCS -						;$00C3B6	||/
 	ASL A						;$00C3B8	||
@@ -9172,13 +9187,13 @@ CODE_FL_00C3BD:
 	dw CODE_FL_00C3D6				; 08
 
 CODE_FL_00C3CF:					;-----------| Normal level, submode 3, routine 6
-	LDA !GS_Corkboard			;$00C3CF	|
-	STA !CurrentGameState		;$00C3D2	|
+	LDA #$00!GAMESTATE_CORKBOARD			;$00C3CF	|
+	STA CurrentGameState		;$00C3D2	|
 	RTL							;$00C3D5	|
 
 CODE_FL_00C3D6:					;-----------| Normal level, submode 3, routine 7/8
-	LDA !GS_TitleScreen			;$00C3D6	|
-	STA !CurrentGameState		;$00C3D9	|
+	LDA #$00!GAMESTATE_TITLESCREEN			;$00C3D6	|
+	STA CurrentGameState		;$00C3D9	|
 	RTL							;$00C3DC	|
 
 CODE_FL_00C3DD:					;-----------| Normal level, submode 3, routine 0
@@ -9209,8 +9224,8 @@ CODE_FL_00C412:					;			|
 	JSL CODE_FL_00F161			;$00C412	|
 	LDA #$0001					;$00C416	|
 	JSL CODE_FL_00EAB0			;$00C419	|
-	LDA !GS_DynaGoal				;$00C41D	|
-	STA !CurrentGameState		;$00C420	|
+	LDA #$00!GAMESTATE_DYNAGOAL	;$00C41D	|
+	STA CurrentGameState		;$00C420	|
 	RTL							;$00C423	|
 
 CODE_FL_00C424:					;-----------| Normal level, submode 3, routine 2
@@ -9218,8 +9233,8 @@ CODE_FL_00C424:					;-----------| Normal level, submode 3, routine 2
 	BEQ CODE_FL_00C42C			;$00C427	|
 	JMP CODE_FL_00C1D8			;$00C429	|
 CODE_FL_00C42C:					;			|
-	LDA !GS_SubgameTitle			;$00C42C	|
-	STA !CurrentGameState		;$00C42F	|
+	LDA #$00!GAMESTATE_SUBGAMETITLE		;$00C42C	|
+	STA CurrentGameState		;$00C42F	|
 	RTL							;$00C432	|
 
 CODE_FL_00C433:					;-----------| Normal level, submode 3, routine 4
@@ -9244,38 +9259,38 @@ CODE_FL_00C449:					;			|
 	LDA #$0006					;$00C45B	|
 	JSL CODE_FL_00EAB0			;$00C45E	|
 CODE_FL_00C462:					;			|
-	LDA !GS_SubgameMap				;$00C462	|
-	STA !CurrentGameState		;$00C465	|
+	LDA #$00!GAMESTATE_SUBGAMEMAP	;$00C462	|
+	STA CurrentGameState		;$00C465	|
 	RTL							;$00C468	|
 
 CODE_FL_00C469:					;-----------| Normal level, submode 3, routine 5
-	LDA !MWW_Current_Planet					;$00C469	|
+	LDA MWW_Current_Planet		;$00C469	|
 	LDX #$7A6B					;$00C46C	|
 	JSL CODE_FL_00EA1E			;$00C46F	|
 	LDA #$0008					;$00C473	|
 	JSL CODE_FL_00EAB0			;$00C476	|
 	LDA #$0009					;$00C47A	|
 	JSL CODE_FL_00EAB0			;$00C47D	|
-	LDA !GS_DynaGoal				;$00C481	|
+	LDA #$00!GAMESTATE_DYNAGOAL	;$00C481	|
 	LDX $32EE					;$00C484	|
 	CPX #$0007					;$00C487	|
 	BNE CODE_FL_00C496			;$00C48A	|
 	LDA #$0001					;$00C48C	|
 	JSL CODE_FL_00EAB0			;$00C48F	|
-	LDA !GS_SubgameMap				;$00C493	|
+	LDA #$00!GAMESTATE_SUBGAMEMAP	;$00C493	|
 CODE_FL_00C496:					;			|
-	STA !CurrentGameState		;$00C496	|
+	STA CurrentGameState		;$00C496	|
 	RTL							;$00C499	|
 
 
 CODE_FL_00C49A:					;-----------| Normal level, submode 4
-	LDA !CurrentSubGame			;$00C49A	|
-	CMP !SG_GCO					;$00C49D	|
+	LDA CurrentSubGame			;$00C49A	|
+	CMP #$00!SUBGAME_GCO		;$00C49D	|
 	BEQ CODE_FL_00C4C6			;$00C4A0	|
-	CMP !SG_RoMK				;$00C4A2	|
+	CMP #$00!SUBGAME_ROMK		;$00C4A2	|
 	BNE CODE_FL_00C4E6			;$00C4A5	|
 	LDA $7B19					;$00C4A7	|
-	LDX !MWW_Abilities_Saved					;$00C4AA	|
+	LDX MWW_Abilities_Saved	;$00C4AA	|
 	CPX $7B17					;$00C4AD	|
 	BNE CODE_FL_00C4B5			;$00C4B0	|
 	CMP $7B15					;$00C4B2	|
@@ -9289,7 +9304,7 @@ CODE_FL_00C4B5:					;			|
 
 CODE_FL_00C4C6:
 	LDA #$FFFF					;$00C4C6	|
-	STA !Respawn_Room					;$00C4C9	|
+	STA Respawn_Room			;$00C4C9	|
 	STA $7B0D					;$00C4CC	|
 	SEP #$20					;$00C4CF	|
 	LDA #$01					;$00C4D1	|
@@ -9300,17 +9315,17 @@ CODE_FL_00C4C6:
 	LDA #$0001					;$00C4DF	|
 	JSL CODE_FL_00EAB0			;$00C4E2	|
 CODE_FL_00C4E6:					;			|
-	LDA !GS_SubgameCredits		;$00C4E6	|
-	STA !CurrentGameState		;$00C4E9	|
+	LDA #$00!GAMESTATE_SUBGAMECREDITS	;$00C4E6	|
+	STA CurrentGameState		;$00C4E9	|
 	RTL							;$00C4EC	|
 
 
 CODE_FL_00C4ED:					;-----------| Normal level, submode 2
 	JSL CODE_FL_00D87F			;$00C4ED	|
-	LDA !GS_GameOver			;$00C4F1	|
-	STA !CurrentGameState		;$00C4F4	|
+	LDA #$00!GAMESTATE_GAMEOVER	;$00C4F1	|
+	STA CurrentGameState		;$00C4F4	|
 	JSL CODE_FL_00BC66			;$00C4F7	|
-	LDA !Reload_Map_Unpause					;$00C4FB	|
+	LDA Reload_Map_On_Unpause	;$00C4FB	|
 	BEQ CODE_FL_00C507			;$00C4FE	|
 	JSL CODE_FL_00D87F			;$00C500	|
 	JMP CODE_FL_00C1DC			;$00C504	|
@@ -9318,9 +9333,9 @@ CODE_FL_00C4ED:					;-----------| Normal level, submode 2
 CODE_FL_00C507:
 	LDA #$0000					;$00C507	|
 	JSL CODE_FL_00EC42			;$00C50A	|
-	LDA !GS_Corkboard			;$00C50E	|
-	STA !CurrentGameState		;$00C511	|
-	INC !Reload_Map_Unpause					;$00C514	|
+	LDA #$00!GAMESTATE_CORKBOARD	;$00C50E	|
+	STA CurrentGameState		;$00C511	|
+	INC Reload_Map_On_Unpause	;$00C514	|
 	RTL							;$00C517	|
 
 
@@ -9338,7 +9353,7 @@ CODE_FL_00C518:					;-----------| Normal level, submode 1
 	JSL CreateNewObject2		;$00C533	|
 	LDA #$0000					;$00C537	|
 	STA $73AE					;$00C53A	|
-	LDA !Respawn_Room					;$00C53D	|
+	LDA Respawn_Room			;$00C53D	|
 	STA $73B4					;$00C540	|
 	SEP #$20					;$00C543	|
 	LDA $3078					;$00C545	|
@@ -9356,10 +9371,10 @@ CODE_FL_00C518:					;-----------| Normal level, submode 1
 	ASL A						;$00C566	|
 	STA $307A					;$00C567	|
 	REP #$20					;$00C56A	|
-	STZ !Reload_Room					;$00C56C	|
+	STZ Reload_Room			;$00C56C	|
 CODE_FL_00C56F:					;			|
 	JSL CODE_FL_00BCDE			;$00C56F	|
-	LDA !Reload_Room					;$00C573	|
+	LDA Reload_Room			;$00C573	|
 	BEQ CODE_FL_00C56F			;$00C576	|
 	LDX #$0016					;$00C578	|
 CODE_FL_00C57B:					;			|
@@ -9383,7 +9398,7 @@ CODE_FL_00C594:					;			|
 CODE_FL_00C59C:
 	JSL CODE_FL_00D883			;$00C59C	|
 	LDA $73B4					;$00C5A0	|
-	STA !Respawn_Room					;$00C5A3	|
+	STA Respawn_Room			;$00C5A3	|
 	ASL A						;$00C5A6	|
 	ASL A						;$00C5A7	|
 	STA $32F4					;$00C5A8	|
@@ -9403,8 +9418,8 @@ CODE_FL_00C59C:
 	STA $002132					;$00C5D3	|
 	REP #$20					;$00C5D7	|
 	LDA #$0000					;$00C5D9	|
-	STA !Load_Special_Dest		;$00C5DC	|
-	STZ !Reload_Room			;$00C5DF	|
+	STA Load_Special_Dest		;$00C5DC	|
+	STZ Reload_Room			;$00C5DF	|
 	JMP CODE_FL_00C219			;$00C5E2	|
 
 
@@ -9412,10 +9427,10 @@ CODE_FL_00C59C:
 CODE_FL_00C5E5:					;-----------| Game Mode 04 - Game Over
 	LDA #$0007					;$00C5E5	|
 	JSL CODE_FL_00BD70			;$00C5E8	|
-	STZ !Reload_Room			;$00C5EC	|
+	STZ Reload_Room			;$00C5EC	|
 CODE_FL_00C5EF:					;			|
 	JSL CODE_FL_00BCDE			;$00C5EF	|
-	LDA !Reload_Room			;$00C5F3	|
+	LDA Reload_Room			;$00C5F3	|
 	BEQ CODE_FL_00C5EF			;$00C5F6	|
 	JSL CODE_FL_00CC67			;$00C5F8	|
 	RTL							;$00C5FC	|
@@ -9429,29 +9444,29 @@ CODE_FL_00C5FD:					;-----------| Game Mode 09 - Dynablade cannon game, Milky Wa
 	JSL CODE_FL_00D93B			;$00C608	|
 	JSL CODE_FL_00D9C4			;$00C60C	|
 	INC $7B57					;$00C610	|
-	LDA !CurrentSubGame					;$00C613	|
+	LDA CurrentSubGame			;$00C613	|
 	STA $73B0					;$00C616	|
 	LDA $32EE					;$00C619	|
 	STA $73B2					;$00C61C	|
-	STZ !Reload_Room					;$00C61F	|
+	STZ Reload_Room			;$00C61F	|
 	LDA #$FFFF					;$00C622	|
 	STA $7B33					;$00C625	|
 CODE_FL_00C628:					;			|
 	JSL CODE_FL_00BD0E			;$00C628	|
-	LDA !CurrentSubGame			;$00C62C	|
-	CMP !SG_DynaBlade			;$00C62F	|
+	LDA CurrentSubGame			;$00C62C	|
+	CMP #$00!SUBGAME_DYNABLADE	;$00C62F	|
 	BEQ CODE_FL_00C63E			;$00C632	|
 	JSL CODE_FL_00CBCC			;$00C634	|
 	BEQ CODE_FL_00C63E			;$00C638	|
 	JSL $CF98A9					;$00C63A	|
 CODE_FL_00C63E:					;			|
-	LDA !Reload_Room					;$00C63E	|
+	LDA Reload_Room			;$00C63E	|
 	BEQ CODE_FL_00C628			;$00C641	|
 	STZ $7B57					;$00C643	|
 	LDA $73B0					;$00C646	|
-	STA !CurrentSubGame			;$00C649	|
-	LDA !GS_SubgameMap			;$00C64C	|
-	STA !CurrentGameState		;$00C64F	|
+	STA CurrentSubGame			;$00C649	|
+	LDA #$00!GAMESTATE_SUBGAMEMAP	;$00C64C	|
+	STA CurrentGameState		;$00C64F	|
 	RTL							;$00C652	|
 
 
@@ -9464,21 +9479,21 @@ CODE_FL_00C653:					;-----------| Game Mode 02 - "Is this your first time?"
 	STA $73A6					;$00C65C	|
 	LDA $7B25					;$00C65F	|
 	BEQ CODE_FL_00C672			;$00C662	|
-	LDX !CurrentSubGame			;$00C664	|
+	LDX CurrentSubGame			;$00C664	|
 	LDA.l DATA_00C73F,X			;$00C667	|
 	AND #$00FF					;$00C66B	|
-	STA !CurrentGameState		;$00C66E	|
+	STA CurrentGameState		;$00C66E	|
 	RTL							;$00C671	|
 
 CODE_FL_00C672:
 	LDA #$0001					;$00C672	|
-	STA !Reload_Map_Unpause		;$00C675	|
+	STA Reload_Map_On_Unpause	;$00C675	|
 	STZ $7A95					;$00C678	|
 	LDA $32EE					;$00C67B	|
 	STA $73B2					;$00C67E	|
-	LDA !Respawn_Room			;$00C681	|
+	LDA Respawn_Room			;$00C681	|
 	STA $73B4					;$00C684	|
-	LDX !CurrentSubGame			;$00C687	|
+	LDX CurrentSubGame			;$00C687	|
 	STX $73B0					;$00C68A	|
 	LDA #$0008					;$00C68D	|
 	LDY #$0000					;$00C690	|
@@ -9486,7 +9501,7 @@ CODE_FL_00C672:
 	JSL $CA0000					;$00C697	|
 	JSL CODE_FL_00D93B			;$00C69B	|
 	JSL CODE_FL_00D9C4			;$00C69F	|
-	STZ !Load_Special_Dest		;$00C6A3	|
+	STZ Load_Special_Dest		;$00C6A3	|
 	JSL CODE_FL_00DB92			;$00C6A6	|
 	JSL CODE_FL_00DBB0			;$00C6AA	|
 CODE_FL_00C6AE:					;			|
@@ -9500,7 +9515,7 @@ CODE_FL_00C6AE:					;			|
 	LDA $7A95					;$00C6C2	|
 	AND #$7FFF					;$00C6C5	|
 	STA $7A95					;$00C6C8	|
-	STZ !Reload_Room			;$00C6CB	|
+	STZ Reload_Room			;$00C6CB	|
 	LDA #$0001					;$00C6CE	|
 	STA $770B					;$00C6D1	|
 	STZ $7B33					;$00C6D4	|
@@ -9516,7 +9531,7 @@ CODE_FL_00C6DD:					;			|
 	AND #$FF00					;$00C6F0	|
 	STA $7A9B					;$00C6F3	|
 CODE_FL_00C6F6:					;			|
-	LDA !Reload_Room					;$00C6F6	|
+	LDA Reload_Room			;$00C6F6	|
 	BEQ CODE_FL_00C6DD			;$00C6F9	|
 	LDA $7A95					;$00C6FB	|
 	BPL CODE_FL_00C6AE			;$00C6FE	|
@@ -9527,12 +9542,12 @@ CODE_FL_00C6F6:					;			|
 	LDX $73B0					;$00C70E	|
 	LDA.l DATA_00C73F,X			;$00C711	|
 	AND #$00FF					;$00C715	|
-	LDX !Reload_Map_Unpause					;$00C718	|
+	LDX Reload_Map_On_Unpause	;$00C718	|
 	BNE CODE_FL_00C723			;$00C71B	|
-	LDA !GS_SubgameTitle		;$00C71D	|
-	INC !Reload_Map_Unpause					;$00C720	|
+	LDA #$00!GAMESTATE_SUBGAMETITLE		;$00C71D	|
+	INC Reload_Map_On_Unpause	;$00C720	|
 CODE_FL_00C723:					;			|
-	STA !CurrentGameState		;$00C723	|
+	STA CurrentGameState		;$00C723	|
 	STZ $7A99					;$00C726	|
 	LDA #$0001					;$00C729	|
 	STA $7ADF					;$00C72C	|
@@ -9549,13 +9564,13 @@ DATA_00C73F:
 CODE_FL_00C746:					;-----------| Game Mode 0A - Sound test
 	LDA #$000B					;$00C746	|
 	JSL CODE_FL_00BD70			;$00C749	|
-	STZ !Reload_Room					;$00C74D	|
+	STZ Reload_Room			;$00C74D	|
 CODE_FL_00C750:					;			|
 	JSL CODE_FL_00BCDE			;$00C750	|
-	LDA !Reload_Room					;$00C754	|
+	LDA Reload_Room			;$00C754	|
 	BEQ CODE_FL_00C750			;$00C757	|
-	LDA !GS_Corkboard			;$00C759	|
-	STA !CurrentGameState		;$00C75C	|
+	LDA #$00!GAMESTATE_CORKBOARD	;$00C759	|
+	STA CurrentGameState		;$00C75C	|
 	RTL							;$00C75F	|
 
 
@@ -9564,13 +9579,13 @@ CODE_FL_00C750:					;			|
 CODE_FL_00C760:					;-----------| Game Mode 0B - Minigame (Megaton, Samurai)
 	LDA #$0002					;$00C760	|
 	JSL CODE_FL_00BD70			;$00C763	|
-	STZ !Reload_Room					;$00C767	|
+	STZ Reload_Room					;$00C767	|
 CODE_FL_00C76A:					;			|
 	JSL CODE_FL_00BCDE			;$00C76A	|
-	LDA !Reload_Room					;$00C76E	|
+	LDA Reload_Room					;$00C76E	|
 	BEQ CODE_FL_00C76A			;$00C771	|
-	LDA !GS_Corkboard			;$00C773	|
-	STA !CurrentGameState		;$00C776	|
+	LDA #$00!GAMESTATE_CORKBOARD			;$00C773	|
+	STA CurrentGameState		;$00C776	|
 	RTL							;$00C779	|
 
 
@@ -9581,28 +9596,28 @@ CODE_FL_00C77A:					;-----------| Game Mode 0C - The Arena
 	STA $73A6					;$00C77D	|
 	STZ $7AA5					;$00C780	|
 	STZ $32EE					;$00C783	|
-	STZ !Respawn_Room					;$00C786	|
+	STZ Respawn_Room					;$00C786	|
 	JSL CODE_FL_00D93B			;$00C789	|
 CODE_FL_00C78D:					;			|
 	JSL CODE_FL_00D87F			;$00C78D	|
 	LDA #$000C					;$00C791	|
 	JSL CODE_FL_00BD70			;$00C794	|
 	JSL CODE_FL_00D9C4			;$00C798	|
-	STZ !Reload_Room					;$00C79C	|
+	STZ Reload_Room					;$00C79C	|
 CODE_FL_00C79F:					;			|
 	JSL CODE_FL_00BCDE			;$00C79F	|
 	JSL CODE_FL_00CBCC			;$00C7A3	|
 	BEQ CODE_FL_00C7D3			;$00C7A7	|
 	LDA $7B35					;$00C7A9	|
-	ORA !Camera_Lock					;$00C7AC	|
+	ORA Camera_Lock					;$00C7AC	|
 	BNE CODE_FL_00C7D3			;$00C7AF	|
-	LDA !CurrentSubGame			;$00C7B1	|
-	CMP !SG_Arena				;$00C7B4	|
+	LDA CurrentSubGame			;$00C7B1	|
+	CMP #$00!SUBGAME_ARENA				;$00C7B4	|
 	BNE CODE_FL_00C7C9			;$00C7B7	|
 	LDA $32EE					;$00C7B9	|
 	CMP #$0000					;$00C7BC	|
 	BNE CODE_FL_00C7C9			;$00C7BF	|
-	LDA !Respawn_Room					;$00C7C1	|
+	LDA Respawn_Room					;$00C7C1	|
 	CMP #$0002					;$00C7C4	|
 	BEQ CODE_FL_00C7D3			;$00C7C7	|
 CODE_FL_00C7C9:					;			|
@@ -9610,7 +9625,7 @@ CODE_FL_00C7C9:					;			|
 	STA $770D					;$00C7CC	|
 	JSL $CF98A9					;$00C7CF	|
 CODE_FL_00C7D3:					;			|
-	LDA !Reload_Room					;$00C7D3	|
+	LDA Reload_Room			;$00C7D3	|
 	BEQ CODE_FL_00C79F			;$00C7D6	|
 	LDA $7A9D					;$00C7D8	|
 	BPL CODE_FL_00C78D			;$00C7DB	|
@@ -9618,8 +9633,8 @@ CODE_FL_00C7D3:					;			|
 	STZ $7B33					;$00C7E0	|
 	LDA #$0001					;$00C7E3	|
 	STA $73A6					;$00C7E6	|
-	LDA !GS_Corkboard			;$00C7E9	|
-	STA !CurrentGameState		;$00C7EC	|
+	LDA #$00!GAMESTATE_CORKBOARD	;$00C7E9	|
+	STA CurrentGameState		;$00C7EC	|
 	RTL							;$00C7EF	|
 
 
@@ -9635,7 +9650,7 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	JSR CODE_FL_00C9C1			;$00C806	|
 	LDA.l DemoScreenData+1,X	;$00C809	|
 	AND #$00FF					;$00C80D	|
-	STA !CurrentSubGame			;$00C810	|
+	STA CurrentSubGame			;$00C810	|
 	ASL A						;$00C813	|
 	STA $32EC					;$00C814	|
 	LDA.l DemoScreenData+2,X	;$00C817	|
@@ -9645,14 +9660,14 @@ CODE_FL_00C7F0:					;-----------| Game Mode 0F - Main title screen subgame previ
 	STA $32F0					;$00C822	|
 	LDA.l DemoScreenData+3,X	;$00C825	|
 	AND #$00FF					;$00C829	|
-	LDY !CurrentSubGame			;$00C82C	|
+	LDY CurrentSubGame			;$00C82C	|
 	CPY #$0002					;$00C82F	|
 	BNE CODE_FL_00C839			;$00C832	|
 	STA $7B2D					;$00C834	|
 	BRA CODE_FL_00C841			;$00C837	|
 
 CODE_FL_00C839:
-	STA !Respawn_Room					;$00C839	|
+	STA Respawn_Room					;$00C839	|
 	ASL A						;$00C83C	|
 	ASL A						;$00C83D	|
 	STA $32F4					;$00C83E	|
@@ -9671,8 +9686,8 @@ CODE_FL_00C852:
 	dw CODE_FL_00C963				; 02
 
 CODE_FL_00C858:					;-----------| Title screen subroutine 0
-	LDA !GS_SubgameTitle		;$00C858	|
-	STA !CurrentGameState		;$00C85B	|
+	LDA #$00!GAMESTATE_SUBGAMETITLE		;$00C858	|
+	STA CurrentGameState		;$00C85B	|
 	STA $7A8B					;$00C85E	|
 	STZ $7A89					;$00C861	|
 	JSL CODE_FL_00BC66			;$00C864	|
@@ -9696,9 +9711,9 @@ CODE_FL_00C86B:					;-----------| Title screen subroutine 1
 	JSR CODE_FL_00C9C1			;$00C89B	|
 	LDA.l DemoScreenData+7,X	;$00C89E	|
 	BMI CODE_FL_00C8B4			;$00C8A2	|
-	STA !Kirby_X_Respawn		;$00C8A4	|
+	STA Kirby_X_Respawn		;$00C8A4	|
 	LDA.l DemoScreenData+9,X	;$00C8A7	|
-	STA !Kirby_Y_Respawn		;$00C8AB	|
+	STA Kirby_Y_Respawn		;$00C8AB	|
 	LDA #$0002					;$00C8AE	|
 	STA $332A					;$00C8B1	|
 CODE_FL_00C8B4:					;			|
@@ -9708,16 +9723,16 @@ CODE_FL_00C8B4:					;			|
 	JSL $D4FB90					;$00C8BE	|
 	LDA #$0001					;$00C8C2	|
 	STA $73A6					;$00C8C5	|
-	STA !Reload_Room			;$00C8C8	|
+	STA Reload_Room			;$00C8C8	|
 	JSL CODE_FL_00BCDE			;$00C8CB	|
 	JSL CODE_FL_00BCDE			;$00C8CF	|
 	JSL CODE_FL_00BCDE			;$00C8D3	|
 	STZ $73A6					;$00C8D7	|
-	STZ !Load_Special_Dest		;$00C8DA	|
+	STZ Load_Special_Dest		;$00C8DA	|
 	JSL CODE_FL_00CBF4			;$00C8DD	|
-	STZ !Reload_Room			;$00C8E1	|
-	STZ !Reload_Map_Unpause		;$00C8E4	|
-	STZ !CurrentGameState		;$00C8E7	|
+	STZ Reload_Room			;$00C8E1	|
+	STZ Reload_Map_On_Unpause		;$00C8E4	|
+	STZ CurrentGameState		;$00C8E7	|
 	JSR CODE_FL_00C9C1			;$00C8EA	|
 	LDA.l DemoScreenData+4,X	;$00C8ED	|
 	AND #$00FF					;$00C8F1	|
@@ -9733,8 +9748,8 @@ CODE_FL_00C8FE:
 CODE_FL_00C908:					;			|
 	PHA							;$00C908	|
 	JSL UpdtLyrsCtrl			;$00C909	|
-	LDA $32C4					;$00C90D	|
-	AND #$FFF0					;$00C910	|
+	LDA P1_Hold					;$00C90D	|
+	AND #!BTN_ALL				;$00C910	|
 	BNE CODE_FL_00C95C			;$00C913	|
 	LDA #$CB1B					;$00C915	|\ 
 	LDX #$0000					;$00C918	|| Execute $00CB1B on the SNES.
@@ -9742,7 +9757,7 @@ CODE_FL_00C908:					;			|
 	STZ $32C6					;$00C91F	|
 	STZ $32D6					;$00C922	|
 	JSL $05971F					;$00C925	|
-	JSR CODE_FL_00BD3B			;$00C929	|
+	JSR CheckSoftReset			;$00C929	|
 	JSL $03ECEB					;$00C92C	|
 	JSL $048184					;$00C930	|
 	JSR CODE_FL_00BD60			;$00C934	|
@@ -9752,7 +9767,7 @@ CODE_FL_00C908:					;			|
 	JSL SA1_ExecuteSNES			;$00C941	|/
 	PLA							;$00C945	|
 	BPL CODE_FL_00C94F			;$00C946	|
-	LDA !Reload_Room					;$00C948	|
+	LDA Reload_Room			;$00C948	|
 	BEQ CODE_FL_00C908			;$00C94B	|
 	BRA CODE_FL_00C952			;$00C94D	|
 
@@ -9761,20 +9776,20 @@ CODE_FL_00C94F:
 	BNE CODE_FL_00C908			;$00C950	|
 CODE_FL_00C952:					;			|
 	JSL CODE_FL_00CC7B			;$00C952	|
-	STZ !Reload_Map_Unpause					;$00C956	|
+	STZ Reload_Map_On_Unpause					;$00C956	|
 	JMP CODE_FL_00C973			;$00C959	|
 
 CODE_FL_00C95C:
 	PLA							;$00C95C	|
-	INC !Reload_Map_Unpause					;$00C95D	|
+	INC Reload_Map_On_Unpause					;$00C95D	|
 	JMP CODE_FL_00C973			;$00C960	|
 
 
 CODE_FL_00C963:					;-----------| Title screen subroutine 2
-	LDA !CurrentSubGame			;$00C963	|
+	LDA CurrentSubGame			;$00C963	|
 	STA $73AA					;$00C966	|
-	LDA !GS_TitleMinigamePreview;$00C969	|
-	STA !CurrentGameState		;$00C96C	|
+	LDA #$00!GAMESTATE_TITLEMINIGAMEPREVIEW	;$00C969	|
+	STA CurrentGameState		;$00C96C	|
 	JSL CODE_FL_00BC66			;$00C96F	|
 CODE_FL_00C973:					;			|
 	JSR CODE_FL_00C9C1			;$00C973	|
@@ -9807,7 +9822,7 @@ CODE_FL_00C98F:					;-----------| Title screen subroutine 2-2
 
 CODE_FL_00C9AB:					;-----------| Title screen subroutine 2-0
 	INC $739C					;$00C9AB	|
-	LDA !Reload_Map_Unpause					;$00C9AE	|
+	LDA Reload_Map_On_Unpause	;$00C9AE	|
 	BNE CODE_FL_00C9C0			;$00C9B1	|
 	JMP CODE_FL_00C7F0			;$00C9B3	|
 
@@ -9847,7 +9862,7 @@ DemoScreenData:					;$00C9D1	| Table used for the title screen. 12 bytes per row
 ;		09 = Y coordinate 1
 ;		0A = Y coordinate 2
 ;		0B = Behavior when demo timer expires
-;	    00  01  02  03  04  05  06  07  08  09  0A  0B
+;	    00  01  02  03  04  05  06  07  09  0B
 	db $00,$00,$00,$00,$FF,$00,$00,$FF,$FF,$FF,$FF,$00
 	db $01,$00,$00,$01,$0C,$00,$00,$2B,$00,$2A,$00,$00
 	db $01,$00,$00,$05,$0A,$08,$0B,$3C,$00,$54,$00,$00
@@ -9901,21 +9916,21 @@ CODE_FL_00CB25:					;			|
 	STA $1873					;$00CB2F	|
 	INX							;$00CB32	|
 	LDA $D3F454,X				;$00CB33	|
-	STA $32C4					;$00CB37	|
+	STA P1_Hold					;$00CB37	|
 	INX							;$00CB3A	|
 	INX							;$00CB3B	|
 	STX $739E					;$00CB3C	|
 	LDA $1871					;$00CB3F	|
-	EOR #$FFF0					;$00CB42	|
-	AND $32C4					;$00CB45	|
+	EOR #!BTN_ALL				;$00CB42	|
+	AND P1_Hold					;$00CB45	|
 	STA $32D4					;$00CB48	|
-	LDA $32C4					;$00CB4B	|
+	LDA P1_Hold					;$00CB4B	|
 	STA $1871					;$00CB4E	|
 	RTL							;$00CB51	|
 
 CODE_FL_00CB52:
 	LDA $1871					;$00CB52	|
-	STA $32C4					;$00CB55	|
+	STA P1_Hold					;$00CB55	|
 	STZ $32D4					;$00CB58	|
 	RTL							;$00CB5B	|
 
@@ -9927,27 +9942,27 @@ CODE_FL_00CB5C:					;-----------| Game Mode 10 - Main title screen minigame prev
 	LDA #$CAFD					;$00CB63	|
 	LDX #$0000					;$00CB66	|
 	JSL SA1_ExecuteSNES			;$00CB69	|
-	STZ !Reload_Room					;$00CB6D	|
-	STZ !Reload_Map_Unpause					;$00CB70	|
+	STZ Reload_Room				;$00CB6D	|
+	STZ Reload_Map_On_Unpause	;$00CB70	|
 CODE_FL_00CB73:					;			|
 	JSL UpdtLyrsCtrl			;$00CB73	|
-	LDA $32C4					;$00CB77	|
-	AND #$FFF0					;$00CB7A	|
+	LDA P1_Hold					;$00CB77	|
+	AND #!BTN_ALL				;$00CB7A	|
 	BNE CODE_FL_00CBA0			;$00CB7D	|
 	LDA #$CB1B					;$00CB7F	|\ 
 	LDX #$0000					;$00CB82	|| Execute $00CB1B on the SNES.
 	JSL SA1_ExecuteSNES			;$00CB85	|/
-	JSR CODE_FL_00BD3B			;$00CB89	|
+	JSR CheckSoftReset			;$00CB89	|
 	JSL ProcessObjects			;$00CB8C	|
 	LDA #$DFC6					;$00CB90	|\ 
 	LDX #$0001					;$00CB93	|| Execute $00DFC6 on the SNES.
 	JSL SA1_ExecuteSNES			;$00CB96	|/
-	LDA !Reload_Room					;$00CB9A	|
+	LDA Reload_Room				;$00CB9A	|
 	BEQ CODE_FL_00CB73			;$00CB9D	|
 	RTL							;$00CB9F	|
 
 CODE_FL_00CBA0:
-	INC !Reload_Map_Unpause					;$00CBA0	|
+	INC Reload_Map_On_Unpause	;$00CBA0	|
 	RTL							;$00CBA3	|
 
 
@@ -9955,28 +9970,28 @@ CODE_FL_00CBA0:
 CODE_FL_00CBA4:					;-----------| Game Mode 07 - Subgame opening cutscene
 	LDA #$0009					;$00CBA4	|
 	JSL CODE_FL_00BD70			;$00CBA7	|
-	STZ !Reload_Room					;$00CBAB	|
-	STZ !Reload_Map_Unpause					;$00CBAE	|
+	STZ Reload_Room				;$00CBAB	|
+	STZ Reload_Map_On_Unpause	;$00CBAE	|
 CODE_FL_00CBB1:					;			|
 	JSL CODE_FL_00BCDE			;$00CBB1	|
 	LDA $739A					;$00CBB5	|
 	BEQ CODE_FL_00CBC6			;$00CBB8	|
-	LDA $32C4					;$00CBBA	|
-	AND #$FFF0					;$00CBBD	|
+	LDA P1_Hold					;$00CBBA	|
+	AND #!BTN_ALL				;$00CBBD	|
 	BEQ CODE_FL_00CBC6			;$00CBC0	|
-	INC !Reload_Map_Unpause					;$00CBC2	|
+	INC Reload_Map_On_Unpause	;$00CBC2	|
 	RTL							;$00CBC5	|
 
 CODE_FL_00CBC6:
-	LDA !Reload_Room					;$00CBC6	|
+	LDA Reload_Room				;$00CBC6	|
 	BEQ CODE_FL_00CBB1			;$00CBC9	|
 	RTL							;$00CBCB	|
 
 
 
 CODE_FL_00CBCC:					;-----------|
-	LDA !CurrentSubGame			;$00CBCC	|
-	CMP !SG_GCO					;$00CBCF	|
+	LDA CurrentSubGame			;$00CBCC	|
+	CMP #$00!SUBGAME_GCO		;$00CBCF	|
 	BEQ CODE_FL_00CBD6			;$00CBD2	|
 	BRA CODE_FL_00CBDB			;$00CBD4	|
 
@@ -10009,13 +10024,13 @@ CODE_FL_00CBF7:					;			|
 	JSL UpdtLyrsCtrl			;$00CBFC	|
 	LDA $739A					;$00CC00	|
 	BEQ CODE_FL_00CC11			;$00CC03	|
-	STZ $32C4					;$00CC05	|
+	STZ P1_Hold					;$00CC05	|
 	STZ $32D4					;$00CC08	|
 	STZ $32C6					;$00CC0B	|
 	STZ $32D6					;$00CC0E	|
 CODE_FL_00CC11:					;			|
 	JSL $05971F					;$00CC11	|
-	JSR CODE_FL_00BD3B			;$00CC15	|
+	JSR CheckSoftReset			;$00CC15	|
 	JSL $03ECEB					;$00CC18	|
 	JSL $048184					;$00CC1C	|
 	JSR CODE_FL_00BD60			;$00CC20	|
@@ -10030,7 +10045,7 @@ CODE_FL_00CC11:					;			|
 
 
 CODE_FL_00CC36:					;-----------|
-	JSL PlayMusic			;$00CC36	|
+	JSL PlayMusic				;$00CC36	|
 	LDA #$0000					;$00CC3A	|
 	JSL CODE_FL_00CE67			;$00CC3D	|
 	LDA #$0010					;$00CC41	|
@@ -10080,13 +10095,11 @@ CODE_FL_00CC8F:					;			|
 	DEC A						;$00CC98	|
 	BNE CODE_FL_00CC7E			;$00CC99	|
 	LDA #$0000					;$00CC9B	|
-	JSL PlayMusic			;$00CC9E	|
+	JSL PlayMusic				;$00CC9E	|
 	JSL UpdtLyrsCtrl			;$00CCA2	|
 	LDA #$00FF					;$00CCA6	|
 	JSL CODE_FL_00CE67			;$00CCA9	|
 	JML UpdateVramSprSize		;$00CCAD	|
-
-
 
 
 
@@ -10099,16 +10112,16 @@ CheckStartErrs:					;-----------| Routine to check for controller/system errors 
   .wasteTime:					;			|| Waste some extra time (waiting for autojoypad read?).
 	DEC A						;$00CCBC	||
 	BNE .wasteTime				;$00CCBD	|/
-	LDA $32C4					;$00CCBF	|\ 
-	AND #$000F					;$00CCC2	|| If either controller has invalid inputs
+	LDA P1_Hold					;$00CCBF	|\ 
+	AND #~!BTN_ALL				;$00CCC2	|| If either controller has invalid inputs
 	BNE .invalidContr			;$00CCC5	||  (the four unused bits on a normal controller),
 	LDA $32C6					;$00CCC7	||  branch to show error.
-	AND #$000F					;$00CCCA	||
+	AND #~!BTN_ALL				;$00CCCA	||
 	BNE .invalidContr			;$00CCCD	|| Also show the error if a multitap is detected.
 	JSR CheckForMultitap		;$00CCCF	||
 	AND #$00C0					;$00CCD2	||
 	BNE .invalidContr			;$00CCD5	|/
-	LDA $213F					;$00CCD7	|\ 
+	LDA HW_STAT78					;$00CCD7	|\ 
 	AND #$0010					;$00CCDA	|| If the PAL switch is set, branch to show error.
 	BNE .invalidConsole			;$00CCDD	|/
 	RTL							;$00CCDF	|
@@ -10183,32 +10196,32 @@ CheckForMultitap:				;-----------| Routine to check if a multitap is plugged in.
 	SEP #$30					;$00CD8A	|
 	STZ $08						;$00CD8C	|
   .waitForJoy:					;			|
-	LDA $4212					;$00CD8E	|\ 
+	LDA HW_HVBJOY					;$00CD8E	|\ 
 	AND #$01					;$00CD91	|| Wait for auto-joypad read.
 	BNE .waitForJoy				;$00CD93	|/
-	STZ $4016					;$00CD95	|\ 
+	STZ HW_JOY1					;$00CD95	|\ 
 	LDA #$01					;$00CD98	|| Latch the controller data.
-	STA $4016					;$00CD9A	|/
+	STA HW_JOY1					;$00CD9A	|/
 	LDX #$08					;$00CD9D	|\ 
   .readLoop1:					;			||
-	LDA $4016					;$00CD9F	||
+	LDA HW_JOY1					;$00CD9F	||
 	LSR A						;$00CDA2	||
 	LSR A						;$00CDA3	|| Get the lower byte of the signature for port 1/2.
 	ROL $00						;$00CDA4	|| If the multitap is plugged in, this will be 0xFF.
-	LDA $4017					;$00CDA6	||
+	LDA HW_JOY2					;$00CDA6	||
 	LSR A						;$00CDA9	||
 	LSR A						;$00CDAA	||
 	ROL $02						;$00CDAB	||
 	DEX							;$00CDAD	||
 	BNE .readLoop1				;$00CDAE	|/
-	STZ $4016					;$00CDB0	|
+	STZ HW_JOY1					;$00CDB0	|
 	LDX #$08					;$00CDB3	|\ 
   .readLoop2:					;			||
-	LDA $4016					;$00CDB5	||
+	LDA HW_JOY1					;$00CDB5	||
 	LSR A						;$00CDB8	||
 	LSR A						;$00CDB9	|| Get the upper byte of the signature for port 1/2.
 	ROL $04						;$00CDBA	|| If the multitap is plugged in, this will NOT be 0xFF.
-	LDA $4017					;$00CDBC	||
+	LDA HW_JOY2					;$00CDBC	||
 	LSR A						;$00CDBF	||
 	LSR A						;$00CDC0	||
 	ROL $06						;$00CDC1	||
@@ -10264,7 +10277,7 @@ CODE_FL_00CE43:					;			|
 	JML SA1_ExecuteSNES			;$00CE55	|
 	SEP #$20					;$00CE59	|
 	LDA $33CD					;$00CE5B	|
-	STA $2143					;$00CE5E	|
+	STA HW_APUIO3					;$00CE5E	|
 	REP #$20					;$00CE61	|
 	RTL							;$00CE63	|
 
@@ -10300,7 +10313,7 @@ CODE_FL_00CE91:					;			|
 CODE_FL_00CEA0:					;			|
 	SEP #$20					;$00CEA0	|
 	LDA $33CC					;$00CEA2	|
-	STA $2142					;$00CEA5	|
+	STA HW_APUIO2					;$00CEA5	|
 	REP #$20					;$00CEA8	|
 	RTL							;$00CEAA	|
 
@@ -10357,8 +10370,8 @@ CODE_FL_00CF17:					;			|
 	SEP #$20					;$00CF25	|
 CODE_FL_00CF27:					;			|
 	LDA #$72					;$00CF27	|
-	STA $2140					;$00CF29	|
-	CMP $2140					;$00CF2C	|
+	STA HW_APUIO0					;$00CF29	|
+	CMP HW_APUIO0					;$00CF2C	|
 	BNE CODE_FL_00CF27			;$00CF2F	|
 	REP #$20					;$00CF31	|
 	RTL							;$00CF33	|
@@ -10373,8 +10386,8 @@ CODE_FL_00CF3F:
 	SEP #$30					;$00CF3F	|
 CODE_FL_00CF41:					;			|
 	LDY #$72					;$00CF41	|
-	STY $2140					;$00CF43	|
-	CPY $2140					;$00CF46	|
+	STY HW_APUIO0					;$00CF43	|
+	CPY HW_APUIO0					;$00CF46	|
 	BNE CODE_FL_00CF41			;$00CF49	|
 	REP #$30					;$00CF4B	|
 	RTL							;$00CF4D	|
@@ -10383,13 +10396,13 @@ CODE_FL_00CF4E:
 	SEP #$30					;$00CF4E	|
 	LDA #$FF					;$00CF50	|
 	STA $33CC					;$00CF52	|
-	STA $2142					;$00CF55	|
+	STA HW_APUIO2					;$00CF55	|
 	LDA $33CD					;$00CF58	|
-	STA $2143					;$00CF5B	|
+	STA HW_APUIO3					;$00CF5B	|
 CODE_FL_00CF5E:					;			|
 	LDA #$73					;$00CF5E	|
-	STA $2140					;$00CF60	|
-	CMP $2140					;$00CF63	|
+	STA HW_APUIO0					;$00CF60	|
+	CMP HW_APUIO0					;$00CF63	|
 	BNE CODE_FL_00CF5E			;$00CF66	|
 	REP #$30					;$00CF68	|
 	RTL							;$00CF6A	|
@@ -10418,12 +10431,12 @@ CODE_FL_00CF9C:
 	SEP #$30					;$00CF9C	|
 	LDA $33CA					;$00CF9E	|
 	BNE CODE_FL_00CFB6			;$00CFA1	|
-	STZ $2141					;$00CFA3	|
-	STZ $2142					;$00CFA6	|
+	STZ HW_APUIO1					;$00CFA3	|
+	STZ HW_APUIO2					;$00CFA6	|
 CODE_FL_00CFA9:					;			|
 	LDA #$72					;$00CFA9	|
-	STA $2140					;$00CFAB	|
-	CMP $2140					;$00CFAE	|
+	STA HW_APUIO0					;$00CFAB	|
+	CMP HW_APUIO0					;$00CFAE	|
 	BNE CODE_FL_00CFA9			;$00CFB1	|
 	REP #$30					;$00CFB3	|
 	RTL							;$00CFB5	|
@@ -10434,8 +10447,8 @@ CODE_FL_00CFB6:
 	STA $00AA					;$00CFBB	|
 CODE_FL_00CFBE:					;			|
 	LDY #$72					;$00CFBE	|
-	STY $2140					;$00CFC0	|
-	CPY $2140					;$00CFC3	|
+	STY HW_APUIO0					;$00CFC0	|
+	CPY HW_APUIO0					;$00CFC3	|
 	BNE CODE_FL_00CFBE			;$00CFC6	|
 	REP #$30					;$00CFC8	|
 	AND #$00FF					;$00CFCA	|
@@ -10485,7 +10498,7 @@ PlayMusic:						;-----------| Routine to load music
 	RTL							;$00D01A	|
   .onSNES:						;```````````| On the SNES now.
 	SEP #$30					;$00D01B	|
-	STZ $2141					;$00D01D	|
+	STZ HW_APUIO1					;$00D01D	|
 	STZ $33CB					;$00D020	|
 	LDA #$FF					;$00D023	|
 	STA $33CE					;$00D025	|
@@ -10493,11 +10506,11 @@ PlayMusic:						;-----------| Routine to load music
 	STA $33D0					;$00D02B	|
 	LDA $33CA					;$00D02E	|\ Branch if a song is being requested.
 	BNE CODE_FL_00D043			;$00D031	|/
-	STZ $2142					;$00D033	|
+	STZ HW_APUIO2					;$00D033	|
 CODE_FL_00D036:					;			|
 	LDA #$72					;$00D036	|
-	STA $2140					;$00D038	|
-	CMP $2140					;$00D03B	|
+	STA HW_APUIO0					;$00D038	|
+	CMP HW_APUIO0					;$00D03B	|
 	BNE CODE_FL_00D036			;$00D03E	|
 	REP #$30					;$00D040	|
 	RTL							;$00D042	|
@@ -10508,8 +10521,8 @@ CODE_FL_00D043:					;```````````| Song is being requested.
 	STA $00AA					;$00D048	|/
   .waitForSPC:					;			|
 	LDY #$72					;$00D04B	|\ 
-	STY $2140					;$00D04D	|| Wait for the SPC to finish whatever it's doing.
-	CPY $2140					;$00D050	||
+	STY HW_APUIO0					;$00D04D	|| Wait for the SPC to finish whatever it's doing.
+	CPY HW_APUIO0					;$00D050	||
 	BNE .waitForSPC				;$00D053	|/
 	REP #$30					;$00D055	|\ 
 	AND #$00FF					;$00D057	||
@@ -10534,13 +10547,13 @@ CODE_FL_00D043:					;```````````| Song is being requested.
   .noNewSamples:				;			|
 	LDA #$FF					;$00D082	|
 	STA $33CC					;$00D084	|
-	STA $2142					;$00D087	|
+	STA HW_APUIO2					;$00D087	|
 	LDA $33CD					;$00D08A	|
-	STA $2143					;$00D08D	|
+	STA HW_APUIO3					;$00D08D	|
   .waitForFinish:				;			|
 	LDA #$73					;$00D090	|\ 
-	STA $2140					;$00D092	|| Wait for the SPC to finish loading.
-	CMP $2140					;$00D095	||
+	STA HW_APUIO0					;$00D092	|| Wait for the SPC to finish loading.
+	CMP HW_APUIO0					;$00D095	||
 	BNE .waitForFinish			;$00D098	|/
 	REP #$30					;$00D09A	|
 	RTL							;$00D09C	|
@@ -10629,9 +10642,9 @@ ReadPlaySFX:
 PlaySFX:						;-----------|
 	SEP #$30					;$00D12D	|
 	CMP #$F9					;$00D12F	|
-	BCS CODE_FL_00D150			;$00D131	|
+	BCS .CODE_FL_00D150			;$00D131	|
 	TAX							;$00D133	|
-	BNE CODE_FL_00D153			;$00D134	|
+	BNE .CODE_FL_00D153			;$00D134	|
 	STZ $33CB					;$00D136	|
 	LDA #$FF					;$00D139	|
 	STA $33CE					;$00D13B	|
@@ -10641,60 +10654,58 @@ PlaySFX:						;-----------|
 	LDA.w #.onSNES				;$00D146	|
 	LDX.w #.onSNES>>16			;$00D149	|
 	JML SA1_ExecuteSNES			;$00D14C	|
-
-CODE_FL_00D150:
+  .CODE_FL_00D150:
 	REP #$30					;$00D150	|
 	RTL							;$00D152	|
-
-CODE_FL_00D153:
+  .CODE_FL_00D153:
 	LDA $EBB6EC,X				;$00D153	|
 	TAY							;$00D157	|
 	LDA $EBB5F4,X				;$00D158	|
 	BIT #$01					;$00D15C	|
-	BEQ CODE_FL_00D167			;$00D15E	|
+	BEQ .CODE_FL_00D167			;$00D15E	|
 	CPY $33CE					;$00D160	|
-	BEQ CODE_FL_00D167			;$00D163	|
-	BCS CODE_FL_00D150			;$00D165	|
-CODE_FL_00D167:					;			|
+	BEQ .CODE_FL_00D167			;$00D163	|
+	BCS .CODE_FL_00D150			;$00D165	|
+  .CODE_FL_00D167:				;			|
 	BIT #$02					;$00D167	|
-	BEQ CODE_FL_00D172			;$00D169	|
+	BEQ .CODE_FL_00D172			;$00D169	|
 	CPY $33CF					;$00D16B	|
-	BEQ CODE_FL_00D172			;$00D16E	|
-	BCS CODE_FL_00D150			;$00D170	|
-CODE_FL_00D172:					;			|
+	BEQ .CODE_FL_00D172			;$00D16E	|
+	BCS .CODE_FL_00D150			;$00D170	|
+  .CODE_FL_00D172:				;			|
 	BIT #$04					;$00D172	|
-	BEQ CODE_FL_00D17D			;$00D174	|
+	BEQ .CODE_FL_00D17D			;$00D174	|
 	CPY $33D0					;$00D176	|
-	BEQ CODE_FL_00D17D			;$00D179	|
-	BCS CODE_FL_00D150			;$00D17B	|
-CODE_FL_00D17D:					;			|
+	BEQ .CODE_FL_00D17D			;$00D179	|
+	BCS .CODE_FL_00D150			;$00D17B	|
+  .CODE_FL_00D17D:				;			|
 	STX $33CB					;$00D17D	|
 	STA $49						;$00D180	|
 	LDA $EBB7E4,X				;$00D182	|
 	REP #$20					;$00D186	|
 	AND #$00FF					;$00D188	|
 	BIT #$0080					;$00D18B	|
-	BEQ CODE_FL_00D195			;$00D18E	|
+	BEQ .CODE_FL_00D195			;$00D18E	|
 	AND #$007F					;$00D190	|
 	ASL A						;$00D193	|
 	ASL A						;$00D194	|
-CODE_FL_00D195:					;			|
+  .CODE_FL_00D195:				;			|
 	INC A						;$00D195	|
 	LSR $49						;$00D196	|
-	BCC CODE_FL_00D1A0			;$00D198	|
+	BCC .CODE_FL_00D1A0			;$00D198	|
 	STY $33CE					;$00D19A	|
 	STA $33D1					;$00D19D	|
-CODE_FL_00D1A0:					;			|
+  .CODE_FL_00D1A0:				;			|
 	LSR $49						;$00D1A0	|
-	BCC CODE_FL_00D1AA			;$00D1A2	|
+	BCC .CODE_FL_00D1AA			;$00D1A2	|
 	STY $33CF					;$00D1A4	|
 	STA $33D3					;$00D1A7	|
-CODE_FL_00D1AA:					;			|
+  .CODE_FL_00D1AA:				;			|
 	LSR $49						;$00D1AA	|
-	BCC CODE_FL_00D1B4			;$00D1AC	|
+	BCC .CODE_FL_00D1B4			;$00D1AC	|
 	STY $33D0					;$00D1AE	|
 	STA $33D5					;$00D1B1	|
-CODE_FL_00D1B4:					;			|
+  .CODE_FL_00D1B4:				;			|
 	REP #$10					;$00D1B4	|
 	LDA.w #.onSNES				;$00D1B6	|\ 
 	LDX.w #.onSNES>>16			;$00D1B9	|| Execute the below routine on the SNES.
@@ -10703,19 +10714,19 @@ CODE_FL_00D1B4:					;			|
 	SEP #$30					;$00D1C0	|
 	LDA $33CB					;$00D1C2	|
 	BNE CODE_FL_00D1E5			;$00D1C5	|
-	LDA $2140					;$00D1C7	|
+	LDA HW_APUIO0					;$00D1C7	|
 	AND #$7F					;$00D1CA	|
 	CMP #$72					;$00D1CC	|
-	BCS CODE_FL_00D1DA			;$00D1CE	|
-  CODE_FL_00D1D0:				;			|
+	BCS .CODE_FL_00D1DA			;$00D1CE	|
+  .CODE_FL_00D1D0:				;			|
 	LDA #$72					;$00D1D0	|
-	STA $2140					;$00D1D2	|
-	CMP $2140					;$00D1D5	|
-	BNE CODE_FL_00D1D0			;$00D1D8	|
-  CODE_FL_00D1DA:				;			|
-	STZ $2141					;$00D1DA	|
-	LDA $2141					;$00D1DD	|
-	BNE CODE_FL_00D1DA			;$00D1E0	|
+	STA HW_APUIO0					;$00D1D2	|
+	CMP HW_APUIO0					;$00D1D5	|
+	BNE .CODE_FL_00D1D0			;$00D1D8	|
+  .CODE_FL_00D1DA:				;			|
+	STZ HW_APUIO1					;$00D1DA	|
+	LDA HW_APUIO1					;$00D1DD	|
+	BNE .CODE_FL_00D1DA			;$00D1E0	|
 	REP #$30					;$00D1E2	|
 	RTL							;$00D1E4	|
 
@@ -10739,16 +10750,16 @@ CODE_FL_00D1E5:
 	JSR CODE_FL_00D104			;$00D20B	|
 	JSR CODE_FL_00D604			;$00D20E	|
 	SEP #$20					;$00D211	|
-	STZ $2142					;$00D213	|
+	STZ HW_APUIO2					;$00D213	|
 	LDA #$73					;$00D216	|
-	STA $2140					;$00D218	|
+	STA HW_APUIO0					;$00D218	|
 CODE_FL_00D21B:					;			|
-	CMP $2140					;$00D21B	|
+	CMP HW_APUIO0					;$00D21B	|
 	BNE CODE_FL_00D21B			;$00D21E	|
 	DEC A						;$00D220	|
-	STA $2140					;$00D221	|
+	STA HW_APUIO0					;$00D221	|
 CODE_FL_00D224:					;			|
-	CMP $2140					;$00D224	|
+	CMP HW_APUIO0					;$00D224	|
 	BNE CODE_FL_00D224			;$00D227	|
 	STZ $00AF					;$00D229	|
 	STZ $00AA					;$00D22C	|
@@ -10837,12 +10848,12 @@ CODE_FL_00D2D7:					;			|
 	STA $3096					;$00D2D9	|
 	TXA							;$00D2DC	|
 	ORA $3096					;$00D2DD	|
-	STA $2141					;$00D2E0	|
+	STA HW_APUIO1					;$00D2E0	|
 CODE_FL_00D2E3:					;			|
 	LDA $33CC					;$00D2E3	|
-	STA $2142					;$00D2E6	|
+	STA HW_APUIO2					;$00D2E6	|
 	LDA $33CD					;$00D2E9	|
-	STA $2143					;$00D2EC	|
+	STA HW_APUIO3					;$00D2EC	|
 	REP #$30					;$00D2EF	|
 	PLD							;$00D2F1	|
 	RTL							;$00D2F2	|
@@ -11163,11 +11174,11 @@ CODE_FL_00D52B:					;			|
 	JSR CODE_FL_00D604			;$00D533	|
 	SEP #$30					;$00D536	|
 	LDA #$FD					;$00D538	|
-	STA $2140					;$00D53A	|
+	STA HW_APUIO0					;$00D53A	|
 	LDA $33CC					;$00D53D	|
-	STA $2142					;$00D540	|
+	STA HW_APUIO2					;$00D540	|
 	LDA $33CD					;$00D543	|
-	STA $2143					;$00D546	|
+	STA HW_APUIO3					;$00D546	|
 	RTS							;$00D549	|
 
 
@@ -11175,10 +11186,10 @@ CODE_FL_00D52B:					;			|
 CODE_FL_00D54A:					;-----------| Subroutine used by the above to wait for the SPC?
 	INC $95						;$00D54A	|
 CODE_FL_00D54C:					;			|
-	CPX $2140					;$00D54C	|
+	CPX HW_APUIO0					;$00D54C	|
 	BNE CODE_FL_00D54C			;$00D54F	|
-	STA $2142					;$00D551	|
-	STX $2140					;$00D554	|
+	STA HW_APUIO2					;$00D551	|
+	STX HW_APUIO0					;$00D554	|
 	INX							;$00D557	|
 	RTS							;$00D558	|
 
@@ -11190,7 +11201,7 @@ StartSPC700:					;-----------| Routine to handle starting up the SPC700 chip.
 	PHD							;$00D559	|
 	LDA #$0000					;$00D55A	|\ Change DP to $00xx.
 	TCD							;$00D55D	|/
-	LDA $2140					;$00D55E	|\ 
+	LDA HW_APUIO0					;$00D55E	|\ 
 	CMP #$BBAA					;$00D561	|| If the SPC chip is waiting for the engine, upload it.
 	BNE .engineUploaded			;$00D564	||
 	JSR UploadSPCEngine			;$00D566	|/
@@ -11224,13 +11235,13 @@ StartSPC700:					;-----------| Routine to handle starting up the SPC700 chip.
 	STA $33D0					;$00D5AE	|
 CODE_FL_00D5B1:					;			|
 	LDA #$72					;$00D5B1	|
-	STA $2140					;$00D5B3	|
-	CMP $2140					;$00D5B6	|
+	STA HW_APUIO0					;$00D5B3	|
+	CMP HW_APUIO0					;$00D5B6	|
 	BNE CODE_FL_00D5B1			;$00D5B9	|
-	STZ $2142					;$00D5BB	|
-	STZ $2141					;$00D5BE	|
+	STZ HW_APUIO2					;$00D5BB	|
+	STZ HW_APUIO1					;$00D5BE	|
 CODE_FL_00D5C1:					;			|
-	LDA $2141					;$00D5C1	|
+	LDA HW_APUIO1					;$00D5C1	|
 	BNE CODE_FL_00D5C1			;$00D5C4	|
 	REP #$20					;$00D5C6	|
 	RTL							;$00D5C8	|
@@ -11242,23 +11253,23 @@ SyncSPC:						;-----------| Routine to stall until the SPC timer loops, for sync
 	SEP #$20					;$00D5CF	|
 	BIT $00B0					;$00D5D1	|\ 
 	BMI .waitForCounterInc		;$00D5D4	||
-	LDA $2140					;$00D5D6	||
+	LDA HW_APUIO0					;$00D5D6	||
 	BEQ .waitForCounterInc		;$00D5D9	||
   .waitForClear:				;			|| Make sure the chip isn't currently sending data?
-	STZ $2141					;$00D5DB	||
-	STZ $2142					;$00D5DE	||
-	LDA $2141					;$00D5E1	||
-	ORA $2142					;$00D5E4	||
+	STZ HW_APUIO1					;$00D5DB	||
+	STZ HW_APUIO2					;$00D5DE	||
+	LDA HW_APUIO1					;$00D5E1	||
+	ORA HW_APUIO2					;$00D5E4	||
 	BNE .waitForClear			;$00D5E7	|/
   .waitForCounterInc:			;			|
-	STZ $2142					;$00D5E9	|\ 
+	STZ HW_APUIO2					;$00D5E9	|\ 
 	LDA #$78					;$00D5EC	||
-	STA $2143					;$00D5EE	||
+	STA HW_APUIO3					;$00D5EE	||
 	LDA #$FF					;$00D5F1	|| Repeatedly send [$FF,$FE,$00,$78] to the SPC
-	STA $2140					;$00D5F3	||  until a timer overflow occurs.
+	STA HW_APUIO0					;$00D5F3	||  until a timer overflow occurs.
 	DEC A						;$00D5F6	||
-	STA $2141					;$00D5F7	||
-	CMP $2140					;$00D5FA	||
+	STA HW_APUIO1					;$00D5F7	||
+	CMP HW_APUIO0					;$00D5FA	||
 	BNE .waitForCounterInc		;$00D5FD	|/
 	STA $A7						;$00D5FF	|
 	REP #$20					;$00D601	|
@@ -11269,25 +11280,25 @@ CODE_FL_00D604:					;-----------|
 	SEP #$10					;$00D604	|
 	LDX $A7						;$00D606	|
 CODE_FL_00D608:					;			|
-	CPX $2140					;$00D608	|
+	CPX HW_APUIO0					;$00D608	|
 	BNE CODE_FL_00D608			;$00D60B	|
-	STZ $2142					;$00D60D	|
-	STX $2140					;$00D610	|
+	STZ HW_APUIO2					;$00D60D	|
+	STX HW_APUIO0					;$00D610	|
 	CPX #$FE					;$00D613	|
 	BNE CODE_FL_00D620			;$00D615	|
 	INX							;$00D617	|
 CODE_FL_00D618:					;			|
-	CPX $2140					;$00D618	|
+	CPX HW_APUIO0					;$00D618	|
 	BNE CODE_FL_00D618			;$00D61B	|
-	STX $2140					;$00D61D	|
+	STX HW_APUIO0					;$00D61D	|
 CODE_FL_00D620:					;			|
 	LDX #$FE					;$00D620	|
 CODE_FL_00D622:					;			|
-	CPX $2140					;$00D622	|
+	CPX HW_APUIO0					;$00D622	|
 	BNE CODE_FL_00D622			;$00D625	|
-	STX $2140					;$00D627	|
+	STX HW_APUIO0					;$00D627	|
 CODE_FL_00D62A:					;			|
-	CPX $2140					;$00D62A	|
+	CPX HW_APUIO0					;$00D62A	|
 	BEQ CODE_FL_00D62A			;$00D62D	|
 	REP #$10					;$00D62F	|
 	STZ $33C8					;$00D631	|
@@ -11317,17 +11328,17 @@ TransferBytes:					;~~~~~~~~~~~| Part of the SPC upload routine to handle a sing
 	INY							;$00D653	|||
 	XBA							;$00D654	||/
   .waitForFinish:				;			||
-	CMP $2140					;$00D655	||\ Wait for the SPC to respond from the previous byte.
+	CMP HW_APUIO0					;$00D655	||\ Wait for the SPC to respond from the previous byte.
 	BNE .waitForFinish			;$00D658	||/
 	INC A						;$00D65A	|| Increment validation byte.
   .sendData:					;```````````||``] Entry point for the inner byte loop.
 	REP #$20					;$00D65B	||\ 
-	STA $2140					;$00D65D	||| Send byte, plus the validation byte.
+	STA HW_APUIO0					;$00D65D	||| Send byte, plus the validation byte.
 	SEP #$20					;$00D660	||/
 	DEX							;$00D662	||
 	BNE .nextByte				;$00D663	|/
   .WaitForResponse:				;			|
-	CMP $2140					;$00D665	|\ Wait for the SPC to respond from the last byte of the block.
+	CMP HW_APUIO0					;$00D665	|\ Wait for the SPC to respond from the last byte of the block.
 	BNE .WaitForResponse		;$00D668	|/
   .AddThree						;			|
 	ADC #$03					;$00D66A	|\ Add 3; if A becomes 0, add 3 once more so it's still positive.
@@ -11343,22 +11354,22 @@ SendSPCBlock:					;```````````| Entry point for the SPC data upload loop.
 	LDA [$95],Y					;$00D676	|\ 
 	INY							;$00D678	|| Send the ARAM address to write to.
 	INY							;$00D679	||
-	STA $2142					;$00D67A	|/
+	STA HW_APUIO2					;$00D67A	|/
 	SEP #$20					;$00D67D	|
 	CPX #$0001					;$00D67F	|\ 
 	LDA #$00					;$00D682	|| If at the end of the data (length is 0000), send #$00.
 	ROL A						;$00D684	||  Else, send #$01.
-	STA $2141					;$00D685	|/
+	STA HW_APUIO1					;$00D685	|/
 	ADC #$7F					;$00D688	|] Set overflow flag if there are still bytes left to write. 
 	PLA							;$00D68A	|\ 
-	STA $2140					;$00D68B	|| Send a byte to indicate the write is done,
+	STA HW_APUIO0					;$00D68B	|| Send a byte to indicate the write is done,
   .waitForLoad:					;			||  then wait for the response back from the SPC chip.
-	CMP $2140					;$00D68E	||
+	CMP HW_APUIO0					;$00D68E	||
 	BNE .waitForLoad			;$00D691	|/
 	BVS TransferBytes			;$00D693	|] If the overflow flag was set earlier, jump back to upload additional blocks.
 	REP #$20					;$00D695	|\ 
   .waitForFinish:				;			|| Wait for the SPC I/O port to be cleared.
-	LDA $2140					;$00D697	||
+	LDA HW_APUIO0					;$00D697	||
 	BNE .waitForFinish			;$00D69A	|/
 	RTS							;$00D69C	|
 
@@ -11505,8 +11516,8 @@ CODE_FL_00D828:					;-----------|
 	STA $7384					;$00D83A	|
 	LDA #$FFFF					;$00D83D	|
 	STA $7386					;$00D840	|
-	STZ !Kirby_HP					;$00D843	|
-	STZ !Helper_HP					;$00D846	|
+	STZ Kirby_HP					;$00D843	|
+	STZ Helper_HP					;$00D846	|
 	STZ $740B					;$00D849	|
 	STZ $7A91					;$00D84C	|
 	STZ $7A97					;$00D84F	|
@@ -11576,13 +11587,13 @@ CODE_FL_00D8D3:					;			|
 
 CODE_FL_00D8DE:
 	LDA #$0003					;$00D8DE	|
-	STA !Lives					;$00D8E1	|
+	STA Lives					;$00D8E1	|
 	LDA #$0003					;$00D8E4	|
 	STA $738E					;$00D8E7	|
 	RTL							;$00D8EA	|
 
 CODE_FL_00D8EB:
-	STZ !RoMK_Cutscenes_Done					;$00D8EB	|
+	STZ RoMK_Cutscenes_Done					;$00D8EB	|
 	STZ $7711					;$00D8EE	|
 	STZ $7712					;$00D8F1	|
 	STZ $7719					;$00D8F4	|
@@ -11598,7 +11609,7 @@ CODE_FL_00D8EB:
 	JSL $03A04A					;$00D913	|
 	STZ $7372					;$00D917	|
 	STZ $7374					;$00D91A	|
-	STZ !Score					;$00D91D	|
+	STZ PlayerScore					;$00D91D	|
 	STZ $7378					;$00D920	|
 	LDA #$D92E					;$00D923	|
 	LDX #$0000					;$00D926	|
@@ -11606,7 +11617,7 @@ CODE_FL_00D8EB:
 	RTL							;$00D92D	|
 
 CODE_FL_00D92E:
-	STZ !Lives_Collected					;$00D92E	|
+	STZ Permanent_Collectables					;$00D92E	|
 	STZ $14C9					;$00D931	|
 	STZ $14CB					;$00D934	|
 	STZ $14CD					;$00D937	|
@@ -11641,8 +11652,8 @@ CODE_FL_00D95C:					;			|
 	LDA #$0001					;$00D97E	|
 	STA $770B					;$00D981	|
 	STZ $7744					;$00D984	|
-	LDA !CurrentSubGame			;$00D987	|
-	CMP !SG_RoMK				;$00D98A	|
+	LDA CurrentSubGame			;$00D987	|
+	CMP #$00!SUBGAME_ROMK				;$00D98A	|
 	BNE CODE_FL_00D993			;$00D98D	|
 	JSL CODE_FL_00DAA3			;$00D98F	|
 CODE_FL_00D993:					;			|
@@ -11654,7 +11665,7 @@ CODE_FL_00D993:					;			|
 	RTL							;$00D9A5	|
 
 CODE_FL_00D9A6:
-	STZ !Tomatoes_Collected					;$00D9A6	|
+	STZ Level_Collectables					;$00D9A6	|
 	STZ $14D1					;$00D9A9	|
 	STZ $14D3					;$00D9AC	|
 	STZ $14D5					;$00D9AF	|
@@ -11735,7 +11746,7 @@ CODE_FL_00DA66:
 	STA $14BC					;$00DA6F	|
 	STA $14BE					;$00DA72	|
 	STA $14C0					;$00DA75	|
-	STZ !Food_Collected					;$00DA78	|
+	STZ Room_Collectables					;$00DA78	|
 	STZ $14D9					;$00DA7B	|
 	STZ $14DB					;$00DA7E	|
 	STZ $14DD					;$00DA81	|
@@ -11748,9 +11759,9 @@ CODE_FL_00DA66:
 	RTL							;$00DA96	|
 
 CODE_FL_00DA97:
-	STA !CurrentSubGame			;$00DA97	|
+	STA CurrentSubGame			;$00DA97	|
 	STX $32EE					;$00DA9A	|
-	STY !Respawn_Room					;$00DA9D	|
+	STY Respawn_Room					;$00DA9D	|
 	LDY $39						;$00DAA0	|
 	RTL							;$00DAA2	|
 
@@ -11785,12 +11796,12 @@ CODE_FL_00DAE9:					;			||
 	STA $14						;$00DAE9	|/
 	LDA #$0000					;$00DAEB	|
 	STA $16						;$00DAEE	|
-	LDA !Respawn_Room					;$00DAF0	|
+	LDA Respawn_Room					;$00DAF0	|
 	ASL A						;$00DAF3	|
 	TAY							;$00DAF4	|
 	LDA [$14],Y					;$00DAF5	|
 	CMP #$FFFF					;$00DAF7	|
-	STA !RoMK_Timer					;$00DAFA	|
+	STA RoMK_Timer					;$00DAFA	|
 	RTL							;$00DAFD	|
 
 CODE_FL_00DAFE:
@@ -11923,11 +11934,11 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	PEA $3700					;$00DBCB	|\ Change the DP to $37xx.
 	PLD							;$00DBCE	|/
 	LDA #$8F					;$00DBCF	|\ Enable force blank.
-	STA $2100					;$00DBD1	|/
-	STZ $4200					;$00DBD4	| Disable interrupts.
-	STZ $420B					;$00DBD7	| Disable DMAs.
-	STZ $420C					;$00DBDA	| Disable HDMAs.
-	STZ $420D					;$00DBDD	| Disable fastrom.
+	STA HW_INIDISP					;$00DBD1	|/
+	STZ HW_NMITIMEN					;$00DBD4	| Disable interrupts.
+	STZ HW_MDMAEN					;$00DBD7	| Disable DMAs.
+	STZ HW_HDMAEN					;$00DBDA	| Disable HDMAs.
+	STZ HW_MEMSEL					;$00DBDD	| Disable fastrom.
 	LDA #$20					;$00DBE0	|\ Reset the SA-1.
 	STA $2200					;$00DBE2	|/
 	STZ $2201					;$00DBE5	|\ 
@@ -11953,7 +11964,7 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	LDA #$7E					;$00DC18	|\ Set bank byte for decompressed data pointer.
 	STA $3014					;$00DC1A	|/
 	LDA #$80					;$00DC1D	|\ Enable force blank (again?).
-	STA !Screen_Brightness					;$00DC1F	|/
+	STA Screen_Brightness					;$00DC1F	|/
 	LDA #$FF					;$00DC22	|\ Unmask all HDMA channels.
 	STA $3093					;$00DC24	|/
 	REP #$20					;$00DC27	|
@@ -11966,7 +11977,7 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	LDA $3091					;$00DC3A	|\ 
 	ORA #$81					;$00DC3D	|| Enable NMI and auto-joypad read.
 	STA $3091					;$00DC3F	||
-	STA $4200					;$00DC42	|/
+	STA HW_NMITIMEN					;$00DC42	|/
 	REP #$20					;$00DC45	|
 	LDA #$3600					;$00DC47	|\ Change the DP to $36xx.
 	TCD							;$00DC4A	|/
@@ -12014,27 +12025,27 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 
   .notA:
 	TYA							;$00DCA1	|\ 
-	AND #$8000					;$00DCA2	||
+	AND #!BTN_B					;$00DCA2	||
 	BEQ .notB					;$00DCA5	|| If B is pressed, decrement VRAM page and start over.
 	DEC $20						;$00DCA7	||
 	JMP .reloadDisplay			;$00DCA9	|/
 
   .notB:
 	TYA							;$00DCAC	|
-	AND #$0050					;$00DCAD	|\ 
+	AND #!BTN_X|!BTN_R			;$00DCAD	|\ 
 	BEQ .notXR					;$00DCB0	|| If X/R is pressed, cycle the palette up one row.
 	JMP .cyclePalUp				;$00DCB2	|/
 
   .notXR:
 	TYA							;$00DCB5	|
-	AND #$4020					;$00DCB6	|\ 
+	AND #!BTN_Y|!BTN_L			;$00DCB6	|\ 
 	BEQ .notYL					;$00DCB9	|| If Y/L is pressed, cycle the palette down one row.
 	JMP .cyclePalDown			;$00DCBB	|/
 
   .notYL:
-	LDA $32C4					;$00DCBE	|\ 
+	LDA P1_Hold	;$00DCBE	|\ 
 	TAY							;$00DCC1	||
-	AND #$0800					;$00DCC2	||
+	AND #!BTN_UP					;$00DCC2	||
 	BEQ .notUp					;$00DCC5	|| If up is held, move the page down.
 	LDA $303D					;$00DCC7	||
 	CLC							;$00DCCA	||
@@ -12043,7 +12054,7 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	STA $3041					;$00DCD1	|/
   .notUp:						;			|
 	TYA							;$00DCD4	|\ 
-	AND #$0400					;$00DCD5	||
+	AND #!BTN_DOWN				;$00DCD5	|| 
 	BEQ .notDown				;$00DCD8	||
 	LDA $303D					;$00DCDA	|| If down is held, mvoe the page up.
 	SEC							;$00DCDD	||
@@ -12162,12 +12173,12 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	PEA $7F7F					;$00DDBE	|\ 
 	PLB							;$00DDC1	||
 	PLB							;$00DDC2	||
-	STZ $0000					;$00DDC3	|| Clear out the tilemap in $7F0000-$7F0FFF.
+	STZ $0000					;$00DDC3	|| Clear out the tilemap in $SaveFile_Number00-$7F0FFF.
 	LDA #$0FFF					;$00DDC6	||
 	LDX #$0000					;$00DDC9	||
 	LDY #$0001					;$00DDCC	||
 	MVN $7F,$7F					;$00DDCF	|/
-	LDX #$0190					;$00DDD2	|\ Loop to write the tilemap into $7F0000. 
+	LDX #$0190					;$00DDD2	|\ Loop to write the tilemap into $SaveFile_Number00. 
 	LDA #$0000					;$00DDD5	||  A = tile number, Y = YXPCCCTT, X = VRAM address.
 	LDY #$0002					;$00DDD8	||\ Number of pages...
 	STY $26						;$00DDDB	||/
@@ -12201,7 +12212,7 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	BNE .tilePageLoop			;$00DE04	|//
 	PLB							;$00DE06	|
 	LDA #$DE1D					;$00DE07	|\ Load the DMA table at $00DE1D.
-	LDX #$0000					;$00DE0A	|| This table writes $7F0000 into the the VRAM tilemap.
+	LDX #$0000					;$00DE0A	|| This table writes $SaveFile_Number00 into the the VRAM tilemap.
 	JSL LoadDMATable			;$00DE0D	|/
 	RTS							;$00DE11	|
 
@@ -12213,8 +12224,8 @@ DATA_00DE12:					;$00DE12	| DMA table for the debug VRAM viewer, to clear the BG
   .zero:						;$00DE1B	| Data used for the above fixed transfer.
 	dw $0000
 
-DATA_00DE1D:					;$00DE1D	| DMA table for teh debug VRAM viewer, to upload the BG1/3 tilemap.
-	db $03 : dw $1000 : dl $7F0000 : dw $5400		; Transfer 0x1000 bytes from $7F0000 to $5400.
+DATA_00DE1D:					;$00DE1D	| DMA table for the debug VRAM viewer, to upload the BG1/3 tilemap.
+	db $03 : dw $1000 : dl $7F0000 : dw $5400		; Transfer 0x1000 bytes from $SaveFile_Number00 to $5400.
 	db $FF
 
 
@@ -14007,11 +14018,11 @@ CODE_FL_00EA66:					;			|
 
 CODE_FL_00EA71:					;			| A = the index number of the dataset. 
 	LDX #$0022					;$00EA71	| This will return the status of a specific bit within a set of data across multiple bytes.
-	.loop:						;			|
-		DEX						;$00EA74	|\ Determine which byte the data is in based on A.
-		DEX						;$00EA75	||
-		CMP.l n_times_8,X		;$00EA76	||
-		BCC .loop				;$00EA7A	|/
+  .loop:						;			| Mostly used for, but not limited to, checking a large set of save data, e.g. chests collected, CopyDX collected, etc.
+	DEX							;$00EA74	|\ Determine which byte the data is in based on A.
+	DEX							;$00EA75	||
+	CMP.l n_times_8,X			;$00EA76	||
+	BCC .loop					;$00EA7A	|/
 	TXY							;$00EA7C	|
 	AND #%0000000000000111		;$00EA7D	|
 	TAX							;$00EA80	|
@@ -14019,13 +14030,13 @@ CODE_FL_00EA71:					;			| A = the index number of the dataset.
 	LSR A						;$00EA82	|
 	TAY							;$00EA83	|
 	LDA #$0001					;$00EA84	|
-	.loop2:						;			|
-		DEX						;$00EA87	|
-		BMI .end				;$00EA88	|
-		ASL A					;$00EA8A	|
-		BRA .loop2				;$00EA8B	|
-	.end:						;			|
-		RTS						;$00EA8D	|
+  .loop2:						;			|
+	DEX							;$00EA87	|
+	BMI .end					;$00EA88	|
+	ASL A						;$00EA8A	|
+	BRA .loop2					;$00EA8B	|
+  .end:							;			|
+	RTS							;$00EA8D	|
 
 n_times_8:
 	dw $0000,$0008,$0010,$0018
@@ -14044,7 +14055,7 @@ CODE_FL_00EAB0:
 
 CODE_FL_00EABA:
 	TXA							;$00EABA	|
-	LDY $7AE3					;$00EABB	|\ 
+	LDY SaveFile_Offset			;$00EABB	|\ 
 	CMP #$000B					;$00EABE	|| Jump to the routine.
   -	BCS -						;$00EAC1	||] Hardlock the game if a value >= 0xB is used.
 	ASL A						;$00EAC3	||
@@ -14052,7 +14063,7 @@ CODE_FL_00EABA:
 	JMP (CODE_FL_00EAC8,X)		;$00EAC5	|/
 
 CODE_FL_00EAC8:
-	dw CODE_FL_00EADE
+	dw CODE_FL_00EADE			; Subroutines to save progress?
 	dw CODE_FL_00EBD9
 	dw CODE_FL_00EAED
 	dw CODE_FL_00EAFC
@@ -14066,8 +14077,8 @@ CODE_FL_00EAC8:
 
 
 CODE_FL_00EADE:
-	LDA !SB_GCO_Boss_Status					;$00EADE	|
-	STA $7F0A,Y					;$00EAE1	|
+	LDA SB_GCO_Boss_Status		;$00EADE	|
+	STA SaveFile_GamesFinished,Y	;$00EAE1	|
 	LDA $7A93					;$00EAE4	|
 	STA $7F0F,Y					;$00EAE7	|
 	JMP CODE_FL_00EC34			;$00EAEA	|
@@ -14134,7 +14145,7 @@ CODE_FL_00EB5C:
 	SEP #$20					;$00EB74	|
 	LDA $7B13					;$00EB76	|
 	STA $7F38,Y					;$00EB79	|
-	LDA !Respawn_Room					;$00EB7C	|
+	LDA Respawn_Room			;$00EB7C	|
 	STA $7F33,Y					;$00EB7F	|
 	LDA $7B14					;$00EB82	|
 	STA $7F39,Y					;$00EB85	|
@@ -14149,7 +14160,7 @@ CODE_FL_00EB5C:
 CODE_FL_00EB99:
 	LDA $7B19					;$00EB99	|
 	STA $7F3E,Y					;$00EB9C	|
-	LDA !MWW_Abilities_Saved					;$00EB9F	|
+	LDA MWW_Abilities_Saved	;$00EB9F	|
 	STA $7F40,Y					;$00EBA2	|
 CODE_FL_00EBA5:					;			|
 	LDA $7B15					;$00EBA5	|
@@ -14188,8 +14199,8 @@ CODE_FL_00EBD9:
 
 
 CODE_FL_00EBE7:
-	LDA !CurrentSubGame			;$00EBE7	|
-	CMP !SG_MWW					;$00EBEA	|
+	LDA CurrentSubGame			;$00EBE7	|
+	CMP #$00!SUBGAME_MWW					;$00EBEA	|
 	BEQ CODE_FL_00EC26			;$00EBED	|
 	CMP #$0004					;$00EBEF	|
 	BEQ CODE_FL_00EC1E			;$00EBF2	|
@@ -14217,15 +14228,15 @@ CODE_FL_00EC1E:
 CODE_FL_00EC26:
 	LDA $7A6B					;$00EC26	|
 	STA $7F4F,Y					;$00EC29	|
-	LDA !MWW_Current_Planet					;$00EC2C	|
+	LDA MWW_Current_Planet		;$00EC2C	|
 	STA $7F51,Y					;$00EC2F	|
 	BRA CODE_FL_00EC34			;$00EC32	|
 
 
 CODE_FL_00EC34:
-	LDA $7AE3					;$00EC34	|
+	LDA SaveFile_Offset		;$00EC34	|
 	JSL CODE_FL_00EF16			;$00EC37	|
-	LDX $7AE3					;$00EC3B	|
+	LDX SaveFile_Offset		;$00EC3B	|
 	STA $7F04,X					;$00EC3E	|
 	RTL							;$00EC41	|
 
@@ -14234,7 +14245,7 @@ CODE_FL_00EC34:
 
 
 CODE_FL_00EC42:
-	LDY $7AE3					;$00EC42	|\ 
+	LDY SaveFile_Offset		;$00EC42	|\ 
 	CMP #$0002					;$00EC45	|| Jump to the routine.
   -	BCS -						;$00EC48	||] Hardlock the game if a value >= 2 is passed.
 	ASL A						;$00EC4A	||
@@ -14246,8 +14257,8 @@ CODE_FL_00EC4F:
 	dw CODE_FL_00ED3B
 
 CODE_FL_00EC53:
-	LDA $7F0A,Y					;$00EC53	|
-	STA !SB_GCO_Boss_Status					;$00EC56	|
+	LDA SaveFile_GamesFinished,Y	;$00EC53	|
+	STA SB_GCO_Boss_Status		;$00EC56	|
 	LDA $7F0C,Y					;$00EC59	|
 	STA $7AE7					;$00EC5C	|
 	LDA $7F0D,Y					;$00EC5F	|
@@ -14293,7 +14304,7 @@ CODE_FL_00EC53:
 	LDA $7F3E,Y					;$00ECD5	|
 	STA $7B19					;$00ECD8	|
 	LDA $7F40,Y					;$00ECDB	|
-	STA !MWW_Abilities_Saved					;$00ECDE	|
+	STA MWW_Abilities_Saved					;$00ECDE	|
 	LDA $7F42,Y					;$00ECE1	|
 	STA $7B1D					;$00ECE4	|
 	SEP #$20					;$00ECE7	|
@@ -14325,7 +14336,7 @@ CODE_FL_00EC53:
 	LDA $7F4F,Y					;$00ED2F	|
 	STA $7A6B					;$00ED32	|
 	LDA $7F51,Y					;$00ED35	|
-	STA !MWW_Current_Planet					;$00ED38	|
+	STA MWW_Current_Planet					;$00ED38	|
 CODE_FL_00ED3B:					;```````````|
 	LDA $7F2B,Y					;$00ED3B	|
 	STA $7B05					;$00ED3E	|
@@ -14359,14 +14370,14 @@ CODE_FL_00ED7D:					;			|
 
 
 CODE_FL_00ED81:
-	LDX !CurrentSubGame			;$00ED81	|
-	CPX !SG_Arena				;$00ED84	|
+	LDX CurrentSubGame			;$00ED81	|
+	CPX #$00!SUBGAME_ARENA				;$00ED84	|
 	BEQ CODE_FL_00EDAE			;$00ED87	|
 	PHA							;$00ED89	|
 	LDX #$7AE7					;$00ED8A	|
 	JSL CODE_FL_00EA1E			;$00ED8D	|
-	LDA !CurrentSubGame			;$00ED91	|
-	CMP !SG_GCO					;$00ED94	|
+	LDA CurrentSubGame			;$00ED91	|
+	CMP #$00!SUBGAME_GCO					;$00ED94	|
 	BNE CODE_FL_00ED9C			;$00ED97	|
 	PLA							;$00ED99	|
 	BRA CODE_FL_00EDB3			;$00ED9A	|
@@ -14387,14 +14398,14 @@ CODE_FL_00EDB3:					;			|
 	RTL							;$00EDB5	|
 
 CODE_FL_00EDB6:
-	LDX !CurrentSubGame			;$00EDB6	|
+	LDX CurrentSubGame			;$00EDB6	|
 	LDA.l DATA_00EDE5,X			;$00EDB9	|
 	AND #$00FF					;$00EDBD	|
 	TSB $7A93					;$00EDC0	|
-	LDX !CurrentSubGame			;$00EDC3	|
+	LDX CurrentSubGame			;$00EDC3	|
 	LDA.l DATA_00EDDE,X			;$00EDC6	|
 	AND #$00FF					;$00EDCA	|
-	LDX #!SB_GCO_Boss_Status	;$00EDCD	|
+	LDX #SB_GCO_Boss_Status	;$00EDCD	|
 	JSL CODE_FL_00EA1E			;$00EDD0	|
 	LDA #$0000					;$00EDD4	|
 	JSL CODE_FL_00EAB0			;$00EDD7	|
@@ -14415,11 +14426,11 @@ CODE_FL_00EDEC:
 	PHA							;$00EDEC	|	; Routine for calculating boss health
 	PHX							;$00EDED	|
 	PHY							;$00EDEE	|
-	LDA !CurrentSubGame			;$00EDEF	|
-	CMP !SG_SpringBreeze		;$00EDF2	|
+	LDA CurrentSubGame			;$00EDEF	|
+	CMP #$00!SUBGAME_SPRINGBREEZE		;$00EDF2	|
 	BNE CODE_FL_00EE08			;$00EDF5	|
 	LDA #$0000					;$00EDF7	|
-	LDX #!SB_GCO_Boss_Status	;$00EDFA	|
+	LDX #SB_GCO_Boss_Status	;$00EDFA	|
 	JSL CheckObjectUsageStatus	;$00EDFD	|
 	BNE CODE_FL_00EE08			;$00EE01	|	; Set Spring Breeze boss health 
 	PLY							;$00EE03	|
@@ -14442,7 +14453,7 @@ CODE_FL_00EE0D:
 CODE_FL_00EE11:
 	STX $2A						;$00EE11	|
 	STY $2C						;$00EE13	|
-	LDX #!SB_GCO_Boss_Status	;$00EE15	|
+	LDX #SB_GCO_Boss_Status	;$00EE15	|
 	JSL CheckObjectUsageStatus	;$00EE18	|
 	PHP							;$00EE1C	|
 	LDX $2A						;$00EE1D	|
@@ -14495,9 +14506,9 @@ EraseFile:						;-----------| Routine to erase a file specified in A.
 	LDY #$009E					;$00EE70	|
 	LDX #$0002					;$00EE73	|
   .MakeNewFile:					;```````````| All three join back up. X = file number, Y = base index to file data.
-	LDA $7F06,Y					;$00EE76	|
+	LDA SaveFile_Subgame,Y		;$00EE76	|
 	ORA #$00FF					;$00EE79	|
-	STA $7F06,Y					;$00EE7C	|
+	STA SaveFile_Subgame,Y		;$00EE7C	|
 	SEP #$20					;$00EE7F	|
 	LDA #$00					;$00EE81	|
 	STA $7F07,Y					;$00EE83	|
@@ -14527,7 +14538,7 @@ ValidateSaves:					;-----------| Routine to validate save file integrity. If a s
 	STZ $00						;$00EEBC	|
 	LDX #$0000					;$00EEBE	|\ 
 	JSL GetSaveChecksum			;$00EEC1	||
-	CMP $7F04					;$00EEC5	|| Get a sum of all bytes in $7F0A through $7F52 (save file 1),
+	CMP $7F04					;$00EEC5	|| Get a sum of all bytes in SaveFile_GamesFinished through $7F52 (save file 1),
 	BEQ .ValidFile1				;$00EEC8	||  and if it does not match $7F04, erase it.
 	LDA #$0000					;$00EECA	||
 	JSL EraseFile				;$00EECD	|/
@@ -14553,7 +14564,7 @@ ValidateSaves:					;-----------| Routine to validate save file integrity. If a s
 	CMP #$0003					;$00EEFF	|
 	BNE .notAllInvalid			;$00EF02	|
 	SEP #$20					;$00EF04	|\ 
-	STZ $7F00					;$00EF06	|| For when creating a new SRAM?
+	STZ SaveFile_Number		;$00EF06	|| For when creating a new SRAM?
 	STZ $7F01					;$00EF09	||
 	REP #$20					;$00EF0C	|/
   .notAllInvalid:				;			|
@@ -14564,8 +14575,8 @@ GetSaveChecksum:				;-----------| Subroutine to take a checksum of the save file
 	LDA.l SaveIndices,X			;$00EF0F	|\ 
 	AND #$00FF					;$00EF13	||
 CODE_FL_00EF16:					;			||
-	CLC							;$00EF16	|| $14 = 24-bit pointer to file data ($7F0A, $7F59, $7FA8).
-	ADC #$7F0A					;$00EF17	||
+	CLC							;$00EF16	|| $14 = 24-bit pointer to file data (SaveFile_GamesFinished, $7F59, $7FA8).
+	ADC #SaveFile_GamesFinished	;$00EF17	||
 	STA $14						;$00EF1A	||
 	STZ $16						;$00EF1C	|/
 	LDY #$0048					;$00EF1E	|\ 
@@ -14580,7 +14591,7 @@ CODE_FL_00EF16:					;			||
 	BPL .loop					;$00EF2E	|/
 	RTL							;$00EF30	|
 
-SaveIndices:					;$00EF31	| Indices to each save file from $7F0A.
+SaveIndices:					;$00EF31	| Indices to each save file from SaveFile_GamesFinished.
 	db $00									; File 1
 	db $4F									; File 2
 	db $9E									; File 3
@@ -14615,7 +14626,7 @@ CheckEmptySaves:				;-----------| Subroutine to check for any uninitialized save
 	LDA.l SaveIndices,X			;$00EF65	|
 	AND #$00FF					;$00EF69	|
 	CLC							;$00EF6C	|
-	ADC #$7F0A					;$00EF6D	|
+	ADC #SaveFile_GamesFinished	;$00EF6D	|
 	STA $14						;$00EF70	|
 	STZ $16						;$00EF72	|
 	LDY #$0048					;$00EF74	|
@@ -14634,16 +14645,16 @@ CODE_FL_00EF79:					;			|
 
 
 CODE_FL_00EF86:
-	LDX $7AE3					;$00EF86	|
-	LDA !CurrentSubGame			;$00EF89	|
+	LDX SaveFile_Offset		;$00EF86	|
+	LDA CurrentSubGame			;$00EF89	|
 	SEP #$20					;$00EF8C	|
-	STA $7F06,X					;$00EF8E	|
+	STA SaveFile_Subgame,X		;$00EF8E	|
 	REP #$20					;$00EF91	|
 	RTL							;$00EF93	|
 	STA $02						;$00EF94	|
 	TAX							;$00EF96	|
 	STZ $00						;$00EF97	|
-	LDA $7F0A,X					;$00EF99	|
+	LDA SaveFile_GamesFinished,X	;$00EF99	|
 	BIT #$0001					;$00EF9C	|
 	BEQ CODE_FL_00EFA6			;$00EF9F	|
 	LDA #$000B					;$00EFA1	|
@@ -14768,7 +14779,7 @@ CODE_FL_00F071:					;			|
 	CLC							;$00F071	|
 	ADC $00						;$00F072	|
 	STA $00						;$00F074	|
-	LDA $7F0A,X					;$00F076	|
+	LDA SaveFile_GamesFinished,X					;$00F076	|
 	BIT #$0010					;$00F079	|
 	BEQ CODE_FL_00F086			;$00F07C	|
 	LDA $00						;$00F07E	|
@@ -14881,12 +14892,12 @@ CODE_FL_00F13D:
 	CMP $7378					;$00F140	|
 	BNE CODE_FL_00F14B			;$00F143	|
 	LDA $7AEB					;$00F145	|
-	CMP !Score					;$00F148	|
+	CMP PlayerScore					;$00F148	|
 CODE_FL_00F14B:					;			|
 	BCS CODE_FL_00F160			;$00F14B	|
 	LDA $7378					;$00F14D	|
 	STA $7AED					;$00F150	|
-	LDA !Score					;$00F153	|
+	LDA PlayerScore					;$00F153	|
 	STA $7AEB					;$00F156	|
 	LDA #$0002					;$00F159	|
 	JSL CODE_FL_00EAB0			;$00F15C	|
@@ -14898,12 +14909,12 @@ CODE_FL_00F161:
 	CMP $7378					;$00F164	|
 	BNE CODE_FL_00F16F			;$00F167	|
 	LDA $7AEF					;$00F169	|
-	CMP !Score					;$00F16C	|
+	CMP PlayerScore					;$00F16C	|
 CODE_FL_00F16F:					;			|
 	BCS CODE_FL_00F184			;$00F16F	|
 	LDA $7378					;$00F171	|
 	STA $7AF1					;$00F174	|
-	LDA !Score					;$00F177	|
+	LDA PlayerScore					;$00F177	|
 	STA $7AEF					;$00F17A	|
 	LDA #$0003					;$00F17D	|
 	JSL CODE_FL_00EAB0			;$00F180	|

@@ -7868,7 +7868,7 @@ TEXT_SoundDebug:
 
 TEXT_InitError:
 	%TEXT_WriteDataW($000502, $7FFF)
-	%TEXT_WriteDataW($000506, $4210)
+	%TEXT_WriteDataW($000506, HW_RDNMI)
 	%TEXT_SetVisibility($01)
 	%TEXT_SetCharWidth($FF)
 	%TEXT_Speed($00, $00)
