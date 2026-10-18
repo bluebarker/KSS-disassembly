@@ -10,7 +10,7 @@ ORG $000000
 IdentifySNES: skip 2
 
 ; Unidentified
-skip 12
+skip $7E000E-$7E0002
 
 ; === $7E000E ===
 ; 24 bytes

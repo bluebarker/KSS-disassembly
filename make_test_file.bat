@@ -2,7 +2,7 @@
 
 echo Assembling...
 
-copy orig.sfc out.sfc
+copy "Kirby Super Star (USA).sfc" out.sfc
 asar main.asm out.sfc
 
 :checkmatch
