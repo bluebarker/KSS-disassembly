@@ -1,14 +1,3 @@
-; Subgame IDs
-!SUBGAME_SPRINGBREEZE            = 00
-!SUBGAME_DYNABLADE               = 01
-!SUBGAME_GOURMETRACE             = 02
-!SUBGAME_GCO                     = 03
-!SUBGAME_ROMK                    = 04
-!SUBGAME_MWW                     = 05
-!SUBGAME_ARENA                   = 06
-!SUBGAME_SOUNDTEST               = 07
-!SUBGAME_MEGATONSAMURAI          = 08
-
 ; Game State IDs
 !GAMESTATE_TITLESCREEN             = 00
 !GAMESTATE_CORKBOARD               = 01
@@ -27,22 +16,6 @@
 !GAMESTATE_DYNAMAPFIGHT            = 0E
 !GAMESTATE_TITLESUBGAMEPREVIEW     = 0F
 !GAMESTATE_TITLEMINIGAMEPREVIEW    = 10
-
-; Controller Buttons
-!BTN_NONE   = $0000
-!BTN_B      = $8000
-!BTN_Y      = $4000
-!BTN_SELECT = $2000
-!BTN_START  = $1000
-!BTN_UP     = $0800
-!BTN_DOWN   = $0400
-!BTN_LEFT   = $0200
-!BTN_RIGHT  = $0100
-!BTN_A      = $0080
-!BTN_X      = $0040
-!BTN_L      = $0020
-!BTN_R      = $0010
-!BTN_ALL    = $FFF0
 
 ; Abilities
 !ABILITY_NORMAL   = 00

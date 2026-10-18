@@ -118,7 +118,7 @@ CODE_FN_01810D:
 	AND.W #$00FF                  ;$018116	|
 	BEQ CODE_818139               ;$018119	|
 	STA.W $331A                   ;$01811B	|
-	LDA.W Respawn_Room                   ;$01811E	|
+	LDA.W Current_Room                   ;$01811E	|
 	STA.W $3312                   ;$018121	|
 	LDA.W $332A                   ;$018124	|
 	STA.W $3318                   ;$018127	|
@@ -138,7 +138,7 @@ CODE_FN_01813A:
 	BNE CODE_818169               ;$01813D	|
 	INC.W $331A                   ;$01813F	|
 	LDA.W $3312                   ;$018142	|
-	STA.W Respawn_Room                   ;$018145	|
+	STA.W Current_Room            ;$018145	|
 	LDA.W $3318                   ;$018148	|
 	STA.W $332A                   ;$01814B	|
 	DEC A                         ;$01814E	|
@@ -175,7 +175,7 @@ CODE_81818F:
 	STA.B $00                     ;$01818F	|
 	LDA.W #$819C                  ;$018191	|
 	LDX.W #$0001                  ;$018194	|
-	JSL.L SA1_ExecuteSNES              ;$018197	|
+	JSL.L SA1_ExecuteSNES         ;$018197	|
 	RTS                           ;$01819B	|
 	JSL.L CODE_FL_0180FE          ;$01819C	|
 	LDY.W #$0036                  ;$0181A0	|
@@ -663,18 +663,18 @@ PTR16_018574:
     dw CODE_01858B                ;$018578 |
 
 CODE_01857A:
-    LDA.W Respawn_Room                   ;$01857A |
+    LDA.W Current_Room                   ;$01857A |
     AND.W #$000F                  ;$01857D |
     RTS                           ;$018580 |
 
 CODE_018581:
-    LDA.W Respawn_Room                   ;$018581 |
+    LDA.W Current_Room                   ;$018581 |
     AND.W #$000F                  ;$018584 |
     ORA.W #$0010                  ;$018587 |
     RTS                           ;$01858A |
 
 CODE_01858B:
-    LDA.W Respawn_Room                   ;$01858B |
+    LDA.W Current_Room                   ;$01858B |
     AND.W #$000F                  ;$01858E |
     LSR A                         ;$018591 |
     ORA.W #$0020                  ;$018592 |
@@ -759,7 +759,7 @@ CODE_JP_01865F:
 	LDA.W $32EE                   ;$01865F	|
 	CMP.W #$0007                  ;$018662	|
 	BNE CODE_018673               ;$018665	|
-	LDA.W Respawn_Room                   ;$018667	|
+	LDA.W Current_Room                   ;$018667	|
 	CMP.W #$0001                  ;$01866A	|
 	BNE CODE_018673               ;$01866D	|
 	JSL.L CODE_FL_D5999E          ;$01866F	|
@@ -1598,7 +1598,7 @@ CODE_FN_018C74:
 	LDA.W $32EE                   ;$018CBA	|
 	ASL A                         ;$018CBD	|
 	STA.W $32F0                   ;$018CBE	|
-	LDA.W Respawn_Room            ;$018CC1	|
+	LDA.W Current_Room            ;$018CC1	|
 	ASL A                         ;$018CC4	|
 	ASL A                         ;$018CC5	|
 	STA.W $32F4                   ;$018CC6	|
@@ -2094,10 +2094,10 @@ CODE_8190B6:
 	TAY                           ;$0190FE	|
 	LDA.B [$14],Y                 ;$0190FF	|
 	CLC                           ;$019101	|
-	ADC.W Respawn_Room           ;$019102	|
-	ADC.W Respawn_Room           ;$019105	|
-	ADC.W Respawn_Room           ;$019108	|
-	ADC.W Respawn_Room           ;$01910B	|
+	ADC.W Current_Room           ;$019102	|
+	ADC.W Current_Room           ;$019105	|
+	ADC.W Current_Room           ;$019108	|
+	ADC.W Current_Room           ;$01910B	|
 	TAY                           ;$01910E	|
 	LDA.B [$14],Y                 ;$01910F	|
 	STA.B $18                     ;$019111	|
@@ -2275,7 +2275,7 @@ CODE_81924B:
 
 CODE_81924E:
 	STX.W Load_Special_Dest     ;$01924E	|
-	STA.W Respawn_Room           ;$019251	|
+	STA.W Current_Room           ;$019251	|
 
 CODE_819254:
 	LDA.W #$000F                  ;$019254	|

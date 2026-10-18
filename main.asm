@@ -7,6 +7,7 @@ incsrc "rammap1.asm"
 incsrc "hardware_registers.asm"
 incsrc "labels.asm"
 incsrc "macros/actionscript.asm"
+incsrc "macros/macros.asm"
 
 incsrc "bank_00.asm"
 incsrc "bank_01.asm"

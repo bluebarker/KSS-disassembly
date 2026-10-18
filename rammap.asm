@@ -708,6 +708,22 @@ MainScreenDesignation_Mirror: skip 1
 ; $32A4-$32C3 handles the high X bit and size of each tile.
 OAM_Table: skip 544
 
+; Valid controller inputs:
+!BTN_NONE   = $0000
+!BTN_B      = $8000
+!BTN_Y      = $4000
+!BTN_SELECT = $2000
+!BTN_START  = $1000
+!BTN_UP     = $0800
+!BTN_DOWN   = $0400
+!BTN_LEFT   = $0200
+!BTN_RIGHT  = $0100
+!BTN_A      = $0080
+!BTN_X      = $0040
+!BTN_L      = $0020
+!BTN_R      = $0010
+!BTN_ALL    = $FFF0
+
 ; === $0032C4 ===
 ; 2 bytes
 ; Controller 1 input, held. Format (16-bit): byetUDLR axlr----
@@ -787,21 +803,23 @@ skip 6
 ; === $0032EA ===
 ; 2 bytes
 ; Currently active subgame.
-;  00 - Spring Breeze
-;  01 - Dyna Blade
-;  02 - Gourmet Race
-;  03 - The Great Cave Offensive
-;  04 - Revenge of Meta-Knight
-;  05 - Milky Way Wishes
-;  06 - The Arena
-;  07 - Sound Test
-;  08 - Guide / Minigame
-;  09 - Unused?
-;  0A - Unused?
-CurrentSubGame: skip 2
+; Valid subgames:
+!SUBGAME_SPRINGBREEZE   = 00
+!SUBGAME_DYNABLADE      = 01
+!SUBGAME_GOURMETRACE    = 02
+!SUBGAME_GCO            = 03
+!SUBGAME_ROMK           = 04
+!SUBGAME_MWW            = 05
+!SUBGAME_ARENA          = 06
+!SUBGAME_SOUNDTEST      = 07
+!SUBGAME_MEGATONSAMURAI = 08
+Current_SubGame: skip 2
 
-; Unidentified
-skip 2
+; === $0032EC ===
+; 2 bytes
+; Written as a double of $32EA whenever a room is being loaded
+; Used to calculate offsets for loading room data
+Current_SubGame_x2: skip 2
 
 ; === $0032EE ===
 ; 2 bytes
@@ -817,10 +835,40 @@ skip 2
 ;  07 - [?]
 ;  08 - Nova
 ;  09 - [?] (unused duplicate?)
-CurrentLevel: skip 2
+Current_Level: skip 2
+
+; === $0032F0 ===
+; 2 bytes
+; Written as a double of $32EE whenever a room is being loaded
+; Used to calculate offsets for loading room data
+Current_Level_x2: skip 2
+
+; === $0032F2 ===
+; 2 bytes
+; Room number to respawn into
+; Room number is relative to subgame index
+Current_Room: skip 2
+
+; === $0032F4 ===
+; 2 bytes
+; Written as a quadruple of $32F2 whenever a room is being loaded
+; Used to calculate offsets for loading room data
+Current_Room_x4: skip 2
+
+; === $0032F6 ===
+; 2 bytes
+; Pointer to room data. 
+; The data written here is read from the start of bank $FF
+skip 2
+
+
+; 3312 respawn room
+; 3314 x respawn
+; 3316 y respawn 
+; 3318 respawn ram offset position (but why)
 
 ; Unidentified
-skip 222
+skip 218
 
 ; === $0033CE ===
 ; 1 byte
