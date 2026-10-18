@@ -1,15 +1,13 @@
 ORG $018000
 
 
-CODE_FL_018000:
+RoomLoad_Start:
 	JSR.W CODE_FN_01813A          ;$018000	|
 	JSR.W CODE_FN_018C74          ;$018003	|
-	LDA.W #$8E52                  ;$018006	|
-	LDX.W #$0001                  ;$018009	|
+	%LoadAddrToAX(CODE_818E52)
 	JSL.L SA1_ExecuteSNES         ;$01800C	|
 	JSR.W CODE_FN_018307          ;$018010	|
-	LDA.W #$806B                  ;$018013	|
-	LDX.W #$0001                  ;$018016	|
+	%LoadAddrToAX(InitializeRoomProperties)
 	JSL.L SA1_ExecuteSNES         ;$018019	|
 	JSL.L CODE_FL_03A2D4          ;$01801D	|
 	BCS CODE_818027               ;$018021	|
@@ -36,16 +34,17 @@ CODE_818027:
 	JSR.W CODE_FN_01925E          ;$018058	|
 	JSR.W CODE_FN_018E99          ;$01805B	|
 	JSR.W CODE_FN_018BD7          ;$01805E	|
-	LDA.W #$8078                  ;$018061	|
-	LDX.W #$0001                  ;$018064	|
+	%LoadAddrToAX(InitializeStatusBar)
 	JML.L SA1_ExecuteSNES         ;$018067	|
-	JSR.W LoadLevelBackground     ;$01806B	|
-	JSR.W LoadLevelConsumables    ;$01806E	|
-	JSR.W LoadLevelTileset        ;$018071	|
+InitializeRoomProperties:
+	JSR.W LoadRoomBackground      ;$01806B	|
+	JSR.W LoadRoomConsumables     ;$01806E	|
+	JSR.W LoadRoomTileset         ;$018071	|
 	JSR.W CODE_FN_018698          ;$018074	|
 	RTL                           ;$018077	|
+InitializeStatusBar:
 	JSR.W SetupStatusBar          ;$018078	|
-	JSR.W HandleStatusBar          ;$01807B	|
+	JSR.W HandleStatusBar         ;$01807B	|
 	JSR.W CODE_FN_01A743          ;$01807E	|
 	JSR.W CODE_FN_01859A          ;$018081	|
 	JML.L CODE_JL_D0234E          ;$018084	|
@@ -53,12 +52,10 @@ CODE_818027:
 CODE_FL_018088:
 	JSL.L UpdateVramSprSize       ;$018088	|
 	JSR.W CODE_FN_018C74          ;$01808C	|
-	LDA.W #$8E52                  ;$01808F	|
-	LDX.W #$0001                  ;$018092	|
+	%LoadAddrToAX(CODE_818E52)
 	JSL.L SA1_ExecuteSNES         ;$018095	|
 	JSR.W CODE_FN_018307          ;$018099	|
-	LDA.W #$806B                  ;$01809C	|
-	LDX.W #$0001                  ;$01809F	|
+	%LoadAddrToAX(InitializeRoomProperties)
 	JSL.L SA1_ExecuteSNES         ;$0180A2	|
 	JSL.L CODE_FL_D01566          ;$0180A6	|
 	LDA.W $3330                   ;$0180AA	|
@@ -422,20 +419,20 @@ CODE_8183B8:
 	RTS                           ;$0183BB	|
 	dw $0000,$7FFF,$0000          ;$0183BC  |
 
-LoadLevelBackground_NoDMA_L:
-	JSR.W LoadLevelBackground_NoDMA;$0183C2	|
+LoadRoomBackground_NoDMA_L:
+	JSR.W LoadRoomBackground_NoDMA;$0183C2	|
 	RTL                           ;$0183C5	|
 
-LoadLevelBackground_L:
-	JSR.W LoadLevelBackground          ;$0183C6	|
+LoadRoomBackground_L:
+	JSR.W LoadRoomBackground          ;$0183C6	|
 	RTL                           ;$0183C9	|
 
-LoadLevelBackground:
+LoadRoomBackground:
 	LDX.W #$0001                  ;$0183CA	|
 	LDA.W #$8479                  ;$0183CD	|
 	JSL.L LoadDMATable          ;$0183D0	|
 
-LoadLevelBackground_NoDMA:
+LoadRoomBackground_NoDMA:
 	LDA.W $332E                   ;$0183D4	|
 	AND.W #$0001                  ;$0183D7	|
 	BEQ CODE_81840B               ;$0183DA	|
@@ -580,11 +577,11 @@ DATA8_0184D1:
     dw $0000                      ;$0184D7 |
     db $FF           			  ;$0184D9 |
 
-LoadLevelConsumables_L:
-	JSR LoadLevelConsumables	  ;$0184DA	|
+LoadRoomConsumables_L:
+	JSR LoadRoomConsumables	  ;$0184DA	|
 	RTL							  ;$0184DD	|
 
-LoadLevelConsumables:
+LoadRoomConsumables:
 	PEA.W $007E                   ;$0184DE	|
 	PLB                           ;$0184E1	|
 	LDA.W #$00DB                  ;$0184E2	|
@@ -767,11 +764,11 @@ CODE_JP_01865F:
 CODE_018673:
 	RTS                           ;$018673	|
 
-LoadLevelTileset_L:
-	JSR.W LoadLevelTileset        ;$018674	|
+LoadRoomTileset_L:
+	JSR.W LoadRoomTileset        ;$018674	|
 	RTL                           ;$018677	|
 
-LoadLevelTileset:
+LoadRoomTileset:
 	LDA.W #$001B                  ;$018678	|
 	JSL.L CODE_FL_018101          ;$01867B	|
 	LDA.B [$14]                   ;$01867F	|
@@ -1770,6 +1767,7 @@ CODE_818E25:
 	LDA.W #$001F                  ;$018E4B	|
 	STA.W $3074                   ;$018E4E	|
 	RTS                           ;$018E51	|
+CODE_818E52:
 	LDA.W #$FFFF                  ;$018E52	|
 	STA.W $09A8                   ;$018E55	|
 	STA.W $103C                   ;$018E58	|
@@ -8448,7 +8446,7 @@ CODE_01C26A:
     AND.W #$007F                  ;$01C274 |
     ASL A                         ;$01C277 |
     TAX                           ;$01C278 |
-    LDA.L DATA16_01CF86,X         ;$01C279 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C279 |
     AND.W #$001F                  ;$01C27D |
     TAX                           ;$01C280 |
     JMP.W (PTR16_01C284,X)        ;$01C281 |
@@ -8613,9 +8611,9 @@ CODE_FL_01C365:
     AND.W #$007F                  ;$01C36B |
     ASL A                         ;$01C36E |
     TAX                           ;$01C36F |
-    LDA.L DATA16_01D086,X         ;$01C370 |
+    LDA.L TileDamageProperties_LUT,X         ;$01C370 |
     STA.B $6E                     ;$01C374 |
-    LDA.L DATA16_01CF86,X         ;$01C376 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C376 |
     BIT.W #$0020                  ;$01C37A |
     BEQ CODE_81C387               ;$01C37D |
     LDY.W $33B0                   ;$01C37F |
@@ -8757,7 +8755,7 @@ CODE_JP_01C447:
     AND.W #$007F                  ;$01C449 |
     ASL A                         ;$01C44C |
     TAX                           ;$01C44D |
-    LDA.L DATA16_01CF86,X         ;$01C44E |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C44E |
     BIT.W #$0020                  ;$01C452 |
     BEQ CODE_81C45F               ;$01C455 |
     LDY.W $33B0                   ;$01C457 |
@@ -8910,7 +8908,7 @@ CODE_01C535:
     AND.W #$007F                  ;$01C537 |
     ASL A                         ;$01C53A |
     TAX                           ;$01C53B |
-    LDA.L DATA16_01CF86,X         ;$01C53C |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C53C |
     BIT.W #$0020                  ;$01C540 |
     BEQ CODE_81C54A               ;$01C543 |
     LDY.W $33B0                   ;$01C545 |
@@ -9070,9 +9068,9 @@ CODE_FL_01C62C:
     AND.W #$007F                  ;$01C632 |
     ASL A                         ;$01C635 |
     TAX                           ;$01C636 |
-    LDA.L DATA16_01D086,X         ;$01C637 |
+    LDA.L TileDamageProperties_LUT,X         ;$01C637 |
     STA.B $6E                     ;$01C63B |
-    LDA.L DATA16_01CF86,X         ;$01C63D |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C63D |
     BIT.W #$0020                  ;$01C641 |
     BNE CODE_81C680               ;$01C644 |
     AND.W #$001F                  ;$01C646 |
@@ -9101,7 +9099,7 @@ CODE_01C66D:
     AND.W #$007F                  ;$01C66F |
     ASL A                         ;$01C672 |
     TAX                           ;$01C673 |
-    LDA.L DATA16_01CF86,X         ;$01C674 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C674 |
     AND.W #$001F                  ;$01C678 |
     BNE CODE_81C680               ;$01C67B |
     JMP.W CODE_JP_01C6D4          ;$01C67D |
@@ -9111,9 +9109,9 @@ CODE_81C680:
     AND.W #$007F                  ;$01C682 |
     ASL A                         ;$01C685 |
     TAX                           ;$01C686 |
-    LDA.L DATA16_01D086,X         ;$01C687 |
+    LDA.L TileDamageProperties_LUT,X         ;$01C687 |
     STA.B $6C                     ;$01C68B |
-    LDA.L DATA16_01CF86,X         ;$01C68D |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C68D |
     BIT.W #$0020                  ;$01C691 |
     BEQ CODE_81C699               ;$01C694 |
     JMP.W CODE_JP_01CDED          ;$01C696 |
@@ -9158,7 +9156,7 @@ CODE_JP_01C6D4:
     AND.W #$007F                  ;$01C6D6 |
     ASL A                         ;$01C6D9 |
     TAX                           ;$01C6DA |
-    LDA.L DATA16_01CF86,X         ;$01C6DB |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C6DB |
     BIT.W #$0020                  ;$01C6DF |
     BNE CODE_81C717               ;$01C6E2 |
     AND.W #$001F                  ;$01C6E4 |
@@ -9202,9 +9200,9 @@ CODE_FL_01C723:
     AND.W #$007F                  ;$01C729 |
     ASL A                         ;$01C72C |
     TAX                           ;$01C72D |
-    LDA.L DATA16_01D086,X         ;$01C72E |
+    LDA.L TileDamageProperties_LUT,X         ;$01C72E |
     STA.B $6E                     ;$01C732 |
-    LDA.L DATA16_01CF86,X         ;$01C734 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C734 |
     BIT.W #$0020                  ;$01C738 |
     BEQ CODE_81C740               ;$01C73B |
     JMP.W CODE_81C828             ;$01C73D |
@@ -9343,9 +9341,9 @@ CODE_81C828:
     AND.W #$007F                  ;$01C82A |
     ASL A                         ;$01C82D |
     TAX                           ;$01C82E |
-    LDA.L DATA16_01D086,X         ;$01C82F |
+    LDA.L TileDamageProperties_LUT,X         ;$01C82F |
     STA.B $70                     ;$01C833 |
-    LDA.L DATA16_01CF86,X         ;$01C835 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C835 |
     BIT.W #$0020                  ;$01C839 |
     BNE CODE_81C880               ;$01C83C |
     AND.W #$001F                  ;$01C83E |
@@ -9505,7 +9503,7 @@ CODE_JP_01C94F:
     AND.W #$007F                  ;$01C951 |
     ASL A                         ;$01C954 |
     TAX                           ;$01C955 |
-    LDA.L DATA16_01CF86,X         ;$01C956 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01C956 |
     BIT.W #$0020                  ;$01C95A |
     BNE CODE_81C9A1               ;$01C95D |
     AND.W #$001F                  ;$01C95F |
@@ -9664,9 +9662,9 @@ CODE_FL_01CA71:
     AND.W #$007F                  ;$01CA77 |
     ASL A                         ;$01CA7A |
     TAX                           ;$01CA7B |
-    LDA.L DATA16_01D086,X         ;$01CA7C |
+    LDA.L TileDamageProperties_LUT,X         ;$01CA7C |
     STA.B $6E                     ;$01CA80 |
-    LDA.L DATA16_01CF86,X         ;$01CA82 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01CA82 |
     BIT.W #$0020                  ;$01CA86 |
     BEQ CODE_81CA8E               ;$01CA89 |
     JMP.W CODE_81CB33             ;$01CA8B |
@@ -9779,9 +9777,9 @@ CODE_81CB33:
     AND.W #$007F                  ;$01CB35 |
     ASL A                         ;$01CB38 |
     TAX                           ;$01CB39 |
-    LDA.L DATA16_01D086,X         ;$01CB3A |
+    LDA.L TileDamageProperties_LUT,X         ;$01CB3A |
     STA.B $6C                     ;$01CB3E |
-    LDA.L DATA16_01CF86,X         ;$01CB40 |
+    LDA.L TileCollisionProperties_LUT,X         ;$01CB40 |
     BIT.W #$0020                  ;$01CB44 |
     BNE CODE_81CB89               ;$01CB47 |
     AND.W #$001F                  ;$01CB49 |
@@ -9905,7 +9903,7 @@ CODE_JP_01CC03:
     AND.W #$007F                  ;$01CC05 |
     ASL A                         ;$01CC08 |
     TAX                           ;$01CC09 |
-    LDA.L DATA16_01CF86,X         ;$01CC0A |
+    LDA.L TileCollisionProperties_LUT,X         ;$01CC0A |
     BIT.W #$0020                  ;$01CC0E |
     BNE CODE_81CC53               ;$01CC11 |
     AND.W #$001F                  ;$01CC13 |
@@ -10358,7 +10356,7 @@ DATA24_01CF2D:
 DATA8_01CF7E:
     db $00,$03,$06,$09,$0C,$0F,$12,$15;$01CF7E |
 
-DATA16_01CF86:
+TileCollisionProperties_LUT:
     dw $0000,$0000,$0000,$0000    ;$01CF86 |
     dw $0000,$0000,$0000,$0000    ;$01CF8E |
     dw $0000,$0000,$0000,$0000    ;$01CF96 |
@@ -10392,7 +10390,7 @@ DATA16_01CF86:
     dw $0002,$0002,$0000,$0000    ;$01D076 |
     dw $0000,$0000,$0000,$0000    ;$01D07E |
 
-DATA16_01D086:
+TileDamageProperties_LUT:
     dw $0000,$0000,$0000,$0000    ;$01D086 |
     dw $0000,$0000,$0000,$0000    ;$01D08E |
     dw $0000,$0000,$0000,$0000    ;$01D096 |
@@ -10426,9 +10424,8 @@ DATA16_01D086:
     dw $000E,$0006,$0000,$0000    ;$01D176 |
     dw $0000,$0000,$0000,$0000    ;$01D17E |
 
-    LDY.W #$0004                  ;$01D186 |	this was read as data, maybe this is written to ram and ran there?
+    LDY.W #$0004                  ;$01D186 |
     BRA CODE_01D18E               ;$01D189 |
-
     LDY.W #$0002                  ;$01D18B |
 
 CODE_01D18E:
@@ -10909,7 +10906,7 @@ CODE_81D4C8:
     AND.W #$007F                  ;$01D4E7 |
     ASL A                         ;$01D4EA |
     TAX                           ;$01D4EB |
-    LDA.L DATA16_01D086,X         ;$01D4EC |
+    LDA.L TileDamageProperties_LUT,X         ;$01D4EC |
     CMP.W #$0002                  ;$01D4F0 |
     BCC CODE_81D500               ;$01D4F3 |
     CMP.W #$0005                  ;$01D4F5 |

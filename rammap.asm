@@ -257,6 +257,17 @@ ORG $7F0000
 ; DEBUG: For the VRAM viewer, the first 0x1000 bytes of this are used as the raw tilemap to be uploaded into VRAM. 
 Level_Tilemap: skip 4096
 
+; 7EB000 cleared to all FF at $018E76?
+; 7EB200 something written to it here: $01C126
+; 7EB400 giant list of DMAs for animating background tiles:
+; ?? ?? ?? (1 byte, Frame Count to Display DMA) (DMA TABLE FORMAT) (DMA DATA)
+;      it is a large list of DMA tables with some other attributes
+;      7EB402 is written to $7E0FC8 sometimes (at $01A233)
+;      7EB404 is the start of a DMA table
+;      7EB407 is fixed to 7EB40D? so data is right after the DMA table
+;      DMAs are written to 2CA0 in VRAM
+; The rest of this bank seems to be attributed to the DMA table list
+
 ; Unidentified
 skip 21872
 

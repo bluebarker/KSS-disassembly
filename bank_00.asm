@@ -1,10 +1,7 @@
 ORG $008000
 
 RomStart:
-	NOP							;$008000	|
-	NOP							;$008001	|
-	NOP							;$008002	|
-	NOP							;$008003	|
+	NOP #4							;$008000	|
 
 Reset_SNES:						;-----------| SNES RESET vector; game boots to here.
 	SEI							;$008004	| Disable IRQ.
@@ -618,7 +615,7 @@ UpdateVramSprSize:				;-----------| Routine to update sprite tile sizes and GFX 
 UpdtLyrsCtrlBrght:				;-----------| Routine which updates controllers, layer positions, and screen brightness.
 	SEP #$20					;$0084FD	|
 	LDA $30A1					;$0084FF	|
-	STA Screen_Brightness					;$008502	|
+	STA Screen_Brightness		;$008502	|
 	REP #$20					;$008505	|
 	JMP UpdtLyrsCtrl			;$008507	|
 
@@ -8464,18 +8461,18 @@ CODE_FL_00BD7B:					;			|
 AS_Script_0000:
 	%AS_MOV_REG_VAR($0)
 	%AS_MULTIJMP(AS_00BDA0,
-			AS_00BDA7,
-			AS_00BDC7,
-			AS_00BDCB,
-			AS_00BDAB,
-			AS_00BDB3,
-			AS_00BDB7,
-			AS_00BDBE,
-			AS_00BDCF,
-			AS_00BDD3,
-			AS_00BDD7,
-			AS_00BDDB,
-			AS_00BDDF)
+		AS_00BDA7,
+		AS_00BDC7,
+		AS_00BDCB,
+		AS_00BDAB,
+		AS_00BDB3,
+		AS_00BDB7,
+		AS_00BDBE,
+		AS_00BDCF,
+		AS_00BDD3,
+		AS_00BDD7,
+		AS_00BDDB,
+		AS_00BDDF)
 AS_00BDA0:
 	%AS_ASMCALL(CODE_FL_00A47B, $01)
 	dl $CADCF1
@@ -8723,10 +8720,7 @@ DATA_00BFBC:
 	db $03,$06,$03,$03,$03,$06,$01
 
 CODE_FL_00BFC3:					;```````````| SNES-side subroutine used above to waste some cycles.
-	NOP							;$00BFC3	|
-	NOP							;$00BFC4	|
-	NOP							;$00BFC5	|
-	NOP							;$00BFC6	|
+	NOP #4							;$00BFC3	|
 	RTL							;$00BFC7	|
 
 
@@ -8846,7 +8840,7 @@ CODE_FL_00C0BA:					;-----------| Game Mode 0D - Dynablade trial room
 	JSL CODE_FL_00D93B			;$00C0BA	|
 	JSL UpdateVramSprSize		;$00C0BE	|
 	JSL CODE_FL_00D9C4			;$00C0C2	|
-	JSL CODE_FL_018000			;$00C0C6	|
+	JSL RoomLoad_Start			;$00C0C6	|
 	JSL $D4FB90					;$00C0CA	|
 	LDA #$0001					;$00C0CE	|
 	STA $73A6					;$00C0D1	|
@@ -8880,7 +8874,7 @@ CODE_FL_00C108:					;-----------| Game Mode 0E - Dynablade overworld enemy battl
 	JSL CODE_FL_00D93B			;$00C115	|
 	JSL CODE_FL_00A94B			;$00C119	|
 	JSL CODE_FL_00D9C4			;$00C11D	|
-	JSL CODE_FL_018000			;$00C121	|
+	JSL RoomLoad_Start			;$00C121	|
 	%LoadAddrToAX(CODE_FL_00C1CA)
 	JSL SA1_ExecuteSNES			;$00C12B	|
 	JSL $D4FB90					;$00C12F	|
@@ -8942,12 +8936,12 @@ CODE_FL_00C1B9:					;			|
 	PLA							;$00C1BE	|
 	DEC A						;$00C1BF	|
 	BNE CODE_FL_00C1B9			;$00C1C0	|
-	STZ Reload_Room					;$00C1C2	|
+	STZ Reload_Room				;$00C1C2	|
 	JSL CODE_FL_00CC7B			;$00C1C5	|
 	RTL							;$00C1C9	|
 
 CODE_FL_00C1CA:
-	LDA #$00!SUBGAME_DYNABLADE			;$00C1CA	|
+	LDA #$00!SUBGAME_DYNABLADE	;$00C1CA	|
 	STA Current_SubGame			;$00C1CD	|
 	JSL SetupStatusBar_L		;$00C1D0	|
 	JML HandleStatusBar_L		;$00C1D4	|
@@ -8959,7 +8953,7 @@ CODE_FL_00C1D8:					;-----------| Game Mode 03 - Normal level (including Nova ba
 CODE_FL_00C1DC:					;			|
 	JSL UpdateVramSprSize		;$00C1DC	|
 	JSL CODE_FL_00D9C4			;$00C1E0	|
-	JSL CODE_FL_018000			;$00C1E4	|
+	JSL RoomLoad_Start			;$00C1E4	|
 	JSL $D4FB90					;$00C1E8	|
 	LDA #$0001					;$00C1EC	|
 	STA $73A6					;$00C1EF	|
@@ -9694,7 +9688,7 @@ CODE_FL_00C86B:					;-----------| Title screen subroutine 1
 CODE_FL_00C8B4:					;			|
 	LDA #$0001					;$00C8B4	|
 	STA $331A					;$00C8B7	|
-	JSL CODE_FL_018000			;$00C8BA	|
+	JSL RoomLoad_Start			;$00C8BA	|
 	JSL $D4FB90					;$00C8BE	|
 	LDA #$0001					;$00C8C2	|
 	STA $73A6					;$00C8C5	|
