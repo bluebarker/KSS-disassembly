@@ -910,7 +910,7 @@ TEXT_CB1613:
 TEXT_CB1619:
 	%TEXT_Wait($1E)
 	%TEXT_CursorEnable()
-	%TEXT_HaltUntilPress($C0, $C0)
+	%TEXT_HaltUntilPress($C0C0)
 	%TEXT_CursorDisable()
 	%TEXT_Clear()
 	%TEXT_End()
@@ -3863,7 +3863,7 @@ TEXT_CB408D:
 
 TEXT_CB4093:
 	%TEXT_Wait($10)
-	%TEXT_HaltUntilPress($40, $C0)
+	%TEXT_HaltUntilPress($C040)
 	%TEXT_Clear()
 	%TEXT_End()
 
@@ -3879,14 +3879,14 @@ TEXT_CB409A:
 TEXT_CB40A7:
 	%TEXT_Wait($10)
 	%TEXT_CursorEnable()
-	%TEXT_HaltUntilPress($40, $C0)
+	%TEXT_HaltUntilPress($C040)
 	%TEXT_CursorDisable()
 	%TEXT_End()
 
 TEXT_CB40AF:
 	%TEXT_CursorDisable()
 	%TEXT_Wait($10)
-	%TEXT_HaltUntilPress($40, $C0)
+	%TEXT_HaltUntilPress($C040)
 	%TEXT_End()
 
 TEXT_CB40B6:

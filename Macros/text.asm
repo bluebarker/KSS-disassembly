@@ -55,8 +55,8 @@ macro TEXT_UNK0B()     ; seems to be unused?
     db $0B 
 endmacro 
 
-macro TEXT_HaltUntilPress(x, y)     ; Do not continue running through text data until the specified button is pressed.
-    db $0C, <x>, <y>
+macro TEXT_HaltUntilPress(word)     ; Do not continue running through text data until the specified button is pressed.
+    db $0C : dw <word>
 endmacro
 
 macro TEXT_Wait(x)      ; Wait the specified number of frames

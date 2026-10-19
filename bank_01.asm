@@ -115,7 +115,7 @@ CODE_FN_01810D:
 	AND.W #$00FF                  ;$018116	|
 	BEQ CODE_818139               ;$018119	|
 	STA.W $331A                   ;$01811B	|
-	LDA.W Current_Room                   ;$01811E	|
+	LDA.W Current_Room            ;$01811E	|
 	STA.W $3312                   ;$018121	|
 	LDA.W $332A                   ;$018124	|
 	STA.W $3318                   ;$018127	|
