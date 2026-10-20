@@ -1918,19 +1918,19 @@ CreateNewObject:					;-----------|
 	LDA #$007A					;$008E85	|
 	STA $6012					;$008E88	|
 	PLA							;$008E8B	|
-CreateNewObject2:					;			|
+CreateNewObject2:				;			|
 	STA $600A					;$008E8C	|
 	STX $600C					;$008E8F	|
 	STY $600E					;$008E92	|
-	JSR FindFreeObjectSlot			;$008E95	|
-	BCC InitializeNewObject			;$008E98	|
+	JSR FindFreeObjectSlot		;$008E95	|
+	BCC InitializeNewObject		;$008E98	|
 	LDA #$FFFF					;$008E9A	|
 	RTL							;$008E9D	|
 
 InitializeNewObject:			; X = Object slot
-	LDA #$AB78					;$008E9E	|
+	LDA #CODE_FL_00AB78			;$008E9E	|
 	STA $6630,X					;$008EA1	|
-	LDA #$A6FB					;$008EA4	|
+	LDA #CODE_FL_00A6FB			;$008EA4	|
 	STA $66AA,X					;$008EA7	|
 	LDA $6000					;$008EAA	|
 	STA $6D56,X					;$008EAD	|

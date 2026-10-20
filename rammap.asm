@@ -247,15 +247,6 @@ SNES_Stack: skip 256
 ; The index for where to write the next DMA can be found at $3012, which gets reset at the end of every frame.
 DMA_Buffer: skip 24319
 
-ORG $7F0000
-
-; === $7F0000 ===
-; 4096 bytes
-; The entire Layer 1 Map24 tilemap for the level, two bytes per tile.
-; Tiles appear to be laid on in full strips from the left edge of the level to the right edge. 
-; As such, the number of tiles per row varies depending on the size of the level.
-; DEBUG: For the VRAM viewer, the first 0x1000 bytes of this are used as the raw tilemap to be uploaded into VRAM. 
-Level_Tilemap: skip 4096
 
 ; 7EB000 cleared to all FF at $018E76?
 ; 7EB200 something written to it here: $01C126
@@ -268,8 +259,72 @@ Level_Tilemap: skip 4096
 ;      DMAs are written to 2CA0 in VRAM
 ; The rest of this bank seems to be attributed to the DMA table list
 
-; Unidentified
-skip 21872
+
+ORG $7F0000
+
+; === $7F0000 ===
+; 8192 bytes
+; The entire Layer 1 Map24 tilemap for the level, two bytes per tile.
+; Tiles appear to be laid on in full strips from the left edge of the level to the right edge. 
+; As such, the number of tiles per row varies depending on the size of the level.
+; DEBUG: For the VRAM viewer, the first 0x1000 bytes of this are used as the raw tilemap to be uploaded into VRAM. 
+Level_Tilemap: skip 8192
+
+; === $7F2000 ===
+; 4096 bytes
+; Table of all tiles in the level that have been changed, i.e. bomb block broke tiles, etc.
+; Each tile is one byte
+Level_Tilemap_TilesChanged: skip 4096
+
+; === $7F3000 ===
+; 1440 bytes
+; Table for each meta tile that denotes the first row and first column that each meta tile is using.
+Level_Tile_Graphics_1: skip 1440
+
+; === $7F35A0 ===
+; 1440 bytes
+; Table for each meta tile that denotes the first row and second column that each meta tile is using.
+Level_Tile_Graphics_2: skip 1440
+
+; === $7F3B40 ===
+; 1440 bytes
+; Table for each meta tile that denotes the first row and third column that each meta tile is using.
+Level_Tile_Graphics_3: skip 1440
+
+; === $7F40E0 ===
+; 1440 bytes
+; Table for each meta tile that denotes the second row and first column that each meta tile is using.
+Level_Tile_Graphics_4: skip 1440
+
+; === $7F4680 ===
+; 1440 bytes
+; Table for each meta tile that denotes the second row and second column that each meta tile is using.
+Level_Tile_Graphics_5: skip 1440
+
+; === $7F4C20 ===
+; 1440 bytes
+; Table for each meta tile that denotes the second row and third column that each meta tile is using.
+Level_Tile_Graphics_6: skip 1440
+
+; === $7F51C0 ===
+; 1440 bytes
+; Table for each meta tile that denotes the third row and first column that each meta tile is using.
+Level_Tile_Graphics_7: skip 1440
+
+; === $7F5760 ===
+; 1440 bytes
+; Table for each meta tile that denotes the third row and second column that each meta tile is using.
+Level_Tile_Graphics_8: skip 1440
+
+; === $7F5D00 ===
+; 1440 bytes
+; Table for each meta tile that denotes the third row and third column that each meta tile is using.
+Level_Tile_Graphics_9: skip 1440
+
+; === $7F62A0 ===
+; 720 bytes
+; Table for the attributes of each tile in the current room.
+Level_Tile_Attributes: skip 720
 
 ; === $7F6570 ===
 ; 1024 bytes
@@ -283,7 +338,6 @@ VWF_Buffer: skip 1024
 ; Unclear on what it actually represents.
 ; Size is probably not accurate, but it is the maximum allowable index given by the game's code.
 ;UnknownForRoutine01E7E7: skip 131008
-
 
 
 ; --== SA-1 RAM ==--
