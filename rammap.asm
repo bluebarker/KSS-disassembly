@@ -191,10 +191,28 @@ Alternative_Sprite_Palette: skip 160
 ;  6 - 16-bit destination VRAM address
 ; Finally, update $301F by adding 8 to it.
 ; Size of this table is uncertain; will need to adjust later.
-VRAM_DMA_Queue: skip 160
+VRAM_DMA_Queue: skip 168
+
+; === $7E09A8 ===
+; 512 bytes
+; The list of objects that exist in the current room. The end of the list is denoted by $FFFF.
+; Each object in the list constists of two bytes:
+;  The low byte is the object type
+;  The high byte is the object parameters, if it has any
+ObjectSpawnList_Type: skip 512
+
+; === $7E0BA8 ===
+; 512 bytes
+; The list of X position spawns which correlates to the object list.
+ObjectSpawnList_XPos: skip 512
+
+; === $7E0DA8 ===
+; 512 bytes
+; The list of Y position spawns which correlates to the object list.
+ObjectSpawnList_YPos: skip 512
 
 ; Unidentified
-skip 2855
+skip $7E14C7-$7E0FA8
 
 ; === $7E14C7 ===
 ; 8 bytes
@@ -375,7 +393,7 @@ Execute_on_SA1: skip 3
 
 ; === $00300F ===
 ; 1 byte
-; Flag to tell the SA-1 to run the pointer written in $3000C. 
+; Flag to tell the SA-1 to run the pointer written in $300C. 
 ; If negative, the SNES will jump to the routine specified there (assuming it is not already busy).
 ; Set to 0x00 when the SNES finishes execution.
 SA1_TriggerExecution: skip 1
@@ -1029,3 +1047,25 @@ SA1_Stack: skip 128
 
 ORG $006000
 ; WIP
+
+; 6438: Kirby's animation frame 2 byte
+; 643A: Helper's animation frame 2 byte
+; 643C: Kirby's attack animation frame 8 byte (2 byte x 4)
+; 6444: Helper's attack animation frame 8 byte (2 byte x 4)
+; 6894: X coordinate of Kirby's sprite (object slot 2)
+; 690E: X coordinate of Kirby's sprite (object slot 2)
+; 6988: Kirby X pos (object slot 2)
+; 6A02: Kirby Y pos (object slot 2)
+; 7380: Kirby Max HP
+; 7382: Helper Max HP
+; 7384: Kirby Copy Ability Panel Graphics
+; 7385: Temp graphic on ability panel
+; 7386: Helper panel
+; 7387: Temp helper panel
+; 7388: The temporary graphic number displayed on Kirby's copy ability panel ($7387 is this value plus 0x20
+; 7389:  The temporary graphic number displayed on Kirby's copy ability panel (mirror?)
+; 738A: The display time of the temporary graphics for Kirby's copy ability panel 2 byte
+; 738C: A flag indicating whether to temporarily replace the graphics on the helper's copy ability panel.
+; 738D: The temporary graphic number displayed on the Helper's copy ability panel (if $738C is anything other than 0x00, it becomes "0xFF = Help!")
+; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
+; $77E6  :   2 Byte :  Enemy's life
