@@ -1028,6 +1028,10 @@ Debug_Current_Palette: skip 2
 ; Unidentified
 skip $36A0-$362A
 
+; some addresses before the following ones have controller stuff
+; 3690 mirror of controller inputs except only when Kirby can receive input
+; 3698 was left or right last pressed
+
 ; === $0036A0 ===
 ; 2 bytes
 ; Buttons designated to moving Kirby left and right
@@ -1090,13 +1094,13 @@ ButtonMap_P2Summon: skip 2
 
 ; === $0036B8 ===
 ; 2 bytes
-; Buttons designated to having Kirby open special menus (GCO treasure/MWW power cycle)
-ButtonMap_P1SubgameMenu: skip 2
+; Buttons designated to having Kirby select abilities in MWW
+ButtonMap_P1SelectAbility: skip 2
 
 ; === $0036BA ===
 ; 2 bytes
-; Buttons designated to having Kirby open special menus (GCO treasure/MWW power cycle)
-ButtonMap_P2SubgameMenu: skip 2
+; Buttons designated to having Helper select abilities in MWW
+ButtonMap_P2SelectAbility: skip 2
 
 ; 36BC & 36BE are Kirby and Helper's last obtained abilities?
 
