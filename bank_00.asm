@@ -11562,7 +11562,7 @@ CODE_FL_00D8DE:
 	RTL							;$00D8EA	|
 
 CODE_FL_00D8EB:
-	STZ RoMK_Cutscenes_Done					;$00D8EB	|
+	STZ RoMK_Cutscenes_Done		;$00D8EB	|
 	STZ $7711					;$00D8EE	|
 	STZ $7712					;$00D8F1	|
 	STZ $7719					;$00D8F4	|
@@ -11578,18 +11578,18 @@ CODE_FL_00D8EB:
 	JSL $03A04A					;$00D913	|
 	STZ $7372					;$00D917	|
 	STZ $7374					;$00D91A	|
-	STZ PlayerScore					;$00D91D	|
+	STZ PlayerScore				;$00D91D	|
 	STZ $7378					;$00D920	|
 	LDA #$D92E					;$00D923	|
 	LDX #$0000					;$00D926	|
 	JSL SA1_ExecuteSNES			;$00D929	|
 	RTL							;$00D92D	|
 
-CODE_FL_00D92E:
-	STZ Permanent_Collectables					;$00D92E	|
-	STZ $14C9					;$00D931	|
-	STZ $14CB					;$00D934	|
-	STZ $14CD					;$00D937	|
+ResetPermanentCollectables:
+	STZ Permanent_Collectables	;$00D92E	|
+	STZ Permanent_Collectables+2;$00D931	|
+	STZ Permanent_Collectables+4;$00D934	|
+	STZ Permanent_Collectables+6;$00D937	|
 	RTL							;$00D93A	|
 
 CODE_FL_00D93B:
@@ -11622,7 +11622,7 @@ CODE_FL_00D95C:					;			|
 	STA $770B					;$00D981	|
 	STZ $7744					;$00D984	|
 	LDA Current_SubGame			;$00D987	|
-	CMP #$00!SUBGAME_ROMK				;$00D98A	|
+	CMP #$00!SUBGAME_ROMK		;$00D98A	|
 	BNE CODE_FL_00D993			;$00D98D	|
 	JSL CODE_FL_00DAA3			;$00D98F	|
 CODE_FL_00D993:					;			|

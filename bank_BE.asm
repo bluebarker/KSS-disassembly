@@ -2,7 +2,7 @@
 ; Although this bank is technically mapped at $BE8000, the Super MMC maps it to the lower half of bank FF.
 ;  As KSS always references it in this way, all address values will be treated as such.
 
-    ORG $FF0000
+ORG $FF0000
 
     dw $009A,$0596,$089C,$013F    ;$BE8000 |    Unsure what this is for but it has to do with loading level graphics
     dw $0102,$0043,$0022,$002A    ;$BE8008 |
@@ -25,646 +25,327 @@
     dw $0582,$0586,$058A,$058E    ;$BE8090 |
     dw $0592                      ;$BE8098 |
 
-LevelLayoutDataPointers:
-    dl DATA8_F0DACE               ;$BE809A |	Giant pointer list to level layout data.
-    db $00                        ;$BE809D |
-    dl DATA8_F020EF               ;$BE809E |
-    db $00                        ;$BE80A1 |
-    dl DATA8_F081C4               ;$BE80A2 |
-    db $00                        ;$BE80A5 |
-    dl DATA8_F1E611               ;$BE80A6 |
-    db $00                        ;$BE80A9 |
-    dl DATA8_F1E020               ;$BE80AA |
-    db $00                        ;$BE80AD |
-    dl DATA8_F00DF8               ;$BE80AE |
-    db $00                        ;$BE80B1 |
-    dl DATA8_F09AD3               ;$BE80B2 |
-    db $00                        ;$BE80B5 |
-    dl DATA8_F02972               ;$BE80B6 |
-    db $00                        ;$BE80B9 |
-    dl DATA8_F1CAB4               ;$BE80BA |
-    db $00                        ;$BE80BD |
-    dl DATA8_F089F1               ;$BE80BE |
-    db $00                        ;$BE80C1 |
-    dl DATA8_F1F8F4               ;$BE80C2 |
-    db $00                        ;$BE80C5 |
-    dl DATA8_F07CB5               ;$BE80C6 |
-    db $00                        ;$BE80C9 |
-    dl DATA8_F0947C               ;$BE80CA |
-    db $00                        ;$BE80CD |
-    dl DATA8_F0980C               ;$BE80CE |
-    db $00                        ;$BE80D1 |
-    dl DATA8_F1C633               ;$BE80D2 |
-    db $00                        ;$BE80D5 |
-    dl DATA8_F09A24               ;$BE80D6 |
-    db $00                        ;$BE80D9 |
-    dl DATA8_F1DC1F               ;$BE80DA |
-    db $00                        ;$BE80DD |
-    dl DATA8_F0225F               ;$BE80DE |
-    db $00                        ;$BE80E1 |
-    dl DATA8_F06502               ;$BE80E2 |
-    db $00                        ;$BE80E5 |
-    dl DATA8_F15B14               ;$BE80E6 |
-    db $00                        ;$BE80E9 |
-    dl DATA8_F13D6F               ;$BE80EA |
-    db $00                        ;$BE80ED |
-    dl DATA8_F1D39A               ;$BE80EE |
-    db $00                        ;$BE80F1 |
-    dl DATA8_F2A14B               ;$BE80F2 |
-    db $00                        ;$BE80F5 |
-    dl DATA8_F066ED               ;$BE80F6 |
-    db $00                        ;$BE80F9 |
-    dl DATA8_F0836C               ;$BE80FA |
-    db $00                        ;$BE80FD |
-    dl DATA8_F193F0               ;$BE80FE |
-    db $00                        ;$BE8101 |
-    dl DATA8_F05E14               ;$BE8102 |
-    db $00                        ;$BE8105 |
-    dl DATA8_F19E90               ;$BE8106 |
-    db $00                        ;$BE8109 |
-    dl DATA8_F01DFB               ;$BE810A |
-    db $00                        ;$BE810D |
-    dl DATA8_F103D8               ;$BE810E |
-    db $00                        ;$BE8111 |
-    dl DATA8_F25394               ;$BE8112 |
-    db $00                        ;$BE8115 |
-    dl DATA8_F433A2               ;$BE8116 |
-    db $00                        ;$BE8119 |
-    dl DATA8_F06F58               ;$BE811A |
-    db $00                        ;$BE811D |
-    dl DATA8_F1A670               ;$BE811E |
-    db $00                        ;$BE8121 |
-    dl DATA8_F0449B               ;$BE8122 |
-    db $00                        ;$BE8125 |
-    dl DATA8_F3C872               ;$BE8126 |
-    db $00                        ;$BE8129 |
-    dl DATA8_F04809               ;$BE812A |
-    db $00                        ;$BE812D |
-    dl DATA8_F1B0A7               ;$BE812E |
-    db $00                        ;$BE8131 |
-    dl DATA8_F48BC3               ;$BE8132 |
-    db $00                        ;$BE8135 |
-    dl DATA8_F3482D               ;$BE8136 |
-    db $00                        ;$BE8139 |
-    dl DATA8_F258C8               ;$BE813A |
-    db $00                        ;$BE813D |
-    dl DATA8_F5FED2               ;$BE813E |
-    db $00                        ;$BE8141 |
-    dl DATA8_F07D90               ;$BE8142 |
-    db $00                        ;$BE8145 |
-    dl DATA8_F2FB51               ;$BE8146 |
-    db $00                        ;$BE8149 |
-    dl DATA8_F09B82               ;$BE814A |
-    db $00                        ;$BE814D |
-    dl DATA8_F182C9               ;$BE814E |
-    db $00                        ;$BE8151 |
-    dl DATA8_F170D4               ;$BE8152 |
-    db $00                        ;$BE8155 |
-    dl DATA8_F21CED               ;$BE8156 |
-    db $00                        ;$BE8159 |
-    dl DATA8_F330C3               ;$BE815A |
-    db $00                        ;$BE815D |
-    dl DATA8_F0399E               ;$BE815E |
-    db $00                        ;$BE8161 |
-    dl DATA8_F1FAC8               ;$BE8162 |
-    db $00                        ;$BE8165 |
-    dl DATA8_F1AE23               ;$BE8166 |
-    db $00                        ;$BE8169 |
-    dl DATA8_F1549A               ;$BE816A |
-    db $00                        ;$BE816D |
-    dl DATA8_F3CE9E               ;$BE816E |
-    db $00                        ;$BE8171 |
-    dl DATA8_F2632B               ;$BE8172 |
-    db $00                        ;$BE8175 |
-    dl DATA8_F365E2               ;$BE8176 |
-    db $00                        ;$BE8179 |
-    dl DATA8_F4479A               ;$BE817A |
-    db $00                        ;$BE817D |
-    dl DATA8_F12C61               ;$BE817E |
-    db $00                        ;$BE8181 |
-    dl DATA8_F1B594               ;$BE8182 |
-    db $00                        ;$BE8185 |
-    dl DATA8_F03450               ;$BE8186 |
-    db $00                        ;$BE8189 |
-    dl DATA8_F06AB7               ;$BE818A |
-    db $00                        ;$BE818D |
-    dl DATA8_F09E23               ;$BE818E |
-    db $00                        ;$BE8191 |
-    dl DATA8_F3F2F8               ;$BE8192 |
-    db $00                        ;$BE8195 |
-    dl DATA8_F00000               ;$BE8196 |
-    db $00                        ;$BE8199 |
-    dl DATA8_F06D81               ;$BE819A |
-    db $00                        ;$BE819D |
-    dl DATA8_F0DF63               ;$BE819E |
-    db $00                        ;$BE81A1 |
-    dl DATA8_F1BCD3               ;$BE81A2 |
-    db $00                        ;$BE81A5 |
-    dl DATA8_F1C876               ;$BE81A6 |
-    db $00                        ;$BE81A9 |
-    dl DATA8_F21749               ;$BE81AA |
-    db $00                        ;$BE81AD |
-    dl DATA8_F4518C               ;$BE81AE |
-    db $00                        ;$BE81B1 |
-    dl DATA8_F63F60               ;$BE81B2 |
-    db $00                        ;$BE81B5 |
-    dl DATA8_F0B3B7               ;$BE81B6 |
-    db $00                        ;$BE81B9 |
-    dl DATA8_F05F14               ;$BE81BA |
-    db $00                        ;$BE81BD |
-    dl DATA8_F067E0               ;$BE81BE |
-    db $00                        ;$BE81C1 |
-    dl DATA8_F16DCE               ;$BE81C2 |
-    db $00                        ;$BE81C5 |
-    dl DATA8_F26D64               ;$BE81C6 |
-    db $00                        ;$BE81C9 |
-    dl DATA8_F395D6               ;$BE81CA |
-    db $00                        ;$BE81CD |
-    dl DATA8_F072F3               ;$BE81CE |
-    db $00                        ;$BE81D1 |
-    dl DATA8_F10000               ;$BE81D2 |
-    db $00                        ;$BE81D5 |
-    dl DATA8_F116AD               ;$BE81D6 |
-    db $00                        ;$BE81D9 |
-    dl DATA8_F0D0B4               ;$BE81DA |
-    db $00                        ;$BE81DD |
-    dl DATA8_F18B79               ;$BE81DE |
-    db $00                        ;$BE81E1 |
-    dl DATA8_F15E50               ;$BE81E2 |
-    db $00                        ;$BE81E5 |
-    dl DATA8_F1969E               ;$BE81E6 |
-    db $00                        ;$BE81E9 |
-    dl DATA8_F176DC               ;$BE81EA |
-    db $00                        ;$BE81ED |
-    dl DATA8_F0055B               ;$BE81EE |
-    db $00                        ;$BE81F1 |
-    dl DATA8_F2F39B               ;$BE81F2 |
-    db $00                        ;$BE81F5 |
-    dl DATA8_F4BA70               ;$BE81F6 |
-    db $00                        ;$BE81F9 |
-    dl DATA8_F40000               ;$BE81FA |
-    db $00                        ;$BE81FD |
-    dl DATA8_F07127               ;$BE81FE |
-    db $00                        ;$BE8201 |
-    dl DATA8_F48252               ;$BE8202 |
-    db $00                        ;$BE8205 |
-    dl DATA8_F2C7C0               ;$BE8206 |
-    db $00                        ;$BE8209 |
-    dl DATA8_F157D8               ;$BE820A |
-    db $00                        ;$BE820D |
-    dl DATA8_F036FB               ;$BE820E |
-    db $00                        ;$BE8211 |
-    dl DATA8_F1B802               ;$BE8212 |
-    db $00                        ;$BE8215 |
-    dl DATA8_F03C39               ;$BE8216 |
-    db $00                        ;$BE8219 |
-    dl DATA8_F00395               ;$BE821A |
-    db $00                        ;$BE821D |
-    dl DATA8_F1EFAE               ;$BE821E |
-    db $00                        ;$BE8221 |
-    dl DATA8_F035A6               ;$BE8222 |
-    db $00                        ;$BE8225 |
-    dl DATA8_F008D4               ;$BE8226 |
-    db $00                        ;$BE8229 |
-    dl DATA8_F12557               ;$BE822A |
-    db $00                        ;$BE822D |
-    dl DATA8_F2AE83               ;$BE822E |
-    db $00                        ;$BE8231 |
-    dl DATA8_F02C39               ;$BE8232 |
-    db $00                        ;$BE8235 |
-    dl DATA8_F16AC0               ;$BE8236 |
-    db $00                        ;$BE8239 |
-    dl DATA8_F11A5B               ;$BE823A |
-    db $00                        ;$BE823D |
-    dl DATA8_F128F1               ;$BE823E |
-    db $00                        ;$BE8241 |
-    dl DATA8_F1648E               ;$BE8242 |
-    db $00                        ;$BE8245 |
-    dl DATA8_F1D166               ;$BE8246 |
-    db $00                        ;$BE8249 |
-    dl DATA8_F1CF2E               ;$BE824A |
-    db $00                        ;$BE824D |
-    dl DATA8_F17CDF               ;$BE824E |
-    db $00                        ;$BE8251 |
-    dl DATA8_F1FE69               ;$BE8252 |
-    db $00                        ;$BE8255 |
-    dl DATA8_F014C2               ;$BE8256 |
-    db $00                        ;$BE8259 |
-    dl DATA8_F1E41B               ;$BE825A |
-    db $00                        ;$BE825D |
-    dl DATA8_F055FD               ;$BE825E |
-    db $00                        ;$BE8261 |
-    dl DATA8_F1C3E3               ;$BE8262 |
-    db $00                        ;$BE8265 |
-    dl DATA8_F046E5               ;$BE8266 |
-    db $00                        ;$BE8269 |
-    dl DATA8_F03D7D               ;$BE826A |
-    db $00                        ;$BE826D |
-    dl DATA8_F032FA               ;$BE826E |
-    db $00                        ;$BE8271 |
-    dl DATA8_F026A3               ;$BE8272 |
-    db $00                        ;$BE8275 |
-    dl DATA8_F08B81               ;$BE8276 |
-    db $00                        ;$BE8279 |
-    dl DATA8_F08ABA               ;$BE827A |
-    db $00                        ;$BE827D |
-    dl DATA8_F065F8               ;$BE827E |
-    db $00                        ;$BE8281 |
-    dl DATA8_F04927               ;$BE8282 |
-    db $00                        ;$BE8285 |
-    dl DATA8_F073D9               ;$BE8286 |
-    db $00                        ;$BE8289 |
-    dl DATA8_F074BF               ;$BE828A |
-    db $00                        ;$BE828D |
-    dl DATA8_F0165B               ;$BE828E |
-    db $00                        ;$BE8291 |
-    dl DATA8_F08F55               ;$BE8292 |
-    db $00                        ;$BE8295 |
-    dl DATA8_F0D4A2               ;$BE8296 |
-    db $00                        ;$BE8299 |
-    dl DATA8_F085E1               ;$BE829A |
-    db $00                        ;$BE829D |
-    dl DATA8_F08D0F               ;$BE829E |
-    db $00                        ;$BE82A1 |
-    dl DATA8_F1C190               ;$BE82A2 |
-    db $00                        ;$BE82A5 |
-    dl DATA8_F2E3FD               ;$BE82A6 |
-    db $00                        ;$BE82A9 |
-    dl DATA8_F2EBDD               ;$BE82AA |
-    db $00                        ;$BE82AD |
-    dl DATA8_F017E6               ;$BE82AE |
-    db $00                        ;$BE82B1 |
-    dl DATA8_F388B3               ;$BE82B2 |
-    db $00                        ;$BE82B5 |
-    dl DATA8_F031A3               ;$BE82B6 |
-    db $00                        ;$BE82B9 |
-    dl DATA8_F053ED               ;$BE82BA |
-    db $00                        ;$BE82BD |
-    dl DATA8_F023CD               ;$BE82BE |
-    db $00                        ;$BE82C1 |
-    dl DATA8_F051D5               ;$BE82C2 |
-    db $00                        ;$BE82C5 |
-    dl DATA8_F1CCF2               ;$BE82C6 |
-    db $00                        ;$BE82C9 |
-    dl DATA8_F1F18F               ;$BE82CA |
-    db $00                        ;$BE82CD |
-    dl DATA8_F01AF6               ;$BE82CE |
-    db $00                        ;$BE82D1 |
-    dl DATA8_F00FAE               ;$BE82D2 |
-    db $00                        ;$BE82D5 |
-    dl DATA8_F167AA               ;$BE82D6 |
-    db $00                        ;$BE82D9 |
-    dl DATA8_F36D0D               ;$BE82DA |
-    db $00                        ;$BE82DD |
-    dl DATA8_F1D5CA               ;$BE82DE |
-    db $00                        ;$BE82E1 |
-    dl DATA8_F1F36E               ;$BE82E2 |
-    db $00                        ;$BE82E5 |
-    dl DATA8_F06211               ;$BE82E6 |
-    db $00                        ;$BE82E9 |
-    dl DATA8_F1EDCC               ;$BE82EA |
-    db $00                        ;$BE82ED |
-    dl DATA8_F0930A               ;$BE82EE |
-    db $00                        ;$BE82F1 |
-    dl DATA8_F08C48               ;$BE82F2 |
-    db $00                        ;$BE82F5 |
-    dl DATA8_F06014               ;$BE82F6 |
-    db $00                        ;$BE82F9 |
-    dl DATA8_F0720D               ;$BE82FA |
-    db $00                        ;$BE82FD |
-    dl DATA8_F09193               ;$BE82FE |
-    db $00                        ;$BE8301 |
-    dl DATA8_F23343               ;$BE8302 |
-    db $00                        ;$BE8305 |
-    dl DATA8_F01162               ;$BE8306 |
-    db $00                        ;$BE8309 |
-    dl DATA8_F0384F               ;$BE830A |
-    db $00                        ;$BE830D |
-    dl DATA8_F16171               ;$BE830E |
-    db $00                        ;$BE8311 |
-    dl DATA8_F39C4A               ;$BE8312 |
-    db $00                        ;$BE8315 |
-    dl DATA8_F49E93               ;$BE8316 |
-    db $00                        ;$BE8319 |
-    dl DATA8_F054F6               ;$BE831A |
-    db $00                        ;$BE831D |
-    dl DATA8_F1912A               ;$BE831E |
-    db $00                        ;$BE8321 |
-    dl DATA8_F1F547               ;$BE8322 |
-    db $00                        ;$BE8325 |
-    dl DATA8_F4CC81               ;$BE8326 |
-    db $00                        ;$BE8329 |
-    dl DATA8_F248FC               ;$BE832A |
-    db $00                        ;$BE832D |
-    dl DATA8_F06C95               ;$BE832E |
-    db $00                        ;$BE8331 |
-    dl DATA8_F40A7D               ;$BE8332 |
-    db $00                        ;$BE8335 |
-    dl DATA8_F00A8B               ;$BE8336 |
-    db $00                        ;$BE8339 |
-    dl DATA8_F01315               ;$BE833A |
-    db $00                        ;$BE833D |
-    dl DATA8_F0E034               ;$BE833E |
-    db $00                        ;$BE8341 |
-    dl DATA8_F29CCB               ;$BE8342 |
-    db $00                        ;$BE8345 |
-    dl DATA8_F1E9F2               ;$BE8346 |
-    db $00                        ;$BE8349 |
-    dl DATA8_F107AF               ;$BE834A |
-    db $00                        ;$BE834D |
-    dl DATA8_F28A67               ;$BE834E |
-    db $00                        ;$BE8351 |
-    dl DATA8_F069C5               ;$BE8352 |
-    db $00                        ;$BE8355 |
-    dl DATA8_F05702               ;$BE8356 |
-    db $00                        ;$BE8359 |
-    dl DATA8_F0D269               ;$BE835A |
-    db $00                        ;$BE835D |
-    dl DATA8_F28105               ;$BE835E |
-    db $00                        ;$BE8361 |
-    dl DATA8_F4D547               ;$BE8362 |
-    db $00                        ;$BE8365 |
-    dl DATA8_F18E58               ;$BE8366 |
-    db $00                        ;$BE8369 |
-    dl DATA8_F1E21F               ;$BE836A |
-    db $00                        ;$BE836D |
-    dl DATA8_F2B2D0               ;$BE836E |
-    db $00                        ;$BE8371 |
-    dl DATA8_F4654A               ;$BE8372 |
-    db $00                        ;$BE8375 |
-    dl DATA8_F06E6D               ;$BE8376 |
-    db $00                        ;$BE8379 |
-    dl DATA8_F08510               ;$BE837A |
-    db $00                        ;$BE837D |
-    dl DATA8_FFFF6E               ;$BE837E |
-    db $00                        ;$BE8381 |
-    dl DATA8_F27264               ;$BE8382 |
-    db $00                        ;$BE8385 |
-    dl DATA8_F20BC5               ;$BE8386 |
-    db $00                        ;$BE8389 |
-    dl DATA8_F086B2               ;$BE838A |
-    db $00                        ;$BE838D |
-    dl DATA8_F07AF1               ;$BE838E |
-    db $00                        ;$BE8391 |
-    dl DATA8_F01970               ;$BE8392 |
-    db $00                        ;$BE8395 |
-    dl DATA8_F35E9F               ;$BE8396 |
-    db $00                        ;$BE8399 |
-    dl DATA8_F06BA7               ;$BE839A |
-    db $00                        ;$BE839D |
-    dl DATA8_F112F5               ;$BE839E |
-    db $00                        ;$BE83A1 |
-    dl DATA8_F03EBF               ;$BE83A2 |
-    db $00                        ;$BE83A5 |
-    dl DATA8_F0630E               ;$BE83A6 |
-    db $00                        ;$BE83A9 |
-    dl DATA8_F3D4C5               ;$BE83AA |
-    db $00                        ;$BE83AD |
-    dl DATA8_F10F3D               ;$BE83AE |
-    db $00                        ;$BE83B1 |
-    dl DATA8_F2DFFC               ;$BE83B2 |
-    db $00                        ;$BE83B5 |
-    dl DATA8_F2EFBC               ;$BE83B6 |
-    db $00                        ;$BE83B9 |
-    dl DATA8_F21188               ;$BE83BA |
-    db $00                        ;$BE83BD |
-    dl DATA8_F0D01D               ;$BE83BE |
-    db $00                        ;$BE83C1 |
-    dl DATA8_F08782               ;$BE83C2 |
-    db $00                        ;$BE83C5 |
-    dl DATA8_F0A0BA               ;$BE83C6 |
-    db $00                        ;$BE83C9 |
-    dl DATA8_F09C2C               ;$BE83CA |
-    db $00                        ;$BE83CD |
-    dl DATA8_F0A015               ;$BE83CE |
-    db $00                        ;$BE83D1 |
-    dl DATA8_F3A2B2               ;$BE83D2 |
-    db $00                        ;$BE83D5 |
-    dl DATA8_F53CCF               ;$BE83D6 |
-    db $00                        ;$BE83D9 |
-    dl DATA8_F25DFA               ;$BE83DA |
-    db $00                        ;$BE83DD |
-    dl DATA8_F03FF7               ;$BE83DE |
-    db $00                        ;$BE83E1 |
-    dl DATA8_F090D6               ;$BE83E2 |
-    db $00                        ;$BE83E5 |
-    dl DATA8_F0CF85               ;$BE83E6 |
-    db $00                        ;$BE83E9 |
-    dl DATA8_F09CD5               ;$BE83EA |
-    db $00                        ;$BE83ED |
-    dl DATA8_F1DA1C               ;$BE83EE |
-    db $00                        ;$BE83F1 |
-    dl DATA8_F318E4               ;$BE83F2 |
-    db $00                        ;$BE83F5 |
-    dl DATA8_F04FB7               ;$BE83F6 |
-    db $00                        ;$BE83F9 |
-    dl DATA8_F04C77               ;$BE83FA |
-    db $00                        ;$BE83FD |
-    dl DATA8_F045C0               ;$BE83FE |
-    db $00                        ;$BE8401 |
-    dl DATA8_F050C7               ;$BE8402 |
-    db $00                        ;$BE8405 |
-    dl DATA8_F0424F               ;$BE8406 |
-    db $00                        ;$BE8409 |
-    dl DATA8_F04D8E               ;$BE840A |
-    db $00                        ;$BE840D |
-    dl DATA8_F04375               ;$BE840E |
-    db $00                        ;$BE8411 |
-    dl DATA8_F04B5D               ;$BE8412 |
-    db $00                        ;$BE8415 |
-    dl DATA8_F2FF29               ;$BE8416 |
-    db $00                        ;$BE8419 |
-    dl DATA8_F05806               ;$BE841A |
-    db $00                        ;$BE841D |
-    dl DATA8_F04EA3               ;$BE841E |
-    db $00                        ;$BE8421 |
-    dl DATA8_F052E3               ;$BE8422 |
-    db $00                        ;$BE8425 |
-    dl DATA8_F01C7A               ;$BE8426 |
-    db $00                        ;$BE8429 |
-    dl DATA8_F5A02C               ;$BE842A |
-    db $00                        ;$BE842D |
-    dl DATA8_F238C9               ;$BE842E |
-    db $00                        ;$BE8431 |
-    dl DATA8_F07040               ;$BE8432 |
-    db $00                        ;$BE8435 |
-    dl DATA8_F0CEE8               ;$BE8436 |
-    db $00                        ;$BE8439 |
-    dl DATA8_F02AD8               ;$BE843A |
-    db $00                        ;$BE843D |
-    dl DATA8_F3ECF4               ;$BE843E |
-    db $00                        ;$BE8441 |
-    dl DATA8_F2E7FD               ;$BE8442 |
-    db $00                        ;$BE8445 |
-    dl DATA8_F1EBE0               ;$BE8446 |
-    db $00                        ;$BE8449 |
-    dl DATA8_F34FC3               ;$BE844A |
-    db $00                        ;$BE844D |
-    dl DATA8_F06113               ;$BE844E |
-    db $00                        ;$BE8451 |
-    dl DATA8_F09250               ;$BE8452 |
-    db $00                        ;$BE8455 |
-    dl DATA8_F1889A               ;$BE8456 |
-    db $00                        ;$BE8459 |
-    dl DATA8_F0D387               ;$BE845A |
-    db $00                        ;$BE845D |
-    dl DATA8_F02539               ;$BE845E |
-    db $00                        ;$BE8461 |
-    dl DATA8_F338AC               ;$BE8462 |
-    db $00                        ;$BE8465 |
-    dl DATA8_F30000               ;$BE8466 |
-    db $00                        ;$BE8469 |
-    dl DATA8_F3DAD7               ;$BE846A |
-    db $00                        ;$BE846D |
-    dl DATA8_F1F71E               ;$BE846E |
-    db $00                        ;$BE8471 |
-    dl DATA8_F0D9EA               ;$BE8472 |
-    db $00                        ;$BE8475 |
-    dl DATA8_F08852               ;$BE8476 |
-    db $00                        ;$BE8479 |
-    dl DATA8_F1D7F8               ;$BE847A |
-    db $00                        ;$BE847D |
-    dl DATA8_F2D7F3               ;$BE847E |
-    db $00                        ;$BE8481 |
-    dl DATA8_F3408A               ;$BE8482 |
-    db $00                        ;$BE8485 |
-    dl DATA8_F243A4               ;$BE8486 |
-    db $00                        ;$BE8489 |
-    dl DATA8_F3F8EE               ;$BE848A |
-    db $00                        ;$BE848D |
-    dl DATA8_F8FF32               ;$BE848E |
-    db $00                        ;$BE8491 |
-    dl DATA8_F08922               ;$BE8492 |
-    db $00                        ;$BE8495 |
-    dl DATA8_F09974               ;$BE8496 |
-    db $00                        ;$BE8499 |
-    dl DATA8_F001CD               ;$BE849A |
-    db $00                        ;$BE849D |
-    dl DATA8_F03AED               ;$BE849E |
-    db $00                        ;$BE84A1 |
-    dl DATA8_F0DB3B               ;$BE84A2 |
-    db $00                        ;$BE84A5 |
-    dl DATA8_F23E4C               ;$BE84A6 |
-    db $00                        ;$BE84A9 |
-    dl DATA8_F13338               ;$BE84AA |
-    db $00                        ;$BE84AD |
-    dl DATA8_F0DBA6               ;$BE84AE |
-    db $00                        ;$BE84B1 |
-    dl DATA8_F7FE9C               ;$BE84B2 |
-    db $00                        ;$BE84B5 |
-    dl DATA8_F07F42               ;$BE84B6 |
-    db $00                        ;$BE84B9 |
-    dl DATA8_F09ECA               ;$BE84BA |
-    db $00                        ;$BE84BD |
-    dl DATA8_F00C42               ;$BE84BE |
-    db $00                        ;$BE84C1 |
-    dl DATA8_F09F70               ;$BE84C2 |
-    db $00                        ;$BE84C5 |
-    dl DATA8_F093C3               ;$BE84C6 |
-    db $00                        ;$BE84C9 |
-    dl DATA8_F068D3               ;$BE84CA |
-    db $00                        ;$BE84CD |
-    dl DATA8_F06409               ;$BE84CE |
-    db $00                        ;$BE84D1 |
-    dl DATA8_F0DC11               ;$BE84D2 |
-    db $00                        ;$BE84D5 |
-    dl DATA8_FAFF93               ;$BE84D6 |
-    db $00                        ;$BE84D9 |
-    dl DATA8_F0D1DA               ;$BE84DA |
-    db $00                        ;$BE84DD |
-    dl DATA8_F09D7C               ;$BE84DE |
-    db $00                        ;$BE84E1 |
-    dl DATA8_F0D8EE               ;$BE84E2 |
-    db $00                        ;$BE84E5 |
-    dl DATA8_F0D2F8               ;$BE84E6 |
-    db $00                        ;$BE84E9 |
-    dl DATA8_F0DA5C               ;$BE84EA |
-    db $00                        ;$BE84ED |
-    dl DATA8_F0D149               ;$BE84EE |
-    db $00                        ;$BE84F1 |
-    dl DATA8_F07E69               ;$BE84F2 |
-    db $00                        ;$BE84F5 |
-    dl DATA8_F136A1               ;$BE84F6 |
-    db $00                        ;$BE84F9 |
-    dl DATA8_F096A3               ;$BE84FA |
-    db $00                        ;$BE84FD |
-    dl DATA8_F098C0               ;$BE84FE |
-    db $00                        ;$BE8501 |
-    dl DATA8_F09758               ;$BE8502 |
-    db $00                        ;$BE8505 |
-    dl DATA8_F0DC7C               ;$BE8506 |
-    db $00                        ;$BE8509 |
-    dl DATA8_F0DFCC               ;$BE850A |
-    db $00                        ;$BE850D |
-    dl DATA8_F0D866               ;$BE850E |
-    db $00                        ;$BE8511 |
-    dl DATA8_F0D52F               ;$BE8512 |
-    db $00                        ;$BE8515 |
-    dl DATA8_F0D646               ;$BE8516 |
-    db $00                        ;$BE8519 |
-    dl DATA8_F0DE8F               ;$BE851A |
-    db $00                        ;$BE851D |
-    dl DATA8_F0D756               ;$BE851E |
-    db $00                        ;$BE8521 |
-    dl DATA8_F0D7DE               ;$BE8522 |
-    db $00                        ;$BE8525 |
-    dl DATA8_F0DCE7               ;$BE8526 |
-    db $00                        ;$BE8529 |
-    dl DATA8_F0D415               ;$BE852A |
-    db $00                        ;$BE852D |
-    dl DATA8_F0DE25               ;$BE852E |
-    db $00                        ;$BE8531 |
-    dl DATA8_F04A43               ;$BE8532 |
-    db $00                        ;$BE8535 |
-    dl DATA8_F0DEF9               ;$BE8536 |
-    db $00                        ;$BE8539 |
-    dl DATA8_F0D6CE               ;$BE853A |
-    db $00                        ;$BE853D |
-    dl DATA8_F0DD51               ;$BE853E |
-    db $00                        ;$BE8541 |
-    dl DATA8_F09016               ;$BE8542 |
-    db $00                        ;$BE8545 |
-    dl DATA8_F080EF               ;$BE8546 |
-    db $00                        ;$BE8549 |
-    dl DATA8_F0843E               ;$BE854A |
-    db $00                        ;$BE854D |
-    dl DATA8_F0E4DB               ;$BE854E |
-    db $00                        ;$BE8551 |
-    dl DATA8_F0E53E               ;$BE8552 |
-    db $00                        ;$BE8555 |
-    dl DATA8_F0E5A1               ;$BE8556 |
-    db $00                        ;$BE8559 |
-    dl DATA8_F0E604               ;$BE855A |
-    db $00                        ;$BE855D |
-    dl DATA8_F0E667               ;$BE855E |
-    db $00                        ;$BE8561 |
-    dl DATA8_F0E6CA               ;$BE8562 |
-    db $00                        ;$BE8565 |
-    dl DATA8_F0E72D               ;$BE8566 |
-    db $00                        ;$BE8569 |
-    dl DATA8_F0E09A               ;$BE856A |
-    db $00                        ;$BE856D |
-    dl DATA8_F0E0FD               ;$BE856E |
-    db $00                        ;$BE8571 |
-    dl DATA8_F0E160               ;$BE8572 |
-    db $00                        ;$BE8575 |
-    dl DATA8_F0E1C3               ;$BE8576 |
-    db $00                        ;$BE8579 |
-    dl DATA8_F0E226               ;$BE857A |
-    db $00                        ;$BE857D |
-    dl DATA8_F0E289               ;$BE857E |
-    db $00                        ;$BE8581 |
-    dl DATA8_F0E2EC               ;$BE8582 |
-    db $00                        ;$BE8585 |
-    dl DATA8_F0E34F               ;$BE8586 |
-    db $00                        ;$BE8589 |
-    dl DATA8_F0E3B2               ;$BE858A |
-    db $00                        ;$BE858D |
-    dl DATA8_F0E415               ;$BE858E |
-    db $00                        ;$BE8591 |
-    dl DATA8_F0E478               ;$BE8592 |
-    db $00                        ;$BE8595 |
-    dl $000000                    ;$BE8596 |
+LevelLayoutDataPointers:          ; Giant pointer table to level layout data.
+    dl DATA8_F0DACE : db $00      ; Unsure why each one has a $00 following it
+    dl DATA8_F020EF : db $00
+    dl DATA8_F081C4 : db $00
+    dl DATA8_F1E611 : db $00
+    dl DATA8_F1E020 : db $00
+    dl DATA8_F00DF8 : db $00
+    dl DATA8_F09AD3 : db $00
+    dl DATA8_F02972 : db $00
+    dl DATA8_F1CAB4 : db $00
+    dl DATA8_F089F1 : db $00
+    dl DATA8_F1F8F4 : db $00
+    dl DATA8_F07CB5 : db $00
+    dl DATA8_F0947C : db $00
+    dl DATA8_F0980C : db $00
+    dl DATA8_F1C633 : db $00
+    dl DATA8_F09A24 : db $00
+    dl DATA8_F1DC1F : db $00
+    dl DATA8_F0225F : db $00
+    dl DATA8_F06502 : db $00
+    dl DATA8_F15B14 : db $00
+    dl DATA8_F13D6F : db $00
+    dl DATA8_F1D39A : db $00
+    dl DATA8_F2A14B : db $00
+    dl DATA8_F066ED : db $00
+    dl DATA8_F0836C : db $00
+    dl DATA8_F193F0 : db $00
+    dl DATA8_F05E14 : db $00
+    dl DATA8_F19E90 : db $00
+    dl DATA8_F01DFB : db $00
+    dl DATA8_F103D8 : db $00
+    dl DATA8_F25394 : db $00
+    dl DATA8_F433A2 : db $00
+    dl DATA8_F06F58 : db $00
+    dl DATA8_F1A670 : db $00
+    dl DATA8_F0449B : db $00
+    dl DATA8_F3C872 : db $00
+    dl DATA8_F04809 : db $00
+    dl DATA8_F1B0A7 : db $00
+    dl DATA8_F48BC3 : db $00
+    dl DATA8_F3482D : db $00
+    dl DATA8_F258C8 : db $00
+    dl DATA8_F5FED2 : db $00
+    dl DATA8_F07D90 : db $00
+    dl DATA8_F2FB51 : db $00
+    dl DATA8_F09B82 : db $00
+    dl DATA8_F182C9 : db $00
+    dl DATA8_F170D4 : db $00
+    dl DATA8_F21CED : db $00
+    dl DATA8_F330C3 : db $00
+    dl DATA8_F0399E : db $00
+    dl DATA8_F1FAC8 : db $00
+    dl DATA8_F1AE23 : db $00
+    dl DATA8_F1549A : db $00
+    dl DATA8_F3CE9E : db $00
+    dl DATA8_F2632B : db $00
+    dl DATA8_F365E2 : db $00
+    dl DATA8_F4479A : db $00
+    dl DATA8_F12C61 : db $00
+    dl DATA8_F1B594 : db $00
+    dl DATA8_F03450 : db $00
+    dl DATA8_F06AB7 : db $00
+    dl DATA8_F09E23 : db $00
+    dl DATA8_F3F2F8 : db $00
+    dl DATA8_F00000 : db $00
+    dl DATA8_F06D81 : db $00
+    dl DATA8_F0DF63 : db $00
+    dl DATA8_F1BCD3 : db $00
+    dl DATA8_F1C876 : db $00
+    dl DATA8_F21749 : db $00
+    dl DATA8_F4518C : db $00
+    dl DATA8_F63F60 : db $00
+    dl DATA8_F0B3B7 : db $00
+    dl DATA8_F05F14 : db $00
+    dl DATA8_F067E0 : db $00
+    dl DATA8_F16DCE : db $00
+    dl DATA8_F26D64 : db $00
+    dl DATA8_F395D6 : db $00
+    dl DATA8_F072F3 : db $00
+    dl DATA8_F10000 : db $00
+    dl DATA8_F116AD : db $00
+    dl DATA8_F0D0B4 : db $00
+    dl DATA8_F18B79 : db $00
+    dl DATA8_F15E50 : db $00
+    dl DATA8_F1969E : db $00
+    dl DATA8_F176DC : db $00
+    dl DATA8_F0055B : db $00
+    dl DATA8_F2F39B : db $00
+    dl DATA8_F4BA70 : db $00
+    dl DATA8_F40000 : db $00
+    dl DATA8_F07127 : db $00
+    dl DATA8_F48252 : db $00
+    dl DATA8_F2C7C0 : db $00
+    dl DATA8_F157D8 : db $00
+    dl DATA8_F036FB : db $00
+    dl DATA8_F1B802 : db $00
+    dl DATA8_F03C39 : db $00
+    dl DATA8_F00395 : db $00
+    dl DATA8_F1EFAE : db $00
+    dl DATA8_F035A6 : db $00
+    dl DATA8_F008D4 : db $00
+    dl DATA8_F12557 : db $00
+    dl DATA8_F2AE83 : db $00
+    dl DATA8_F02C39 : db $00
+    dl DATA8_F16AC0 : db $00
+    dl DATA8_F11A5B : db $00
+    dl DATA8_F128F1 : db $00
+    dl DATA8_F1648E : db $00
+    dl DATA8_F1D166 : db $00
+    dl DATA8_F1CF2E : db $00
+    dl DATA8_F17CDF : db $00
+    dl DATA8_F1FE69 : db $00
+    dl DATA8_F014C2 : db $00
+    dl DATA8_F1E41B : db $00
+    dl DATA8_F055FD : db $00
+    dl DATA8_F1C3E3 : db $00
+    dl DATA8_F046E5 : db $00
+    dl DATA8_F03D7D : db $00
+    dl DATA8_F032FA : db $00
+    dl DATA8_F026A3 : db $00
+    dl DATA8_F08B81 : db $00
+    dl DATA8_F08ABA : db $00
+    dl DATA8_F065F8 : db $00
+    dl DATA8_F04927 : db $00
+    dl DATA8_F073D9 : db $00
+    dl DATA8_F074BF : db $00
+    dl DATA8_F0165B : db $00
+    dl DATA8_F08F55 : db $00
+    dl DATA8_F0D4A2 : db $00
+    dl DATA8_F085E1 : db $00
+    dl DATA8_F08D0F : db $00
+    dl DATA8_F1C190 : db $00
+    dl DATA8_F2E3FD : db $00
+    dl DATA8_F2EBDD : db $00
+    dl DATA8_F017E6 : db $00
+    dl DATA8_F388B3 : db $00
+    dl DATA8_F031A3 : db $00
+    dl DATA8_F053ED : db $00
+    dl DATA8_F023CD : db $00
+    dl DATA8_F051D5 : db $00
+    dl DATA8_F1CCF2 : db $00
+    dl DATA8_F1F18F : db $00
+    dl DATA8_F01AF6 : db $00
+    dl DATA8_F00FAE : db $00
+    dl DATA8_F167AA : db $00
+    dl DATA8_F36D0D : db $00
+    dl DATA8_F1D5CA : db $00
+    dl DATA8_F1F36E : db $00
+    dl DATA8_F06211 : db $00
+    dl DATA8_F1EDCC : db $00
+    dl DATA8_F0930A : db $00
+    dl DATA8_F08C48 : db $00
+    dl DATA8_F06014 : db $00
+    dl DATA8_F0720D : db $00
+    dl DATA8_F09193 : db $00
+    dl DATA8_F23343 : db $00
+    dl DATA8_F01162 : db $00
+    dl DATA8_F0384F : db $00
+    dl DATA8_F16171 : db $00
+    dl DATA8_F39C4A : db $00
+    dl DATA8_F49E93 : db $00
+    dl DATA8_F054F6 : db $00
+    dl DATA8_F1912A : db $00
+    dl DATA8_F1F547 : db $00
+    dl DATA8_F4CC81 : db $00
+    dl DATA8_F248FC : db $00
+    dl DATA8_F06C95 : db $00
+    dl DATA8_F40A7D : db $00
+    dl DATA8_F00A8B : db $00
+    dl DATA8_F01315 : db $00
+    dl DATA8_F0E034 : db $00
+    dl DATA8_F29CCB : db $00
+    dl DATA8_F1E9F2 : db $00
+    dl DATA8_F107AF : db $00
+    dl DATA8_F28A67 : db $00
+    dl DATA8_F069C5 : db $00
+    dl DATA8_F05702 : db $00
+    dl DATA8_F0D269 : db $00
+    dl DATA8_F28105 : db $00
+    dl DATA8_F4D547 : db $00
+    dl DATA8_F18E58 : db $00
+    dl DATA8_F1E21F : db $00
+    dl DATA8_F2B2D0 : db $00
+    dl DATA8_F4654A : db $00
+    dl DATA8_F06E6D : db $00
+    dl DATA8_F08510 : db $00
+    dl DATA8_FFFF6E : db $00
+    dl DATA8_F27264 : db $00
+    dl DATA8_F20BC5 : db $00
+    dl DATA8_F086B2 : db $00
+    dl DATA8_F07AF1 : db $00
+    dl DATA8_F01970 : db $00
+    dl DATA8_F35E9F : db $00
+    dl DATA8_F06BA7 : db $00
+    dl DATA8_F112F5 : db $00
+    dl DATA8_F03EBF : db $00
+    dl DATA8_F0630E : db $00
+    dl DATA8_F3D4C5 : db $00
+    dl DATA8_F10F3D : db $00
+    dl DATA8_F2DFFC : db $00
+    dl DATA8_F2EFBC : db $00
+    dl DATA8_F21188 : db $00
+    dl DATA8_F0D01D : db $00
+    dl DATA8_F08782 : db $00
+    dl DATA8_F0A0BA : db $00
+    dl DATA8_F09C2C : db $00
+    dl DATA8_F0A015 : db $00
+    dl DATA8_F3A2B2 : db $00
+    dl DATA8_F53CCF : db $00
+    dl DATA8_F25DFA : db $00
+    dl DATA8_F03FF7 : db $00
+    dl DATA8_F090D6 : db $00
+    dl DATA8_F0CF85 : db $00
+    dl DATA8_F09CD5 : db $00
+    dl DATA8_F1DA1C : db $00
+    dl DATA8_F318E4 : db $00
+    dl DATA8_F04FB7 : db $00
+    dl DATA8_F04C77 : db $00
+    dl DATA8_F045C0 : db $00
+    dl DATA8_F050C7 : db $00
+    dl DATA8_F0424F : db $00
+    dl DATA8_F04D8E : db $00
+    dl DATA8_F04375 : db $00
+    dl DATA8_F04B5D : db $00
+    dl DATA8_F2FF29 : db $00
+    dl DATA8_F05806 : db $00
+    dl DATA8_F04EA3 : db $00
+    dl DATA8_F052E3 : db $00
+    dl DATA8_F01C7A : db $00
+    dl DATA8_F5A02C : db $00
+    dl DATA8_F238C9 : db $00
+    dl DATA8_F07040 : db $00
+    dl DATA8_F0CEE8 : db $00
+    dl DATA8_F02AD8 : db $00
+    dl DATA8_F3ECF4 : db $00
+    dl DATA8_F2E7FD : db $00
+    dl DATA8_F1EBE0 : db $00
+    dl DATA8_F34FC3 : db $00
+    dl DATA8_F06113 : db $00
+    dl DATA8_F09250 : db $00
+    dl DATA8_F1889A : db $00
+    dl DATA8_F0D387 : db $00
+    dl DATA8_F02539 : db $00
+    dl DATA8_F338AC : db $00
+    dl DATA8_F30000 : db $00
+    dl DATA8_F3DAD7 : db $00
+    dl DATA8_F1F71E : db $00
+    dl DATA8_F0D9EA : db $00
+    dl DATA8_F08852 : db $00
+    dl DATA8_F1D7F8 : db $00
+    dl DATA8_F2D7F3 : db $00
+    dl DATA8_F3408A : db $00
+    dl DATA8_F243A4 : db $00
+    dl DATA8_F3F8EE : db $00
+    dl DATA8_F8FF32 : db $00
+    dl DATA8_F08922 : db $00
+    dl DATA8_F09974 : db $00
+    dl DATA8_F001CD : db $00
+    dl DATA8_F03AED : db $00
+    dl DATA8_F0DB3B : db $00
+    dl DATA8_F23E4C : db $00
+    dl DATA8_F13338 : db $00
+    dl DATA8_F0DBA6 : db $00
+    dl DATA8_F7FE9C : db $00
+    dl DATA8_F07F42 : db $00
+    dl DATA8_F09ECA : db $00
+    dl DATA8_F00C42 : db $00
+    dl DATA8_F09F70 : db $00
+    dl DATA8_F093C3 : db $00
+    dl DATA8_F068D3 : db $00
+    dl DATA8_F06409 : db $00
+    dl DATA8_F0DC11 : db $00
+    dl DATA8_FAFF93 : db $00
+    dl DATA8_F0D1DA : db $00
+    dl DATA8_F09D7C : db $00
+    dl DATA8_F0D8EE : db $00
+    dl DATA8_F0D2F8 : db $00
+    dl DATA8_F0DA5C : db $00
+    dl DATA8_F0D149 : db $00
+    dl DATA8_F07E69 : db $00
+    dl DATA8_F136A1 : db $00
+    dl DATA8_F096A3 : db $00
+    dl DATA8_F098C0 : db $00
+    dl DATA8_F09758 : db $00
+    dl DATA8_F0DC7C : db $00
+    dl DATA8_F0DFCC : db $00
+    dl DATA8_F0D866 : db $00
+    dl DATA8_F0D52F : db $00
+    dl DATA8_F0D646 : db $00
+    dl DATA8_F0DE8F : db $00
+    dl DATA8_F0D756 : db $00
+    dl DATA8_F0D7DE : db $00
+    dl DATA8_F0DCE7 : db $00
+    dl DATA8_F0D415 : db $00
+    dl DATA8_F0DE25 : db $00
+    dl DATA8_F04A43 : db $00
+    dl DATA8_F0DEF9 : db $00
+    dl DATA8_F0D6CE : db $00
+    dl DATA8_F0DD51 : db $00
+    dl DATA8_F09016 : db $00
+    dl DATA8_F080EF : db $00
+    dl DATA8_F0843E : db $00
+    dl DATA8_F0E4DB : db $00
+    dl DATA8_F0E53E : db $00
+    dl DATA8_F0E5A1 : db $00
+    dl DATA8_F0E604 : db $00
+    dl DATA8_F0E667 : db $00
+    dl DATA8_F0E6CA : db $00
+    dl DATA8_F0E72D : db $00
+    dl DATA8_F0E09A : db $00
+    dl DATA8_F0E0FD : db $00
+    dl DATA8_F0E160 : db $00
+    dl DATA8_F0E1C3 : db $00
+    dl DATA8_F0E226 : db $00
+    dl DATA8_F0E289 : db $00
+    dl DATA8_F0E2EC : db $00
+    dl DATA8_F0E34F : db $00
+    dl DATA8_F0E3B2 : db $00
+    dl DATA8_F0E415 : db $00
+    dl DATA8_F0E478 : db $00
+    dl $000000
 
 TilesetGraphicsDataPointers:
     dl DATA8_F43DA7               ;$BE8599 |	Pointers to compressed tileset graphics

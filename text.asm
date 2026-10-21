@@ -7834,14 +7834,15 @@ TEXT_CB7795:
 	%TEXT_End()
 
 ; Unsure where this would have been used.　Assuming it is printing debug data.
-; There are some Japanese characters that don't exist in the English ROM but are attempted to be printed (they are not mapped to any character for this reason)
+; Kanji graphics don't exist in the English ROM but are attempted to be printed (they are not mapped to any character here for this reason).
+; This same error message is located at CF9307 in the Japanese 1.2 ROM and prints kanji properly, so this will be used to fill in the blanks in the comments.
 TEXT_SoundDebug:
 	%TEXT_RunMacro(TEXT_CB7795)
 	db "BGMばんごう: "				; "BGM Number:"
-	%TEXT_ReadValue($0033CA)
+	%TEXT_ReadValue(CurrentMusic_SA1)
 	%TEXT_NewLine()
 	db "FGMばんごう: "				; "FGM Number:"
-	%TEXT_ReadValue($0033CB)
+	%TEXT_ReadValue(CurrentSFX_SA1)
 	%TEXT_NewLine()
 	db "Track  : "
 	%TEXT_ReadValue($003739)
@@ -7852,13 +7853,13 @@ TEXT_SoundDebug:
 	db "FlgSub : "
 	%TEXT_ReadValue($00736C)
 	%TEXT_NewLine()
-	db " 『ごめん!!サウンドバグで"	; 『ごめん!!サウンドバグで_まってます。』 Rough translation: "Sorry!! Because of a sound bug, ____ is/are waiting."
+	db " 『ごめん!!サウンドバグで"	; 『ごめん!!サウンドバグで止まってます。』 Rough translation: "Sorry!! Because of a sound bug, the game has stopped."
 	%TEXT_NewLine()
 	db "  "
 	db $98
 	db "まってます。』"	
 	%TEXT_NewLine()
-	db " 『"					  ; 『__をおよび_さい。』Rough translation: "Please(?) call ____."
+	db " 『"					  ; 『係員をおよび下さい。』Rough translation: "Please call a supervisor."
 	db $9A
 	db $99
 	db "をおよび"

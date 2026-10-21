@@ -3,7 +3,7 @@
 echo Assembling...
 
 copy "Kirby Super Star (USA).sfc" out.sfc
-asar main.asm out.sfc
+asar --symbols=wla main.asm out.sfc
 
 :checkmatch
 fc "Kirby Super Star (USA).sfc" out.sfc > nul

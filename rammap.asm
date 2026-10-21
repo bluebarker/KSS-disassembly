@@ -951,7 +951,25 @@ skip 2
 ; 3318 respawn ram offset position (but why)
 
 ; Unidentified
-skip 218
+skip $33CA-$32F8
+
+; === $0033CA ===
+; 1 byte
+; Current music value mirrored from $7E00AA onto the SA-1
+CurrentMusic_SA1: skip 1
+
+; === $0033CB ===
+; 1 byte
+; Current SFX value mirrored from $7E00AB onto the SA-1
+CurrentSFX_SA1: skip 1
+
+; === $0033CC ===
+; Current music volume. Updates on music or update or sound effect playing.
+CurrentVolume: skip 1
+
+; === $0033CD ===
+; Whether or not Stereo or Mono is set.
+CurrentStereoMono: skip 1
 
 ; === $0033CE ===
 ; 1 byte
@@ -1008,7 +1026,82 @@ skip 6
 Debug_Current_Palette: skip 2
 
 ; Unidentified
-skip 263
+skip $36A0-$362A
+
+; === $0036A0 ===
+; 2 bytes
+; Buttons designated to moving Kirby left and right
+ButtonMap_P1MoveLR: skip 2
+
+; === $0036A2 ===
+; 2 bytes
+; Buttons designated to moving Helper left and right
+ButtonMap_P2MoveLR: skip 2
+
+; === $0036A4 ===
+; 2 bytes
+; Buttons designated to having Kirby crouch
+ButtonMap_P1Crouch: skip 2
+
+; === $0036A6 ===
+; 2 bytes
+; Buttons designated to having Helper crouch
+ButtonMap_P2Crouch: skip 2
+
+; === $0036A8 ===
+; 2 bytes
+; Buttons designated to having Kirby shield
+ButtonMap_P1Shield: skip 2
+
+; === $0036AA ===
+; 2 bytes
+; Buttons designated to having Helper shield
+ButtonMap_P2Shield: skip 2
+
+; === $0036AC ===
+; 2 bytes
+; Buttons designated to having Kirby attack
+ButtonMap_P1Attack: skip 2
+
+; === $0036AE ===
+; 2 bytes
+; Buttons designated to having Helper attack
+ButtonMap_P2Attack: skip 2
+
+; === $0036B0 ===
+; 2 bytes
+; Buttons designated to having Kirby jump
+ButtonMap_P1Jump: skip 2
+
+; === $0036B2 ===
+; 2 bytes
+; Buttons designated to having Helper jump
+ButtonMap_P2Jump: skip 2
+
+; === $0036B4 ===
+; 2 bytes
+; Buttons designated to having Kirby summon a helper
+ButtonMap_P1Summon: skip 2
+
+; === $0036B6 ===
+; 2 bytes
+; Buttons designated to having Helper teleport to Kirby
+ButtonMap_P2Summon: skip 2
+
+; === $0036B8 ===
+; 2 bytes
+; Buttons designated to having Kirby open special menus (GCO treasure/MWW power cycle)
+ButtonMap_P1SubgameMenu: skip 2
+
+; === $0036BA ===
+; 2 bytes
+; Buttons designated to having Kirby open special menus (GCO treasure/MWW power cycle)
+ButtonMap_P2SubgameMenu: skip 2
+
+; 36BC & 36BE are Kirby and Helper's last obtained abilities?
+
+; Unidentified
+skip $3731-$36BC
 
 ; === $003731 ===
 ; 8 bytes
@@ -1019,6 +1112,8 @@ skip 263
 ; $3734 - 24-bit source
 ; $3737 - 16-bit destination VRAM address
 DMA_Buffer_TempStorage: skip 8
+
+; 3739 is labeled as "Track" in the music debug text thing.
 
 ; Unidentified
 skip 10
@@ -1032,7 +1127,7 @@ Current_RNG: skip 2
 ; 10 bytes
 ; Scratch RAM.
 ; $3749, $374B, and $374D are often used for storing arguments from A/X/Y passed into function calls.
-SA1_ScratchRAM: skip 10
+SA1_Scratch_AXY: skip 10
 
 ; Unidentified
 skip 57
@@ -1048,6 +1143,9 @@ SA1_Stack: skip 128
 ORG $006000
 ; WIP
 
+
+; 6028: Scratch RAM intended for 24-bit pointers
+; 6240: Partner ID, 0xFFFF if no partner is active
 ; 6438: Kirby's animation frame 2 byte
 ; 643A: Helper's animation frame 2 byte
 ; 643C: Kirby's attack animation frame 8 byte (2 byte x 4)
@@ -1056,6 +1154,8 @@ ORG $006000
 ; 690E: X coordinate of Kirby's sprite (object slot 2)
 ; 6988: Kirby X pos (object slot 2)
 ; 6A02: Kirby Y pos (object slot 2)
+; 6EC4: Currently selected song in sound test
+; 6F3E: Currently selected SFX in sound test
 ; 7380: Kirby Max HP
 ; 7382: Helper Max HP
 ; 7384: Kirby Copy Ability Panel Graphics
@@ -1063,7 +1163,7 @@ ORG $006000
 ; 7386: Helper panel
 ; 7387: Temp helper panel
 ; 7388: The temporary graphic number displayed on Kirby's copy ability panel ($7387 is this value plus 0x20
-; 7389:  The temporary graphic number displayed on Kirby's copy ability panel (mirror?)
+; 7389:  The temporary graphic number displayed on Kirby's copy ability panel, previous frame. Used to determine whether to update the image
 ; 738A: The display time of the temporary graphics for Kirby's copy ability panel 2 byte
 ; 738C: A flag indicating whether to temporarily replace the graphics on the helper's copy ability panel.
 ; 738D: The temporary graphic number displayed on the Helper's copy ability panel (if $738C is anything other than 0x00, it becomes "0xFF = Help!")
