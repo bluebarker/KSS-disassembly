@@ -5816,7 +5816,7 @@ CODE_FL_00A8AC:					;-----------|
 CODE_FL_00A8B6:					;-----------|
 	JSR CODE_FL_00A8BA			;$00A8B6	|
 	RTL							;$00A8B9	|
-CODE_FL_00A8BA:					;			|
+CODE_FL_00A8BA:					;			|	Handles BG scroll on the corkboard
 	LDX #$0004					;$00A8BA	|
 CODE_FL_00A8BD:					;			|
 	JSL CODE_FL_00A8D2			;$00A8BD	|

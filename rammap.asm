@@ -1031,6 +1031,7 @@ skip $36A0-$362A
 ; some addresses before the following ones have controller stuff
 ; 3690 mirror of controller inputs except only when Kirby can receive input
 ; 3698 was left or right last pressed
+; 36FC kirby facing direction
 
 ; === $0036A0 ===
 ; 2 bytes
@@ -1148,7 +1149,7 @@ ORG $006000
 ; WIP
 
 
-; 6028: Scratch RAM intended for 24-bit pointers
+; 6028: Scratch RAM intended for 24-bit pointers. Used for the LongCall_6028 subroutine
 ; 6240: Partner ID, 0xFFFF if no partner is active
 ; 6438: Kirby's animation frame 2 byte
 ; 643A: Helper's animation frame 2 byte
@@ -1173,3 +1174,9 @@ ORG $006000
 ; 738D: The temporary graphic number displayed on the Helper's copy ability panel (if $738C is anything other than 0x00, it becomes "0xFF = Help!")
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life
+
+; corkboard:
+; 7a85: number of games unlocked
+; 7a87: last frame subgame selection (used to trigger sfx)
+; 7a91: current subgame selected
+; 7a93: flags for which subgames have been cleared
