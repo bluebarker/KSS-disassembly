@@ -590,7 +590,7 @@ UpdateVramSprSize:				;-----------| Routine to update sprite tile sizes and GFX 
 	STA Screen_Brightness					;$0084C5	|/
 	REP #$20					;$0084C8	|
 	JSL WaitForSnesNMI			;$0084CA	| Wait for the SNES to execute NMI.
-	%LoadAddrToAX(.RunOnSNES)
+	%LoadLongToAX(.RunOnSNES)
 	JML SA1_ExecuteSNES			;$0084D4	|/
 
   .RunOnSNES:					;```````````| Routine to update the sprite size/GFX base on the SNES side ($2101).
@@ -933,7 +933,7 @@ LoadDMATable:					;-----------| Routine to write DMA data from a table in A/X to
 	JSL .DecompressData			;$008722	|||
 	BRA .doneCall				;$008726	||| ...decompress the data given first.
   .onSNES:						;			|||
-	%LoadAddrToAX(.DecompressData)
+	%LoadLongToAX(.DecompressData)
 	JSL SA1_ExecuteSNES			;$00872E	||/
   .doneCall:					;			||
 	SEP #$20					;$008732	||
@@ -988,7 +988,7 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
 	STA $3019					;$00878D	|/
 	BIT $0000					;$008790	|\ 
 	BPL .onSNES					;$008793	||
-	%LoadAddrToAX(.writeDMA)
+	%LoadLongToAX(.writeDMA)
 	JSL SA1_ExecuteSNES			;$00879B	|| Transfer the bytes into the circular VRAM DMA buffer at $0100.
 	BRA .doneCall				;$00879F	||
   .onSNES:						;			||
@@ -1017,7 +1017,7 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
   .inForceBlank:				;```````````| In force blank, so a DMA can just be directly executed.
 	BIT $0000					;$0087CB	|\ 
 	BPL .execDMA				;$0087CE	||
-	%LoadAddrToAX(.execDMA)
+	%LoadLongToAX(.execDMA)
 	JML SA1_ExecuteSNES			;$0087D6	|/
 
   .execDMA
@@ -1071,7 +1071,7 @@ WriteTile:						;-----------| Subroutine to write a single tile into the DMA buf
 	STA $3019					;$00883F	|/
 	BIT $0000					;$008842	|\ 
 	BPL ..alreadyOnSNES			;$008845	||
-	%LoadAddrToAX(.writeTile)
+	%LoadLongToAX(.writeTile)
 	JSL SA1_ExecuteSNES			;$00884D	||
 	BRA .doneWrite				;$008851	||
   ..alreadyOnSNES:				;			||
@@ -1098,7 +1098,7 @@ WriteTile:						;-----------| Subroutine to write a single tile into the DMA buf
 	BPL ..alreadyOnSNES			;$008879	||
 	STX $4B						;$00887B	||
 	STA $49						;$00887D	||
-	%LoadAddrToAX(..nowOnSNES)
+	%LoadLongToAX(..nowOnSNES)
 	JML SA1_ExecuteSNES			;$008885	||
   ..nowOnSNES:					;			||
 	LDX $4B						;$008889	||
@@ -1130,7 +1130,7 @@ DecompressData:					;-----------| Routine to decompress data, using exhal decomp
 	PHK							;$0088AD	||
 	PLB							;$0088AE	||
 	REP #$20					;$0088AF	||
-	%LoadAddrToAX(.nowOnSNES)
+	%LoadLongToAX(.nowOnSNES)
 	JSL SA1_ExecuteSNES			;$0088B7	|| All of this is just to make sure the routine executes on the SNES.
 	PLB							;$0088BB	||
 	LDA $49						;$0088BC	||
@@ -1398,7 +1398,7 @@ UpdtLyrsCtrl:					;-----------| Routine to update layer positions and fetch cont
 	PLD							;$008A3B	|
 	BIT $0000					;$008A3C	|
 	BPL .alreadyOnSNES			;$008A3F	|
-	%LoadAddrToAX(.OnSNES)
+	%LoadLongToAX(.OnSNES)
 	JSL SA1_ExecuteSNES			;$008A47	|| Make sure the routine runs on the SNES.
 	BRA .done					;$008A4B	||
   .alreadyOnSNES:				;			||
@@ -1578,7 +1578,7 @@ WritePal:						;-----------| Routine to write to the palette ($0500). Use _Alt0 
 	STA $49						;$008BD6	|/
 	BIT $0000					;$008BD8	|\ 
 	BPL .onSNES					;$008BDB	||
-	%LoadAddrToAX(.onSNES)
+	%LoadLongToAX(.onSNES)
 	JML SA1_ExecuteSNES			;$008BE3	|/
 
   .onSNES:
@@ -1733,7 +1733,7 @@ WriteToDMAQueue:				;-----------| Subroutine to write $31-$38 into the VRAM DMA 
 	STA $3019					;$008CFC	|/
 	BIT $0000					;$008CFF	|
 	BPL .alreadyOnSNES			;$008D02	|
-	%LoadAddrToAX(.writeDMA)
+	%LoadLongToAX(.writeDMA)
 	JSL SA1_ExecuteSNES			;$008D0A	|
 	BRA .doneWrite				;$008D0E	|
   .alreadyOnSNES:				;			|
@@ -2192,7 +2192,7 @@ CODE_FL_00909C:					;			|
 	BMI CODE_FL_0090E2			;$0090A3	|
 	BVS CODE_FL_0090BB			;$0090A5	|
 	BEQ CODE_FL_0090B5			;$0090A7	|
-	%LoadAddrToAX(AS_Interpret)
+	%LoadLongToAX(AS_Interpret)
 	JSL SA1_ExecuteSNES			;$0090AF	|
 	BRA CODE_FL_0090E2			;$0090B3	|
 
@@ -2209,7 +2209,7 @@ CODE_FL_0090BB:
 	STA $602A					;$0090C9	|
 	AND #$2000					;$0090CC	|
 	BEQ CODE_FL_0090DD			;$0090CF	|
-	%LoadAddrToAX(CODE_FL_009126)
+	%LoadLongToAX(CODE_FL_009126)
 	JSL SA1_ExecuteSNES			;$0090D7	|
 	BRA CODE_FL_0090E2			;$0090DB	|
 
@@ -2229,7 +2229,7 @@ CODE_FL_0090E7:					;			|
 	LDA $6818,X					;$0090F7	|
 	AND #$2000					;$0090FA	|
 	BEQ CODE_FL_00910B			;$0090FD	|
-	%LoadAddrToAX(CODE_FL_009126)
+	%LoadLongToAX(CODE_FL_009126)
 	JSL SA1_ExecuteSNES			;$009105	|
 	BRA CODE_FL_009110			;$009109	|
 
@@ -4578,7 +4578,7 @@ CODE_FL_00A00E:					;			|
 	STA $49						;$00A015	|
 	BIT $0000					;$00A017	|
 	BPL CODE_FL_00A026			;$00A01A	|
-	%LoadAddrToAX(CODE_FL_00A026)
+	%LoadLongToAX(CODE_FL_00A026)
 	JML SA1_ExecuteSNES			;$00A022	|/
 
 CODE_FL_00A026:					;```````````| On the SNES.
@@ -4607,7 +4607,7 @@ CODE_FL_00A031:					;-----------|
 	DEY							;$00A04A	|
 	DEY							;$00A04B	|
 	STY $4D						;$00A04C	|
-	%LoadAddrToAX(CODE_FL_00A058)
+	%LoadLongToAX(CODE_FL_00A058)
 	JML SA1_ExecuteSNES			;$00A054	|/
 
 CODE_FL_00A058:					;```````````|
@@ -4674,7 +4674,7 @@ CODE_FL_00A09D:					;-----------|
 	DEY							;$00A0AC	|
 	DEY							;$00A0AD	|
 	STY $4D						;$00A0AE	|
-	%LoadAddrToAX(CODE_FL_00A0BA)
+	%LoadLongToAX(CODE_FL_00A0BA)
 	JML SA1_ExecuteSNES			;$00A0B6	|/
 CODE_FL_00A0BA:					;			|
 	LDY $4D						;$00A0BA	|
@@ -4721,7 +4721,7 @@ CODE_FL_00A0F1:					;-----------|
 	DEY							;$00A100	|
 	DEY							;$00A101	|
 	STY $4D						;$00A102	|
-	%LoadAddrToAX(CODE_FL_00A10E)
+	%LoadLongToAX(CODE_FL_00A10E)
 	JML SA1_ExecuteSNES			;$00A10A	|/
 CODE_FL_00A10E:					;			|
 	LDY $4D						;$00A10E	|
@@ -4785,7 +4785,7 @@ CODE_FL_00A13C:					;-----------|
 	DEY							;$00A16D	|
 	DEY							;$00A16E	|
 	STY $4D						;$00A16F	|
-	%LoadAddrToAX(CODE_FL_00A17B)
+	%LoadLongToAX(CODE_FL_00A17B)
 	JML SA1_ExecuteSNES			;$00A177	|/
 CODE_FL_00A17B:					;			|
 	LDY $4D						;$00A17B	|
@@ -4855,7 +4855,7 @@ CODE_FL_00A1B4:					;-----------|
 	DEY							;$00A1E5	|
 	DEY							;$00A1E6	|
 	STY $4D						;$00A1E7	|
-	%LoadAddrToAX(CODE_FL_00A1F3)
+	%LoadLongToAX(CODE_FL_00A1F3)
 	JML SA1_ExecuteSNES			;$00A1EF	|/
 CODE_FL_00A1F3:					;			|
 	LDY $4D						;$00A1F3	|
@@ -4908,7 +4908,7 @@ CODE_FL_00A240:					;			|
 	STA $49						;$00A240	|
 	STX $4B						;$00A242	|
 	STY $4D						;$00A244	|
-	%LoadAddrToAX(CODE_FL_00A250)
+	%LoadLongToAX(CODE_FL_00A250)
 	JML SA1_ExecuteSNES			;$00A24C	|/
 CODE_FL_00A250:					;			|
 	LDA $49						;$00A250	|
@@ -8326,7 +8326,7 @@ CODE_FL_00BC29:					;-----------| SA-1: continue point after SNES finishes loadi
 	LDA $7F01					;$00BC3D	|
 	AND #$00FF					;$00BC40	|
 	JSL CODE_FL_00CE43			;$00BC43	|
-	%LoadAddrToAX(CheckStartErrs)
+	%LoadLongToAX(CheckStartErrs)
 	JSL SA1_ExecuteSNES			;$00BC4D	|/
 	LDA #$00!GAMESTATE_TITLESCREEN			;$00BC51	|
 	STA CurrentGameState		;$00BC54	|
@@ -8397,7 +8397,7 @@ CODE_FL_00BCDE:					;-----------|
 	JSL $048184					;$00BCED	|
 	JSR CODE_FL_00BD60			;$00BCF1	|
 	JSL ProcessObjects			;$00BCF4	|
-	%LoadAddrToAX(VWF_TextLoopEntry)
+	%LoadLongToAX(VWF_TextLoopEntry)
 	JSL SA1_ExecuteSNES			;$00BCFE	|
 	RTL							;$00BD02	|
 
@@ -8420,7 +8420,7 @@ CODE_FL_00BD0E:
 CODE_FL_00BD29:					;			|
 	JSR CODE_FL_00BD60			;$00BD29	|
 	JSL ProcessObjects			;$00BD2C	|
-	%LoadAddrToAX(VWF_TextLoopEntry)
+	%LoadLongToAX(VWF_TextLoopEntry)
 	JSL SA1_ExecuteSNES			;$00BD36	|
 	RTL							;$00BD3A	|
 
@@ -8436,7 +8436,7 @@ SoftReset:
 	LDA #$0000					;$00BD4B	|
 	JSL PlayMusic				;$00BD4E	|
 	JSL UpdtLyrsCtrl			;$00BD52	|
-	%LoadAddrToAX(Reset_SNES)
+	%LoadLongToAX(Reset_SNES)
 	JML SA1_ExecuteSNES			;$00BD5C	|
 
 CODE_FL_00BD60:
@@ -8617,7 +8617,7 @@ CODE_FL_00BEDA:					;			|
 	STZ Reload_Room			;$00BEDA	|
 CODE_FL_00BEDD:					;			|
 	JSL CODE_FL_00BCDE			;$00BEDD	|
-	%LoadAddrToAX(CODE_FL_00BFC3)
+	%LoadLongToAX(CODE_FL_00BFC3)
 	JSL SA1_ExecuteSNES			;$00BEE7	|/
 	LDA $739A					;$00BEEB	|
 	BEQ CODE_FL_00BEFC			;$00BEEE	|
@@ -8875,7 +8875,7 @@ CODE_FL_00C108:					;-----------| Game Mode 0E - Dynablade overworld enemy battl
 	JSL CODE_FL_00A94B			;$00C119	|
 	JSL CODE_FL_00D9C4			;$00C11D	|
 	JSL RoomLoad_Start			;$00C121	|
-	%LoadAddrToAX(CODE_FL_00C1CA)
+	%LoadLongToAX(CODE_FL_00C1CA)
 	JSL SA1_ExecuteSNES			;$00C12B	|
 	JSL $D4FB90					;$00C12F	|
 	LDA #$FFFF					;$00C133	|

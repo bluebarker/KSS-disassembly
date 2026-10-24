@@ -4,10 +4,10 @@ ORG $018000
 RoomLoad_Start:
 	JSR.W CODE_FN_01813A          ;$018000	|
 	JSR.W CODE_FN_018C74          ;$018003	|
-	%LoadAddrToAX(CODE_818E52)
+	%LoadLongToAX(CODE_818E52)
 	JSL.L SA1_ExecuteSNES         ;$01800C	|
 	JSR.W CODE_FN_018307          ;$018010	|
-	%LoadAddrToAX(InitializeRoomProperties)
+	%LoadLongToAX(InitializeRoomProperties)
 	JSL.L SA1_ExecuteSNES         ;$018019	|
 	JSL.L CODE_FL_03A2D4          ;$01801D	|
 	BCS CODE_818027               ;$018021	|
@@ -34,7 +34,7 @@ CODE_818027:
 	JSR.W CODE_FN_01925E          ;$018058	|
 	JSR.W CODE_FN_018E99          ;$01805B	|
 	JSR.W CODE_FN_018BD7          ;$01805E	|
-	%LoadAddrToAX(InitializeStatusBar)
+	%LoadLongToAX(InitializeStatusBar)
 	JML.L SA1_ExecuteSNES         ;$018067	|
 InitializeRoomProperties:
 	JSR.W LoadRoomBackground      ;$01806B	|
@@ -52,10 +52,10 @@ InitializeStatusBar:
 CODE_FL_018088:
 	JSL.L UpdateVramSprSize       ;$018088	|
 	JSR.W CODE_FN_018C74          ;$01808C	|
-	%LoadAddrToAX(CODE_818E52)
+	%LoadLongToAX(CODE_818E52)
 	JSL.L SA1_ExecuteSNES         ;$018095	|
 	JSR.W CODE_FN_018307          ;$018099	|
-	%LoadAddrToAX(InitializeRoomProperties)
+	%LoadLongToAX(InitializeRoomProperties)
 	JSL.L SA1_ExecuteSNES         ;$0180A2	|
 	JSL.L CODE_FL_D01566          ;$0180A6	|
 	LDA.W $3330                   ;$0180AA	|

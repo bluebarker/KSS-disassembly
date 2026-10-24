@@ -2,7 +2,7 @@
 ; Although this bank is technically mapped at $168000, the Super MMC maps it to the lower half of bank CB.
 ;  As KSS always references it in this way, all address values will be treated as such.
 
-incsrc "CharMaps/vwf.asm"
+incsrc "Text/CharMaps/VWF_U.asm"
 incsrc "Macros/text.asm"
 
 org $CB0000
@@ -50,13 +50,17 @@ DATA_CB00E0:						;$CB00E0	| 2bpp values used to initialize the VWF text buffer 
 	
 
 ORG $CB0F18
-	incsrc "text.asm"
+	incsrc "Text/Text_U.asm"
 
 ORG $CB7944
 	incbin "Graphics/Marx (CB7944).bin" ; Called from subroutine $D5F444
 
 ;ORG $CB9066
 ;	Marx's red "glow" overlay sprite, 0x456 bytes. Called from subroutine $D5F444. It is decompressed by itself separately, but is also decompressed with the Marx graphics.
+
+; this is technically the start of bank 17, maybe should create a new file for this?
+; It gets slightly confusing because Marx's graphics are also written through the start of Bank 17. 
+; Because of mapping to bank CB it is able to view bank 16 and 17 as continuous data.
 
 ;ORG $CB94BC
 ; pointers?

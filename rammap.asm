@@ -1004,8 +1004,16 @@ InternalTimerB: skip 2
 ; When it reaches 0000, 0xFF is stored to $33D0.
 InternalTimerC: skip 2
 
+; === $0033D7 ===
+; 2 bytes
+; Varies the amount of damage to be received.
+; Initializes at 0x1000, and ranges between 0x0A00 and 0x1600
+; The lower the value, the more damage will be taken
+; For more info: https://waddledx.hatenablog.jp/entry/20171113/1510499775
+DamageModifier: skip 2
+
 ; Unidentified
-skip 553
+skip 551
 
 ; === $003600 ===
 ; 32 bytes
