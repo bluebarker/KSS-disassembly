@@ -351,11 +351,16 @@ Level_Tile_Attributes: skip 720
 VWF_Buffer: skip 1024
 
 ; === $7F6970 ===
-; 131008 bytes
+; 131008 bytes?
 ; Some sort of table/buffer used at routine at $01E7E7.
 ; Unclear on what it actually represents.
 ; Size is probably not accurate, but it is the maximum allowable index given by the game's code.
 ;UnknownForRoutine01E7E7: skip 131008
+
+; === $7F8800 ===
+; 42303 bytes?
+; Used as temp storage for loading helper graphics.
+; However, this memory is also used initially to load other things before loading the helper graphics (could be the HUD or etc)
 
 
 ; --== SA-1 RAM ==--
@@ -1184,6 +1189,7 @@ ORG $006000
 ; $77E6  :   2 Byte :  Enemy's life
 
 ; corkboard:
+; 7a65: current dyna blade level (may be limited to map? double check)
 ; 7a85: number of games unlocked
 ; 7a87: last frame subgame selection (used to trigger sfx)
 ; 7a91: current subgame selected

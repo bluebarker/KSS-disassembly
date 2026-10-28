@@ -15593,21 +15593,21 @@ CODE_FL_01FCBD:
 	STZ $00D1					;$01FCBD	|
 	INC $00D7					;$01FCC0	|
 	DEC A						;$01FCC3	|
-CODE_FL_01FCC4: ;			|
+CODE_FL_01FCC4: 				;			|
 	STA $00BD					;$01FCC4	|
 	STZ $00E3					;$01FCC7	|
 	CMP #$000E					;$01FCCA	|
 	BCS CODE_FL_01FCD2			;$01FCCD	|
 	INC $00E3					;$01FCCF	|
-CODE_FL_01FCD2: ;			|
+CODE_FL_01FCD2: 				;			|
 	JMP CODE_FL_01FD35			;$01FCD2	|
 
 
 
 CODE_FL_01FCD5:					;-----------| Subroutine which most likely checks whether to update the boss's HP bar.
-	LDA Boss_Max_HP					;$01FCD5	|\ Branch if a boss is actually active.
+	LDA Boss_Max_HP				;$01FCD5	|\ Branch if a boss is actually active.
 	BPL CODE_FL_01FCE2			;$01FCD8	|/
-CODE_FL_01FCDA: ;			|
+CODE_FL_01FCDA: 				;			|
 	STZ $00D3					;$01FCDA	|
 	STZ $00D9					;$01FCDD	|
 	CLC							;$01FCE0	|
@@ -15620,14 +15620,14 @@ CODE_FL_01FCE2:
 
 CODE_FL_01FCE9: 
 	STZ $00DF					;$01FCE9	|
-CODE_FL_01FCEC: ;			|
+CODE_FL_01FCEC: 				;			|
 	STX $14						;$01FCEC	|
-	CMP Boss_HP_Meter					;$01FCEE	|
+	CMP Boss_HP_Meter			;$01FCEE	|
 	BCC CODE_FL_01FCF6			;$01FCF1	|
-	LDA Boss_HP_Meter					;$01FCF3	|
-CODE_FL_01FCF6: ;			|
+	LDA Boss_HP_Meter			;$01FCF3	|
+CODE_FL_01FCF6: 				;			|
 	STA $49						;$01FCF6	|
-	LDA Boss_HP_Meter					;$01FCF8	|
+	LDA Boss_HP_Meter			;$01FCF8	|
 	STA $4B						;$01FCFB	|
 	LDA #$FD52					;$01FCFD	|\ 
 	LDX #$0001					;$01FD00	|| Wait for the SA-1 chip to execute $01FD52.
