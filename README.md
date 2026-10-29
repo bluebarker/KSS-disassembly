@@ -13,4 +13,4 @@ Since this is currently a work in progress disassembly, you will need an origina
 Banks 00, 01, and BE are "complete", though still need proper labelling in several areas. Bank 16 is complete, though can use more labelling for better readability. The rest of the banks have yet to be disassembled.
 
 # Contribution
-Anyone can contribute to this project. Most of this disassembly is being done through [DiztinGUIsh](https://github.com/DizTools/DiztinGUIsh) and Asar's CDL, though any other disassembly tools are permitted.
+Anyone can contribute to this project. Most of this disassembly is being done through [DiztinGUIsh](https://github.com/DizTools/DiztinGUIsh) and Mesen's CDL, though any other disassembly tools are permitted.
