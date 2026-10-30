@@ -127,7 +127,13 @@ CurrentMusic: skip 1
 CurrentSampleBank: skip 1
 
 ; Unidentified
-skip 7
+skip 5
+
+; === $7E00B1 ===
+; 2 bytes
+; If set to anything greater than zero, updates the status bar in VRAM
+;  to match the WRAM mirror located at $7E1617
+UpdateStatusBar: skip 2
 
 ; === $7E00B3 ===
 ; 2 bytes
@@ -1161,21 +1167,38 @@ SA1_Stack: skip 128
 ORG $006000
 ; WIP
 
+; The following are temporary RAM addresses used when creating new objects.
+; These paramters are written here first before being written to the object queue in routine InitializeNewObject ($008E9E)
+; 6000: ObjVar0_Temp
+; 6002: ObjVar1_Temp
+; 6004: ObjVar2_Temp
+; 6006: ObjVar3_Temp
+; 6008: ObjVar4_Temp
+; 600A: 623C,X
+; 600C: ObjXPos_Temp
+; 600E: ObjYPos_Temp
+; 6010: probably the object type - gets written to at code $009AF9 with a static number #$0040 (denotes intangible particle fx?)
+; also gets written to at code $03803D with a value from table $038061
+; 6012: similar as above, at around the same code
+; 6014: object list size?? stays static at 0x007A and game crashes if it is any different
 
 ; 6028: Scratch RAM intended for 24-bit pointers. Used for the LongCall_6028 subroutine
-; 6240: Partner ID, 0xFFFF if no partner is active
+; 6240?: Partner ID, 0xFFFF if no partner is active
 ; 6438: Kirby's animation frame 2 byte
 ; 643A: Helper's animation frame 2 byte
-; 643C: Kirby's attack animation frame 8 byte (2 byte x 4)
-; 6444: Helper's attack animation frame 8 byte (2 byte x 4)
+; 643C: Kirby's attack particles frame 8 byte (2 byte x 4)
+; 6444: Helper's attack particles frame 8 byte (2 byte x 4)
 ; 6894: X coordinate of Kirby's sprite (object slot 2)
 ; 690E: X coordinate of Kirby's sprite (object slot 2)
 ; 6988: Kirby X pos (object slot 2)
 ; 6A02: Kirby Y pos (object slot 2)
 ; 6EC4: Currently selected song in sound test
 ; 6F3E: Currently selected SFX in sound test
-; 7380: Kirby Max HP
-; 7382: Helper Max HP
+; 7368: Camera lock 2 byte
+; 737C: Kirby HP  2 byte
+; 737E: Helper HP 2 byte
+; 7380: Kirby Max HP 2 byte
+; 7382: Helper Max HP 2 byte
 ; 7384: Kirby Copy Ability Panel Graphics
 ; 7385: Temp graphic on ability panel
 ; 7386: Helper panel
@@ -1187,6 +1210,8 @@ ORG $006000
 ; 738D: The temporary graphic number displayed on the Helper's copy ability panel (if $738C is anything other than 0x00, it becomes "0xFF = Help!")
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life
+
+; 7a04: count of enemies defeated before rolling a food drop
 
 ; corkboard:
 ; 7a65: current dyna blade level (may be limited to map? double check)

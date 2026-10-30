@@ -1907,7 +1907,7 @@ CODE_FL_008E3D:					;			|
 
 
 
-CreateNewObject:					;-----------|
+CreateDummyObject:				; Runs at some game state initializations. This writes an empty object into the first slot of the object queue, which seems to do nothing?
 	PHA							;$008E72	|
 	STZ $6000					;$008E73	|
 	STZ $6002					;$008E76	|
@@ -1918,7 +1918,7 @@ CreateNewObject:					;-----------|
 	LDA #$007A					;$008E85	|
 	STA $6012					;$008E88	|
 	PLA							;$008E8B	|
-CreateNewObject2:				;			|
+CreateNewObject:				; Otherwise every single object will start here on creation
 	STA $600A					;$008E8C	|
 	STX $600C					;$008E8F	|
 	STY $600E					;$008E92	|
