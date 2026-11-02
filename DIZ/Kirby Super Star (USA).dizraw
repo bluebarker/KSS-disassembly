@@ -577,10 +577,10 @@
           <Value exs:type="ns1:Label" Name="CODE_808E3D" Comment="" />
         </sys:Item>
         <sys:Item Key="36466">
-          <Value exs:type="ns1:Label" Name="CreateNewObject" Comment="" />
+          <Value exs:type="ns1:Label" Name="CreateDummyObject" Comment="" />
         </sys:Item>
         <sys:Item Key="36492">
-          <Value exs:type="ns1:Label" Name="CreateNewObject2" Comment="" />
+          <Value exs:type="ns1:Label" Name="CreateNewObject" Comment="" />
         </sys:Item>
         <sys:Item Key="36510">
           <Value exs:type="ns1:Label" Name="InitializeNewObject" Comment="X     = Object slot&#xA;" />

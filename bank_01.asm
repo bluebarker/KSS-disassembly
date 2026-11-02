@@ -230,7 +230,7 @@ CODE_0181DF:
 	TAY                           ;$01820A	|
 	JSR.W CODE_FN_01829A          ;$01820B	|
 	LDA.W #$0009                  ;$01820E	|
-	JML.L CreateNewObject2        ;$018211	|
+	JML.L CreateNewObject        ;$018211	|
 
 CODE_JP_018215:
 	LDA.W #$0001                  ;$018215	|
@@ -260,7 +260,7 @@ CODE_JP_018215:
 	ORA.W $6000                   ;$018256	|
 	STA.W $6000                   ;$018259	|
 	LDA.W #$0009                  ;$01825C	|
-	JML.L CreateNewObject2        ;$01825F	|
+	JML.L CreateNewObject        ;$01825F	|
 
 CODE_JP_018263:
     LDX.W #$0000                  ;$018263 |
@@ -277,7 +277,7 @@ CODE_81826B:
 	LDA.W #$0001                  ;$018277	|
 	LDX.W $3382                   ;$01827A	|
 	LDY.W $3386                   ;$01827D	|
-	JML.L CreateNewObject2        ;$018280	|
+	JML.L CreateNewObject        ;$018280	|
 
 CODE_FN_018284:
 	CLC                           ;$018284	|
@@ -328,7 +328,7 @@ CODE_8182A6:
 	LDA.W #$0002                  ;$0182EE	|
 	LDX.W #$FFF0                  ;$0182F1	|
 	LDY.W #$0082                  ;$0182F4	|
-	JSL.L CreateNewObject2        ;$0182F7	|
+	JSL.L CreateNewObject        ;$0182F7	|
 	TAX                           ;$0182FB	|
 	LDA.W #$0020                  ;$0182FC	|
 	STA.W Helper_HP                   ;$0182FF	|
@@ -2580,7 +2580,7 @@ CODE_819475:
 	ADC.B $08                     ;$01947D	|
 	TAX                           ;$01947F	|
 	LDA.W #$0009                  ;$019480	|
-	JSL.L CreateNewObject2        ;$019483	|
+	JSL.L CreateNewObject        ;$019483	|
 	PLX                           ;$019487	|
 	TAY                           ;$019488	|
 	BMI CODE_81942F               ;$019489	|
@@ -5827,7 +5827,7 @@ CODE_01ABAC:
 	LDX.B $04                     ;$01ABEA	|
 	LDY.B $06                     ;$01ABEC	|
 	LDA.W #$0009                  ;$01ABEE	|
-	JSL.L CreateNewObject2        ;$01ABF1	|
+	JSL.L CreateNewObject        ;$01ABF1	|
 
 CODE_01ABF5:
 	LDY.B $4D                     ;$01ABF5	|

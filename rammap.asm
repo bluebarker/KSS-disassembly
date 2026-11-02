@@ -146,7 +146,36 @@ UpdateStatusBar: skip 2
 CurrentStatusBar: skip 2
 
 ; Unidentified
-skip 75
+skip $B9-$B5
+
+; === $7E00B9 ===
+; 2 bytes
+; Lives count to display on HUD.
+; This is always updated to match the current lives number saved in $737A.
+HUD_Lives: skip 2
+
+; === $7E00BB ===
+; 2 bytes
+; Kirby HP count to display on HUD
+; This isn't directly equal to the actual HP value in $737C as this is the value to represent in the HP meter.
+HUD_KirbyHP: skip 2
+
+; === $7E00BD ===
+; 2 bytes
+; Helper HP count to display on HUD
+; This isn't directly equal to the actual HP value in $737E as this is the value to represent in the HP meter.
+HUD_HelperHP: skip 2
+
+; Unidentified
+skip $CF-$BF
+
+; === $7E00CF ===
+; 2 bytes
+; Timer for adjusting each unit in the HP bar
+HUD_HealthUnitTimer: skip 2
+
+; Unidentified
+skip $100-$D1
 
 ; === $7E0100 ===
 ; 1024 bytes
@@ -1165,33 +1194,283 @@ SA1_Stack: skip 128
 ; --== Save RAM ==--
 
 ORG $006000
-; WIP
 
 ; The following are temporary RAM addresses used when creating new objects.
 ; These paramters are written here first before being written to the object queue in routine InitializeNewObject ($008E9E)
-; 6000: ObjVar0_Temp
-; 6002: ObjVar1_Temp
-; 6004: ObjVar2_Temp
-; 6006: ObjVar3_Temp
-; 6008: ObjVar4_Temp
-; 600A: 623C,X
-; 600C: ObjXPos_Temp
-; 600E: ObjYPos_Temp
-; 6010: probably the object type - gets written to at code $009AF9 with a static number #$0040 (denotes intangible particle fx?)
-; also gets written to at code $03803D with a value from table $038061
-; 6012: similar as above, at around the same code
-; 6014: object list size?? stays static at 0x007A and game crashes if it is any different
 
-; 6028: Scratch RAM intended for 24-bit pointers. Used for the LongCall_6028 subroutine
-; 6240?: Partner ID, 0xFFFF if no partner is active
-; 6438: Kirby's animation frame 2 byte
-; 643A: Helper's animation frame 2 byte
-; 643C: Kirby's attack particles frame 8 byte (2 byte x 4)
-; 6444: Helper's attack particles frame 8 byte (2 byte x 4)
-; 6894: X coordinate of Kirby's sprite (object slot 2)
-; 690E: X coordinate of Kirby's sprite (object slot 2)
-; 6988: Kirby X pos (object slot 2)
-; 6A02: Kirby Y pos (object slot 2)
+; === $006000 - $006008 ===
+; 2 bytes each
+; Temporary storage for the variables of the next object that is being spawned.
+ObjVar0_Temp: skip 2
+ObjVar1_Temp: skip 2
+ObjVar2_Temp: skip 2
+ObjVar3_Temp: skip 2
+ObjVar4_Temp: skip 2
+
+; === $00600A ===
+; 2 bytes
+; Unsure: 623C,X
+skip 2
+
+; === $00600C - $00600E ===
+; 2 bytes each
+; Temporary storage for the X and Y spawn positions of the next object that is being spawned.
+ObjXPos_Temp: skip 2
+ObjYPos_Temp: skip 2
+
+; === $006010 - $006012 ===
+; 2 bytes each
+; Minimum and maximum slot to use when allocating a new object
+ObjSlotMinimum: skip 2
+ObjSlotMaximum: skip 2
+
+; === $006014 ===
+; 2 bytes
+; Head of the object linked list.
+; Always set to 0x007D when the object list is initialized
+; This is also essentially the max object count * 2
+; Max object count is always set to 61
+;  In this case: 61 * 2 = 0x007A
+ObjLinkedListStart: skip 2
+
+; === $006016 ===
+; 2 bytes
+; Set to 0x007E on object initialization but never actually used??
+skip 2
+
+; === $006018 ===
+; 2 bytes
+; Next object to be processed (temp inside ProcessObjects: $008FF2)
+ObjNext: skip 2
+
+; Unidentified
+skip $6028-$601A
+
+; === $006028 ===
+; 3 bytes
+; Scratch RAM intended for 24-bit pointers.
+; Used for the LongCall_6028 subroutine.
+LongCallPointer: skip 3
+
+; Unidentified
+skip $603C-$602B
+
+; The following are all tables for every object currently being executed.
+; The size of each table is dependent on the maximum number of objects.
+!Max_Obj_Count = 61
+
+; === $00603C ===
+; Next object in the linked list.
+Obj_NextInList: skip !Max_Obj_Count*2
+; 60b6  minimum obj slot address? 0x0002
+skip 2
+; 60b8  this number will point to another number in the list. This number also gets written to $6018 briefly
+skip 2
+; 60ba  always 0xFFFF? gets written to $601A
+skip 2
+
+; === $0060BC ===
+; Undocumented table
+skip !Max_Obj_Count*2
+; 6136  ?
+skip 2
+; 6138  ?
+skip 2
+; 613A  ?
+skip 2
+
+; === $00613C ===
+; Undocumented table
+skip !Max_Obj_Count*2
+; 61B6  ?
+skip 2
+; 61B8  ?
+skip 2
+; 61BA  ?
+skip 2
+
+; === $0061BC ===
+; Undocumented table
+skip !Max_Obj_Count*2
+; 6236  ?
+skip 2
+; 6238  ?
+skip 2
+; 623A  ?
+skip 2
+
+; === $00623C ===
+; Undocumented table
+skip !Max_Obj_Count*2
+; 62B6  ?
+skip 2
+; 62B8  ?
+skip 2
+; 62BA  ?
+skip 2
+
+; === $0062BC ===
+; Set to 8000 if object is invalid?
+skip !Max_Obj_Count*2
+; 6336  ?
+skip 2
+; 6338  ?
+skip 2
+; 633A  ?
+skip 2
+
+; === $00633C ===
+; Tick callback address
+Obj_TickCallbackAddr: skip !Max_Obj_Count*2
+
+; === $0063B6 ===
+; Tick callback bank
+; Set to 8000 to disable the tick callback
+Obj_TickCallbackBank: skip !Max_Obj_Count*2
+; 6430  ?
+skip 2
+; 6432  ?
+skip 2
+; 6434  ?
+skip 2
+
+; === $006436 ===
+; Object pose (aka animation frame)
+Obj_Pose: skip !Max_Obj_Count*2
+; These are always set to 0xFFFF(?):
+; 64B0  ?
+skip 2
+; 64B2  ?
+skip 2
+; 64B4  ?
+skip 2
+
+; === $0064B6 ===
+; Undocumented table
+skip !Max_Obj_Count*2
+; 6530  ?
+skip 2
+; 6532  ?
+skip 2
+; 6534  ?
+skip 2
+
+; === $006536 ===
+; Object spritemap address
+; Setting as 8000 will make it so the object is no longer drawn
+Obj_SpriteMapAddr: skip !Max_Obj_Count*2
+
+; === $0065B0 ===
+; Object spritemap bank
+Obj_SpriteMapBank: skip !Max_Obj_Count*2
+; 662A  ?
+skip 2
+; 662C  ?
+skip 2
+; 662E  ?
+skip 2
+
+; === $006630 ===
+; Object draw callback
+Obj_DrawCallback: skip !Max_Obj_Count*2
+
+; === $0066AA ===
+; Unknown callback. Move callback?
+Obj_UnknownCallback: skip !Max_Obj_Count*2
+
+; === $006724 ===
+; Script sleep timer for the indexed object
+Obj_ScriptSleepTimer: skip !Max_Obj_Count*2
+
+; === $00679E ===
+; Script program counter for the indexed object
+Obj_ScriptProgramCounter: skip !Max_Obj_Count*2
+
+; === $006818 ===
+; Script program bank for the indexed object
+; Extra flags in high byte: 
+; - 80: skip a bunch of processing
+; - 40: "Script" is actually "native ASM" (directly calls routines to wait/yield, etc)
+; - 20: ActionScript/ASM runs on the S-CPU
+Obj_ScriptProgramBank: skip !Max_Obj_Count*2
+
+; === $006892 ===
+; Mirror of the Object X Position list which starts at $006986
+; Unsure what the use case is?
+Obj_XPositionMirror: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $6988
+
+; === $00690C ===
+; Mirror of the Object Y Position list which starts at $006A00
+; Unsure what the use case is?
+Obj_YPositionMirror: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $690E
+
+; === $006986 ===
+; Object X Position 
+Obj_XPosition: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $6894
+
+; === $006A00 ===
+; Object Y Position 
+Obj_YPosition: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $6894
+
+; === $006A7A ===
+; Object X Position fraction (aka subpixels, 1/65536 units)
+Obj_XPositionFraction: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $6A7C
+
+; === $006AF4 ===
+; Object Y Position fraction (aka subpixels, 1/65536 units)
+Obj_YPositionFraction: skip !Max_Obj_Count*2
+; Kirby is always in object slot 2, therefore his X position will always be located at $6AF6
+
+; === $006B6E ===
+; Undocumented table
+skip !Max_Obj_Count*2
+
+; === $006BE8 ===
+; Undocumented table
+skip !Max_Obj_Count*2
+
+; === $006C62 ===
+; Undocumented table
+skip !Max_Obj_Count*2
+
+; === $006CDC ===
+; Undocumented table
+skip !Max_Obj_Count*2
+
+; === $006D56 - $0071A0 ===
+; All object variable tables
+; $006D56
+Obj_VAR0: skip !Max_Obj_Count*2
+; $006DD0
+Obj_VAR1: skip !Max_Obj_Count*2
+; $006E4A
+Obj_VAR2: skip !Max_Obj_Count*2
+; $006EC4
+Obj_VAR3: skip !Max_Obj_Count*2
+; $006F3E
+Obj_VAR4: skip !Max_Obj_Count*2
+; $006FB8
+Obj_VAR5: skip !Max_Obj_Count*2
+; $007032
+Obj_VAR6: skip !Max_Obj_Count*2
+; $0070AC
+Obj_VAR7: skip !Max_Obj_Count*2
+; $007126
+Obj_VAR8: skip !Max_Obj_Count*2
+; $0071A0
+Obj_VAR9: skip !Max_Obj_Count*2
+
+; Unidentified
+skip 48
+
+; === $00724A ===
+Obj_ScriptWorkRegister: skip !Max_Obj_Count*2
+
 ; 6EC4: Currently selected song in sound test
 ; 6F3E: Currently selected SFX in sound test
 ; 7368: Camera lock 2 byte

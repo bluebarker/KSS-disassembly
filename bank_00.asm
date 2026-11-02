@@ -1896,7 +1896,7 @@ CODE_FL_008E3D:					;			|
 	BPL CODE_FL_008E3D			;$008E57	|
 	STZ $305B					;$008E59	|
 	STZ $305D					;$008E5C	|
-	STZ Camera_Lock					;$008E5F	|
+	STZ Camera_Lock				;$008E5F	|
 	JSR CODE_FL_00A985			;$008E62	|
 	JSR CODE_FL_00A9C5			;$008E65	|
 	SEP #$20					;$008E68	|
@@ -3868,7 +3868,7 @@ CODE_FL_009B34:					;			|
 	PLX							;$009B5D	|
 	PLA							;$009B5E	|
 	AND #$7FFF					;$009B5F	|
-	JMP CreateNewObject2			;$009B62	|
+	JMP CreateNewObject			;$009B62	|
 
 CODE_FL_009B65:					;-----------|
 	JSR AS_ReadByte			;$009B65	|
@@ -3911,7 +3911,7 @@ CODE_FL_009B91:					;-----------|
 	STZ $6008					;$009BB2	|
 	TYA							;$009BB5	|
 	AND #$7FFF					;$009BB6	|
-	JMP CreateNewObject2			;$009BB9	|
+	JMP CreateNewObject			;$009BB9	|
 
 CODE_FL_009BBC:					;-----------|
 	JSR AS_ReadWord			;$009BBC	|
@@ -8450,7 +8450,7 @@ CODE_FL_00BD60:
 CODE_FL_00BD70:					;-----------|
 	PHA							;$00BD70	|
 	LDA #$0000					;$00BD71	|
-	JSL CreateNewObject			;$00BD74	|
+	JSL CreateDummyObject			;$00BD74	|
 	CMP #$FFFF					;$00BD78	|
 CODE_FL_00BD7B:					;			|
 	BEQ CODE_FL_00BD7B			;$00BD7B	|
@@ -9319,7 +9319,7 @@ CODE_FL_00C518:					;-----------| Normal level, submode 1
 	TAX							;$00C52E	|
 	TAY							;$00C52F	|
 	LDA #$0000					;$00C530	|
-	JSL CreateNewObject2		;$00C533	|
+	JSL CreateNewObject		;$00C533	|
 	LDA #$0000					;$00C537	|
 	STA $73AE					;$00C53A	|
 	LDA Current_Room			;$00C53D	|
