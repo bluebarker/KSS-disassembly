@@ -1398,33 +1398,33 @@ Obj_ScriptProgramBank: skip !Max_Obj_Count*2
 ; Mirror of the Object X Position list which starts at $006986
 ; Unsure what the use case is?
 Obj_XPositionMirror: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $6988
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6894
 
 ; === $00690C ===
 ; Mirror of the Object Y Position list which starts at $006A00
 ; Unsure what the use case is?
 Obj_YPositionMirror: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $690E
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $690E
 
 ; === $006986 ===
 ; Object X Position 
 Obj_XPosition: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $6894
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6988
 
 ; === $006A00 ===
 ; Object Y Position 
 Obj_YPosition: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $6894
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6A02
 
 ; === $006A7A ===
 ; Object X Position fraction (aka subpixels, 1/65536 units)
 Obj_XPositionFraction: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $6A7C
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6A7C
 
 ; === $006AF4 ===
 ; Object Y Position fraction (aka subpixels, 1/65536 units)
 Obj_YPositionFraction: skip !Max_Obj_Count*2
-; Kirby is always in object slot 2, therefore his X position will always be located at $6AF6
+; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6AF6
 
 ; === $006B6E ===
 ; Undocumented table
@@ -1471,27 +1471,192 @@ skip 48
 ; === $00724A ===
 Obj_ScriptWorkRegister: skip !Max_Obj_Count*2
 
-; 6EC4: Currently selected song in sound test
-; 6F3E: Currently selected SFX in sound test
-; 7368: Camera lock 2 byte
-; 737C: Kirby HP  2 byte
-; 737E: Helper HP 2 byte
-; 7380: Kirby Max HP 2 byte
-; 7382: Helper Max HP 2 byte
-; 7384: Kirby Copy Ability Panel Graphics
-; 7385: Temp graphic on ability panel
-; 7386: Helper panel
-; 7387: Temp helper panel
-; 7388: The temporary graphic number displayed on Kirby's copy ability panel ($7387 is this value plus 0x20
-; 7389:  The temporary graphic number displayed on Kirby's copy ability panel, previous frame. Used to determine whether to update the image
-; 738A: The display time of the temporary graphics for Kirby's copy ability panel 2 byte
-; 738C: A flag indicating whether to temporarily replace the graphics on the helper's copy ability panel.
-; 738D: The temporary graphic number displayed on the Helper's copy ability panel (if $738C is anything other than 0x00, it becomes "0xFF = Help!")
+skip $7368-$72C4
+
+; === $007368 ===
+; 2 bytes
+; Locks the camera in place if set to anything greater than 0x0000
+CameraLock: skip 2
+
+; Unidentified
+skip $7376-$736A
+
+; === $007376 ===
+; 4 bytes
+; Current score
+PlayerScore: skip 4
+
+; === $00737A ===
+; 2 bytes
+; Current lives count
+Lives: skip 2
+
+; === $00737C - $00737E ===
+; 2 bytes each
+; Kirby and Helper's HP
+KirbyHP: skip 2
+HelperHP: skip 2
+
+; === $007380 - $007382 ===
+; 2 bytes each
+; Kirby and Helper's Max HP
+KirbyMaxHP: skip 2
+HelperMaxHP: skip 2
+
+; === $007384 ===
+; 1 byte
+; Kirby's copy ability panel graphic
+KirbyAbilityPanelGFX: skip 1
+
+; === $007385 ===
+; 1 byte
+; Temporary graphic for Kirby's copy ability panel graphic
+; i.e. Ouch!, Invincible, etc.
+KirbyAbilityTempPanelGFX: skip 1
+
+; === $007386 ===
+; 1 byte
+; Helper's copy ability panel graphic
+HelperAbilityPanelGFX: skip 1
+
+; === $007387 ===
+; 1 byte
+; Temporary graphic for Helper's copy ability panel graphic
+; i.e. Ouch!, Invincible, etc.
+HelperAbilityTempPanelGFX: skip 1
+
+; === $007388 ===
+; 1 byte
+; The temporary graphic number displayed on Kirby's copy ability panel
+; ($7384 is this value plus 0x20)
+; 00 - Default
+; 01 - クリア (Clear, unused)
+; 02 - Mix
+; 03 - Super
+; 04 - Cannon
+; 05 - Trolley
+; 06 - ゴール (Goal, unused)
+; 07 - Wheelie Rider
+; 08 - Ouch
+; 09 - I'm Hit.
+; 0A - Let's Go
+; 0B - 怒 (Anger, unused)
+; 0C - No good!
+; 0D - Warp Star
+; 0E-FF - Blank
+KirbyAbilityTempPanelIndex: skip 1
+
+; === $007389 ===
+; 1 byte
+; Same as above, except written to a frame after $7388 has changed
+KirbyAbilityTempPanelIndexUpdate: skip 1
+
+; === $00738A ===
+; 2 bytes
+; The display time of the temporary graphics for Kirby's ability panel
+KirbyAbilityTempPanelTimer: skip 2
+
+; === $00738C ===
+; 1 byte
+; The temporary graphic number displayed on Helper's copy ability panel
+; Anything greater than 00 will make the panel the "Help" graphic
+; Otherwise it will be Default
+HelperAbilityTempPanelIndex: skip 1
+
+; === $00738D ===
+; 1 byte
+; Same as above, except written to a frame after $738C has changed
+HelperAbilityTempPanelIndexUpdate: skip 1
+
+; Unidentified
+skip 2
+
+; === $007390 ===
+; 2 bytes
+; Current game state.
+; The game state can be one of the below values:
+!GAMESTATE_TITLESCREEN             = 00
+!GAMESTATE_CORKBOARD               = 01
+!GAMESTATE_TUTORIAL                = 02
+!GAMESTATE_MAINLEVEL               = 03
+!GAMESTATE_GAMEOVER                = 04
+!GAMESTATE_SUBGAMETITLE            = 05
+!GAMESTATE_SUBGAMEMAP              = 06
+!GAMESTATE_SUBGAMEOPENING          = 07
+!GAMESTATE_SUBGAMECREDITS          = 08
+!GAMESTATE_DYNAGOAL                = 09
+!GAMESTATE_SOUNDTEST               = 0A
+!GAMESTATE_MINIGAME                = 0B
+!GAMESTATE_ARENA                   = 0C
+!GAMESTATE_DYNASECRET              = 0D
+!GAMESTATE_DYNAMAPFIGHT            = 0E
+!GAMESTATE_TITLESUBGAMEPREVIEW     = 0F
+!GAMESTATE_TITLEMINIGAMEPREVIEW    = 10
+CurrentGameState: skip 2
+
+; === $007392 ===
+; 2 bytes
+; Reloads the current room on the next frame if this value is set to anything greater than 0x0000
+ReloadRoom: skip 2
+
+; === $007394 ===
+; 2 bytes
+; A byte that is set to indicate if a warp will take you to a special area
+; 01 - Dyna Blade map (regardless of subgame)
+; 02 - Game Over
+; 03 - Dyna/MWW Goal
+; 04 - Clear Subgame
+LoadSpecialWarpDest: skip 2
+
+; === $007396 ===
+; 2 bytes
+; Set to 0x0000 to load back to Dyna/MWW map on unpause
+ReloadMapOnUnpause: skip 2
+
+; === $007398 ===
+; 2 bytes
+; The game state that the title screen demo is currently using
+; This is not the same as the normal game state address
+; 00 - Subgame Title
+; 01 - Level
+; 02 - Minigame
+; 03 - Subgame Cutscene
+TitleDemo_GameState: skip 2
+
+; === $00739A ===
+; 2 bytes
+; Set to 0x0001 while the title screen demos play, otherwise set to 0x0000.
+; If set to 0x0001:
+;  Inputs are not read until the fade from black while loading a room has completed
+;  Pressing any button on a subgame title screen will attempt to load the main title screen
+TitleDemo_Flag: skip 2
+
+; === $00739C ===
+; 1 byte
+; Current title screen demo
+; Increases by 1 every time a title screen demo finishes
+TitleDemo_CurrentDemo: skip 1
+
+; === $00739D ===
+; 1 byte
+; 0x02 is written to this value but otherwise never used?
+skip 1
+
+; === $00739E ===
+; 2 bytes
+; Current index in the input list for Player 1
+;  Player 2 is never used (It is always CPU-controlled)
+TitleDemo_InputIndex: skip 2
+
+; === $0073A0 ===
+; 2 bytes
+; Timer for Revenge of Meta Knight
+RoMK_Timer: skip 2
+
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life
 
 ; 7a04: count of enemies defeated before rolling a food drop
-
 ; corkboard:
 ; 7a65: current dyna blade level (may be limited to map? double check)
 ; 7a85: number of games unlocked

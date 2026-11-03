@@ -1,9 +1,5 @@
 ; Slowly bringing all of these labels over to the other file, which will be the main one going forward
 
-; Game Status
-CurrentGameState   = $7390
-
-
 ; Save Data
 SaveFile_Number        = $7F00     ; 00 for File 1, 01 for File 2, 02 for File 3
 SaveFile_Offset        = $7AE3     ; 00 for File 1, 4F for File 2, 9E for File 3
@@ -13,10 +9,6 @@ SaveFile_GamesFinished = $7F0A     ; The subgames that have been completed in th
 SB_GCO_Boss_Status     = $7AE5
 
 ; Status Elements
-PlayerScore        = $7376
-Lives              = $737A
-Kirby_HP           = $737C
-Helper_HP          = $737E
 Boss_I_Frames      = $78FC
 Boss_HP            = $7A19
 Boss_Max_HP        = $7A1B
@@ -36,24 +28,12 @@ Shooting_Ability   = $7577     ; Sidescrolling Nova shmup, byte set to 01 will e
 RoMK_Cutscenes_Done    = $771D     ; Persists between rooms, 3 bytes large
 
 ; Timers
-RoMK_Timer         = $73A0
 ;Gourmet Race Timer (unsure)
 Timer_Minutes      = $7A2D
 Timer_Seconds      = $7A2C
 Timer_Milliseconds = $7A2B
 
-; Coordinates and Positions
-Kirby_X_Pos            = $6988
-Kirby_Y_Pos            = $6A02
-
-
-Camera_Lock            = $7368
-
 Intangible_to_items    = $744B
-
-Reload_Room                = $7392     ; If this byte is set to 01, the current room is immediately reloaded
-Load_Special_Dest          = $7394     ; Set to 01 upon entering a door to go to Dyna Blade map, 02 to Game Over, 03 to reach MWW goal, 04 to beat subgame
-Reload_Map_On_Unpause      = $7396     ; Set to 00 to load back to map on unpause
 
 ;Milky Way Wishes 
 MWW_Current_Planet         = $7A6D

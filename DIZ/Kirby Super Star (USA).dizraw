@@ -157,7 +157,7 @@
           <Value exs:type="ns1:Label" Name="Kirby_Y_Pos" Comment="" />
         </sys:Item>
         <sys:Item Key="29544">
-          <Value exs:type="ns1:Label" Name="Camera_Lock" Comment="" />
+          <Value exs:type="ns1:Label" Name="CameraLock" Comment="" />
         </sys:Item>
         <sys:Item Key="29558">
           <Value exs:type="ns1:Label" Name="Score" Comment="" />
@@ -166,16 +166,16 @@
           <Value exs:type="ns1:Label" Name="Lives" Comment="" />
         </sys:Item>
         <sys:Item Key="29564">
-          <Value exs:type="ns1:Label" Name="Kirby_HP" Comment="" />
+          <Value exs:type="ns1:Label" Name="KirbyHP" Comment="" />
         </sys:Item>
         <sys:Item Key="29566">
-          <Value exs:type="ns1:Label" Name="Helper_HP" Comment="" />
+          <Value exs:type="ns1:Label" Name="HelperHP" Comment="" />
         </sys:Item>
         <sys:Item Key="29584">
           <Value exs:type="ns1:Label" Name="CurrentGameState" Comment="" />
         </sys:Item>
         <sys:Item Key="29586">
-          <Value exs:type="ns1:Label" Name="Reload_Room" Comment="" />
+          <Value exs:type="ns1:Label" Name="ReloadRoom" Comment="" />
         </sys:Item>
         <sys:Item Key="29588">
           <Value exs:type="ns1:Label" Name="Reload_Map_Unpause" Comment="" />

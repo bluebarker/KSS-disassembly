@@ -331,7 +331,7 @@ CODE_8182A6:
 	JSL.L CreateNewObject        ;$0182F7	|
 	TAX                           ;$0182FB	|
 	LDA.W #$0020                  ;$0182FC	|
-	STA.W Helper_HP                   ;$0182FF	|
+	STA.W HelperHP                   ;$0182FF	|
 	RTL                           ;$018302	|
 
 CODE_FL_018303:
@@ -2074,7 +2074,7 @@ CODE_8190B6:
 	JML.L WriteToDMABuffer        ;$0190D3	|
 	STZ.B $00                     ;$0190D7	|
 	INC.B $00                     ;$0190D9	|
-	LDA.W Load_Special_Dest      ;$0190DB	|
+	LDA.W LoadSpecialWarpDest     ;$0190DB	|
 	CMP.W #$0000                  ;$0190DE	|
 	BNE CODE_819145               ;$0190E1	|
 	STZ.B $14                     ;$0190E3	|
@@ -2092,10 +2092,10 @@ CODE_8190B6:
 	TAY                           ;$0190FE	|
 	LDA.B [$14],Y                 ;$0190FF	|
 	CLC                           ;$019101	|
-	ADC.W Current_Room           ;$019102	|
-	ADC.W Current_Room           ;$019105	|
-	ADC.W Current_Room           ;$019108	|
-	ADC.W Current_Room           ;$01910B	|
+	ADC.W Current_Room            ;$019102	|
+	ADC.W Current_Room            ;$019105	|
+	ADC.W Current_Room            ;$019108	|
+	ADC.W Current_Room            ;$01910B	|
 	TAY                           ;$01910E	|
 	LDA.B [$14],Y                 ;$01910F	|
 	STA.B $18                     ;$019111	|
@@ -2131,7 +2131,7 @@ CODE_819145:
 	RTL                           ;$019145	|
 
 CODE_FL_019146:
-	LDY.W Reload_Room            ;$019146	|
+	LDY.W ReloadRoom            ;$019146	|
 	BNE CODE_8191AF               ;$019149	|
 	LDY.W $3334                   ;$01914B	|
 	BEQ CODE_8191AF               ;$01914E	|
@@ -2179,7 +2179,7 @@ CODE_819193:
 	STZ.W $3334                   ;$0191A2	|
 	STZ.W $73A4                   ;$0191A5	|
 	JSR.W CODE_FN_01A5B9          ;$0191A8	|
-	INC.W Reload_Room                   ;$0191AB	|
+	INC.W ReloadRoom                   ;$0191AB	|
 
 CODE_8191AE:
 	RTL                           ;$0191AE	|
@@ -2272,7 +2272,7 @@ CODE_81924B:
 	LDX.W #$0003                  ;$01924B	|
 
 CODE_81924E:
-	STX.W Load_Special_Dest     ;$01924E	|
+	STX.W LoadSpecialWarpDest     ;$01924E	|
 	STA.W Current_Room           ;$019251	|
 
 CODE_819254:
@@ -2506,7 +2506,7 @@ CODE_8193F7:
 	RTL                           ;$0193FD	|
 
 CODE_8193FE:
-	LDA.W Camera_Lock                   ;$0193FE	|
+	LDA.W CameraLock                   ;$0193FE	|
 	BEQ CODE_819404               ;$019401	|
 	RTL                           ;$019403	|
 
@@ -3558,11 +3558,11 @@ CODE_FL_019B9F:
 
 CODE_819BA7:
 	PHX                           ;$019BA7	|
-	LDA.W Kirby_Y_Pos                   ;$019BA8	|
+	LDA.W Obj_YPosition+2                   ;$019BA8	|
 	CLC                           ;$019BAB	|
 	ADC.L DATA16_019C56,X          ;$019BAC	|
 	TAY                           ;$019BB0	|
-	LDA.W Kirby_X_Pos                   ;$019BB1	|
+	LDA.W Obj_XPosition+2                   ;$019BB1	|
 	CLC                           ;$019BB4	|
 	ADC.L DATA16_019C48,X          ;$019BB5	|
 	TAX                           ;$019BB9	|
@@ -3577,30 +3577,29 @@ CODE_819BA7:
 	BRA CODE_819C13               ;$019BCB	|
 
 CODE_819BCD:
-	LDA.W #$9E21                  ;$019BCD	|
-	LDX.W #$0001                  ;$019BD0	|
-	JSL.L SA1_ExecuteSNES              ;$019BD3	|
+	%LoadLongToAX(CODE_FN_019E21)
+	JSL.L SA1_ExecuteSNES         ;$019BD3	|
 	PLX                           ;$019BD7	|
 	LDA.B $49                     ;$019BD8	|
 	BEQ CODE_819C13               ;$019BDA	|
-	LDA.W Kirby_Y_Pos                   ;$019BDC	|
+	LDA.W Obj_YPosition+2         ;$019BDC	|
 	CLC                           ;$019BDF	|
-	ADC.L DATA16_019C56,X          ;$019BE0	|
+	ADC.L DATA16_019C56,X         ;$019BE0	|
 	TAY                           ;$019BE4	|
-	LDA.W Kirby_X_Pos                   ;$019BE5	|
+	LDA.W Obj_XPosition+2         ;$019BE5	|
 	CLC                           ;$019BE8	|
-	ADC.L DATA16_019C48,X          ;$019BE9	|
+	ADC.L DATA16_019C48,X         ;$019BE9	|
 	BRA CODE_819C35               ;$019BED	|
 
 CODE_819BEF:
 	PHX                           ;$019BEF	|
-	LDA.W Kirby_Y_Pos                   ;$019BF0	|
+	LDA.W Obj_YPosition+2         ;$019BF0	|
 	CLC                           ;$019BF3	|
-	ADC.L DATA16_019C56,X          ;$019BF4	|
+	ADC.L DATA16_019C56,X         ;$019BF4	|
 	TAY                           ;$019BF8	|
-	LDA.W Kirby_X_Pos                   ;$019BF9	|
+	LDA.W Obj_XPosition+2         ;$019BF9	|
 	SEC                           ;$019BFC	|
-	SBC.L DATA16_019C48,X          ;$019BFD	|
+	SBC.L DATA16_019C48,X         ;$019BFD	|
 	TAX                           ;$019C01	|
 	JSL.L CODE_FL_01CE20          ;$019C02	|
 	CMP.W #$0070                  ;$019C06	|
@@ -3616,19 +3615,18 @@ CODE_819C13:
 	RTL                           ;$019C14	|
 
 CODE_819C15:
-	LDA.W #$9E21                  ;$019C15	|
-	LDX.W #$0001                  ;$019C18	|
-	JSL.L SA1_ExecuteSNES              ;$019C1B	|
+	%LoadLongToAX(CODE_FN_019E21)
+	JSL.L SA1_ExecuteSNES         ;$019C1B	|
 	PLX                           ;$019C1F	|
 	LDA.B $49                     ;$019C20	|
 	BEQ CODE_819C13               ;$019C22	|
-	LDA.W Kirby_Y_Pos                   ;$019C24	|
+	LDA.W Obj_YPosition+2         ;$019C24	|
 	CLC                           ;$019C27	|
-	ADC.L DATA16_019C56,X          ;$019C28	|
+	ADC.L DATA16_019C56,X         ;$019C28	|
 	TAY                           ;$019C2C	|
-	LDA.W Kirby_X_Pos                   ;$019C2D	|
+	LDA.W Obj_XPosition+2         ;$019C2D	|
 	SEC                           ;$019C30	|
-	SBC.L DATA16_019C48,X          ;$019C31	|
+	SBC.L DATA16_019C48,X         ;$019C31	|
 
 CODE_819C35:
 	TAX                           ;$019C35	|
@@ -3896,6 +3894,8 @@ CODE_FN_019E13:
 	AND.W #$03FF                  ;$019E1A	|
 	CMP.W #$0370                  ;$019E1D	|
 	RTS                           ;$019E20	|
+
+CODE_FN_019E21:
 	JSR.W CODE_FN_019E2B          ;$019E21	|
 	ROL A                         ;$019E24	|
 	AND.W #$0001                  ;$019E25	|
@@ -4523,7 +4523,7 @@ CODE_81A287:
 CODE_81A288:
 	LDA.W $7A97                   ;$01A288	|
 	BNE CODE_81A298               ;$01A28B	|
-	LDA.W Camera_Lock                   ;$01A28D	|
+	LDA.W CameraLock                   ;$01A28D	|
 	BNE CODE_81A298               ;$01A290	|
 	JSR.W CODE_FN_01A2FD          ;$01A292	|
 	JSR.W CODE_FN_01A42F          ;$01A295	|
@@ -5566,7 +5566,7 @@ CODE_JP_01A9EB:
 	JMP.W CODE_JP_01AA9B          ;$01A9F2	|
 
 CODE_81A9F5:
-	LDA.W Camera_Lock                   ;$01A9F5	|
+	LDA.W CameraLock                   ;$01A9F5	|
 	BNE CODE_01AA36               ;$01A9F8	|
 	LDA.W $73E9,Y                 ;$01A9FA	|
 	LDX.W #$0000                  ;$01A9FD	|
@@ -5767,7 +5767,7 @@ DATA16_01AB65:
     dw $0108,$00F0,$00D8,$00C0    ;$01AB65 |
 
 CODE_JP_01AB6D:
-	LDA.W Camera_Lock                   ;$01AB6D	|
+	LDA.W CameraLock                   ;$01AB6D	|
 	BEQ CODE_81AB75               ;$01AB70	|
 	JMP.W CODE_81AC01             ;$01AB72	|
 
@@ -5893,7 +5893,7 @@ CODE_81AC68:
 	JMP.W CODE_JP_01B619          ;$01AC68	|
 
 CODE_01AC6B:
-	LDA.W Camera_Lock                   ;$01AC6B	|
+	LDA.W CameraLock                   ;$01AC6B	|
 	BNE CODE_81AC55               ;$01AC6E	|
 	LDA.B $00                     ;$01AC70	|
 	AND.W #$1FFF                  ;$01AC72	|
@@ -6923,7 +6923,7 @@ CODE_01B61C:
 	STA.W $3031                   ;$01B64A	|
 	LDA.W #$0001                  ;$01B64D	|
 	JSL.L CODE_FL_00AD79          ;$01B650	|
-	LDA.W Camera_Lock                   ;$01B654	|
+	LDA.W CameraLock                   ;$01B654	|
 	BNE CODE_JP_01B66F            ;$01B657	|
 	LDA.B $00                     ;$01B659	|
 	AND.W #$FFFC                  ;$01B65B	|
@@ -8396,7 +8396,7 @@ CODE_01C1F4:
 	RTS                           ;$01C216	|
 
 CODE_FN_01C217:
-	LDA.W Camera_Lock                   ;$01C217	|
+	LDA.W CameraLock                   ;$01C217	|
 	BNE CODE_81C239               ;$01C21A	|
 	LDA.W $3324                   ;$01C21C	|
 	BMI CODE_81C239               ;$01C21F	|
@@ -10182,8 +10182,7 @@ CODE_FL_01CDF3:
     JSL.L CODE_FL_01CE20          ;$01CDF5 |
     CMP.W #$0070                  ;$01CDF9 |
     BNE CODE_01CE1C               ;$01CDFC |
-    LDA.W #$9E21                  ;$01CDFE |
-    LDX.W #$0001                  ;$01CE01 |
+	%LoadLongToAX(CODE_FN_019E21)
     JSL.L SA1_ExecuteSNES         ;$01CE04 |
     PLY                           ;$01CE08 |
     SEC                           ;$01CE09 |
@@ -15461,7 +15460,7 @@ WriteStatusPal: ;-----------| Subroutine to write N colors to the status bar pal
 
 CODE_FL_01FBD0:					;-----------| Subroutine which most likely checks whether to update Kirby's HP bar.
 	STX $14						;$01FBD0	|
-	LDA Kirby_HP					;$01FBD2	|
+	LDA KirbyHP					;$01FBD2	|
 	BPL CODE_FL_01FBDA			;$01FBD5	|
 	LDA #$0000					;$01FBD7	|
 CODE_FL_01FBDA: ;			|
@@ -15542,7 +15541,7 @@ CODE_FL_01FC60: 				;			|
 
 CODE_FL_01FC62:					;-----------| Subroutine which most likely checks whether to update the partner's HP bar.
 	STX $14						;$01FC62	|
-	LDA Helper_HP					;$01FC64	|
+	LDA HelperHP					;$01FC64	|
 	BPL CODE_FL_01FC6C			;$01FC67	|
 	LDA #$0000					;$01FC69	|
 CODE_FL_01FC6C: ;			|
