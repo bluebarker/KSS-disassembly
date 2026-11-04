@@ -33,6 +33,10 @@ Timer_Minutes      = $7A2D
 Timer_Seconds      = $7A2C
 Timer_Milliseconds = $7A2B
 
+; Coordinates and Positions
+Kirby_X_Pos            = $6988
+Kirby_Y_Pos            = $6A02
+
 Intangible_to_items    = $744B
 
 ;Milky Way Wishes 

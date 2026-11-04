@@ -11330,121 +11330,121 @@ SendSPCBlock:					;```````````| Entry point for the SPC data upload loop.
 	RTS							;$00D69C	|
 
 
-SFXPointers_LUT:				;$00D69D	| Pointers to SFX data.
-	dl $E5087F					; 01		| For some reason the table is read at an offset, so index 00 is technically the code at $00D69A though X is always greater than 0.
-	dl $EC9E23					; 02
-	dl $E16AFE					; 03
-	dl $E4E194					; 04
-	dl $E1D2F9					; 05
-	dl $EC337B					; 06
-	dl $EABA3C					; 07
-	dl $E346AC					; 08
-	dl $E94F4B					; 09
-	dl $E13D82					; 0A
-	dl $E26001					; 0B
-	dl $DB5C4B					; 0C
-	dl $EAB7D2					; 0D
-	dl $EBCB97					; 0E
-	dl $E39EA8					; 0F
-	dl $E1E1A0					; 10
-	dl $E5CB74					; 11
-	dl $EA0571					; 12
-	dl $E2872D					; 13
-	dl $E7CF12					; 14
-	dl $E3890E					; 15
-	dl $EAB908					; 16
-	dl $E0F1F4					; 17
-	dl $EA62B6					; 18
-	dl $E5A5F0					; 19
-	dl $E7DFFB					; 1A
-	dl $E9EA36					; 1B
-	dl $E91CB5					; 1C
-	dl $E4C791					; 1D
-	dl $E57F9B					; 1E
-	dl $E37322					; 1F
-	dl $EA7FC7					; 20
-	dl $E5701D					; 21
-	dl $EA0C98					; 22
+SFXPointers_LUT:					;$00D69D	| Pointers to SFX data. For some reason the table is read at an offset, so index 00 is technically the code at $00D69A though X is always greater than 0.
+	dl $E5087F						; 01 - ($E5087F)
+	dl $EC9E23						; 02 - ($EC9E23)
+	dl $E16AFE						; 03 - ($E16AFE)
+	dl $E4E194						; 04 - ($E4E194)
+	dl $E1D2F9						; 05 - ($E1D2F9)
+	dl $EC337B						; 06 - ($EC337B)
+	dl $EABA3C						; 07 - ($EABA3C)
+	dl $E346AC						; 08 - ($E346AC)
+	dl $E94F4B						; 09 - ($E94F4B)
+	dl $E13D82						; 0A - ($E13D82)
+	dl $E26001						; 0B - ($E26001)
+	dl $DB5C4B						; 0C - ($DB5C4B)
+	dl $EAB7D2						; 0D - ($EAB7D2)
+	dl $EBCB97						; 0E - ($EBCB97)
+	dl $E39EA8						; 0F - ($E39EA8)
+	dl $E1E1A0						; 10 - ($E1E1A0)
+	dl $E5CB74						; 11 - ($E5CB74)
+	dl $EA0571						; 12 - ($EA0571)
+	dl $E2872D						; 13 - ($E2872D)
+	dl $E7CF12						; 14 - ($E7CF12)
+	dl $E3890E						; 15 - ($E3890E)
+	dl $EAB908						; 16 - ($EAB908)
+	dl $E0F1F4						; 17 - ($E0F1F4)
+	dl $EA62B6						; 18 - ($EA62B6)
+	dl $E5A5F0						; 19 - ($E5A5F0)
+	dl $E7DFFB						; 1A - ($E7DFFB)
+	dl $E9EA36						; 1B - ($E9EA36)
+	dl $E91CB5						; 1C - ($E91CB5)
+	dl $E4C791						; 1D - ($E4C791)
+	dl $E57F9B						; 1E - ($E57F9B)
+	dl $E37322						; 1F - ($E37322)
+	dl $EA7FC7						; 20 - ($EA7FC7)
+	dl $E5701D						; 21 - ($E5701D)
+	dl $EA0C98						; 22 - ($EA0C98)
 
-MusicPointers_LUT:				;$00D703	| Pointers to song data
-	dl $D60000					; 00 - ??? \ Both transferred to SPC at start of the game
-	dl $DE9CD5					; 01 - ??? /
+MusicPointers_LUT:					;$00D703	| Pointers to song data
+	dl $D60000						; 00 - ??? \ Both transferred to SPC at start of the game
+	dl $DE9CD5						; 01 - ??? /
   .sampleBanks
-	dl $ECA27B					; 02 - \ 
-	dl $DEC7E4					; 03 - |
-	dl $DDC599					; 04 - |
-	dl $DE16FC					; 05 - | Seem to change the sample bank for the song.
-	dl $DE86D9					; 06 - |
-	dl $E0C28B					; 07 - |
-	dl $E510C2					; 08 - |
-	dl $E22A32					; 09 - |
-	dl $DFB175					; 0A - /
+	dl $ECA27B						; 02 - 
+	dl $DEC7E4						; 03 - 
+	dl $DDC599						; 04 - 
+	dl $DE16FC						; 05 - 
+	dl $DE86D9						; 06 - 
+	dl $E0C28B						; 07 - 
+	dl $E510C2						; 08 - 
+	dl $E22A32						; 09 - 
+	dl $DFB175						; 0A - 
   .songData
-	dl $EC14EE					; 0B - Song 9
-	dl $E1F01B					; 0C - Song 16
-	dl $E1981D					; 0D - Song 42
-	dl $E83C18					; 0E - Song 21
-	dl $E393DD					; 0F - Song 8
-	dl $E51904					; 10 - Song 38
-	dl $E11ED7					; 11 - Song 11
-	dl $E1C44F					; 12 - Song 19
-	dl $E6FC75					; 13 - Song 10
-	dl $E3FE0C					; 14 - Song 20
-	dl $E4B608					; 15 - Song 18
-	dl $EAC873					; 16 - Song 58
-	dl $E73A57					; 17 - Song 17
-	dl $EA5CDE					; 18 - Song 59
-	dl $E6C382					; 19 - Song 5
-	dl $E46CCF					; 1A - Song 6
-	dl $E622D5					; 1B - Song 7
-	dl $E445FF					; 1C - Song 12
-	dl $E86155					; 1D - Song 22
-	dl $E97ACD					; 1E - Song 57
-	dl $E49B7A					; 1F - Song 1
-	dl $E86859					; 20 - Song 2
-	dl $E5392C					; 21 - Song 3
-	dl $E4D04A					; 22 - Song 22
-	dl $E7809E					; 23 - Song 15
-	dl $E33B52					; 24 - Song 14
-	dl $EA32B6					; 25 - Song 13
-	dl $EB0344					; 26 - Song 48
-	dl $E2AD67					; 27 - Song 50
-	dl $E1FE51					; 28 - Song 51
-	dl $E7E854					; 29 - Song 31
-	dl $EA42F9					; 2A - Song 29
-	dl $EEF770					; 2B - Song 30
-	dl $EBAE20					; 2C - Song 32
-	dl $E2380E					; 2D - Song 27
-	dl $E20000					; 2E - Song 28
-	dl $E875FB					; 2F - Song 25
-	dl $E2F78F					; 30 - Song 26
-	dl $E7B463					; 31 - Song 4
-	dl $E26D33					; 32 - Song 37
-	dl $E0D267					; 33 - Song 34
-	dl $E8DC63					; 34 - Song 35
-	dl $E27A3D					; 35 - Song 33
-	dl $E68DA9					; 36 - Song 36
-	dl $DFE7FC					; 37 - Song 54
-	dl $E79D38					; 38 - Song 55
-	dl $EA3113					; 39 - Song 52
-	dl $E699F0					; 3A - Song 63
-	dl $D6F1CE					; 3B - Song 64
-	dl $E20E2E					; 3C - Song 43
-	dl $E0E243					; 3D - Song 41
-	dl $E4633A					; 3E - Song 45
-	dl $E60000					; 3F - Song 46
-	dl $E8D4AE					; 40 - Song 39
-	dl $EA2A53					; 41 - Song 23
-	dl $E7C1E8					; 42 - Song 44
-	dl $EBD2C4					; 43 - Song 40
-	dl $E2C67D					; 44 - Song 53
-	dl $E6A00B					; 45 - Song 60
-	dl $E35D17					; 46 - Song 49
-	dl $E40000					; 47 - Song 61
-	dl $E8AB42					; 48 - Song 62
-	dl $E14CBC					; 49 - Song 47
-	dl $EA47CE					; 4A - Song 56
-	dl $DC38F1					; 4B - Song 65
+	dl $EC14EE						; 0B - Song 9	($EC14EE)
+	dl $E1F01B						; 0C - Song 16	($E1F01B)
+	dl $E1981D						; 0D - Song 42	($E1981D)
+	dl $E83C18						; 0E - Song 21	($E83C18)
+	dl $E393DD						; 0F - Song 8	($E393DD)
+	dl $E51904						; 10 - Song 38	($E51904)
+	dl $E11ED7						; 11 - Song 11	($E11ED7)
+	dl $E1C44F						; 12 - Song 19	($E1C44F)
+	dl $E6FC75						; 13 - Song 10	($E6FC75)
+	dl $E3FE0C						; 14 - Song 20	($E3FE0C)
+	dl $E4B608						; 15 - Song 18	($E4B608)
+	dl $EAC873						; 16 - Song 58	($EAC873)
+	dl $E73A57						; 17 - Song 17	($E73A57)
+	dl $EA5CDE						; 18 - Song 59	($EA5CDE)
+	dl $E6C382						; 19 - Song 5	($E6C382)
+	dl Music_FloatIsland			; 1A - Song 6	($E46CCF)
+	dl $E622D5						; 1B - Song 7	($E622D5)
+	dl Music_SpringBreezeCredits	; 1C - Song 12	($E445FF)
+	dl $E86155						; 1D - Song 22	($E86155)
+	dl $E97ACD						; 1E - Song 57	($E97ACD)
+	dl Music_MainOpening			; 1F - Song 1	($E49B7A)
+	dl $E86859						; 20 - Song 2	($E86859)
+	dl $E5392C						; 21 - Song 3	($E5392C)
+	dl $E4D04A						; 22 - Song 22	($E4D04A)
+	dl $E7809E						; 23 - Song 15	($E7809E)
+	dl $E33B52						; 24 - Song 14	($E33B52)
+	dl $EA32B6						; 25 - Song 13	($EA32B6)
+	dl $EB0344						; 26 - Song 48	($EB0344)
+	dl $E2AD67						; 27 - Song 50	($E2AD67)
+	dl $E1FE51						; 28 - Song 51	($E1FE51)
+	dl $E7E854						; 29 - Song 31	($E7E854)
+	dl $EA42F9						; 2A - Song 29	($EA42F9)
+	dl $EEF770						; 2B - Song 30	($EEF770)
+	dl $EBAE20						; 2C - Song 32	($EBAE20)
+	dl $E2380E						; 2D - Song 27	($E2380E)
+	dl $E20000						; 2E - Song 28	($E20000)
+	dl $E875FB						; 2F - Song 25	($E875FB)
+	dl $E2F78F						; 30 - Song 26	($E2F78F)
+	dl $E7B463						; 31 - Song 4	($E7B463)
+	dl $E26D33						; 32 - Song 37	($E26D33)
+	dl $E0D267						; 33 - Song 34	($E0D267)
+	dl $E8DC63						; 34 - Song 35	($E8DC63)
+	dl $E27A3D						; 35 - Song 33	($E27A3D)
+	dl $E68DA9						; 36 - Song 36	($E68DA9)
+	dl $DFE7FC						; 37 - Song 54	($DFE7FC)
+	dl $E79D38						; 38 - Song 55	($E79D38)
+	dl $EA3113						; 39 - Song 52	($EA3113)
+	dl $E699F0						; 3A - Song 63	($E699F0)
+	dl $D6F1CE						; 3B - Song 64	($D6F1CE)
+	dl $E20E2E						; 3C - Song 43	($E20E2E)
+	dl $E0E243						; 3D - Song 41	($E0E243)
+	dl Music_MetaKnightFight		; 3E - Song 45	($E4633A)
+	dl $E60000						; 3F - Song 46	($E60000)
+	dl $E8D4AE						; 40 - Song 39	($E8D4AE)
+	dl $EA2A53						; 41 - Song 23	($EA2A53)
+	dl $E7C1E8						; 42 - Song 44	($E7C1E8)
+	dl $EBD2C4						; 43 - Song 40	($EBD2C4)
+	dl $E2C67D						; 44 - Song 53	($E2C67D)
+	dl $E6A00B						; 45 - Song 60	($E6A00B)
+	dl $E35D17						; 46 - Song 49	($E35D17)
+	dl Music_MegatonPunch			; 47 - Song 61	($E40000)
+	dl $E8AB42						; 48 - Song 62	($E8AB42)
+	dl $E14CBC						; 49 - Song 47	($E14CBC)
+	dl $EA47CE						; 4A - Song 56	($EA47CE)
+	dl $DC38F1						; 4B - Song 65	($DC38F1)
 
 DATA_00D7E7:					;$00D7E7	| Sample banks for the above songs?
 	db $00,$00,$00,$00,$00,$01,$00,$00		; If zero, does not change the sample bank.

@@ -1,9 +1,3 @@
-; This bank contains data and code that is ran on the SPC.
-; Although this bank is technically mapped at $880000, the Super MMC maps it to the lower half of bank E4.
-;  As KSS always references it in this way, all address values will be treated as such.
-
-ORG $E40A3E
-
 spcblock $0700 nspc
 
 SPCEngine_Start:
