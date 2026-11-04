@@ -113,21 +113,47 @@ VWF_Table: skip 12
 ; 24-bit pointer to VWF text data. Although this is a 24-bit pointer, the bank byte is always 0xCB (bank 16).
 VWF_DataPointer: skip 3
 
+; Unused? Should be verified.
+skip 1
+
+; === $7E0095 ===
+; 3 bytes
+; 24-bit pointer to music data. 
+; This pointer increments through the music data as it is being transferred to the SPC.
+; Mostly used in the LoadToSPC routine at $00D104.
+SPC_ReadAddress: skip 3
+
+; $0099 : similar as above but with the SFX transfer?
+
 ; Unidentified
-skip 22
+skip $A7-$98
+
+; === $7E00A7 ===
+; 2 bytes
+; Amount of bytes to transfer when loading a music track.
+; As the LoadToSPC subroutine steps through the music data, this value is decreased.
+SPC_BytesLeft: skip 2
+
+; Unidentified
+skip $AA-$A9
 
 ; === $7E00AA ===
 ; 1 byte
 ; Currently loaded song. Valid values are 01-42.
-CurrentMusic: skip 1 
+CurrentLoadedMusic: skip 1 
 
 ; === $7E00AB ===
 ; 1 byte
 ; Currently loaded sample bank for the music. Valid values are 01-09.
-CurrentSampleBank: skip 1
+CurrentLoadedSampleBank: skip 1
+
+; === $7E00AC ===
+; 1 byte
+; Currently loaded SFXs. Valid values are 01-22.
+CurrentLoadedSFXs: skip 1
 
 ; Unidentified
-skip 5
+skip $B1-$AD
 
 ; === $7E00B1 ===
 ; 2 bytes
@@ -248,6 +274,8 @@ ObjectSpawnList_YPos: skip 512
 
 ; Unidentified
 skip $7E14C7-$7E0FA8
+
+; $001338,X read from at $00D9BB
 
 ; === $7E14C7 ===
 ; 8 bytes
@@ -1652,6 +1680,13 @@ TitleDemo_InputIndex: skip 2
 ; 2 bytes
 ; Timer for Revenge of Meta Knight
 RoMK_Timer: skip 2
+
+; === $0073A2 ===
+; 2 bytes
+; Timer that keeps track of the main RoMK timer when it slows down.
+; Main RoMK timer slows down once it is below 0x00BF as noted at $00C278.
+RoMK_SlowTimer: skip 2
+
 
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life

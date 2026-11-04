@@ -148,7 +148,7 @@ CODE_FN_01813A:
 	LDA.W $32EA                   ;$01815D	|
 	CMP.W #$0004                  ;$018160	|
 	BNE CODE_818169               ;$018163	|
-	JSL.L CODE_FL_00DAA3          ;$018165	|
+	JSL.L SetRoMKTimer            ;$018165	|
 
 CODE_818169:
 	RTS                           ;$018169	|
@@ -170,10 +170,11 @@ CODE_FN_01816A:
 
 CODE_81818F:
 	STA.B $00                     ;$01818F	|
-	LDA.W #$819C                  ;$018191	|
-	LDX.W #$0001                  ;$018194	|
+	%LoadLongToAX(CODE_81819C)
 	JSL.L SA1_ExecuteSNES         ;$018197	|
 	RTS                           ;$01819B	|
+
+CODE_81819C:
 	JSL.L CODE_FL_0180FE          ;$01819C	|
 	LDY.W #$0036                  ;$0181A0	|
 	LDA.B [$14],Y                 ;$0181A3	|
@@ -312,9 +313,8 @@ CODE_8182A6:
 	STZ.W $6004                   ;$0182BC	|
 	STZ.W $6006                   ;$0182BF	|
 	STZ.W $6008                   ;$0182C2	|
-	LDA.W #$819C                  ;$0182C5	|
-	LDX.W #$0001                  ;$0182C8	|
-	JML.L SA1_ExecuteSNES              ;$0182CB	|
+	%LoadLongToAX(CODE_81819C)
+	JML.L SA1_ExecuteSNES         ;$0182CB	|
 	JSL.L AS_ReadWord_L           ;$0182CF	|
 	STA.W $6000                   ;$0182D3	|
 	LDA.W #$0004                  ;$0182D6	|
@@ -328,10 +328,10 @@ CODE_8182A6:
 	LDA.W #$0002                  ;$0182EE	|
 	LDX.W #$FFF0                  ;$0182F1	|
 	LDY.W #$0082                  ;$0182F4	|
-	JSL.L CreateNewObject        ;$0182F7	|
+	JSL.L CreateNewObject         ;$0182F7	|
 	TAX                           ;$0182FB	|
 	LDA.W #$0020                  ;$0182FC	|
-	STA.W HelperHP                   ;$0182FF	|
+	STA.W HelperHP                ;$0182FF	|
 	RTL                           ;$018302	|
 
 CODE_FL_018303:

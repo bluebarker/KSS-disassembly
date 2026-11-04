@@ -1471,29 +1471,28 @@ CallRNG:						;-----------| RNG routine. Returns result in both A and $49.
 	STA $49						;$008AC4	|
 	BIT $0000					;$008AC6	|\ 
 	BMI .onSA1					;$008AC9	||
-	LDA.w #.onSA1				;$008ACB	||
-	LDX.w #.onSA1>>16			;$008ACE	|| Make sure the below runs on the SA-1.
+	%LoadLongToAX(.onSA1)
 	JSL SNES_ExecuteSA1			;$008AD1	||
 	LDA $49						;$008AD5	||
 	RTL							;$008AD7	|/
   .onSA1:						;			|
 	SEP #$20					;$008AD8	|
-	LDA $43						;$008ADA	|\ 
+	LDA.B Current_RNG			;$008ADA	|\ 
 	LDX #$000B					;$008ADC	||
   .loop:						;			||
-	ASL $43						;$008ADF	||
-	ROL $44						;$008AE1	||
+	ASL.B Current_RNG			;$008ADF	||
+	ROL.B Current_RNG+1			;$008AE1	||
 	ROL A						;$008AE3	||
 	ROL A						;$008AE4	||
-	EOR $43						;$008AE5	||
+	EOR.B Current_RNG			;$008AE5	||
 	ROL A						;$008AE7	|| Get the next RNG value.
-	EOR $43						;$008AE8	||
+	EOR.B Current_RNG			;$008AE8	||
 	LSR A						;$008AEA	||
 	LSR A						;$008AEB	||
 	EOR #$FF					;$008AEC	||
 	AND #$01					;$008AEE	||
-	ORA $43						;$008AF0	||
-	STA $43						;$008AF2	||
+	ORA.B Current_RNG			;$008AF0	||
+	STA.B Current_RNG			;$008AF2	||
 	DEX							;$008AF4	||
 	BNE .loop					;$008AF5	|/
 	REP #$20					;$008AF7	|\ 
@@ -8671,7 +8670,7 @@ CODE_FL_00BF45:
 CODE_FL_00BF54:
 	LDX Current_SubGame			;$00BF54	|
 	CPX #$00!SUBGAME_GOURMETRACE			;$00BF57	|
-	BNE CODE_FL_00BF63			;$00BF5A	|
+	BNE CODE_FL_00BF63			;$00BF5A	|PlaySFX
 	LDA $7B2D					;$00BF5C	|
 	BEQ CODE_FL_00BF71			;$00BF5F	|
 	BRA CODE_FL_00BF6B			;$00BF61	|
@@ -9863,7 +9862,7 @@ CODE_FL_00CAFD:					;-----------| Routine executed on the SNES.
 	STZ $1873					;$00CAFD	|
 	LDA #$FFFF					;$00CB00	|
 	STA $1871					;$00CB03	|
-	STZ $43						;$00CB06	|
+	STZ.B Current_RNG			;$00CB06	|
 	STZ $3094					;$00CB08	|
 	LDA $739C					;$00CB0B	|
 	AND #$00FF					;$00CB0E	|
@@ -10282,7 +10281,7 @@ CODE_FL_00CE91:					;			|
 CODE_FL_00CEA0:					;			|
 	SEP #$20					;$00CEA0	|
 	LDA $33CC					;$00CEA2	|
-	STA HW_APUIO2					;$00CEA5	|
+	STA HW_APUIO2				;$00CEA5	|
 	REP #$20					;$00CEA8	|
 	RTL							;$00CEAA	|
 
@@ -10339,8 +10338,8 @@ CODE_FL_00CF17:					;			|
 	SEP #$20					;$00CF25	|
 CODE_FL_00CF27:					;			|
 	LDA #$72					;$00CF27	|
-	STA HW_APUIO0					;$00CF29	|
-	CMP HW_APUIO0					;$00CF2C	|
+	STA HW_APUIO0				;$00CF29	|
+	CMP HW_APUIO0				;$00CF2C	|
 	BNE CODE_FL_00CF27			;$00CF2F	|
 	REP #$20					;$00CF31	|
 	RTL							;$00CF33	|
@@ -10355,8 +10354,8 @@ CODE_FL_00CF3F:
 	SEP #$30					;$00CF3F	|
 CODE_FL_00CF41:					;			|
 	LDY #$72					;$00CF41	|
-	STY HW_APUIO0					;$00CF43	|
-	CPY HW_APUIO0					;$00CF46	|
+	STY HW_APUIO0				;$00CF43	|
+	CPY HW_APUIO0				;$00CF46	|
 	BNE CODE_FL_00CF41			;$00CF49	|
 	REP #$30					;$00CF4B	|
 	RTL							;$00CF4D	|
@@ -10365,13 +10364,13 @@ CODE_FL_00CF4E:
 	SEP #$30					;$00CF4E	|
 	LDA #$FF					;$00CF50	|
 	STA $33CC					;$00CF52	|
-	STA HW_APUIO2					;$00CF55	|
+	STA HW_APUIO2				;$00CF55	|
 	LDA $33CD					;$00CF58	|
-	STA HW_APUIO3					;$00CF5B	|
+	STA HW_APUIO3				;$00CF5B	|
 CODE_FL_00CF5E:					;			|
 	LDA #$73					;$00CF5E	|
-	STA HW_APUIO0					;$00CF60	|
-	CMP HW_APUIO0					;$00CF63	|
+	STA HW_APUIO0				;$00CF60	|
+	CMP HW_APUIO0				;$00CF63	|
 	BNE CODE_FL_00CF5E			;$00CF66	|
 	REP #$30					;$00CF68	|
 	RTL							;$00CF6A	|
@@ -10400,12 +10399,12 @@ CODE_FL_00CF9C:
 	SEP #$30					;$00CF9C	|
 	LDA $33CA					;$00CF9E	|
 	BNE CODE_FL_00CFB6			;$00CFA1	|
-	STZ HW_APUIO1					;$00CFA3	|
-	STZ HW_APUIO2					;$00CFA6	|
+	STZ HW_APUIO1				;$00CFA3	|
+	STZ HW_APUIO2				;$00CFA6	|
 CODE_FL_00CFA9:					;			|
 	LDA #$72					;$00CFA9	|
-	STA HW_APUIO0					;$00CFAB	|
-	CMP HW_APUIO0					;$00CFAE	|
+	STA HW_APUIO0				;$00CFAB	|
+	CMP HW_APUIO0				;$00CFAE	|
 	BNE CODE_FL_00CFA9			;$00CFB1	|
 	REP #$30					;$00CFB3	|
 	RTL							;$00CFB5	|
@@ -10416,8 +10415,8 @@ CODE_FL_00CFB6:
 	STA $00AA					;$00CFBB	|
 CODE_FL_00CFBE:					;			|
 	LDY #$72					;$00CFBE	|
-	STY HW_APUIO0					;$00CFC0	|
-	CPY HW_APUIO0					;$00CFC3	|
+	STY HW_APUIO0				;$00CFC0	|
+	CPY HW_APUIO0				;$00CFC3	|
 	BNE CODE_FL_00CFBE			;$00CFC6	|
 	REP #$30					;$00CFC8	|
 	AND #$00FF					;$00CFCA	|
@@ -10446,8 +10445,8 @@ CODE_FL_00CFF3:					;			|
 
 CODE_FL_00CFF6:					;-----------|
 	PHY							;$00CFF6	|
-	LDA #$0000					;$00CFF7	|
-	JSL PlayMusic				;$00CFFA	|
+	LDA #$0000					;$00CFF7	| Initialize muted music?
+	JSL PlayMusic				;$00CFFA	| Unsure. This subroutine is ran when loading a Chapter in RoMK
 	PLY							;$00CFFE	|
 	RTL							;$00CFFF	|
 
@@ -10458,16 +10457,15 @@ PlayMusic:						;-----------| Routine to load music
 	CMP #$42					;$00D005	|\ 
 	BCS .invalid				;$00D007	|| Return if the passed value is invalid (>= 0x42)
 	STA $33CA					;$00D009	|/
-	REP #$20					;$00D00C	|\ 
-	LDA.w #.onSNES				;$00D00E	|| Make sure this routine runs on the SNES.
-	LDX.w #.onSNES>>16			;$00D011	||
-	JML SA1_ExecuteSNES			;$00D014	|/
+	REP #$20					;$00D00C	|
+	%LoadLongToAX(.onSNES)
+	JML SA1_ExecuteSNES			;$00D014	|
   .invalid:						;			|
 	REP #$20					;$00D018	|
 	RTL							;$00D01A	|
   .onSNES:						;```````````| On the SNES now.
 	SEP #$30					;$00D01B	|
-	STZ HW_APUIO1					;$00D01D	|
+	STZ HW_APUIO1				;$00D01D	|
 	STZ $33CB					;$00D020	|
 	LDA #$FF					;$00D023	|
 	STA $33CE					;$00D025	|
@@ -10475,11 +10473,11 @@ PlayMusic:						;-----------| Routine to load music
 	STA $33D0					;$00D02B	|
 	LDA $33CA					;$00D02E	|\ Branch if a song is being requested.
 	BNE CODE_FL_00D043			;$00D031	|/
-	STZ HW_APUIO2					;$00D033	|
+	STZ HW_APUIO2				;$00D033	|
 CODE_FL_00D036:					;			|
 	LDA #$72					;$00D036	|
-	STA HW_APUIO0					;$00D038	|
-	CMP HW_APUIO0					;$00D03B	|
+	STA HW_APUIO0				;$00D038	|
+	CMP HW_APUIO0				;$00D03B	|
 	BNE CODE_FL_00D036			;$00D03E	|
 	REP #$30					;$00D040	|
 	RTL							;$00D042	|
@@ -10490,8 +10488,8 @@ CODE_FL_00D043:					;```````````| Song is being requested.
 	STA $00AA					;$00D048	|/
   .waitForSPC:					;			|
 	LDY #$72					;$00D04B	|\ 
-	STY HW_APUIO0					;$00D04D	|| Wait for the SPC to finish whatever it's doing.
-	CPY HW_APUIO0					;$00D050	||
+	STY HW_APUIO0				;$00D04D	|| Wait for the SPC to finish whatever it's doing.
+	CPY HW_APUIO0				;$00D050	||
 	BNE .waitForSPC				;$00D053	|/
 	REP #$30					;$00D055	|\ 
 	AND #$00FF					;$00D057	||
@@ -10516,13 +10514,13 @@ CODE_FL_00D043:					;```````````| Song is being requested.
   .noNewSamples:				;			|
 	LDA #$FF					;$00D082	|
 	STA $33CC					;$00D084	|
-	STA HW_APUIO2					;$00D087	|
+	STA HW_APUIO2				;$00D087	|
 	LDA $33CD					;$00D08A	|
-	STA HW_APUIO3					;$00D08D	|
+	STA HW_APUIO3				;$00D08D	|
   .waitForFinish:				;			|
 	LDA #$73					;$00D090	|\ 
-	STA HW_APUIO0					;$00D092	|| Wait for the SPC to finish loading.
-	CMP HW_APUIO0					;$00D095	||
+	STA HW_APUIO0				;$00D092	|| Wait for the SPC to finish loading.
+	CMP HW_APUIO0				;$00D095	||
 	BNE .waitForFinish			;$00D098	|/
 	REP #$30					;$00D09A	|
 	RTL							;$00D09C	|
@@ -10537,33 +10535,33 @@ CODE_FL_00D0A3:					;			|
 	PEA $0000					;$00D0A4	|\ Change DB to $00.
 	PLD							;$00D0A7	|/
 	TAY							;$00D0A8	|\ 
-	STA $9D						;$00D0A9	||
+	STA.B $9D					;$00D0A9	||
 	ASL A						;$00D0AB	|| Multiply pointer by 3.
-	ADC $9D						;$00D0AC	||
+	ADC.B $9D					;$00D0AC	||
 	TAX							;$00D0AE	|/
-	JSR SyncSPC					;$00D0AF	| Wait for the SPC chip to sync timings.
-	LDA.w DATA_00D703,X			;$00D0B2	|\ 
-	STA $95						;$00D0B5	||
-	STA $99						;$00D0B7	|| Store the pointer to the song/sample bank in $95 and $99.
-	LDA.w DATA_00D703+2,X		;$00D0B9	||
-	AND #$00FF					;$00D0BC	||
-	STA $97						;$00D0BF	||
-	STA $9B						;$00D0C1	|/
-	CPY #$000B					;$00D0C3	|\ Branch if a sample bank is being uploaded.
+	JSR.W SyncSPC				;$00D0AF	| Wait for the SPC chip to sync timings.
+	LDA.W MusicPointers_LUT,X	;$00D0B2	|\ 
+	STA.B SPC_ReadAddress		;$00D0B5	||
+	STA.B $99					;$00D0B7	|| Store the pointer to the song/sample bank in SPC_ReadAddress and $99
+	LDA.W MusicPointers_LUT+2,X	;$00D0B9	||
+	AND.W #$00FF				;$00D0BC	||
+	STA.B $97					;$00D0BF	||
+	STA.B $9B					;$00D0C1	|/
+	CPY.W #$000B				;$00D0C3	|\ Branch if a sample bank is being uploaded.
 	BCC CODE_FL_00D0FA			;$00D0C6	|/
-	CPY #$004B					;$00D0C8	|\ Branch if song 4B (#65) is being uploaded?
+	CPY.W #$004B				;$00D0C8	|\ Branch if song 4B (#65) is being uploaded?
 	BCS CODE_FL_00D0EC			;$00D0CB	|/
-	LDA $00AF					;$00D0CD	|
+	LDA.W $00AF					;$00D0CD	|
 	BEQ CODE_FL_00D0FA			;$00D0D0	|
-	LDA.w DATA_00D703+3			;$00D0D2	|
-	STA $95						;$00D0D5	|
-	LDA.w DATA_00D703+5			;$00D0D7	|
-	STA $97						;$00D0DA	|
-	JSR CODE_FL_00D104			;$00D0DC	|
-	LDA $99						;$00D0DF	|
-	STA $95						;$00D0E1	|
-	LDA $9B						;$00D0E3	|
-	STA $97						;$00D0E5	|
+	LDA.W MusicPointers_LUT+3	;$00D0D2	|
+	STA.B SPC_ReadAddress		;$00D0D5	|
+	LDA.W MusicPointers_LUT+5	;$00D0D7	|
+	STA.B $97					;$00D0DA	|
+	JSR LoadToSPC				;$00D0DC	|
+	LDA.B $99					;$00D0DF	|
+	STA.B SPC_ReadAddress		;$00D0E1	|
+	LDA.B $9B					;$00D0E3	|
+	STA.B SPC_ReadAddress+2		;$00D0E5	|
 	STZ $00AF					;$00D0E7	|
 	BRA CODE_FL_00D0FA			;$00D0EA	|
 CODE_FL_00D0EC:					;```````````| Song 4B (#65) is being uploaded.
@@ -10574,33 +10572,32 @@ CODE_FL_00D0EC:					;```````````| Song 4B (#65) is being uploaded.
 	STZ $00AE					;$00D0F7	|
 CODE_FL_00D0FA:					;```````````| Time to upload the actaul song.
 	REP #$20					;$00D0FA	|
-	JSR CODE_FL_00D104			;$00D0FC	|
+	JSR LoadToSPC				;$00D0FC	|
 	JSR CODE_FL_00D604			;$00D0FF	|
 	PLD							;$00D102	|
 	RTS							;$00D103	|
 
 
-CODE_FL_00D104:					;-----------| 
+LoadToSPC:						;-----------| 
 	SEP #$10					;$00D104	|
-	LDX $A7						;$00D106	|
-CODE_FL_00D108:					;			|
-	LDA [$95]					;$00D108	|
-	BEQ CODE_FL_00D125			;$00D10A	|
-	JSR CODE_FL_00D54A			;$00D10C	|
-	INC $95						;$00D10F	|
-	STA $A7						;$00D111	|
-	LDA [$95]					;$00D113	|
-	JSR CODE_FL_00D54A			;$00D115	|
-	INC $95						;$00D118	|
-CODE_FL_00D11A:					;			|
-	LDA [$95]					;$00D11A	|
-	JSR CODE_FL_00D54A			;$00D11C	|
-	DEC $A7						;$00D11F	|
-	BNE CODE_FL_00D11A			;$00D121	|
-	BRA CODE_FL_00D108			;$00D123	|
-
-CODE_FL_00D125:
-	STX $A7						;$00D125	|
+	LDX.B SPC_BytesLeft			;$00D106	|
+  .checkMusicLength:			;			|
+	LDA.B [SPC_ReadAddress]		;$00D108	| Retrieve the music data length, which is the first byte of the music data.
+	BEQ .end					;$00D10A	| If data length is zero, there is nothing left to transfer, so break out of the loop.
+	JSR.W WaitForSPC			;$00D10C	|
+	INC.B SPC_ReadAddress		;$00D10F	|
+	STA.B SPC_BytesLeft			;$00D111	|
+	LDA.B [SPC_ReadAddress]		;$00D113	|
+	JSR.W WaitForSPC			;$00D115	|
+	INC.B SPC_ReadAddress		;$00D118	|
+  .transferLoop:				;			|
+	LDA.B [SPC_ReadAddress]		;$00D11A	|
+	JSR.W WaitForSPC			;$00D11C	|
+	DEC.B SPC_BytesLeft			;$00D11F	|
+	BNE .transferLoop			;$00D121	|
+	BRA .checkMusicLength		;$00D123	| Music data ends with 0x0000. Go back and check to verify that this is the end of the music data.
+  .end:
+	STX.B SPC_BytesLeft			;$00D125	|
 	REP #$10					;$00D127	|
 	RTS							;$00D129	|
 
@@ -10683,18 +10680,18 @@ PlaySFX:						;-----------|
 	SEP #$30					;$00D1C0	|
 	LDA $33CB					;$00D1C2	|
 	BNE CODE_FL_00D1E5			;$00D1C5	|
-	LDA HW_APUIO0					;$00D1C7	|
+	LDA HW_APUIO0				;$00D1C7	|
 	AND #$7F					;$00D1CA	|
 	CMP #$72					;$00D1CC	|
 	BCS .CODE_FL_00D1DA			;$00D1CE	|
   .CODE_FL_00D1D0:				;			|
 	LDA #$72					;$00D1D0	|
-	STA HW_APUIO0					;$00D1D2	|
-	CMP HW_APUIO0					;$00D1D5	|
+	STA HW_APUIO0				;$00D1D2	|
+	CMP HW_APUIO0				;$00D1D5	|
 	BNE .CODE_FL_00D1D0			;$00D1D8	|
   .CODE_FL_00D1DA:				;			|
-	STZ HW_APUIO1					;$00D1DA	|
-	LDA HW_APUIO1					;$00D1DD	|
+	STZ HW_APUIO1				;$00D1DA	|
+	LDA HW_APUIO1				;$00D1DD	|
 	BNE .CODE_FL_00D1DA			;$00D1E0	|
 	REP #$30					;$00D1E2	|
 	RTL							;$00D1E4	|
@@ -10707,28 +10704,28 @@ CODE_FL_00D1E5:
 	LDA $00AF					;$00D1EC	|
 	BEQ CODE_FL_00D23B			;$00D1EF	|
 	JSR SyncSPC					;$00D1F1	| Wait for the SPC chip to sync timings.
-	LDA.w DATA_00D703+3			;$00D1F4	|
-	STA $95						;$00D1F7	|
-	LDA.w DATA_00D703+5			;$00D1F9	|
+	LDA.W MusicPointers_LUT+3	;$00D1F4	|
+	STA.B SPC_ReadAddress						;$00D1F7	|
+	LDA.W MusicPointers_LUT+5	;$00D1F9	|
 	STA $97						;$00D1FC	|
-	JSR CODE_FL_00D104			;$00D1FE	|
-	LDA.w DATA_00D703+33		;$00D201	|
-	STA $95						;$00D204	|
-	LDA.w DATA_00D703+35		;$00D206	|
+	JSR LoadToSPC			;$00D1FE	|
+	LDA.W MusicPointers_LUT+33	;$00D201	|
+	STA.B SPC_ReadAddress						;$00D204	|
+	LDA.W MusicPointers_LUT+35	;$00D206	|
 	STA $97						;$00D209	|
-	JSR CODE_FL_00D104			;$00D20B	|
+	JSR LoadToSPC			;$00D20B	|
 	JSR CODE_FL_00D604			;$00D20E	|
 	SEP #$20					;$00D211	|
-	STZ HW_APUIO2					;$00D213	|
+	STZ HW_APUIO2				;$00D213	|
 	LDA #$73					;$00D216	|
-	STA HW_APUIO0					;$00D218	|
+	STA HW_APUIO0				;$00D218	|
 CODE_FL_00D21B:					;			|
-	CMP HW_APUIO0					;$00D21B	|
+	CMP HW_APUIO0				;$00D21B	|
 	BNE CODE_FL_00D21B			;$00D21E	|
 	DEC A						;$00D220	|
-	STA HW_APUIO0					;$00D221	|
+	STA HW_APUIO0				;$00D221	|
 CODE_FL_00D224:					;			|
-	CMP HW_APUIO0					;$00D224	|
+	CMP HW_APUIO0				;$00D224	|
 	BNE CODE_FL_00D224			;$00D227	|
 	STZ $00AF					;$00D229	|
 	STZ $00AA					;$00D22C	|
@@ -10817,23 +10814,20 @@ CODE_FL_00D2D7:					;			|
 	STA $3096					;$00D2D9	|
 	TXA							;$00D2DC	|
 	ORA $3096					;$00D2DD	|
-	STA HW_APUIO1					;$00D2E0	|
+	STA HW_APUIO1				;$00D2E0	|
 CODE_FL_00D2E3:					;			|
 	LDA $33CC					;$00D2E3	|
-	STA HW_APUIO2					;$00D2E6	|
+	STA HW_APUIO2				;$00D2E6	|
 	LDA $33CD					;$00D2E9	|
-	STA HW_APUIO3					;$00D2EC	|
+	STA HW_APUIO3				;$00D2EC	|
 	REP #$30					;$00D2EF	|
 	PLD							;$00D2F1	|
 	RTL							;$00D2F2	|
 
 
-
-
-
 CODE_FL_00D2F3:
 	LDA #$0000					;$00D2F3	|
-	JSL PlaySFX			;$00D2F6	|
+	JSL PlaySFX					;$00D2F6	|
 	JSR AS_ReadByte				;$00D2FA	|
 CODE_FL_00D2FD:					;			|
 	STA $49						;$00D2FD	|
@@ -10891,23 +10885,23 @@ CODE_FL_00D355:					;			|
 	RTS							;$00D35A	|
 
 CODE_FL_00D35B:
-	STA $00AC,Y					;$00D35B	|
+	STA.W $00AC,Y				;$00D35B	|
 	ASL A						;$00D35E	|
-	ADC $00AC,Y					;$00D35F	|
+	ADC.W $00AC,Y				;$00D35F	|
 	TAX							;$00D362	|
 	REP #$30					;$00D363	|
-	LDA.w DATA_00D69D-3,X		;$00D365	|
-	STA $95						;$00D368	|
-	LDA.w DATA_00D69D-1,X		;$00D36A	|
-	STA $97						;$00D36D	|
-	JSR SyncSPC					;$00D36F	| Wait for the SPC chip to sync timings.
+	LDA.W SFXPointers_LUT-3,X	;$00D365	|
+	STA.B SPC_ReadAddress		;$00D368	|
+	LDA.W SFXPointers_LUT-1,X	;$00D36A	|
+	STA.B $97					;$00D36D	|
+	JSR.W SyncSPC				;$00D36F	| Wait for the SPC chip to sync timings.
 	SEP #$10					;$00D372	|
-	LDX $A7						;$00D374	|
-	LDA [$95]					;$00D376	|
-	AND #$00FF					;$00D378	|
+	LDX.B SPC_BytesLeft			;$00D374	|
+	LDA.B [SPC_ReadAddress]		;$00D376	|
+	AND.W #$00FF				;$00D378	|
 	BNE CODE_FL_00D382			;$00D37B	|
-	INC $95						;$00D37D	|
-	JMP CODE_FL_00D454			;$00D37F	|
+	INC.B SPC_ReadAddress		;$00D37D	|
+	JMP.W CODE_FL_00D454		;$00D37F	|
 
 CODE_FL_00D382:
 	STA $A1						;$00D382	|
@@ -10915,7 +10909,7 @@ CODE_FL_00D382:
 	ASL A						;$00D386	|
 	ADC $A1						;$00D387	|
 	ASL A						;$00D389	|
-	JSR CODE_FL_00D54A			;$00D38A	|
+	JSR WaitForSPC				;$00D38A	|
 	LDA $9F						;$00D38D	|
 	BEQ CODE_FL_00D3B5			;$00D38F	|
 	CMP #$0001					;$00D391	|
@@ -10923,37 +10917,37 @@ CODE_FL_00D382:
 	CMP #$0003					;$00D396	|
 	BEQ CODE_FL_00D3B5			;$00D399	|
 	LDA #$06E6					;$00D39B	|
-	JSR CODE_FL_00D54A			;$00D39E	|
-	DEC $95						;$00D3A1	|
+	JSR WaitForSPC				;$00D39E	|
+	DEC.B SPC_ReadAddress		;$00D3A1	|
 	LDA #$0051					;$00D3A3	|
 	BRA CODE_FL_00D3C0			;$00D3A6	|
 
 CODE_FL_00D3A8:
 	LDA #$06CE					;$00D3A8	|
-	JSR CODE_FL_00D54A			;$00D3AB	|
-	DEC $95						;$00D3AE	|
+	JSR WaitForSPC				;$00D3AB	|
+	DEC.B SPC_ReadAddress		;$00D3AE	|
 	LDA #$004D					;$00D3B0	|
 	BRA CODE_FL_00D3C0			;$00D3B3	|
 
 CODE_FL_00D3B5:
 	LDA #$06B6					;$00D3B5	|
-	JSR CODE_FL_00D54A			;$00D3B8	|
-	DEC $95						;$00D3BB	|
+	JSR WaitForSPC				;$00D3B8	|
+	DEC.B SPC_ReadAddress		;$00D3BB	|
 	LDA #$0049					;$00D3BD	|
 CODE_FL_00D3C0:					;			|
 	PHA							;$00D3C0	|
-	JSR CODE_FL_00D54A			;$00D3C1	|
-	DEC $95						;$00D3C4	|
-	LDA [$95]					;$00D3C6	|
-	JSR CODE_FL_00D54A			;$00D3C8	|
-	LDA [$95]					;$00D3CB	|
-	JSR CODE_FL_00D54A			;$00D3CD	|
-	LDA [$95]					;$00D3D0	|
-	JSR CODE_FL_00D54A			;$00D3D2	|
-	LDA [$95]					;$00D3D5	|
-	JSR CODE_FL_00D54A			;$00D3D7	|
-	LDA [$95]					;$00D3DA	|
-	JSR CODE_FL_00D54A			;$00D3DC	|
+	JSR WaitForSPC				;$00D3C1	|
+	DEC.B SPC_ReadAddress		;$00D3C4	|
+	LDA.B [SPC_ReadAddress]		;$00D3C6	|
+	JSR WaitForSPC				;$00D3C8	|
+	LDA.B [SPC_ReadAddress]		;$00D3CB	|
+	JSR WaitForSPC				;$00D3CD	|
+	LDA.B [SPC_ReadAddress]		;$00D3D0	|
+	JSR WaitForSPC				;$00D3D2	|
+	LDA.B [SPC_ReadAddress]		;$00D3D5	|
+	JSR WaitForSPC				;$00D3D7	|
+	LDA.B [SPC_ReadAddress]		;$00D3DA	|
+	JSR WaitForSPC				;$00D3DC	|
 	PLA							;$00D3DF	|
 	INC A						;$00D3E0	|
 	DEC $A3						;$00D3E1	|
@@ -10961,8 +10955,8 @@ CODE_FL_00D3C0:					;			|
 	LDA $A1						;$00D3E5	|
 	ASL A						;$00D3E7	|
 	ASL A						;$00D3E8	|
-	JSR CODE_FL_00D54A			;$00D3E9	|
-	DEC $95						;$00D3EC	|
+	JSR WaitForSPC				;$00D3E9	|
+	DEC.B SPC_ReadAddress		;$00D3EC	|
 	LDA $9F						;$00D3EE	|
 	BEQ CODE_FL_00D416			;$00D3F0	|
 	CMP #$0001					;$00D3F2	|
@@ -10970,52 +10964,52 @@ CODE_FL_00D3C0:					;			|
 	CMP #$0003					;$00D3F7	|
 	BEQ CODE_FL_00D416			;$00D3FA	|
 	LDA #$0444					;$00D3FC	|
-	JSR CODE_FL_00D54A			;$00D3FF	|
-	DEC $95						;$00D402	|
+	JSR WaitForSPC				;$00D3FF	|
+	DEC.B SPC_ReadAddress		;$00D402	|
 	LDA #$F900					;$00D404	|
 	BRA CODE_FL_00D421			;$00D407	|
 
 CODE_FL_00D409:
 	LDA #$0434					;$00D409	|
-	JSR CODE_FL_00D54A			;$00D40C	|
-	DEC $95						;$00D40F	|
+	JSR WaitForSPC				;$00D40C	|
+	DEC.B SPC_ReadAddress		;$00D40F	|
 	LDA #$EAE0					;$00D411	|
 	BRA CODE_FL_00D421			;$00D414	|
 
 CODE_FL_00D416:
 	LDA #$0424					;$00D416	|
-	JSR CODE_FL_00D54A			;$00D419	|
-	DEC $95						;$00D41C	|
+	JSR WaitForSPC				;$00D419	|
+	DEC.B SPC_ReadAddress		;$00D41C	|
 	LDA #$DCC0					;$00D41E	|
 CODE_FL_00D421:					;			|
 	STA $A3						;$00D421	|
 CODE_FL_00D423:					;			|
-	LDA [$95]					;$00D423	|
+	LDA.B [SPC_ReadAddress]		;$00D423	|
 	CLC							;$00D425	|
 	ADC $A3						;$00D426	|
-	JSR CODE_FL_00D54A			;$00D428	|
+	JSR WaitForSPC				;$00D428	|
 	XBA							;$00D42B	|
-	JSR CODE_FL_00D54A			;$00D42C	|
-	LDA [$95]					;$00D42F	|
+	JSR WaitForSPC				;$00D42C	|
+	LDA.B [SPC_ReadAddress]		;$00D42F	|
 	CLC							;$00D431	|
 	ADC $A3						;$00D432	|
-	JSR CODE_FL_00D54A			;$00D434	|
+	JSR WaitForSPC				;$00D434	|
 	XBA							;$00D437	|
-	JSR CODE_FL_00D54A			;$00D438	|
+	JSR WaitForSPC				;$00D438	|
 	DEC $A1						;$00D43B	|
 	BNE CODE_FL_00D423			;$00D43D	|
-	LDA [$95]					;$00D43F	|
+	LDA.B [SPC_ReadAddress]		;$00D43F	|
 	STA $A1						;$00D441	|
-	JSR CODE_FL_00D54A			;$00D443	|
+	JSR WaitForSPC				;$00D443	|
 	LDA $A3						;$00D446	|
-	JSR CODE_FL_00D54A			;$00D448	|
+	JSR WaitForSPC				;$00D448	|
 CODE_FL_00D44B:					;			|
-	LDA [$95]					;$00D44B	|
-	JSR CODE_FL_00D54A			;$00D44D	|
+	LDA.B [SPC_ReadAddress]		;$00D44B	|
+	JSR WaitForSPC				;$00D44D	|
 	DEC $A1						;$00D450	|
 	BNE CODE_FL_00D44B			;$00D452	|
 CODE_FL_00D454:					;			|
-	LDA [$95]					;$00D454	|
+	LDA.B [SPC_ReadAddress]		;$00D454	|
 	AND #$00FF					;$00D456	|
 	STA $A1						;$00D459	|
 	LDA $9F						;$00D45B	|
@@ -11052,20 +11046,20 @@ CODE_FL_00D497:					;			|
 	STA $A3						;$00D497	|
 	LDA $A5						;$00D499	|
 	ASL A						;$00D49B	|
-	JSR CODE_FL_00D54A			;$00D49C	|
+	JSR WaitForSPC				;$00D49C	|
 	TYA							;$00D49F	|
 	CLC							;$00D4A0	|
-	ADC [$95]					;$00D4A1	|
-	JSR CODE_FL_00D54A			;$00D4A3	|
-	INC $95						;$00D4A6	|
+	ADC.B [SPC_ReadAddress]		;$00D4A1	|
+	JSR WaitForSPC				;$00D4A3	|
+	INC SPC_ReadAddress						;$00D4A6	|
 	LDY $A1						;$00D4A8	|
 CODE_FL_00D4AA:					;			|
-	LDA [$95]					;$00D4AA	|
+	LDA.B [SPC_ReadAddress]		;$00D4AA	|
 	CLC							;$00D4AC	|
 	ADC $A3						;$00D4AD	|
-	JSR CODE_FL_00D54A			;$00D4AF	|
+	JSR WaitForSPC				;$00D4AF	|
 	XBA							;$00D4B2	|
-	JSR CODE_FL_00D54A			;$00D4B3	|
+	JSR WaitForSPC				;$00D4B3	|
 	DEY							;$00D4B6	|
 	BNE CODE_FL_00D4AA			;$00D4B7	|
 	LDA $A5						;$00D4B9	|
@@ -11076,26 +11070,26 @@ CODE_FL_00D4AA:					;			|
 	TAY							;$00D4C2	|
 	LDA $DE9CD9					;$00D4C3	|
 CODE_FL_00D4C7:					;			|
-	JSR CODE_FL_00D54C			;$00D4C7	|
+	JSR WaitForSPC_loop			;$00D4C7	|
 	XBA							;$00D4CA	|
-	JSR CODE_FL_00D54C			;$00D4CB	|
+	JSR WaitForSPC_loop			;$00D4CB	|
 	XBA							;$00D4CE	|
 	DEY							;$00D4CF	|
 	BNE CODE_FL_00D4C7			;$00D4D0	|
 CODE_FL_00D4D2:					;			|
-	LDA [$95]					;$00D4D2	|
+	LDA.B [SPC_ReadAddress]		;$00D4D2	|
 	STA $A1						;$00D4D4	|
-	JSR CODE_FL_00D54A			;$00D4D6	|
+	JSR WaitForSPC				;$00D4D6	|
 	LDA $A3						;$00D4D9	|
-	JSR CODE_FL_00D54A			;$00D4DB	|
+	JSR WaitForSPC				;$00D4DB	|
 CODE_FL_00D4DE:					;			|
-	LDA [$95]					;$00D4DE	|
-	INC $95						;$00D4E0	|
+	LDA.B [SPC_ReadAddress]		;$00D4DE	|
+	INC.B SPC_ReadAddress		;$00D4E0	|
 	TAY							;$00D4E2	|
 	BMI CODE_FL_00D4F1			;$00D4E3	|
 CODE_FL_00D4E5:					;			|
-	LDA [$95]					;$00D4E5	|
-	JSR CODE_FL_00D54A			;$00D4E7	|
+	LDA.B [SPC_ReadAddress]		;$00D4E5	|
+	JSR WaitForSPC				;$00D4E7	|
 	DEC $A1						;$00D4EA	|
 	DEY							;$00D4EC	|
 	BNE CODE_FL_00D4E5			;$00D4ED	|
@@ -11104,12 +11098,12 @@ CODE_FL_00D4E5:					;			|
 CODE_FL_00D4F1:
 	AND #$0001					;$00D4F1	|
 	BNE CODE_FL_00D508			;$00D4F4	|
-	LDA [$95]					;$00D4F6	|
+	LDA.B [SPC_ReadAddress]		;$00D4F6	|
 	CLC							;$00D4F8	|
 	ADC $A3						;$00D4F9	|
-	JSR CODE_FL_00D54A			;$00D4FB	|
+	JSR WaitForSPC				;$00D4FB	|
 	XBA							;$00D4FE	|
-	JSR CODE_FL_00D54A			;$00D4FF	|
+	JSR WaitForSPC				;$00D4FF	|
 	DEC $A1						;$00D502	|
 	DEC $A1						;$00D504	|
 	BRA CODE_FL_00D52B			;$00D506	|
@@ -11132,60 +11126,56 @@ CODE_FL_00D520:
 	LDA #$0049					;$00D520	|
 CODE_FL_00D523:					;			|
 	CLC							;$00D523	|
-	ADC [$95]					;$00D524	|
-	JSR CODE_FL_00D54A			;$00D526	|
+	ADC.B [SPC_ReadAddress]		;$00D524	|
+	JSR WaitForSPC				;$00D526	|
 	DEC $A1						;$00D529	|
 CODE_FL_00D52B:					;			|
 	LDA $A1						;$00D52B	|
 	BNE CODE_FL_00D4DE			;$00D52D	|
-	STX $A7						;$00D52F	|
+	STX.B SPC_BytesLeft			;$00D52F	|
 	REP #$10					;$00D531	|
 	JSR CODE_FL_00D604			;$00D533	|
 	SEP #$30					;$00D536	|
 	LDA #$FD					;$00D538	|
-	STA HW_APUIO0					;$00D53A	|
+	STA HW_APUIO0				;$00D53A	|
 	LDA $33CC					;$00D53D	|
-	STA HW_APUIO2					;$00D540	|
+	STA HW_APUIO2				;$00D540	|
 	LDA $33CD					;$00D543	|
-	STA HW_APUIO3					;$00D546	|
+	STA HW_APUIO3				;$00D546	|
 	RTS							;$00D549	|
 
 
 
-CODE_FL_00D54A:					;-----------| Subroutine used by the above to wait for the SPC?
-	INC $95						;$00D54A	|
-CODE_FL_00D54C:					;			|
-	CPX HW_APUIO0					;$00D54C	|
-	BNE CODE_FL_00D54C			;$00D54F	|
-	STA HW_APUIO2					;$00D551	|
-	STX HW_APUIO0					;$00D554	|
+WaitForSPC:						;-----------| Subroutine used by the above to wait for the SPC.
+	INC.B SPC_ReadAddress		;$00D54A	|
+  .loop:						;			|
+	CPX HW_APUIO0				;$00D54C	|
+	BNE .loop					;$00D54F	|
+	STA HW_APUIO2				;$00D551	|
+	STX HW_APUIO0				;$00D554	|
 	INX							;$00D557	|
 	RTS							;$00D558	|
-
-
-
-
 
 StartSPC700:					;-----------| Routine to handle starting up the SPC700 chip.
 	PHD							;$00D559	|
 	LDA #$0000					;$00D55A	|\ Change DP to $00xx.
 	TCD							;$00D55D	|/
-	LDA HW_APUIO0					;$00D55E	|\ 
+	LDA HW_APUIO0				;$00D55E	|\ 
 	CMP #$BBAA					;$00D561	|| If the SPC chip is waiting for the engine, upload it.
 	BNE .engineUploaded			;$00D564	||
 	JSR UploadSPCEngine			;$00D566	|/
   .engineUploaded:				;			|
 	JSR SyncSPC					;$00D569	| Wait for the SPC chip to sync timings.
-	LDA.w DATA_00D703			;$00D56C	|
-	STA $95						;$00D56F	|
-	LDA.w DATA_00D703+2			;$00D571	|
+	LDA.W MusicPointers_LUT		;$00D56C	|
+	STA.B SPC_ReadAddress		;$00D56F	|
+	LDA.W MusicPointers_LUT+2	;$00D571	|
 	STA $97						;$00D574	|
-	JSR CODE_FL_00D104			;$00D576	|
-	LDA.w DATA_00D703+3			;$00D579	|
-	STA $95						;$00D57C	|
-	LDA.w DATA_00D703+5			;$00D57E	|
+	JSR LoadToSPC				;$00D576	|
+	LDA.W MusicPointers_LUT+3	;$00D579	|
+	STA.B SPC_ReadAddress		;$00D57C	|
+	LDA.W MusicPointers_LUT+5	;$00D57E	|
 	STA $97						;$00D581	|
-	JSR CODE_FL_00D104			;$00D583	|
+	JSR LoadToSPC				;$00D583	|
 	STZ $00AF					;$00D586	|
 	JSR CODE_FL_00D604			;$00D589	|
 	PLD							;$00D58C	|
@@ -11204,17 +11194,16 @@ StartSPC700:					;-----------| Routine to handle starting up the SPC700 chip.
 	STA $33D0					;$00D5AE	|
 CODE_FL_00D5B1:					;			|
 	LDA #$72					;$00D5B1	|
-	STA HW_APUIO0					;$00D5B3	|
-	CMP HW_APUIO0					;$00D5B6	|
+	STA HW_APUIO0				;$00D5B3	|
+	CMP HW_APUIO0				;$00D5B6	|
 	BNE CODE_FL_00D5B1			;$00D5B9	|
-	STZ HW_APUIO2					;$00D5BB	|
-	STZ HW_APUIO1					;$00D5BE	|
+	STZ HW_APUIO2				;$00D5BB	|
+	STZ HW_APUIO1				;$00D5BE	|
 CODE_FL_00D5C1:					;			|
-	LDA HW_APUIO1					;$00D5C1	|
+	LDA HW_APUIO1				;$00D5C1	|
 	BNE CODE_FL_00D5C1			;$00D5C4	|
 	REP #$20					;$00D5C6	|
 	RTL							;$00D5C8	|
-
 
 SyncSPC:						;-----------| Routine to stall until the SPC timer loops, for syncing timings?
 	LDA #$FFFF					;$00D5C9	|
@@ -11222,87 +11211,85 @@ SyncSPC:						;-----------| Routine to stall until the SPC timer loops, for sync
 	SEP #$20					;$00D5CF	|
 	BIT $00B0					;$00D5D1	|\ 
 	BMI .waitForCounterInc		;$00D5D4	||
-	LDA HW_APUIO0					;$00D5D6	||
+	LDA HW_APUIO0				;$00D5D6	||
 	BEQ .waitForCounterInc		;$00D5D9	||
   .waitForClear:				;			|| Make sure the chip isn't currently sending data?
-	STZ HW_APUIO1					;$00D5DB	||
-	STZ HW_APUIO2					;$00D5DE	||
-	LDA HW_APUIO1					;$00D5E1	||
-	ORA HW_APUIO2					;$00D5E4	||
+	STZ HW_APUIO1				;$00D5DB	||
+	STZ HW_APUIO2				;$00D5DE	||
+	LDA HW_APUIO1				;$00D5E1	||
+	ORA HW_APUIO2				;$00D5E4	||
 	BNE .waitForClear			;$00D5E7	|/
   .waitForCounterInc:			;			|
-	STZ HW_APUIO2					;$00D5E9	|\ 
-	LDA #$78					;$00D5EC	||
-	STA HW_APUIO3					;$00D5EE	||
-	LDA #$FF					;$00D5F1	|| Repeatedly send [$FF,$FE,$00,$78] to the SPC
-	STA HW_APUIO0					;$00D5F3	||  until a timer overflow occurs.
+	STZ HW_APUIO2				;$00D5E9	|\ 
+	LDA.B #$78					;$00D5EC	||
+	STA HW_APUIO3				;$00D5EE	||
+	LDA.B #$FF					;$00D5F1	|| Repeatedly send [$FF,$FE,$00,$78] to the SPC
+	STA HW_APUIO0				;$00D5F3	||  until a timer overflow occurs.
 	DEC A						;$00D5F6	||
-	STA HW_APUIO1					;$00D5F7	||
-	CMP HW_APUIO0					;$00D5FA	||
+	STA HW_APUIO1				;$00D5F7	||
+	CMP HW_APUIO0				;$00D5FA	||
 	BNE .waitForCounterInc		;$00D5FD	|/
-	STA $A7						;$00D5FF	|
+	STA.B SPC_BytesLeft			;$00D5FF	|
 	REP #$20					;$00D601	|
 	RTS							;$00D603	|
 
-
 CODE_FL_00D604:					;-----------|
 	SEP #$10					;$00D604	|
-	LDX $A7						;$00D606	|
+	LDX.B SPC_BytesLeft			;$00D606	|
 CODE_FL_00D608:					;			|
-	CPX HW_APUIO0					;$00D608	|
+	CPX HW_APUIO0				;$00D608	|
 	BNE CODE_FL_00D608			;$00D60B	|
-	STZ HW_APUIO2					;$00D60D	|
-	STX HW_APUIO0					;$00D610	|
+	STZ HW_APUIO2				;$00D60D	|
+	STX HW_APUIO0				;$00D610	|
 	CPX #$FE					;$00D613	|
 	BNE CODE_FL_00D620			;$00D615	|
 	INX							;$00D617	|
 CODE_FL_00D618:					;			|
-	CPX HW_APUIO0					;$00D618	|
+	CPX HW_APUIO0				;$00D618	|
 	BNE CODE_FL_00D618			;$00D61B	|
-	STX HW_APUIO0					;$00D61D	|
+	STX HW_APUIO0				;$00D61D	|
 CODE_FL_00D620:					;			|
 	LDX #$FE					;$00D620	|
 CODE_FL_00D622:					;			|
-	CPX HW_APUIO0					;$00D622	|
+	CPX HW_APUIO0				;$00D622	|
 	BNE CODE_FL_00D622			;$00D625	|
-	STX HW_APUIO0					;$00D627	|
+	STX HW_APUIO0				;$00D627	|
 CODE_FL_00D62A:					;			|
-	CPX HW_APUIO0					;$00D62A	|
+	CPX HW_APUIO0				;$00D62A	|
 	BEQ CODE_FL_00D62A			;$00D62D	|
 	REP #$10					;$00D62F	|
 	STZ $33C8					;$00D631	|
 	RTS							;$00D634	|
 
-
 UploadSPCEngine:				;-----------| Subroutine to upload the SPC engine.
-	LDY #$0000					;$00D635	|
-	LDA #$0A3E					;$00D638	|\ 
-	STA $95						;$00D63B	|| $95 = $E40A3E ($888A3E)
-	LDA #$00E4					;$00D63D	||
-	STA $97						;$00D640	|/
+	LDY.W #$0000				;$00D635	|
+	LDA.W #$0A3E				;$00D638	|\ 
+	STA.B SPC_ReadAddress		;$00D63B	|| $95 = $E40A3E ($888A3E)
+	LDA.W #$00E4				;$00D63D	||
+	STA.B SPC_ReadAddress+2		;$00D640	|/
 	SEP #$20					;$00D642	|
-	LDA #$CC					;$00D644	|\ Start transfer.
+	LDA.B #$CC					;$00D644	|\ Start transfer.
 	BRA SendSPCBlock			;$00D646	|/
 
 TransferBytes:					;~~~~~~~~~~~| Part of the SPC upload routine to handle a single block. Entry point at $00D66E.
-	LDA [$95],Y					;$00D648	|\ 
+	LDA.B [SPC_ReadAddress],Y	;$00D648	|\ 
 	INY							;$00D64A	|| Load first byte to upload.
 	XBA							;$00D64B	||
-	LDA #$00					;$00D64C	|// Validation byte for SPC.
+	LDA.B #$00					;$00D64C	|// Validation byte for SPC.
 	BRA .sendData				;$00D64E	|
 
   .nextByte:					;```````````| Inner loop to load bytes for each block.
 	XBA							;$00D650	|\\ 
-	LDA [$95],Y					;$00D651	||| Load next byte.
+	LDA.B [SPC_ReadAddress],Y	;$00D651	||| Load next byte.
 	INY							;$00D653	|||
 	XBA							;$00D654	||/
   .waitForFinish:				;			||
-	CMP HW_APUIO0					;$00D655	||\ Wait for the SPC to respond from the previous byte.
+	CMP HW_APUIO0				;$00D655	||\ Wait for the SPC to respond from the previous byte.
 	BNE .waitForFinish			;$00D658	||/
 	INC A						;$00D65A	|| Increment validation byte.
   .sendData:					;```````````||``] Entry point for the inner byte loop.
 	REP #$20					;$00D65B	||\ 
-	STA HW_APUIO0					;$00D65D	||| Send byte, plus the validation byte.
+	STA HW_APUIO0				;$00D65D	||| Send byte, plus the validation byte.
 	SEP #$20					;$00D660	||/
 	DEX							;$00D662	||
 	BNE .nextByte				;$00D663	|/
@@ -11316,73 +11303,72 @@ TransferBytes:					;~~~~~~~~~~~| Part of the SPC upload routine to handle a sing
 SendSPCBlock:					;```````````| Entry point for the SPC data upload loop.
 	PHA							;$00D66E	|
 	REP #$20					;$00D66F	|
-	LDA [$95],Y					;$00D671	|\ 
+	LDA.B [SPC_ReadAddress],Y	;$00D671	|\ 
 	INY							;$00D673	|| Get data length.
 	INY							;$00D674	||
 	TAX							;$00D675	|/
-	LDA [$95],Y					;$00D676	|\ 
+	LDA.B [SPC_ReadAddress],Y	;$00D676	|\ 
 	INY							;$00D678	|| Send the ARAM address to write to.
 	INY							;$00D679	||
-	STA HW_APUIO2					;$00D67A	|/
+	STA HW_APUIO2				;$00D67A	|/
 	SEP #$20					;$00D67D	|
 	CPX #$0001					;$00D67F	|\ 
 	LDA #$00					;$00D682	|| If at the end of the data (length is 0000), send #$00.
 	ROL A						;$00D684	||  Else, send #$01.
-	STA HW_APUIO1					;$00D685	|/
+	STA HW_APUIO1				;$00D685	|/
 	ADC #$7F					;$00D688	|] Set overflow flag if there are still bytes left to write. 
 	PLA							;$00D68A	|\ 
-	STA HW_APUIO0					;$00D68B	|| Send a byte to indicate the write is done,
+	STA HW_APUIO0				;$00D68B	|| Send a byte to indicate the write is done,
   .waitForLoad:					;			||  then wait for the response back from the SPC chip.
-	CMP HW_APUIO0					;$00D68E	||
+	CMP HW_APUIO0				;$00D68E	||
 	BNE .waitForLoad			;$00D691	|/
 	BVS TransferBytes			;$00D693	|] If the overflow flag was set earlier, jump back to upload additional blocks.
 	REP #$20					;$00D695	|\ 
   .waitForFinish:				;			|| Wait for the SPC I/O port to be cleared.
-	LDA HW_APUIO0					;$00D697	||
+	LDA HW_APUIO0				;$00D697	||
 	BNE .waitForFinish			;$00D69A	|/
 	RTS							;$00D69C	|
 
 
+SFXPointers_LUT:				;$00D69D	| Pointers to SFX data.
+	dl $E5087F					; 01		| For some reason the table is read at an offset, so index 00 is technically the code at $00D69A though X is always greater than 0.
+	dl $EC9E23					; 02
+	dl $E16AFE					; 03
+	dl $E4E194					; 04
+	dl $E1D2F9					; 05
+	dl $EC337B					; 06
+	dl $EABA3C					; 07
+	dl $E346AC					; 08
+	dl $E94F4B					; 09
+	dl $E13D82					; 0A
+	dl $E26001					; 0B
+	dl $DB5C4B					; 0C
+	dl $EAB7D2					; 0D
+	dl $EBCB97					; 0E
+	dl $E39EA8					; 0F
+	dl $E1E1A0					; 10
+	dl $E5CB74					; 11
+	dl $EA0571					; 12
+	dl $E2872D					; 13
+	dl $E7CF12					; 14
+	dl $E3890E					; 15
+	dl $EAB908					; 16
+	dl $E0F1F4					; 17
+	dl $EA62B6					; 18
+	dl $E5A5F0					; 19
+	dl $E7DFFB					; 1A
+	dl $E9EA36					; 1B
+	dl $E91CB5					; 1C
+	dl $E4C791					; 1D
+	dl $E57F9B					; 1E
+	dl $E37322					; 1F
+	dl $EA7FC7					; 20
+	dl $E5701D					; 21
+	dl $EA0C98					; 22
 
-DATA_00D69D:					;$00D69D	| 
-	dl $E5087F
-	dl $EC9E23
-	dl $E16AFE
-	dl $E4E194
-	dl $E1D2F9
-	dl $EC337B
-	dl $EABA3C
-	dl $E346AC
-	dl $E94F4B
-	dl $E13D82
-	dl $E26001
-	dl $DB5C4B
-	dl $EAB7D2
-	dl $EBCB97
-	dl $E39EA8
-	dl $E1E1A0
-	dl $E5CB74
-	dl $EA0571
-	dl $E2872D
-	dl $E7CF12
-	dl $E3890E
-	dl $EAB908
-	dl $E0F1F4
-	dl $EA62B6
-	dl $E5A5F0
-	dl $E7DFFB
-	dl $E9EA36
-	dl $E91CB5
-	dl $E4C791
-	dl $E57F9B
-	dl $E37322
-	dl $EA7FC7
-	dl $E5701D
-	dl $EA0C98
-
-DATA_00D703:					;$00D703	| Pointers to song data?
-	dl $D60000					; 00 - ???
-	dl $DE9CD5					; 01 - ???
+MusicPointers_LUT:				;$00D703	| Pointers to song data
+	dl $D60000					; 00 - ??? \ Both transferred to SPC at start of the game
+	dl $DE9CD5					; 01 - ??? /
   .sampleBanks
 	dl $ECA27B					; 02 - \ 
 	dl $DEC7E4					; 03 - |
@@ -11486,7 +11472,7 @@ CODE_FL_00D828:					;-----------|
 	LDA #$FFFF					;$00D83D	|
 	STA $7386					;$00D840	|
 	STZ KirbyHP					;$00D843	|
-	STZ HelperHP					;$00D846	|
+	STZ HelperHP				;$00D846	|
 	STZ $740B					;$00D849	|
 	STZ $7A91					;$00D84C	|
 	STZ $7A97					;$00D84F	|
@@ -11501,9 +11487,8 @@ CODE_FL_00D828:					;-----------|
 	STZ $7A67					;$00D868	|
 	STZ $7A68					;$00D86B	|
 	REP #$20					;$00D86E	|
-	LDA.w #.RunOnSNES			;$00D870	|\ 
-	LDX.w #.RunOnSNES>>16		;$00D873	|| Execute the below routine on the SNES.
-	JSL SA1_ExecuteSNES			;$00D876	|/
+	%LoadLongToAX(.RunOnSNES)
+	JSL SA1_ExecuteSNES			;$00D876	|
 	RTL							;$00D87A	|
 
   .RunOnSNES:					;```````````|
@@ -11624,17 +11609,16 @@ CODE_FL_00D95C:					;			|
 	LDA Current_SubGame			;$00D987	|
 	CMP #$00!SUBGAME_ROMK		;$00D98A	|
 	BNE CODE_FL_00D993			;$00D98D	|
-	JSL CODE_FL_00DAA3			;$00D98F	|
+	JSL SetRoMKTimer			;$00D98F	|
 CODE_FL_00D993:					;			|
 	JSL CODE_FL_00CFF6			;$00D993	|
 	JSL $03A123					;$00D997	|
-	LDA #$D9A6					;$00D99B	|
-	LDX #$0000					;$00D99E	|
+	%LoadLongToAX(CODE_FL_00D9A6)
 	JSL SA1_ExecuteSNES			;$00D9A1	|
 	RTL							;$00D9A5	|
 
 CODE_FL_00D9A6:
-	STZ Level_Collectables					;$00D9A6	|
+	STZ Level_Collectables		;$00D9A6	|
 	STZ $14D1					;$00D9A9	|
 	STZ $14D3					;$00D9AC	|
 	STZ $14D5					;$00D9AF	|
@@ -11642,7 +11626,7 @@ CODE_FL_00D9A6:
 	LDX #$003E					;$00D9B5	|
 	LDA #$0000					;$00D9B8	|
 CODE_FL_00D9BB:					;			|
-	STA $001338,X				;$00D9BB	|
+	STA.L $001338,X				;$00D9BB	|
 	DEX							;$00D9BF	|
 	DEX							;$00D9C0	|
 	BPL CODE_FL_00D9BB			;$00D9C1	|
@@ -11729,102 +11713,106 @@ CODE_FL_00DA66:
 
 CODE_FL_00DA97:
 	STA Current_SubGame			;$00DA97	|
-	STX $32EE					;$00DA9A	|
-	STY Current_Room					;$00DA9D	|
+	STX Current_Level			;$00DA9A	|
+	STY Current_Room			;$00DA9D	|
 	LDY $39						;$00DAA0	|
 	RTL							;$00DAA2	|
 
-CODE_FL_00DAA3:
-	LDA #$DAFE					;$00DAA3	|\ 
-	LDX $32EE					;$00DAA6	||
-	CPX #$0000					;$00DAA9	|| Get base index into the table at $00DAFE?...
-	BEQ CODE_FL_00DAE9			;$00DAAC	||
-	LDA #$DB04					;$00DAAE	||
+SetRoMKTimer:
+	LDA.W #.InitRoMKTimer_LUT_0	;$00DAA3	|\ 
+	LDX Current_Level			;$00DAA6	||
+	CPX #$0000					;$00DAA9	|| Get base index of the table holding every RoMK timer initialization per level
+	BEQ .foundIndex				;$00DAAC	||
+	LDA.W #.InitRoMKTimer_LUT_1	;$00DAAE	||
 	CPX #$0001					;$00DAB1	||
-	BEQ CODE_FL_00DAE9			;$00DAB4	||
-	LDA #$DB0E					;$00DAB6	||
+	BEQ .foundIndex				;$00DAB4	||
+	LDA.W #.InitRoMKTimer_LUT_2	;$00DAB6	||
 	CPX #$0002					;$00DAB9	||
-	BEQ CODE_FL_00DAE9			;$00DABC	||
-	LDA #$DB1E					;$00DABE	||
+	BEQ .foundIndex				;$00DABC	||
+	LDA.W #.InitRoMKTimer_LUT_3	;$00DABE	||
 	CPX #$0003					;$00DAC1	||
-	BEQ CODE_FL_00DAE9			;$00DAC4	||
-	LDA #$DB2C					;$00DAC6	||
+	BEQ .foundIndex				;$00DAC4	||
+	LDA.W #.InitRoMKTimer_LUT_4	;$00DAC6	||
 	CPX #$0004					;$00DAC9	||
-	BEQ CODE_FL_00DAE9			;$00DACC	||
-	LDA #$DB30					;$00DACE	||
+	BEQ .foundIndex				;$00DACC	||
+	LDA.W #.InitRoMKTimer_LUT_5	;$00DACE	||
 	CPX #$0005					;$00DAD1	||
-	BEQ CODE_FL_00DAE9			;$00DAD4	||
-	LDA #$DB3E					;$00DAD6	||
+	BEQ .foundIndex				;$00DAD4	||
+	LDA.W #.InitRoMKTimer_LUT_6	;$00DAD6	||
 	CPX #$0006					;$00DAD9	||
-	BEQ CODE_FL_00DAE9			;$00DADC	||
-	LDA #$DB46					;$00DADE	||
+	BEQ .foundIndex				;$00DADC	||
+	LDA.W #.InitRoMKTimer_LUT_7	;$00DADE	||
 	CPX #$0007					;$00DAE1	||
-	BEQ CODE_FL_00DAE9			;$00DAE4	||
-	LDA #$DB4A					;$00DAE6	||
-CODE_FL_00DAE9:					;			||
+	BEQ .foundIndex				;$00DAE4	||
+	LDA.W #.InitRoMKTimer_LUT_8	;$00DAE6	||
+  .foundIndex:					;			||
 	STA $14						;$00DAE9	|/
 	LDA #$0000					;$00DAEB	|
 	STA $16						;$00DAEE	|
-	LDA Current_Room					;$00DAF0	|
+	LDA Current_Room			;$00DAF0	|
 	ASL A						;$00DAF3	|
 	TAY							;$00DAF4	|
 	LDA [$14],Y					;$00DAF5	|
 	CMP #$FFFF					;$00DAF7	|
-	STA RoMK_Timer					;$00DAFA	|
+	STA RoMK_Timer				;$00DAFA	|
 	RTL							;$00DAFD	|
 
-CODE_FL_00DAFE:
-	dw $2328
-	dw $1770
-	dw $0BB8
-  .DB04
-	dw $3A98
-	dw $2EE0
-	dw $2328
-	dw $1770
-	dw $FFFF
-  .DB0E:
-	dw $4C2C
-	dw $4650
-	dw $FFFF
-	dw $FFFF
-	dw $2C88
-	dw $2580
-	dw $FFFF
-	dw $1770
-  .DB1E:
-	dw $4650
-	dw $3A98
-	dw $2EE0
-	dw $2328
-	dw $FFFF
-	dw $1770
-	dw $FFFF
-  .DB2C:
-	dw $5208
-	dw $49D4
-  .DB30:
-	dw $5208
-	dw $FFFF
-	dw $4650
-	dw $3A98
-	dw $FFFF
-	dw $1770
-	dw $FFFF
-  .DB3E:
-	dw $2328
-	dw $FFFF
-	dw $1194
-	dw $FFFF
-  .DB46:
-	dw $0096
-	dw $FFFF
-  .DB4A:
-	dw $3A98
-	dw $2DB4
-	dw $1770
-	dw $1770
-	dw $FFFF
+; List of every timer starting value for every room in Revenge of Meta Knight
+; The level number does not directly correlate to the Chapter number shown in-game
+; The offset in each table is determined using Current_Room
+  .InitRoMKTimer_LUT:
+    ..0:
+	  dw $2328
+	  dw $1770
+	  dw $0BB8
+    ..1:
+	  dw $3A98
+	  dw $2EE0
+	  dw $2328
+	  dw $1770
+	  dw $FFFF
+    ..2:
+	  dw $4C2C
+	  dw $4650
+	  dw $FFFF
+	  dw $FFFF
+	  dw $2C88
+	  dw $2580
+	  dw $FFFF
+	  dw $1770
+    ..3:
+	  dw $4650
+	  dw $3A98
+	  dw $2EE0
+	  dw $2328
+	  dw $FFFF
+	  dw $1770
+	  dw $FFFF
+    ..4:
+	  dw $5208
+	  dw $49D4
+    ..5:
+	  dw $5208
+	  dw $FFFF
+	  dw $4650
+	  dw $3A98
+	  dw $FFFF
+	  dw $1770
+	  dw $FFFF
+    ..6:
+	  dw $2328
+	  dw $FFFF
+	  dw $1194
+	  dw $FFFF
+    ..7:
+	  dw $0096
+	  dw $FFFF
+    ..8:
+	  dw $3A98
+	  dw $2DB4
+	  dw $1770
+	  dw $1770
+	  dw $FFFF
 
 
 

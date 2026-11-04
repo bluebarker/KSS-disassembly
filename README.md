@@ -14,3 +14,5 @@ Banks 00, 01, and BE are "complete", though still need proper labelling in sever
 
 # Contribution
 Anyone can contribute to this project. Most of this disassembly is being done through [DiztinGUIsh](https://github.com/DizTools/DiztinGUIsh) and Mesen's CDL, though any other disassembly tools are permitted.
+
+There are no plans to use LLMs or generative AI to assist in the process of this disassembly in any form.
