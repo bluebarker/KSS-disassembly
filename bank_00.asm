@@ -10699,25 +10699,25 @@ PlaySFX:						;-----------|
 CODE_FL_00D1E5:
 	REP #$30					;$00D1E5	|
 	PHD							;$00D1E7	|
-	LDA #$0000					;$00D1E8	|\ Change the DP to $00xx.
+	LDA.W #$0000				;$00D1E8	|\ Change the DP to $00xx.
 	TCD							;$00D1EB	|/
 	LDA $00AF					;$00D1EC	|
 	BEQ CODE_FL_00D23B			;$00D1EF	|
-	JSR SyncSPC					;$00D1F1	| Wait for the SPC chip to sync timings.
+	JSR.W SyncSPC				;$00D1F1	| Wait for the SPC chip to sync timings.
 	LDA.W MusicPointers_LUT+3	;$00D1F4	|
-	STA.B SPC_ReadAddress						;$00D1F7	|
+	STA.B SPC_ReadAddress		;$00D1F7	|
 	LDA.W MusicPointers_LUT+5	;$00D1F9	|
 	STA $97						;$00D1FC	|
-	JSR LoadToSPC			;$00D1FE	|
+	JSR.W LoadToSPC				;$00D1FE	|
 	LDA.W MusicPointers_LUT+33	;$00D201	|
-	STA.B SPC_ReadAddress						;$00D204	|
+	STA.B SPC_ReadAddress		;$00D204	|
 	LDA.W MusicPointers_LUT+35	;$00D206	|
 	STA $97						;$00D209	|
-	JSR LoadToSPC			;$00D20B	|
-	JSR CODE_FL_00D604			;$00D20E	|
+	JSR.W LoadToSPC				;$00D20B	|
+	JSR.W CODE_FL_00D604		;$00D20E	|
 	SEP #$20					;$00D211	|
 	STZ HW_APUIO2				;$00D213	|
-	LDA #$73					;$00D216	|
+	LDA.B #$73					;$00D216	|
 	STA HW_APUIO0				;$00D218	|
 CODE_FL_00D21B:					;			|
 	CMP HW_APUIO0				;$00D21B	|
@@ -11051,7 +11051,7 @@ CODE_FL_00D497:					;			|
 	CLC							;$00D4A0	|
 	ADC.B [SPC_ReadAddress]		;$00D4A1	|
 	JSR WaitForSPC				;$00D4A3	|
-	INC SPC_ReadAddress						;$00D4A6	|
+	INC SPC_ReadAddress			;$00D4A6	|
 	LDY $A1						;$00D4A8	|
 CODE_FL_00D4AA:					;			|
 	LDA.B [SPC_ReadAddress]		;$00D4AA	|
@@ -11456,9 +11456,6 @@ DATA_00D7E7:					;$00D7E7	| Sample banks for the above songs?
 	db $03,$04,$04,$04,$04,$04,$00,$04
 	db $00,$05,$06,$06,$07,$08,$09,$06
 	db $02
-	
-
-
 
 
 CODE_FL_00D828:					;-----------|
@@ -11494,9 +11491,6 @@ CODE_FL_00D828:					;-----------|
   .RunOnSNES:					;```````````|
 	STZ $00E7					;$00D87B	|
 	RTL							;$00D87E	|
-
-
-
 
 
 CODE_FL_00D87F:

@@ -1,5 +1,5 @@
 ; This bank contains mainly text data.
-; Although this bank is technically mapped at $CB0000, the Super MMC maps it to the lower half of bank CB.
+; Although this bank is technically mapped at $160000, the Super MMC maps it to the lower half of bank CB.
 ;  As KSS always references it in this way, all address values will be treated as such.
 
 incsrc "Text/CharMaps/VWF_U.asm"
