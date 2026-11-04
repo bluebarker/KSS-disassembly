@@ -1249,6 +1249,7 @@ ObjYPos_Temp: skip 2
 ; === $006010 - $006012 ===
 ; 2 bytes each
 ; Minimum and maximum slot to use when allocating a new object
+; These could also be considered the slot offset and slot search limit for the specific object
 ObjSlotMinimum: skip 2
 ObjSlotMaximum: skip 2
 

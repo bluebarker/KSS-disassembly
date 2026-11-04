@@ -10,7 +10,7 @@ macro AS_HALT()
 endmacro
 
 macro AS_WAIT(imm8)    ; wait time is in frames (e.g. 3 = 3 frames)
-    db $02, db <imm8>
+    db $02, <imm8>
 endmacro
 
 macro AS_ONTICK(long)

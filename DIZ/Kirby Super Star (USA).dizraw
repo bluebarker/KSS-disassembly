@@ -5,7 +5,7 @@
     <ProjectSettings exs:member="" BsnesUsageMapImportOnlyChangedUnmarked="true">
       <RomBytesOutputFormatSettings CompressGroupBlock="true" CompressUsingTable1="true" InsertCommentIntoOutputLinesEveryNBytes="2048" />
     </ProjectSettings>
-    <Data RomMapMode="SuperMmc" RomSpeed="SlowRom">
+    <Data RomMapMode="Sa1Rom" RomSpeed="SlowRom">
       <Comments>
         <sys:Item Key="37746" Value="Was the last executed instruction &quot;HALT&quot;?" />
         <sys:Item Key="37768" Value="What's this???" />
@@ -19,6 +19,10 @@
         <sys:Item Key="163879" Value="Unused?" />
         <sys:Item Key="252681" Value="Make the game intentionally hang here?" />
         <sys:Item Key="255724" Value="Intentionally hang the game?" />
+        <sys:Item Key="516743" Value="Unsure if these are pointers but it feels safe to assume so" />
+        <sys:Item Key="517140" Value="why do these point to 0000??" />
+        <sys:Item Key="518332" Value="Softlock?" />
+        <sys:Item Key="518645" Value="Why is this here??" />
         <sys:Item Key="646862" Value="Helper data?" />
         <sys:Item Key="646900" Value="Bank for above data?" />
         <sys:Item Key="646921" Value="Unsure" />
@@ -34,7 +38,7 @@
         <sys:Item Key="647801" Value="Initial velocity during a regular jump" />
         <sys:Item Key="647839" Value="Initial velocity when jumping out of water" />
         <sys:Item Key="647877" Value="Putting label here to mark the end of the previous table" />
-        <sys:Item Key="1423017" Value="This table gives what buttons move the corkboard in which directions" />
+        <sys:Item Key="1423017" Value="This table provides what buttons move the corkboard in which directions" />
         <sys:Item Key="1423057" Value="Spring Breeze X" />
         <sys:Item Key="1423059" Value="Spring Breeze Y" />
         <sys:Item Key="1423061" Value="Dyna Blade X" />
@@ -78,26 +82,638 @@
         <sys:Item Key="12487013" Value="Compressed Graphics Start" />
       </Comments>
       <Labels>
+        <sys:Item Key="0">
+          <Value exs:type="ns1:Label" Name="IdentifySNES" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1">
+          <Value exs:type="ns1:Label" Name="DSP_VOLR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="2">
+          <Value exs:type="ns1:Label" Name="DSP_P" Comment="" />
+        </sys:Item>
+        <sys:Item Key="4">
+          <Value exs:type="ns1:Label" Name="DSP_SRCN" Comment="" />
+        </sys:Item>
+        <sys:Item Key="5">
+          <Value exs:type="ns1:Label" Name="DSP_ADSR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="7">
+          <Value exs:type="ns1:Label" Name="DSP_GAIN" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8">
+          <Value exs:type="ns1:Label" Name="DSP_ENVX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="9">
+          <Value exs:type="ns1:Label" Name="DSP_OUTX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12">
+          <Value exs:type="ns1:Label" Name="DSP_MVOLL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13">
+          <Value exs:type="ns1:Label" Name="DSP_EFB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14">
+          <Value exs:type="ns1:Label" Name="RAM_CommandWaitLoop" Comment="" />
+        </sys:Item>
+        <sys:Item Key="15">
+          <Value exs:type="ns1:Label" Name="DSP_C0" Comment="" />
+        </sys:Item>
+        <sys:Item Key="20">
+          <Value exs:type="ns1:Label" Name="SNES_WaitForCommand_waitForMessage" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28">
+          <Value exs:type="ns1:Label" Name="DSP_MVOLR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="31">
+          <Value exs:type="ns1:Label" Name="DSP_C1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="38">
+          <Value exs:type="ns1:Label" Name="RAM_ResponseWaitLoop" Comment="" />
+        </sys:Item>
+        <sys:Item Key="41">
+          <Value exs:type="ns1:Label" Name="SNES_WaitForResponse_waitForMessage" Comment="" />
+        </sys:Item>
+        <sys:Item Key="44">
+          <Value exs:type="ns1:Label" Name="DSP_EVOLL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="45">
+          <Value exs:type="ns1:Label" Name="DSP_PMON" Comment="" />
+        </sys:Item>
+        <sys:Item Key="47">
+          <Value exs:type="ns1:Label" Name="DSP_C2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="54">
+          <Value exs:type="ns1:Label" Name="P1_ResetRepeat" Comment="" />
+        </sys:Item>
+        <sys:Item Key="56">
+          <Value exs:type="ns1:Label" Name="P2_ResetRepeat" Comment="" />
+        </sys:Item>
+        <sys:Item Key="60">
+          <Value exs:type="ns1:Label" Name="DSP_EVOLR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="61">
+          <Value exs:type="ns1:Label" Name="DSP_NON" Comment="" />
+        </sys:Item>
+        <sys:Item Key="62">
+          <Value exs:type="ns1:Label" Name="Table_BottomLevelFade" Comment="" />
+        </sys:Item>
+        <sys:Item Key="63">
+          <Value exs:type="ns1:Label" Name="DSP_C3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="76">
+          <Value exs:type="ns1:Label" Name="DSP_KON" Comment="" />
+        </sys:Item>
+        <sys:Item Key="77">
+          <Value exs:type="ns1:Label" Name="DSP_EON" Comment="" />
+        </sys:Item>
+        <sys:Item Key="79">
+          <Value exs:type="ns1:Label" Name="DSP_C4" Comment="" />
+        </sys:Item>
+        <sys:Item Key="92">
+          <Value exs:type="ns1:Label" Name="DSP_KOF" Comment="" />
+        </sys:Item>
+        <sys:Item Key="93">
+          <Value exs:type="ns1:Label" Name="DSP_DIR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="95">
+          <Value exs:type="ns1:Label" Name="DSP_C5" Comment="" />
+        </sys:Item>
+        <sys:Item Key="99">
+          <Value exs:type="ns1:Label" Name="VWF_Width" Comment="" />
+        </sys:Item>
+        <sys:Item Key="101">
+          <Value exs:type="ns1:Label" Name="VWF_Color" Comment="" />
+        </sys:Item>
+        <sys:Item Key="107">
+          <Value exs:type="ns1:Label" Name="VWF_ShowCursor" Comment="" />
+        </sys:Item>
+        <sys:Item Key="108">
+          <Value exs:type="ns1:Label" Name="DSP_FLG" Comment="" />
+        </sys:Item>
+        <sys:Item Key="109">
+          <Value exs:type="ns1:Label" Name="VWF_SecondaryColor" Comment="" />
+        </sys:Item>
+        <sys:Item Key="111">
+          <Value exs:type="ns1:Label" Name="DSP_C6" Comment="" />
+        </sys:Item>
+        <sys:Item Key="124">
+          <Value exs:type="ns1:Label" Name="DSP_ENDX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="125">
+          <Value exs:type="ns1:Label" Name="DSP_EDL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="127">
+          <Value exs:type="ns1:Label" Name="DSP_C7" Comment="" />
+        </sys:Item>
+        <sys:Item Key="131">
+          <Value exs:type="ns1:Label" Name="VWF_CurrentIndex" Comment="" />
+        </sys:Item>
+        <sys:Item Key="133">
+          <Value exs:type="ns1:Label" Name="VWF_Table" Comment="" />
+        </sys:Item>
+        <sys:Item Key="145">
+          <Value exs:type="ns1:Label" Name="VWF_DataPointer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="149">
+          <Value exs:type="ns1:Label" Name="SPC_ReadAddress" Comment="" />
+        </sys:Item>
+        <sys:Item Key="167">
+          <Value exs:type="ns1:Label" Name="SPC_BytesLeft" Comment="" />
+        </sys:Item>
+        <sys:Item Key="170">
+          <Value exs:type="ns1:Label" Name="CurrentLoadedMusic" Comment="" />
+        </sys:Item>
+        <sys:Item Key="171">
+          <Value exs:type="ns1:Label" Name="CurrentLoadedSampleBank" Comment="" />
+        </sys:Item>
+        <sys:Item Key="172">
+          <Value exs:type="ns1:Label" Name="CurrentLoadedSFXs" Comment="" />
+        </sys:Item>
+        <sys:Item Key="177">
+          <Value exs:type="ns1:Label" Name="UpdateStatusBar" Comment="" />
+        </sys:Item>
+        <sys:Item Key="179">
+          <Value exs:type="ns1:Label" Name="CurrentStatusBar" Comment="" />
+        </sys:Item>
+        <sys:Item Key="185">
+          <Value exs:type="ns1:Label" Name="HUD_Lives" Comment="" />
+        </sys:Item>
+        <sys:Item Key="187">
+          <Value exs:type="ns1:Label" Name="HUD_KirbyHP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="189">
+          <Value exs:type="ns1:Label" Name="HUD_HelperHP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="207">
+          <Value exs:type="ns1:Label" Name="HUD_HealthUnitTimer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="256">
+          <Value exs:type="ns1:Label" Name="VRAM_Upload_Buffer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1280">
+          <Value exs:type="ns1:Label" Name="Standard_Palette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1800">
+          <Value exs:type="ns1:Label" Name="Alternative_FGBG_Palette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="2144">
+          <Value exs:type="ns1:Label" Name="Alternative_Sprite_Palette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="2304">
+          <Value exs:type="ns1:Label" Name="VRAM_DMA_Queue" Comment="" />
+        </sys:Item>
+        <sys:Item Key="2472">
+          <Value exs:type="ns1:Label" Name="ObjectSpawnList_Type" Comment="" />
+        </sys:Item>
+        <sys:Item Key="2984">
+          <Value exs:type="ns1:Label" Name="ObjectSpawnList_XPos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="3496">
+          <Value exs:type="ns1:Label" Name="ObjectSpawnList_YPos" Comment="" />
+        </sys:Item>
         <sys:Item Key="5319">
-          <Value exs:type="ns1:Label" Name="Lives_Collected" Comment="" />
+          <Value exs:type="ns1:Label" Name="Permanent_Collectables" Comment="" />
         </sys:Item>
         <sys:Item Key="5327">
-          <Value exs:type="ns1:Label" Name="Tomatoes_Collected" Comment="" />
+          <Value exs:type="ns1:Label" Name="Level_Collectables" Comment="" />
         </sys:Item>
         <sys:Item Key="5335">
-          <Value exs:type="ns1:Label" Name="Food_Collected" Comment="" />
+          <Value exs:type="ns1:Label" Name="Room_Collectables" Comment="" />
+        </sys:Item>
+        <sys:Item Key="5407">
+          <Value exs:type="ns1:Label" Name="StatusBar_Palette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="5655">
+          <Value exs:type="ns1:Label" Name="StatusBar_TileMap" Comment="" />
+        </sys:Item>
+        <sys:Item Key="5879">
+          <Value exs:type="ns1:Label" Name="StatusBar_YXPCCCTT" Comment="" />
+        </sys:Item>
+        <sys:Item Key="7936">
+          <Value exs:type="ns1:Label" Name="SNES_Stack" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8192">
+          <Value exs:type="ns1:Label" Name="DMA_Buffer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8448">
+          <Value exs:type="ns1:Label" Name="HW_INIDISP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8449">
+          <Value exs:type="ns1:Label" Name="HW_OBJSEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8450">
+          <Value exs:type="ns1:Label" Name="HW_OAMADD" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8452">
+          <Value exs:type="ns1:Label" Name="HW_OAMDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8453">
+          <Value exs:type="ns1:Label" Name="HW_BGMODE" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8454">
+          <Value exs:type="ns1:Label" Name="HW_MOSAIC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8455">
+          <Value exs:type="ns1:Label" Name="HW_BG1SC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8456">
+          <Value exs:type="ns1:Label" Name="HW_BG2SC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8457">
+          <Value exs:type="ns1:Label" Name="HW_BG3SC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8458">
+          <Value exs:type="ns1:Label" Name="HW_BG4SC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8459">
+          <Value exs:type="ns1:Label" Name="HW_BG12NBA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8460">
+          <Value exs:type="ns1:Label" Name="HW_BG34NBA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8461">
+          <Value exs:type="ns1:Label" Name="HW_BG1HOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8462">
+          <Value exs:type="ns1:Label" Name="HW_BG1VOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8463">
+          <Value exs:type="ns1:Label" Name="HW_BG2HOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8464">
+          <Value exs:type="ns1:Label" Name="HW_BG2VOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8465">
+          <Value exs:type="ns1:Label" Name="HW_BG3HOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8466">
+          <Value exs:type="ns1:Label" Name="HW_BG3VOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8467">
+          <Value exs:type="ns1:Label" Name="HW_BG4HOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8468">
+          <Value exs:type="ns1:Label" Name="HW_BG4VOFS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8469">
+          <Value exs:type="ns1:Label" Name="HW_VMAINC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8470">
+          <Value exs:type="ns1:Label" Name="HW_VMADD" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8472">
+          <Value exs:type="ns1:Label" Name="HW_VMDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8474">
+          <Value exs:type="ns1:Label" Name="HW_M7SEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8475">
+          <Value exs:type="ns1:Label" Name="HW_MPYA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8476">
+          <Value exs:type="ns1:Label" Name="HW_MPYB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8477">
+          <Value exs:type="ns1:Label" Name="HW_M7C" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8478">
+          <Value exs:type="ns1:Label" Name="HW_M7D" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8479">
+          <Value exs:type="ns1:Label" Name="HW_M7X" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8480">
+          <Value exs:type="ns1:Label" Name="HW_M7Y" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8481">
+          <Value exs:type="ns1:Label" Name="HW_CGADD" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8482">
+          <Value exs:type="ns1:Label" Name="HW_CGDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8483">
+          <Value exs:type="ns1:Label" Name="HW_W12SEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8484">
+          <Value exs:type="ns1:Label" Name="HW_W34SEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8485">
+          <Value exs:type="ns1:Label" Name="HW_WOBJSEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8486">
+          <Value exs:type="ns1:Label" Name="HW_WH0" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8487">
+          <Value exs:type="ns1:Label" Name="HW_WH1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8488">
+          <Value exs:type="ns1:Label" Name="HW_WH2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8489">
+          <Value exs:type="ns1:Label" Name="HW_WH3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8490">
+          <Value exs:type="ns1:Label" Name="HW_WBGLOG" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8491">
+          <Value exs:type="ns1:Label" Name="HW_WOBJLOG" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8492">
+          <Value exs:type="ns1:Label" Name="HW_TM" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8493">
+          <Value exs:type="ns1:Label" Name="HW_TS" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8494">
+          <Value exs:type="ns1:Label" Name="HW_TMW" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8495">
+          <Value exs:type="ns1:Label" Name="HW_TSW" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8496">
+          <Value exs:type="ns1:Label" Name="HW_CGSWSEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8497">
+          <Value exs:type="ns1:Label" Name="HW_CGADSUB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8498">
+          <Value exs:type="ns1:Label" Name="HW_COLDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8499">
+          <Value exs:type="ns1:Label" Name="HW_SETINI" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8500">
+          <Value exs:type="ns1:Label" Name="HW_MPY" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8503">
+          <Value exs:type="ns1:Label" Name="HW_SLHV" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8504">
+          <Value exs:type="ns1:Label" Name="HW_ROAMDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8505">
+          <Value exs:type="ns1:Label" Name="HW_RVMDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8507">
+          <Value exs:type="ns1:Label" Name="HW_RCGDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8508">
+          <Value exs:type="ns1:Label" Name="HW_OPHCT" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8509">
+          <Value exs:type="ns1:Label" Name="HW_OPVCT" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8510">
+          <Value exs:type="ns1:Label" Name="HW_STAT77" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8511">
+          <Value exs:type="ns1:Label" Name="HW_STAT78" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8512">
+          <Value exs:type="ns1:Label" Name="HW_APUIO0" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8513">
+          <Value exs:type="ns1:Label" Name="HW_APUIO1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8514">
+          <Value exs:type="ns1:Label" Name="HW_APUIO2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8515">
+          <Value exs:type="ns1:Label" Name="HW_APUIO3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8576">
+          <Value exs:type="ns1:Label" Name="HW_WMDATA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="8577">
+          <Value exs:type="ns1:Label" Name="HW_WMADD" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12288">
+          <Value exs:type="ns1:Label" Name="IdentifySA1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12296">
+          <Value exs:type="ns1:Label" Name="Execute_on_SNES" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12299">
+          <Value exs:type="ns1:Label" Name="SNES_TriggerExecution" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12300">
+          <Value exs:type="ns1:Label" Name="Execute_on_SA1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12303">
+          <Value exs:type="ns1:Label" Name="SA1_TriggerExecution" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12304">
+          <Value exs:type="ns1:Label" Name="Wait_for_NMI" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12306">
+          <Value exs:type="ns1:Label" Name="DecompressedDataDest" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12309">
+          <Value exs:type="ns1:Label" Name="VRAM_Buffer_StartIndex" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12311">
+          <Value exs:type="ns1:Label" Name="VRAM_Buffer_EndIndex" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12313">
+          <Value exs:type="ns1:Label" Name="Current_Total_NMI_Load" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12315">
+          <Value exs:type="ns1:Label" Name="Max_NMI_Load" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12317">
+          <Value exs:type="ns1:Label" Name="Current_NMI_Load" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12319">
+          <Value exs:type="ns1:Label" Name="VRAM_DMA_Queue_Length" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12367">
+          <Value exs:type="ns1:Label" Name="Layer_1_X" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12369">
+          <Value exs:type="ns1:Label" Name="Layer_2_X" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12371">
+          <Value exs:type="ns1:Label" Name="Layer_3_X" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12373">
+          <Value exs:type="ns1:Label" Name="Layer_1_Y" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12375">
+          <Value exs:type="ns1:Label" Name="Layer_2_Y" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12377">
+          <Value exs:type="ns1:Label" Name="Layer_3_Y" Comment="" />
         </sys:Item>
         <sys:Item Key="12383">
           <Value exs:type="ns1:Label" Name="Screen_Brightness" Comment="" />
         </sys:Item>
+        <sys:Item Key="12384">
+          <Value exs:type="ns1:Label" Name="Sprite_Tile_Size" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12385">
+          <Value exs:type="ns1:Label" Name="Background_Mode" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12386">
+          <Value exs:type="ns1:Label" Name="Mosaic_Pixel_Size" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12387">
+          <Value exs:type="ns1:Label" Name="Layer_1_TilemapVramAddrSize" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12388">
+          <Value exs:type="ns1:Label" Name="Layer_2_TilemapVramAddrSize" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12389">
+          <Value exs:type="ns1:Label" Name="Layer_3_TilemapVramAddrSize" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12390">
+          <Value exs:type="ns1:Label" Name="Layer_4_TilemapVramAddrSize" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12391">
+          <Value exs:type="ns1:Label" Name="Layer12_Base_VramAddr" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12392">
+          <Value exs:type="ns1:Label" Name="Layer34_Base_VramAddr" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12393">
+          <Value exs:type="ns1:Label" Name="Layer12_WindowMask" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12394">
+          <Value exs:type="ns1:Label" Name="Layer34_WindowMask" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12395">
+          <Value exs:type="ns1:Label" Name="Object_Color_WindowMask" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12396">
+          <Value exs:type="ns1:Label" Name="Window1_LeftPos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12397">
+          <Value exs:type="ns1:Label" Name="Window1_RightPos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12398">
+          <Value exs:type="ns1:Label" Name="Window2_LeftPos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12399">
+          <Value exs:type="ns1:Label" Name="Window2_RightPos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12400">
+          <Value exs:type="ns1:Label" Name="Layer_WindowMaskLogic" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12401">
+          <Value exs:type="ns1:Label" Name="ColorObj_WindowMaskLogic" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12402">
+          <Value exs:type="ns1:Label" Name="MainScreenDesignation" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12403">
+          <Value exs:type="ns1:Label" Name="SubScreenDesignation" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12404">
+          <Value exs:type="ns1:Label" Name="MainScreenWindowMaskDesignation" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12405">
+          <Value exs:type="ns1:Label" Name="SubScreenWindowMaskDesignation" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12406">
+          <Value exs:type="ns1:Label" Name="ColorAddition_Settings" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12407">
+          <Value exs:type="ns1:Label" Name="CGADSUB_Settings" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12408">
+          <Value exs:type="ns1:Label" Name="Background_Color" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12411">
+          <Value exs:type="ns1:Label" Name="Mode7_Settings" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12419">
+          <Value exs:type="ns1:Label" Name="Mode7_MatrixA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12421">
+          <Value exs:type="ns1:Label" Name="Mode7_MatrixB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12423">
+          <Value exs:type="ns1:Label" Name="Mode7_MatrixC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12425">
+          <Value exs:type="ns1:Label" Name="Mode7_MatrixD" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12427">
+          <Value exs:type="ns1:Label" Name="Mode7_CenterX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12429">
+          <Value exs:type="ns1:Label" Name="Mode7_CenterY" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12433">
+          <Value exs:type="ns1:Label" Name="InterruptEnableFlags" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12434">
+          <Value exs:type="ns1:Label" Name="HDMA_Enable" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12435">
+          <Value exs:type="ns1:Label" Name="HDMA_Mask" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12443">
+          <Value exs:type="ns1:Label" Name="IRQ_Routine_Pointer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12447">
+          <Value exs:type="ns1:Label" Name="SA1_SNES_NMI_Sync" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12449">
+          <Value exs:type="ns1:Label" Name="Screen_Brightness_Mirror_PrevFrame" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12450">
+          <Value exs:type="ns1:Label" Name="Screen_Brightness_Mirror" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12451">
+          <Value exs:type="ns1:Label" Name="MainScreenDesignation_Mirror" Comment="" />
+        </sys:Item>
+        <sys:Item Key="12452">
+          <Value exs:type="ns1:Label" Name="OAM_Table" Comment="" />
+        </sys:Item>
         <sys:Item Key="12996">
           <Value exs:type="ns1:Label" Name="P1_Hold" Comment="" />
         </sys:Item>
+        <sys:Item Key="12998">
+          <Value exs:type="ns1:Label" Name="P2_Hold" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13004">
+          <Value exs:type="ns1:Label" Name="P1_Repeat" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13006">
+          <Value exs:type="ns1:Label" Name="P2_Repeat" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13012">
+          <Value exs:type="ns1:Label" Name="P1_Frame" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13014">
+          <Value exs:type="ns1:Label" Name="P2_Frame" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13020">
+          <Value exs:type="ns1:Label" Name="UseAltPalette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13022">
+          <Value exs:type="ns1:Label" Name="HDMA_Source_Index" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13026">
+          <Value exs:type="ns1:Label" Name="Enable_HDMA_Channel7" Comment="" />
+        </sys:Item>
         <sys:Item Key="13034">
-          <Value exs:type="ns1:Label" Name="CurrentSubgame" Comment="" />
+          <Value exs:type="ns1:Label" Name="Current_SubGame" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13036">
+          <Value exs:type="ns1:Label" Name="Current_SubGame_x2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13038">
+          <Value exs:type="ns1:Label" Name="Current_Level" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13040">
+          <Value exs:type="ns1:Label" Name="Current_Level_x2" Comment="" />
         </sys:Item>
         <sys:Item Key="13042">
-          <Value exs:type="ns1:Label" Name="Respawn_Room" Comment="" />
+          <Value exs:type="ns1:Label" Name="Current_Room" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13044">
+          <Value exs:type="ns1:Label" Name="Current_Room_x4" Comment="" />
         </sys:Item>
         <sys:Item Key="13068">
           <Value exs:type="ns1:Label" Name="Kirby_X_Respawn" Comment="" />
@@ -117,6 +733,39 @@
         <sys:Item Key="13158">
           <Value exs:type="ns1:Label" Name="Room_Size_X" Comment="" />
         </sys:Item>
+        <sys:Item Key="13258">
+          <Value exs:type="ns1:Label" Name="CurrentMusic_SA1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13259">
+          <Value exs:type="ns1:Label" Name="CurrentSFX_SA1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13260">
+          <Value exs:type="ns1:Label" Name="CurrentVolume" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13261">
+          <Value exs:type="ns1:Label" Name="CurrentStereoMono" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13262">
+          <Value exs:type="ns1:Label" Name="InternalTimerA_Underflow" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13263">
+          <Value exs:type="ns1:Label" Name="InternalTimerB_Underflow" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13264">
+          <Value exs:type="ns1:Label" Name="InternalTimerC_Underflow" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13265">
+          <Value exs:type="ns1:Label" Name="InternalTimerA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13267">
+          <Value exs:type="ns1:Label" Name="InternalTimerB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13269">
+          <Value exs:type="ns1:Label" Name="InternalTimerC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13271">
+          <Value exs:type="ns1:Label" Name="DamageModifier" Comment="" />
+        </sys:Item>
         <sys:Item Key="13809">
           <Value exs:type="ns1:Label" Name="Kirby_Invincible" Comment="" />
         </sys:Item>
@@ -129,11 +778,62 @@
         <sys:Item Key="13815">
           <Value exs:type="ns1:Label" Name="Helper_Inv_Time" Comment="" />
         </sys:Item>
+        <sys:Item Key="13824">
+          <Value exs:type="ns1:Label" Name="Debug_Temp_Palette_Wrap" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13856">
+          <Value exs:type="ns1:Label" Name="Debug_Current_VRAM_Page" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13864">
+          <Value exs:type="ns1:Label" Name="Debug_Current_Palette" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13984">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1MoveLR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13986">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2MoveLR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13988">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1Crouch" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13990">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2Crouch" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13992">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1Shield" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13994">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2Shield" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13996">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1Attack" Comment="" />
+        </sys:Item>
+        <sys:Item Key="13998">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2Attack" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14000">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1Jump" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14002">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2Jump" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14004">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1Summon" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14006">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2Summon" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14008">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P1SelectAbility" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14010">
+          <Value exs:type="ns1:Label" Name="ButtonMap_P2SelectAbility" Comment="" />
+        </sys:Item>
         <sys:Item Key="14012">
           <Value exs:type="ns1:Label" Name="MWW_Last_Ability_Selected" Comment="" />
         </sys:Item>
         <sys:Item Key="14129">
-          <Value exs:type="ns1:Label" Name="DMA_Type" Comment="" />
+          <Value exs:type="ns1:Label" Name="DMA_Buffer_TempStorage" Comment="" />
         </sys:Item>
         <sys:Item Key="14130">
           <Value exs:type="ns1:Label" Name="DMA_Size" Comment="" />
@@ -148,19 +848,235 @@
           <Value exs:type="ns1:Label" Name="DMA_Dest" Comment="" />
         </sys:Item>
         <sys:Item Key="14147">
-          <Value exs:type="ns1:Label" Name="RNG" Comment="" />
+          <Value exs:type="ns1:Label" Name="Current_RNG" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14149">
+          <Value exs:type="ns1:Label" Name="SA1_Scratch_AXY" Comment="" />
+        </sys:Item>
+        <sys:Item Key="14216">
+          <Value exs:type="ns1:Label" Name="SA1_Stack" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16406">
+          <Value exs:type="ns1:Label" Name="HW_JOY1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16407">
+          <Value exs:type="ns1:Label" Name="HW_JOY2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16896">
+          <Value exs:type="ns1:Label" Name="HW_NMITIMEN" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16897">
+          <Value exs:type="ns1:Label" Name="HW_WRIO" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16898">
+          <Value exs:type="ns1:Label" Name="HW_WRMPYA" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16899">
+          <Value exs:type="ns1:Label" Name="HW_WRMPYB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16900">
+          <Value exs:type="ns1:Label" Name="HW_WRDIV" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16902">
+          <Value exs:type="ns1:Label" Name="HW_WRDIVB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16903">
+          <Value exs:type="ns1:Label" Name="HW_HTIME" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16905">
+          <Value exs:type="ns1:Label" Name="HW_VTIME" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16907">
+          <Value exs:type="ns1:Label" Name="HW_MDMAEN" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16908">
+          <Value exs:type="ns1:Label" Name="HW_HDMAEN" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16909">
+          <Value exs:type="ns1:Label" Name="HW_MEMSEL" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16912">
+          <Value exs:type="ns1:Label" Name="HW_RDNMI" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16913">
+          <Value exs:type="ns1:Label" Name="HW_TIMEUP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16914">
+          <Value exs:type="ns1:Label" Name="HW_HVBJOY" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16915">
+          <Value exs:type="ns1:Label" Name="HW_RDIO" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16916">
+          <Value exs:type="ns1:Label" Name="HW_RDDIV" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16918">
+          <Value exs:type="ns1:Label" Name="HW_RDMPY" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16920">
+          <Value exs:type="ns1:Label" Name="HW_CNTRL1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16922">
+          <Value exs:type="ns1:Label" Name="HW_CNTRL2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16924">
+          <Value exs:type="ns1:Label" Name="HW_CNTRL3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="16926">
+          <Value exs:type="ns1:Label" Name="HW_CNTRL4" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17152">
+          <Value exs:type="ns1:Label" Name="HW_DMAPARAM" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17153">
+          <Value exs:type="ns1:Label" Name="HW_DMAREG" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17154">
+          <Value exs:type="ns1:Label" Name="HW_DMAADDR" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17157">
+          <Value exs:type="ns1:Label" Name="HW_DMACNT" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17159">
+          <Value exs:type="ns1:Label" Name="HW_HDMABANK" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17160">
+          <Value exs:type="ns1:Label" Name="HW_DMAIDX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="17162">
+          <Value exs:type="ns1:Label" Name="HW_HDMALINES" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24576">
+          <Value exs:type="ns1:Label" Name="ObjVar0_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24578">
+          <Value exs:type="ns1:Label" Name="ObjVar1_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24580">
+          <Value exs:type="ns1:Label" Name="ObjVar2_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24582">
+          <Value exs:type="ns1:Label" Name="ObjVar3_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24584">
+          <Value exs:type="ns1:Label" Name="ObjVar4_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24588">
+          <Value exs:type="ns1:Label" Name="ObjXPos_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24590">
+          <Value exs:type="ns1:Label" Name="ObjYPos_Temp" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24592">
+          <Value exs:type="ns1:Label" Name="ObjSlotMinimum" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24594">
+          <Value exs:type="ns1:Label" Name="ObjSlotMaximum" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24596">
+          <Value exs:type="ns1:Label" Name="ObjLinkedListStart" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24600">
+          <Value exs:type="ns1:Label" Name="ObjNext" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24616">
+          <Value exs:type="ns1:Label" Name="LongCallPointer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="24636">
+          <Value exs:type="ns1:Label" Name="Obj_NextInList" Comment="" />
+        </sys:Item>
+        <sys:Item Key="25404">
+          <Value exs:type="ns1:Label" Name="Obj_TickCallbackAddr" Comment="" />
+        </sys:Item>
+        <sys:Item Key="25526">
+          <Value exs:type="ns1:Label" Name="Obj_TickCallbackBank" Comment="" />
+        </sys:Item>
+        <sys:Item Key="25654">
+          <Value exs:type="ns1:Label" Name="Obj_Pose" Comment="" />
+        </sys:Item>
+        <sys:Item Key="25910">
+          <Value exs:type="ns1:Label" Name="Obj_SpriteMapAddr" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26032">
+          <Value exs:type="ns1:Label" Name="Obj_SpriteMapBank" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26160">
+          <Value exs:type="ns1:Label" Name="Obj_DrawCallback" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26282">
+          <Value exs:type="ns1:Label" Name="Obj_UnknownCallback" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26404">
+          <Value exs:type="ns1:Label" Name="Obj_ScriptSleepTimer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26526">
+          <Value exs:type="ns1:Label" Name="Obj_ScriptProgramCounter" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26648">
+          <Value exs:type="ns1:Label" Name="Obj_ScriptProgramBank" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26770">
+          <Value exs:type="ns1:Label" Name="Obj_XPositionMirror" Comment="" />
+        </sys:Item>
+        <sys:Item Key="26892">
+          <Value exs:type="ns1:Label" Name="Obj_YPositionMirror" Comment="" />
+        </sys:Item>
+        <sys:Item Key="27014">
+          <Value exs:type="ns1:Label" Name="Obj_XPosition" Comment="" />
         </sys:Item>
         <sys:Item Key="27016">
           <Value exs:type="ns1:Label" Name="Kirby_X_Pos" Comment="" />
         </sys:Item>
+        <sys:Item Key="27136">
+          <Value exs:type="ns1:Label" Name="Obj_YPosition" Comment="" />
+        </sys:Item>
         <sys:Item Key="27138">
           <Value exs:type="ns1:Label" Name="Kirby_Y_Pos" Comment="" />
+        </sys:Item>
+        <sys:Item Key="27258">
+          <Value exs:type="ns1:Label" Name="Obj_XPositionFraction" Comment="" />
+        </sys:Item>
+        <sys:Item Key="27380">
+          <Value exs:type="ns1:Label" Name="Obj_YPositionFraction" Comment="" />
+        </sys:Item>
+        <sys:Item Key="27990">
+          <Value exs:type="ns1:Label" Name="Obj_VAR0" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28112">
+          <Value exs:type="ns1:Label" Name="Obj_VAR1" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28234">
+          <Value exs:type="ns1:Label" Name="Obj_VAR2" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28356">
+          <Value exs:type="ns1:Label" Name="Obj_VAR3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28478">
+          <Value exs:type="ns1:Label" Name="Obj_VAR4" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28600">
+          <Value exs:type="ns1:Label" Name="Obj_VAR5" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28722">
+          <Value exs:type="ns1:Label" Name="Obj_VAR6" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28844">
+          <Value exs:type="ns1:Label" Name="Obj_VAR7" Comment="" />
+        </sys:Item>
+        <sys:Item Key="28966">
+          <Value exs:type="ns1:Label" Name="Obj_VAR8" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29088">
+          <Value exs:type="ns1:Label" Name="Obj_VAR9" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29258">
+          <Value exs:type="ns1:Label" Name="Obj_ScriptWorkRegister" Comment="" />
         </sys:Item>
         <sys:Item Key="29544">
           <Value exs:type="ns1:Label" Name="CameraLock" Comment="" />
         </sys:Item>
         <sys:Item Key="29558">
-          <Value exs:type="ns1:Label" Name="Score" Comment="" />
+          <Value exs:type="ns1:Label" Name="PlayerScore" Comment="" />
         </sys:Item>
         <sys:Item Key="29562">
           <Value exs:type="ns1:Label" Name="Lives" Comment="" />
@@ -171,6 +1087,39 @@
         <sys:Item Key="29566">
           <Value exs:type="ns1:Label" Name="HelperHP" Comment="" />
         </sys:Item>
+        <sys:Item Key="29568">
+          <Value exs:type="ns1:Label" Name="KirbyMaxHP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29570">
+          <Value exs:type="ns1:Label" Name="HelperMaxHP" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29572">
+          <Value exs:type="ns1:Label" Name="KirbyAbilityPanelGFX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29573">
+          <Value exs:type="ns1:Label" Name="KirbyAbilityTempPanelGFX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29574">
+          <Value exs:type="ns1:Label" Name="HelperAbilityPanelGFX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29575">
+          <Value exs:type="ns1:Label" Name="HelperAbilityTempPanelGFX" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29576">
+          <Value exs:type="ns1:Label" Name="KirbyAbilityTempPanelIndex" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29577">
+          <Value exs:type="ns1:Label" Name="KirbyAbilityTempPanelIndexUpdate" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29578">
+          <Value exs:type="ns1:Label" Name="KirbyAbilityTempPanelTimer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29580">
+          <Value exs:type="ns1:Label" Name="HelperAbilityTempPanelIndex" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29581">
+          <Value exs:type="ns1:Label" Name="HelperAbilityTempPanelIndexUpdate" Comment="" />
+        </sys:Item>
         <sys:Item Key="29584">
           <Value exs:type="ns1:Label" Name="CurrentGameState" Comment="" />
         </sys:Item>
@@ -178,13 +1127,31 @@
           <Value exs:type="ns1:Label" Name="ReloadRoom" Comment="" />
         </sys:Item>
         <sys:Item Key="29588">
-          <Value exs:type="ns1:Label" Name="Reload_Map_Unpause" Comment="" />
+          <Value exs:type="ns1:Label" Name="LoadSpecialWarpDest" Comment="" />
         </sys:Item>
         <sys:Item Key="29590">
-          <Value exs:type="ns1:Label" Name="Reload_DynaMap_Door" Comment="" />
+          <Value exs:type="ns1:Label" Name="ReloadMapOnUnpause" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29592">
+          <Value exs:type="ns1:Label" Name="TitleDemo_GameState" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29594">
+          <Value exs:type="ns1:Label" Name="TitleDemo_Flag" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29596">
+          <Value exs:type="ns1:Label" Name="TitleDemo_CurrentDemo" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29598">
+          <Value exs:type="ns1:Label" Name="TitleDemo_InputIndex" Comment="" />
         </sys:Item>
         <sys:Item Key="29600">
           <Value exs:type="ns1:Label" Name="RoMK_Timer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29602">
+          <Value exs:type="ns1:Label" Name="RoMK_SlowTimer" Comment="" />
+        </sys:Item>
+        <sys:Item Key="29771">
+          <Value exs:type="ns1:Label" Name="Intangible_to_items" Comment="" />
         </sys:Item>
         <sys:Item Key="29855">
           <Value exs:type="ns1:Label" Name="Kirby_Ability" Comment="" />
@@ -220,7 +1187,7 @@
           <Value exs:type="ns1:Label" Name="Boss_HP" Comment="" />
         </sys:Item>
         <sys:Item Key="31259">
-          <Value exs:type="ns1:Label" Name="Boss_HP_Max" Comment="" />
+          <Value exs:type="ns1:Label" Name="Boss_Max_HP" Comment="" />
         </sys:Item>
         <sys:Item Key="31261">
           <Value exs:type="ns1:Label" Name="Boss_HP_Meter" Comment="" />
@@ -6717,6 +7684,21 @@
         <sys:Item Key="452549">
           <Value exs:type="ns1:Label" Name="CODE_86E7C5" Comment="" />
         </sys:Item>
+        <sys:Item Key="493666">
+          <Value exs:type="ns1:Label" Name="AS_InitializeFileSelect" Comment="" />
+        </sys:Item>
+        <sys:Item Key="493732">
+          <Value exs:type="ns1:Label" Name="" Comment="" />
+        </sys:Item>
+        <sys:Item Key="493770">
+          <Value exs:type="ns1:Label" Name="AS_FileSelectMainLoop" Comment="" />
+        </sys:Item>
+        <sys:Item Key="493782">
+          <Value exs:type="ns1:Label" Name="AS_FileDeletePrompt" Comment="" />
+        </sys:Item>
+        <sys:Item Key="493889">
+          <Value exs:type="ns1:Label" Name="AS_FileSelected" Comment="" />
+        </sys:Item>
         <sys:Item Key="494063">
           <Value exs:type="ns1:Label" Name="CODE_8789EF" Comment="" />
         </sys:Item>
@@ -6737,6 +7719,9 @@
         </sys:Item>
         <sys:Item Key="495221">
           <Value exs:type="ns1:Label" Name="CODE_878E75" Comment="" />
+        </sys:Item>
+        <sys:Item Key="495231">
+          <Value exs:type="ns1:Label" Name="FileSelectMainLoop" Comment="" />
         </sys:Item>
         <sys:Item Key="495255">
           <Value exs:type="ns1:Label" Name="CODE_878E97" Comment="" />
@@ -6914,6 +7899,9 @@
         </sys:Item>
         <sys:Item Key="516695">
           <Value exs:type="ns1:Label" Name="CODE_87E257" Comment="" />
+        </sys:Item>
+        <sys:Item Key="516743">
+          <Value exs:type="ns1:Label" Name="" Comment="" />
         </sys:Item>
         <sys:Item Key="517023">
           <Value exs:type="ns1:Label" Name="CODE_87E39F" Comment="" />
@@ -11970,17 +12958,17 @@ r 70 A
 +C
 .C
 +
-+E
-.
-+C
++G
 .C
 +C
 .C
-+C
++K
 .C
 +C
 .C
-+C
++a
+.C
++G
 .C
 +C
 .C
@@ -11995,12 +12983,12 @@ r 70 A
 +C
 .C
 .C
-+C
-.C
-+C
++K
 .C
 +
-+C
+.
++Q
++G
 .C
 +
 .
@@ -13269,7 +14257,7 @@ r 160 A
 +
 .
 .
-+
++Y
 .
 +E
 .
@@ -13297,7 +14285,7 @@ r 160 A
 +
 .
 .
-+
++I
 .
 +
 .
@@ -13305,7 +14293,7 @@ r 160 A
 +
 .
 .
-+
++Y
 .
 .
 .
@@ -13483,7 +14471,7 @@ r 160 A
 +E
 .
 .
-+
++I
 .
 +
 .
@@ -13491,7 +14479,7 @@ r 160 A
 +
 .
 .
-+
++Q
 .
 .
 +E
@@ -18102,13 +19090,13 @@ r 16 A
 +
 .
 .
-+
++I
 .
 +
-+
++Y
 .
 .
-+
++E
 +E
 .
 .
@@ -32423,7 +33411,7 @@ r 20 A
 +E
 .
 .
-+
++Y
 .
 .
 +E
@@ -32661,23 +33649,23 @@ r 20 A
 +E
 .
 +E
-+B
-.B
-.B
-+B
-+B
-+B
-.B
-.B
-+D
-.D
-+D
-+D
-.D
-.D
-+D
-.D
-+B
++
+.
+.
++
++
++
+.
+.
++C
+.C
++C
++C
+.C
+.C
++
+.
++Q
 +E
 .
 .
@@ -32721,7 +33709,7 @@ r 20 A
 +
 .
 .
-+
++Q
 +E
 .
 .
@@ -196408,1156 +197396,1285 @@ U
 r 1025 U
 A
 ;pos=038000
-r 2047 A
-U
+r 2048 A
 ;pos=038800
-U
-U
-U
-U
-U
-U
-r 213 A
-U
-r 29 A
-U
-U
-r 34 A
-U
-U
-r 165 A
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-r 36 A
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-r 32 A
-+
-.
-.
-+
-.
-.
-+
-+
-.
-.
-.
-+
-+
-.
-.
-.
-+
-.
-.
-+
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-+
-+
-.
-.
-+
-.
-+
-.
-.
-.
-r 116 A
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
 A
 A
 A
 A
 A
 A
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-.
-r 137 A
-+
-.
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-+
-+
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-U
-U
-U
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-+
-+
-.
-.
-+
-+
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+C
-.C
-.C
-+C
-.C
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-+
-.
-.
-+
-+
-+
-.
-.
-.
-+
-+
-.
-.
-+
-+
-.
-.
-+
-.
-r 10 U
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-+
-.
-.
-+
-.
-+
-+
-+
-.
-.
-+
-.
-.
-.
-+
-+
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
+A
+E007
+E007
+A
+A
+A
+A
+A
+A
+E007
+E007
+r 74 A
+E007
+E007
+A
+F007
+F007
+F007
+A
+F007
+F007
+F007
+A
+A
+A
+A
+A
+F007
+F007
+F007
+B007
+B007
+A
+E007
+E007
+A
+A
+A
+A
+F007
+F007
+F007
+A
+B007
+B007
+A
+F007
+F007
+F007
+B
+B
+B
+B
+A
+F007
+F007
+F007
+B
+B
+B
+B
+A
+F007
+F007
+F007
+B
+B
+B
+B
+A
+F007
+F007
+F007
+A
+F007
+F007
+F007
+A
+A
+B
+B
+r 8 A
+A007
+A007
+A
+A007
+A007
+A007
+A
+A
+F007
+F007
+F007
 r 10 A
-U
+F007
+F007
+F007
+A
+A
+A
+F007
+F007
+F007
+A
+A
+A
+A
+F007
+F007
+F007
+A007
+A007
+E007
+E007
+E007
+E007
+E007
+E007
+r 239 A
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
+r 36 B
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
+r 32 B
++
+.
+.
++
+.
+.
++
++
+.
+.
+.
++
++
+.
+.
+.
++
+.
+.
++
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
++
++
+.
+.
++
+.
++
+.
+.
+.
+r 116 B
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
+B
+B
+B
+B
+B
+B
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
+.
+r 135 B
+BQ
+A
++
+.
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++
++
++
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
++
++
+.
+.
++
++
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
++C
+.C
+.C
++C
+.C
++
+.
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++
++
++
+.
+.
+.
++
++
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
++
+.
+.
++
+.
++
++
++
+.
+.
++
+.
+.
+.
++
++
++
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+A
+A
+A
+F007
+F007
+F007
+A
+A
+A
+A
+A
 +
 .
 .
@@ -197896,155 +199013,108 @@ U
 .
 .
 .
+r 32 A007
+r 18 A
++
+.
+.
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++
++
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
++
++
+.
+.
++
++
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
++
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+r 26 B
 A
-A
-A
-A
-A
-A
-A
-U
-U
-U
-A
-A
-A
-A
-U
-A
-A
-A
-U
-U
-U
-A
-A
-A
-A
-U
-A
-A
-A
-U
-U
-U
-A
-A
-A
-A
-U
-A
-A
-A
-U
-U
-U
-A
-A
-A
-A
-U
-A
-A
 +
 .
 .
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-+
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-+
-+
-.
-.
-+
-+
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-+
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-r 27 A
-+
-.
-.
 +
 +
 +
@@ -198148,7 +199218,7 @@ r 27 A
 +
 .
 +
-r 40 A
+r 40 B
 +E
 +
 +
@@ -198477,29 +199547,8 @@ r 1484 A
 +
 .
 .
-r 104 A
-U
-U
-U
-U
-A
-A
-U
-U
-A
-A
-A
-A
-A
-A
-U
-U
-U
-U
-A
-A
-U
-U
+r 14 E007
+r 112 B
 +
 .
 .
@@ -198647,7 +199696,7 @@ U
 .
 +
 .
-r 18 A
+r 18 B
 +
 .
 .
@@ -198781,6 +199830,323 @@ r 18 A
 .
 +
 .
+r 18 B
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+r 44 B
++E
+.
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
++
+.
+.
++Y
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
+.
++
++
+.
+.
++
+.
++
+.
+.
++E
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
+.
++
+.
 r 18 A
 +
 .
@@ -198792,351 +200158,40 @@ r 18 A
 +
 .
 .
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-+
-.
-.
-+
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-r 9 U
-r 34 A
-U
-+
-.
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-U
-U
-U
-U
-U
-U
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-.
-+
-+
-.
-.
-+
-.
-+
-.
 .
 +
 .
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-+
-.
-.
-+
-+
-.
-.
 +
 .
-.
-.
-+
 .
-r 18 A
 +
 .
 .
 .
 +
 .
-.
 +
-.
 .
 .
 +
 .
-+
 .
 .
 +
 .
 .
-.
 +
 .
-+
 .
 .
 +
 .
-.
-.
 +
 .
 .
 +
 .
 .
-.
 +
 .
 +
@@ -199153,9 +200208,8 @@ r 18 A
 +
 .
 .
-+
++Y
 .
-r 8 U
 +
 .
 .
@@ -199170,7 +200224,7 @@ r 8 U
 +
 .
 .
-+
++E
 .
 .
 +
@@ -199569,9 +200623,7 @@ r 18 A
 .
 +
 .
-r 29 A
-U
-r 543 A
+r 573 A
 +
 .
 .
@@ -199600,8 +200652,25 @@ r 543 A
 .
 +
 .
-r 18 U
 +
+.
+.
++
+.
+.
++I
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++E
 +
 .
 .
@@ -199737,7 +200806,7 @@ A
 +
 .
 .
-r 14 A
+r 14 E007
 +
 .
 .
@@ -199749,8 +200818,21 @@ r 14 A
 .
 +
 .
-r 14 U
 +
+.
+.
++I
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++E
 .
 .
 +
@@ -200057,7 +201139,7 @@ r 14 U
 +
 .
 .
-+
++E
 .
 .
 .
@@ -200076,15 +201158,7 @@ r 14 U
 .
 .
 +
-U
-A
-A
-A
-A
-A
-A
-A
-U
+r 9 A
 +
 .
 .
@@ -200114,13 +201188,7 @@ U
 +
 .
 .
-r 12 A
-U
-U
-U
-U
-A
-A
+r 18 E007
 +
 .
 .
@@ -200139,9 +201207,7 @@ A
 +
 .
 .
-r 12 A
-U
-U
+r 14 E007
 +
 .
 .
@@ -200347,13 +201413,13 @@ U
 .
 .
 +
+.
++M
+.
+.
+.
++Y
 .
-U
-U
-U
-U
-U
-U
 +
 .
 .
@@ -200584,15 +201650,16 @@ U
 +
 .
 +
-r 12 A
-U
-U
-r 34 A
-U
-r 11 A
-U
-U
-U
+r 14 E007
+B007
+B007
+B007
+B007
+B007
+B007
+B
+r 41 B007
+A007
 +
 .
 .
@@ -200615,13 +201682,7 @@ U
 .
 +
 .
-r 12 U
-A
-A
-U
-U
-U
-U
+r 18 B
 +
 .
 .
@@ -200733,10 +201794,31 @@ U
 .
 +
 .
-r 22 U
++Y
+.
++
+.
+.
++
++
+.
+.
++I
+.
 +
 .
 .
++Y
+.
++E
+.
+.
++
+.
+.
++
+.
+.
 +
 .
 .
@@ -200766,11 +201848,11 @@ r 22 U
 .
 .
 .
-+
-A
-A
-U
-U
++U
+E007
+E007
+E007
+E007
 +
 .
 .
@@ -200806,20 +201888,7 @@ U
 +
 .
 .
-A
-A
-A
-A
-A
-A
-U
-U
-A
-A
-U
-U
-A
-A
+r 14 E007
 +
 .
 .
@@ -200916,20 +201985,7 @@ A
 +
 .
 .
-U
-U
-A
-A
-U
-U
-U
-U
-A
-A
-U
-U
-U
-U
+r 14 E007
 +
 +
 .
@@ -201027,63 +202083,14 @@ U
 .
 .
 +
-r 18 A
+r 18 B
 +
 .
 +
 .
 .
 +
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-r 28 U
-+
-.
-.
-+
-.
-.
-+
-.
-.
-+
-.
-.
-.
-+
-.
-+
++E
 .
 .
 .
@@ -201102,11 +202109,49 @@ r 28 U
 .
 +
 .
+.
++
+.
+.
++
+.
+.
++
+.
+.
 +
 .
 .
 .
 +
+.
+.
++
+.
+.
++Y
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++Y
+.
+.
++E
 .
 .
 +
@@ -201149,16 +202194,6 @@ r 28 U
 .
 +
 .
-+
-.
-.
-r 305 U
-+
-.
-.
-+
-.
-.
 .
 +
 .
@@ -201169,6 +202204,358 @@ r 305 U
 .
 +
 .
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
++
+.
+.
+.
++
+.
+.
++
+.
++
+.
+.
+B
+B
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++E
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++I
+.
+.
+.
++
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
++Y
+.
+.
+.
++E
++
+.
+.
++E
+.
+.
++
++
+.
+.
++
++
+.
+.
++
+.
+.
++
++
++I
+.
+.
+.
++
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
++
+.
+.
++
++
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
++
+.
+.
++
+.
++Q
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++Y
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
+.
++E
+.
 .
 +
 .
@@ -201187,7 +202574,15 @@ r 305 U
 .
 +
 .
-r 9 U
++
+.
+.
++I
+.
+.
+.
++Y
+.
 +
 .
 .
@@ -201234,20 +202629,7 @@ r 9 U
 +
 .
 .
-A
-A
-U
-U
-U
-U
-U
-U
-A
-A
-U
-U
-U
-U
+r 14 E007
 +
 .
 +
@@ -201410,9 +202792,793 @@ U
 .
 .
 +
-r 155 U
++E
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++M
+.
+.
+.
++I
+.
+.
+.
++
++
+.
+.
++I
+.
++Y
+.
+.
++M
+.
+.
+.
++
+.
+.
++I
+.
++Y
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++M
+.
+.
+.
++I
+.
+.
+.
++
++
+.
+.
++I
+.
++Y
+.
+.
++M
+.
+.
+.
++C
+.C
++C
+.C
++C
+.C
+.C
++C
+.C
+.C
++C
+.C
+.C
++C
+.C
+.C
++
+.
++
+.
+.
++
 ;pos=03E800
-r 662 U
+.
+.
++
+.
+.
++Y
+.
+.
++
+.
+.
++
+.
+.
++I
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++U
++E
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++E
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
++
+.
+.
++
++
+.
+.
++Y
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++M
+.
++
++
++Q
+.
+.
++
++
++
+.
++
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++M
+.
+.
+.
++Y
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
++C
+.C
++C
+.C
++C
+.C
+.C
++C
+.C
++C
+.C
+.C
++C
+.C
++C
+.C
+.C
++C
+.C
++C
+.C
+.C
++
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++C
+.C
++C
+.C
++C
+.C
+.C
++C
+.C
+.C
++C
+.C
+.C
++C
+.C
+.C
++
+.
++Y
+.
+.
+.
+r 32 A
++007
+.007
+.007
++007
+.007
+.007
++007
+.007
+.007
++007
+.007
+.007
++007
+.007
+.007
++007
+.007
+.007
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++I
+.
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
++Y
+.
+.
++Y
+.
+.
+.
 +
 .
 .
@@ -201949,7 +204115,7 @@ r 56 A
 +
 .
 .
-r 38 A
+r 38 E007
 +
 .
 .
@@ -202036,8 +204202,13 @@ r 38 A
 +
 .
 .
-r 12 A
-r 14 U
+E007
+E007
+E007
+E007
+B007
+B007
+r 20 B
 +
 .
 .
@@ -202092,7 +204263,7 @@ r 14 U
 +
 .
 .
-r 18 A
+r 18 E007
 +
 .
 .
@@ -202941,7 +205112,7 @@ r 18 A
 +
 .
 .
-r 8 A
+r 8 E007
 +
 .
 .
@@ -203428,7 +205599,7 @@ r 8 A
 +
 .
 .
-r 8 A
+r 8 E007
 +
 .
 .
@@ -203653,7 +205824,7 @@ r 8 A
 +
 .
 .
-r 18 A
+r 18 E007
 +
 .
 .
@@ -205139,11 +207310,158 @@ r 18 A
 .
 .
 +
-r 18 A
-U
-U
-r 181 A
-r 1392 U
+r 16 B007
+A007
+r 36 A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+B
+B
+F007
+F007
+F007
+B
+B
+A
+r 1392 X
 A
 ;pos=040000
 r 21 A
@@ -573481,7 +575799,9 @@ r 2048 A
 ;pos=2A0800
 r 2048 A
 ;pos=2A1000
-r 2048 A
+r 1512 A
+Ag
+r 535 A
 ;pos=2A1800
 r 665 A
 r 1126 U

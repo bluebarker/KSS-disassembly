@@ -2010,6 +2010,7 @@ CODE_FL_008F57:					;			|
 	AND #$8000					;$008F5A	|
 	STA $62BC,X					;$008F5D	|
 	JSR RemoveTickCallback		;$008F60	|
+CODE_FL_008F63:
 	RTL							;$008F63	|
 
 CODE_FL_008F64:					;-----------|
@@ -8459,49 +8460,49 @@ CODE_FL_00BD7B:					;			|
 
 AS_Script_0000:
 	%AS_MOV_REG_VAR($0)
-	%AS_MULTIJMP(AS_00BDA0,
-		AS_00BDA7,
-		AS_00BDC7,
-		AS_00BDCB,
-		AS_00BDAB,
-		AS_00BDB3,
-		AS_00BDB7,
-		AS_00BDBE,
-		AS_00BDCF,
-		AS_00BDD3,
-		AS_00BDD7,
-		AS_00BDDB,
-		AS_00BDDF)
-AS_00BDA0:
+	%AS_MULTIJMP(AS_MainIntroCutscene,
+		AS_MainTitleScreen,
+		AS_MinigameTitleDemo,
+		AS_MapScreen,
+		AS_Tutorial,
+		AS_Corkboard,
+		AS_SubgameTitle,
+		AS_GameOver,
+		AS_GoalGame,
+		AS_OpeningCutscene,
+		AS_EndingCutscene,
+		AS_SoundTest,
+		AS_TheArena)
+AS_MainIntroCutscene:
 	%AS_ASMCALL(CODE_FL_00A47B, $01)
 	dl $CADCF1
-AS_00BDA7:
+AS_MainTitleScreen:
 	%AS_JML($078807)
-AS_00BDAB:
+AS_Tutorial:
 	%AS_MOV_VAR_IMM16($00, $0000)
 	%AS_JML($D1A39A)
-AS_00BDB3:
+AS_Corkboard:
 	%AS_JML($CAAC12)
-AS_00BDB7:
+AS_SubgameTitle:
 	%AS_ASMCALL(CODE_FL_00A47B, $01)
 	dl $07D5CD
-AS_00BDBE:
+AS_GameOver:
 	%AS_MOV_REG_ABS($738E)
 	%AS_MOV_VAR_REG($00)
 	%AS_JML($CAD6DF)
-AS_00BDC7:
+AS_MinigameTitleDemo:
 	%AS_JML($CB94BC)
-AS_00BDCB:
+AS_MapScreen:
 	%AS_JML($CA5F47)
-AS_00BDCF:
+AS_GoalGame:
 	%AS_JML($CBD21B)
-AS_00BDD3:
+AS_OpeningCutscene:
 	%AS_JML($C90000)
-AS_00BDD7:
+AS_EndingCutscene:
 	%AS_JML($C90018)
-AS_00BDDB:
+AS_SoundTest:
 	%AS_JML($CF9235)
-AS_00BDDF:
+AS_TheArena:
 	%AS_JML($D1DB83)
 
 
@@ -10255,9 +10256,9 @@ CODE_FL_00CE67:					;			|
 	SEP #$20					;$00CE67	|
 	STA $33CC					;$00CE69	|
 	REP #$20					;$00CE6C	|
-	LDA #$CEA0					;$00CE6E	|
-	LDX #$0000					;$00CE71	|
+	%LoadLongToAX(CODE_FL_00CEA0)
 	JML SA1_ExecuteSNES			;$00CE74	|
+CODE_FL_00CE78:
 	JSR AS_ReadByte				;$00CE78	|
 	SEP #$30					;$00CE7B	|
 	CLC							;$00CE7D	|
@@ -10267,7 +10268,6 @@ CODE_FL_00CE67:					;			|
 	BCC CODE_FL_00CE91			;$00CE84	|
 	LDA #$FF					;$00CE86	|
 	BRA CODE_FL_00CE91			;$00CE88	|
-
 CODE_FL_00CE8A:
 	ADC $33CC					;$00CE8A	|
 	BCS CODE_FL_00CE91			;$00CE8D	|
@@ -10275,9 +10275,8 @@ CODE_FL_00CE8A:
 CODE_FL_00CE91:					;			|
 	STA $33CC					;$00CE91	|
 	REP #$30					;$00CE94	|
-	LDA #$CEA0					;$00CE96	|\ 
-	LDX #$0000					;$00CE99	|| Make sure we run the below on the SNES.
-	JML SA1_ExecuteSNES			;$00CE9C	|/
+	%LoadLongToAX(CODE_FL_00CEA0)
+	JML SA1_ExecuteSNES			;$00CE9C	|
 CODE_FL_00CEA0:					;			|
 	SEP #$20					;$00CEA0	|
 	LDA $33CC					;$00CEA2	|
@@ -12820,6 +12819,7 @@ CODE_FL_00E2D9:					;			|
 	INC A						;$00E2E1	|
 CODE_FL_00E2E2:					;			|
 	LDY $39						;$00E2E2	|
+CODE_FL_00E2E4:
 	STA $6986,Y					;$00E2E4	|
 	LDA #$8000					;$00E2E7	|
 	STA $6A7A,Y					;$00E2EA	|
@@ -13171,10 +13171,12 @@ CODE_FL_00E52E:					;			|
 	INC A						;$00E536	|
 CODE_FL_00E537:					;			|
 	LDY $39						;$00E537	|
+CODE_FL_00E539:
 	STA $6B6E,Y					;$00E539	|
 	TXA							;$00E53C	|
 	STA $6BE8,Y					;$00E53D	|
 	RTL							;$00E540	|
+CODE_FL_00E541:
 	PHX							;$00E541	|
 	TYX							;$00E542	|
 	LDY $6DD0,X					;$00E543	|
@@ -13294,6 +13296,7 @@ CODE_FL_00E5E1:					;			|
 	INC A						;$00E5E9	|
 CODE_FL_00E5EA:					;			|
 	LDY $39						;$00E5EA	|
+CODE_FL_00E5EC:
 	STA $6C62,Y					;$00E5EC	|
 	TXA							;$00E5EF	|
 	JMP CODE_FL_00E17F			;$00E5F0	|
@@ -13472,6 +13475,8 @@ CODE_FL_00E6F3:
 	ADC $3081					;$00E6FC	|
 	STA $3081					;$00E6FF	|
 	JMP CODE_FL_00E6CC			;$00E702	|
+
+CODE_FL_00E705:
 	STA $6FB8,Y					;$00E705	|
 	TXA							;$00E708	|
 	XBA							;$00E709	|
@@ -14596,12 +14601,13 @@ CODE_FL_00EF79:					;			|
 
 
 CODE_FL_00EF86:
-	LDX SaveFile_Offset		;$00EF86	|
+	LDX SaveFile_Offset			;$00EF86	|
 	LDA Current_SubGame			;$00EF89	|
 	SEP #$20					;$00EF8C	|
 	STA SaveFile_Subgame,X		;$00EF8E	|
 	REP #$20					;$00EF91	|
 	RTL							;$00EF93	|
+CODE_FL_00EF94:
 	STA $02						;$00EF94	|
 	TAX							;$00EF96	|
 	STZ $00						;$00EF97	|
