@@ -5732,7 +5732,7 @@ CODE_FL_00A802:					;```````````|
 	JSR CODE_FL_00A81B			;$00A817	|
 	RTL							;$00A81A	|
 
-CODE_FL_00A81B:					;```````````|
+CODE_FL_00A81B:					;```````````| Something related to controlling object speed
 	LDY $39						;$00A81B	|
 	LDA $6C62,Y					;$00A81D	|
 	CLC							;$00A820	|
@@ -8460,7 +8460,7 @@ CODE_FL_00BD7B:					;			|
 	RTL							;$00BD81	|
 
 AS_Script_0000:
-	%AS_MOV_REG_VAR($0)
+	%AS_Mov_reg_var($0)
 	%AS_MULTIJMP(AS_MainIntroCutscene,
 		AS_MainTitleScreen,
 		AS_MinigameTitleDemo,
@@ -8475,7 +8475,7 @@ AS_Script_0000:
 		AS_SoundTest,
 		AS_TheArena)
 AS_MainIntroCutscene:
-	%AS_ASMCALL(CODE_FL_00A47B, $01)
+	%AS_ASMCall(CODE_FL_00A47B, $01)
 	dl $CADCF1
 AS_MainTitleScreen:
 	%AS_JML($078807)
@@ -8485,11 +8485,11 @@ AS_Tutorial:
 AS_Corkboard:
 	%AS_JML($CAAC12)
 AS_SubgameTitle:
-	%AS_ASMCALL(CODE_FL_00A47B, $01)
+	%AS_ASMCall(CODE_FL_00A47B, $01)
 	dl $07D5CD
 AS_GameOver:
 	%AS_MOV_REG_ABS($738E)
-	%AS_MOV_VAR_REG($00)
+	%AS_Mov_var_reg($00)
 	%AS_JML($CAD6DF)
 AS_MinigameTitleDemo:
 	%AS_JML($CB94BC)
@@ -10604,7 +10604,7 @@ LoadToSPC:						;-----------|
 
 
 ReadPlaySFX:
-	JSR AS_ReadByte				;$00D12A	| 
+	JSR AS_ReadByte				;$00D12A	|
 PlaySFX:						;-----------|
 	SEP #$30					;$00D12D	|
 	CMP #$F9					;$00D12F	|

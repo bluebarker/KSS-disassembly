@@ -1012,14 +1012,94 @@ Current_Room_x4: skip 2
 ; The data written here is read from the start of bank $FF
 skip 2
 
-
 ; 3312 respawn room
 ; 3314 x respawn
 ; 3316 y respawn 
 ; 3318 respawn ram offset position (but why)
 
 ; Unidentified
-skip $33CA-$32F8
+skip $3342-$32F8
+
+; === $003342 - $003348 ===
+; 2 bytes each
+; Mirrors of Kirby's/Helper's X and Y position to assist with determining camera position.
+; These values are offset so that 0,0 are at the center of the screen when at the most top-left position of the room.
+CameraMirror_KirbyX: skip 2
+CameraMirror_HelperX: skip 2
+CameraMirror_KirbyY: skip 2
+CameraMirror_HelperY: skip 2
+
+; === $00334A - $00334C ===
+; 2 bytes
+; The X and Y positions that the camera will target.
+; Determined using Kirby and Helper's X positions.
+Camera_TargetX: skip 2
+Camera_TargetY: skip 2
+
+; === $00334E ===
+; Influences the Camera Y position in some way.
+; Usually set to zero? Is this a Y offset value?
+skip 2
+
+; === $003350 ===
+; 2 bytes
+; Current camera position X. Always tries to target the value at $334A.
+Camera_CurrentPositionX: skip 2
+
+; === $003352 ===
+; 2 bytes
+; Camera X offset so that camera doesn't abruptly stop in place when finished moving.
+Camera_EasingX: skip 2
+
+; === $003354 ===
+; 2 bytes
+; Current camera position Y
+Current_CameraPositionY: skip 2
+
+; === $003356 ===
+; 2 bytes
+; Camera Y offset so that camera doesn't abruptly stop in place when finished moving.
+Camera_EasingY: skip 2
+
+; === $003358 - $00335E ===
+; 2 bytes
+; Current X/Y position of the foreground/background tiles being drawn to the screen.
+Camera_FGTilesDrawnX: skip 2
+Camera_BGTilesDrawnX: skip 2
+Camera_FGTilesDrawnY: skip 2
+Camera_BGTilesDrawnY: skip 2
+
+; === $003360 ===
+; 2 bytes
+; Offset of the top screen boundary that pushes Kirby down. Increasing this number moves the boundary lower.
+CurrentRoom_BoundaryTop: skip 2
+
+; === $003362 ===
+; 2 bytes
+; Essentially the current room's height. Specifically only used for determining if Kirby has fallen in a pit.
+; This value is compared to Kirby's Y minus 0x0C, at $0290A0.
+CurrentRoom_BoundaryBottom: skip 2
+
+; === $003364 ===
+; 2 bytes
+; Offset of the left-most X boundary. Increasing this number moves the boundary right.
+CurrentRoom_BoundaryLeft: skip 2
+
+; === $003366 ===
+; 2 bytes
+; Essentially the current room's width. Increasing this number moves the boundary right.
+CurrentRoom_BoundaryRight: skip 2
+
+; Unidentified
+skip $3372-$3368
+
+; === $003372 ===
+; 2 bytes
+; Maximum X tile scroll of the given room
+skip 2
+
+; Unidentified
+skip $33CA-$3374
 
 ; === $0033CA ===
 ; 1 byte
@@ -1086,103 +1166,126 @@ skip 551
 ; === $003600 ===
 ; 32 bytes
 ; DEBUG: Temporary storage used for the "wrapped" palette when cycling palettes in the VRAM viewer.
-Debug_Temp_Palette_Wrap: skip 32
+;Debug_Temp_Palette_Wrap: skip 32
 
 ; === $003620 ===
 ; 2 bytes
 ; DEBUG: Current page number for the VRAM viewer.
-Debug_Current_VRAM_Page: skip 2
-
-; Unidentified
-skip 6
+;Debug_Current_VRAM_Page: skip 2
 
 ; === $003628 ===
 ; 2 bytes
 ; DEBUG: Current palette number for the VRAM viewer.
-Debug_Current_Palette: skip 2
+;Debug_Current_Palette: skip 2
 
-; Unidentified
-skip $36A0-$362A
+; === $003600 - $003640 ===
+; 64 bytes each
+; Table of input history from the P1 controller and P2 controller.
+; A new entry is written to this table every frame with the current inputs.
+; Except when a Helper is spawned, the P2 list is blank? 
+P1_InputHistory: skip 64
+P2_InputHistory: skip 64
 
-; some addresses before the following ones have controller stuff
-; 3690 mirror of controller inputs except only when Kirby can receive input
-; 3698 was left or right last pressed
-; 36FC kirby facing direction
+; === $003680 - $003682 ===
+; 2 bytes each
+; The current offset being written to in the list above.
+; Except when a Helper is spawned, the offset is always 0x0000?
+P1_InputHistoryOffset: skip 2
+P2_InputHistoryOffset: skip 2
 
-; === $0036A0 ===
+; Unused?
+skip 12
+
+; === $003690 - $003696 ===
+; 2 bytes each
+; The controller inputs used to control Kirby/Helper.
+; These inputs are usually mirrors of the P1/P2 input values found in SaveRAM.
+; But if computer-controlled, the inputs will be filled in by the game itself.
+P1_Hold_Gameplay: skip 2
+P1_Frame_Gameplay: skip 2
+P2_Hold_Gameplay: skip 2
+P2_Frame_Gameplay: skip 2
+
+; === $003698 - $00369A ===
+; 2 bytes each
+; Tracks the last pressed D-Pad input from above, excluding up/down.
+; Essentially, if 01, left was last pressed, if 02, right was last pressed.
+P1_LastXDirectionalInput: skip 2
+P2_LastXDirectionalInput: skip 2
+
+; === $00369C - $00369E ===
+; 2 bytes each
+; Same as above, but the current real-time equivalent.
+P1_CurrentXDirectionalInput: skip 2
+P2_CurrentXDirectionalInput: skip 2
+
+; === $0036A0 - $0036A2 ===
 ; 2 bytes
-; Buttons designated to moving Kirby left and right
+; Buttons designated to moving Kirby/Helper left and right
 ButtonMap_P1MoveLR: skip 2
-
-; === $0036A2 ===
-; 2 bytes
-; Buttons designated to moving Helper left and right
 ButtonMap_P2MoveLR: skip 2
 
-; === $0036A4 ===
+; === $0036A4 - $0036A6 ===
 ; 2 bytes
-; Buttons designated to having Kirby crouch
+; Buttons designated to having Kirby/Helper crouch
 ButtonMap_P1Crouch: skip 2
-
-; === $0036A6 ===
-; 2 bytes
-; Buttons designated to having Helper crouch
 ButtonMap_P2Crouch: skip 2
 
-; === $0036A8 ===
+; === $0036A8 - $0036AA ===
 ; 2 bytes
-; Buttons designated to having Kirby shield
+; Buttons designated to having Kirby/Helper shield
 ButtonMap_P1Shield: skip 2
-
-; === $0036AA ===
-; 2 bytes
-; Buttons designated to having Helper shield
 ButtonMap_P2Shield: skip 2
 
-; === $0036AC ===
+; === $0036AC - $0036AE ===
 ; 2 bytes
-; Buttons designated to having Kirby attack
+; Buttons designated to having Kirby/Helper attack
 ButtonMap_P1Attack: skip 2
-
-; === $0036AE ===
-; 2 bytes
-; Buttons designated to having Helper attack
 ButtonMap_P2Attack: skip 2
 
-; === $0036B0 ===
+; === $0036B0 - $0036B2 ===
 ; 2 bytes
-; Buttons designated to having Kirby jump
+; Buttons designated to having Kirby/Helper jump
 ButtonMap_P1Jump: skip 2
-
-; === $0036B2 ===
-; 2 bytes
-; Buttons designated to having Helper jump
 ButtonMap_P2Jump: skip 2
 
-; === $0036B4 ===
+; === $0036B4 - $0036B6 ===
 ; 2 bytes
-; Buttons designated to having Kirby summon a helper
+; Buttons designated to having Kirby summon a Helper / having Helper teleport to Kirby
 ButtonMap_P1Summon: skip 2
-
-; === $0036B6 ===
-; 2 bytes
-; Buttons designated to having Helper teleport to Kirby
 ButtonMap_P2Summon: skip 2
 
-; === $0036B8 ===
+; === $0036B8 - $0036BA ===
 ; 2 bytes
-; Buttons designated to having Kirby select abilities in MWW
+; Buttons designated to having Kirby/Helper select abilities in MWW
 ButtonMap_P1SelectAbility: skip 2
-
-; === $0036BA ===
-; 2 bytes
-; Buttons designated to having Helper select abilities in MWW
 ButtonMap_P2SelectAbility: skip 2
 
 ; 36BC & 36BE are Kirby and Helper's last obtained abilities?
 
 ; Unidentified
-skip $3731-$36BC
+skip $36F8-$36BC
+
+; === $0036F8 - $0036FA ===
+; Kirby/Helper's states?
+; More research required
+skip 2
+skip 2
+
+; === $0036FC - $0036FE ===
+; 2 bytes each
+; Kirby's/Helper's current facing direction
+; 0xC0 = facing left 
+; 0x40 = facing right
+; It seems like the only thing determining the facing angle is the upper-most bit out of the two bytes.
+; These bytes are copied to their respective object slots in table $6DD0.
+Kirby_FacingDirection: skip 2
+Helper_FacingDirection: skip 2
+
+; $003700 is the start of several temp RAM addresses that the SA-1 uses
+
+; Unidentified
+skip $3731-$3700
 
 ; === $003731 ===
 ; 8 bytes
@@ -1456,7 +1559,7 @@ Obj_YPositionFraction: skip !Max_Obj_Count*2
 ; Kirby is always in object slot 2, therefore Kirby's reference will always be located at $6AF6
 
 ; === $006B6E ===
-; Undocumented table
+; Object X Speed
 skip !Max_Obj_Count*2
 
 ; === $006BE8 ===
@@ -1464,7 +1567,7 @@ skip !Max_Obj_Count*2
 skip !Max_Obj_Count*2
 
 ; === $006C62 ===
-; Undocumented table
+; Object X Acceleration
 skip !Max_Obj_Count*2
 
 ; === $006CDC ===

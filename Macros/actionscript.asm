@@ -153,69 +153,69 @@ endmacro
 !EOR = 3
 
 ; Same case with BINOP, would be nice to combine all of these macros
-macro AS_BINOP_VAR(var, op, imm16)
+macro AS_BinOp_var(var, op, imm16)
     db $1C, <var>, <op>
     dw <imm16>
 endmacro
 
-macro AS_BINOP_ABS_IMM8(abs, op, imm8)
+macro AS_BinOp_abs_imm8(abs, op, imm8)
     db $1D
     dw <abs>
     db <op>, <imm8>
 endmacro
 
-macro AS_BINOP_ABS_IMM16(abs, op, imm16)
+macro AS_BinOp_abs_imm16(abs, op, imm16)
     db $1E
     dw <abs>
     db <op>
     dw <imm16>
 endmacro
 
-macro AS_BINOP_REG(op, imm16)
+macro AS_BinOp_reg(op, imm16)
     db $1F, <op>
     dw <imm16>
 endmacro
 
-macro AS_MOV_VAR_REG(var)
+macro AS_Mov_var_reg(var)
     db $20, <var>
 endmacro
 
-macro AS_MOV_REG_VAR(var)
+macro AS_Mov_reg_var(var)
     db $21, <var>
 endmacro
 
-macro AS_WAIT_VAR(var)
+macro AS_Wait_var(var)
     db $22, <var>
 endmacro
 
-macro AS_SETPOSE_VAR(var)
+macro AS_SetPose_var(var)
     db $23, <var>
 endmacro
 
-macro AS_UNK24()
+macro AS_StopMovement()
     db $24
 endmacro
 
-macro AS_UNK25()
+macro AS_StopAcceleration()
     db $25
 endmacro
 
-macro AS_SETXPOS(imm16)
+macro AS_SetPositionX(imm16)
     db $26
     dw <imm16>
 endmacro
 
-macro AS_SETYPOS(imm16)
+macro AS_SetPositionY(imm16)
     db $27
     dw <imm16>
 endmacro
 
-macro AS_ADDXPOS(imm16)
+macro AS_AddPositionX(imm16)
     db $28
     dw <imm16>
 endmacro 
 
-macro AS_ADDYPOS(imm16)
+macro AS_AddPositionY(imm16)
     db $29
     dw <imm16>
 endmacro 
@@ -273,7 +273,7 @@ macro AS_UNK34(imm8)
     db $34, <imm8>
 endmacro
 
-macro AS_SETPOSE_IMM16(imm16)
+macro AS_SetPose_imm16(imm16)
     db $35
     dw <imm16>
 endmacro
@@ -284,52 +284,52 @@ macro AS_UNDEFINED(hex)
 endmacro 
 
 
-macro AS_SETPOSE_IMM8(imm8, wait)
+macro AS_SetPose_imm8(imm8, wait)
     db $40|(<wait>&$0F), <imm8>
 endmacro
 
-macro AS_ADDPOSE(imm8, wait)
+macro AS_AddPose(imm8, wait)
     db $50|(<wait>&$0F), <imm8>
 endmacro
 
-macro AS_INCPOSE(wait)
+macro AS_IncPose(wait)
     db $60|(<wait>&$0F)
 endmacro
 
-macro AS_DECPOSE(wait)
+macro AS_DecPose(wait)
     db $70|(<wait>&$0F)
 endmacro
 
-macro AS_UNK8x(value, wait)
+macro AS_SetSpeedX(value, wait)
     db $80|(<wait>&$0F)
     dw <value>
 endmacro
 
-macro AS_UNK9x(value, wait)
+macro AS_SetSpeedY(value, wait)
     db $90|(<wait>&$0F)
     dw <value>
 endmacro
 
-macro AS_UNKAx(value, wait)
+macro AS_SetAccelerationX(value, wait)
     db $A0|(<wait>&$0F)
     dw <value>
 endmacro
 
-macro AS_UNKBx(value, wait)
+macro AS_SetAccelerationY(value, wait)
     db $B0|(<wait>&$0F)
     dw <value>
 endmacro
 
-macro AS_ASMCALL(long, wait)
+macro AS_ASMCall(long, wait)
     db $C0|(<wait>&$0F)
     dl <long>
 endmacro
 
-macro AS_PRESETCALL(imm8, wait)
+macro AS_PresetCall(imm8, wait)
     db $D0|(<wait>&$0F), <imm8>
 endmacro
 
-macro AS_UNKEx(imm8, wait)
+macro AS_PlaySFX(imm8, wait)
     db $E0|(<wait>&$0F), <imm8>
 endmacro
 

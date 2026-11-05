@@ -4584,7 +4584,7 @@ CODE_FN_01A2FD:
 	RTS                           ;$01A30A	|
 
 CODE_81A30B:
-	LDA.W $6240                   ;$01A30B	|
+	LDA.W $6240                   ;$01A30B	| ; Camera movement code 1P
 	BPL CODE_81A345               ;$01A30E	|
 	LDA.W $3342                   ;$01A310	|
 	BMI CODE_81A31A               ;$01A313	|
@@ -4621,7 +4621,7 @@ CODE_81A341:
 	RTS                           ;$01A344	|
 
 CODE_81A345:
-	LDA.W $3344                   ;$01A345	|
+	LDA.W $3344                   ;$01A345	| Camera movement code 2P?
 	SEC                           ;$01A348	|
 	SBC.W $3342                   ;$01A349	|
 	BMI CODE_01A35A               ;$01A34C	|

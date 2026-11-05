@@ -261,34 +261,34 @@
 
 AS_078807:
     %AS_JSR(AS_07895F)
-    %AS_PRESETCALL($06, $00)            ; Set main screen layers to `arg` (hardware register TM)
+    %AS_PresetCall($06, $00)            ; Set main screen layers to `arg` (hardware register TM)
         db $13
-    %AS_SETPOSE_IMM8($00, $00)
+    %AS_SetPose_imm8($00, $00)
     %AS_JMP(AS_DelayTitleScreenSkip)
 
 AS_078812:
     %AS_JSR(AS_07895F)
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0000
         dw CODE_8789F5
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0000
         dw CODE_878BBA
     %AS_WAIT($20)
-    %AS_PRESETCALL($06, $00)
+    %AS_PresetCall($06, $00)
         db $13
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0000
         dw CODE_878CE5
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0002
         dw CODE_878CE5
     %AS_WAIT($10)
-    %AS_SETPOSE_IMM8($00, $00)
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_SetPose_imm8($00, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0004
         dw CODE_878CE5
-    %AS_ASMCALL(CODE_FL_00A3F1, $00)
+    %AS_ASMCall(CODE_FL_00A3F1, $00)
         dw $001F
         dw $0002
 
@@ -297,171 +297,171 @@ AS_DelayTitleScreenSkip:                ; Add a delay before you can press a but
     %AS_MOV_VAR_IMM16($00, $0078)
 
 AS_078854:
-    %AS_BINOP_VAR($00, !ADD, $FFFF)
-    %AS_MOV_REG_VAR($00)
+    %AS_BinOp_var($00, !ADD, $FFFF)
+    %AS_Mov_reg_var($00)
     %AS_JNE(AS_InitializeFileSelect)
-    %AS_ASMCALL(CODE_078E3F, $00)       ; inc $7396 : inc $7392
+    %AS_ASMCall(CODE_078E3F, $00)       ; inc $7396 : inc $7392
 
 AS_InitializeFileSelect:
-    %AS_ASMCALL(CODE_FL_00A32B, $00)
+    %AS_ASMCall(CODE_FL_00A32B, $00)
         db $00
     %AS_MOV_REG_IMM16($0000)
-    %AS_ASMCALL(CODE_FL_00A26B, $01)    ; Check if buttons started being pressed this frame on controller REG
+    %AS_ASMCall(CODE_FL_00A26B, $01)    ; Check if buttons started being pressed this frame on controller REG
         dw $D0C0
     %AS_JEQ(AS_078854)
-    %AS_SETPOSE_IMM8($FF, $00)
-    %AS_PRESETCALL($0A, $00)            ; ASMCALL $009FEA: Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
+    %AS_SetPose_imm8($FF, $00)
+    %AS_PresetCall($0A, $00)            ; ASMCALL $009FEA: Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
         dl $EB9125
         db $80
         dw $0100
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0000
         dw CODE_8789C5
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0001
         dw CODE_8789C5
-    %AS_ASMCALL(CODE_078FA9, $00)
+    %AS_ASMCall(CODE_078FA9, $00)
         dw $0002
         dw CODE_8789C5
-    %AS_ASMCALL(CODE_078E59, $00)
+    %AS_ASMCall(CODE_078E59, $00)
     %AS_ONTICK(CODE_079103)
     %AS_UNK30($00, $F800)
     %AS_WAIT($1D)
     %AS_UNK30($00, $0000)
-    %AS_UNK24()
-    %AS_PRESETCALL($03, $00)            ; ASMCALL $009C94: Set background mode
+    %AS_StopMovement()
+    %AS_PresetCall($03, $00)            ; ASMCALL $009C94: Set background mode
         db $09
-    %AS_ASMCALL(ReadPlayMusic, $00)     ; Music to be played on File Select (in this case it is nothing)
+    %AS_ASMCall(ReadPlayMusic, $00)     ; Music to be played on File Select (in this case it is nothing)
         db $00
-    %AS_ASMCALL(ReadPlaySFX, $01)       ; SFX to play when the files stop moving
+    %AS_ASMCall(ReadPlaySFX, $01)       ; SFX to play when the files stop moving
         db $07
     %AS_SPRITEMAP($CC96AF)
     %AS_ONTICK(CODE_879123)
-    %AS_ASMCALL(CODE_078E67, $01)
-    %AS_SETPOSE_IMM8($07, $00)
-    %AS_ASMCALL(CODE_078F6A, $01)
-    %AS_PRESETCALL($06, $00)            ; ASMCALL $009CCE: Set main screen layers to `arg` (hardware register TM)
+    %AS_ASMCall(CODE_078E67, $01)
+    %AS_SetPose_imm8($07, $00)
+    %AS_ASMCall(CODE_078F6A, $01)
+    %AS_PresetCall($06, $00)            ; ASMCALL $009CCE: Set main screen layers to `arg` (hardware register TM)
         db $17
 
 AS_FileSelectMainLoop:
-    %AS_ASMCALL(FileSelectMainLoop, $01)
+    %AS_ASMCall(FileSelectMainLoop, $01)
     %AS_MULTIJMP(AS_FileSelectMainLoop,
         AS_FileDeletePrompt,
         AS_FileSelected)
 
 AS_FileDeletePrompt:
-    %AS_ASMCALL(CODE_878F03, $00)
+    %AS_ASMCall(CODE_878F03, $00)
     %AS_JEQ(AS_FileSelectMainLoop)
-    %AS_ASMCALL(ReadPlaySFX, $00)
+    %AS_ASMCall(ReadPlaySFX, $00)
         db $46
     %AS_ONTICK(CODE_FL_008F63)
-    %AS_SETPOSE_IMM8($FF, $00)
-    %AS_ASMCALL(CODE_878F80, $00)
-    %AS_ASMCALL(CODE_878F38, $00)
+    %AS_SetPose_imm8($FF, $00)
+    %AS_ASMCall(CODE_878F80, $00)
+    %AS_ASMCall(CODE_878F38, $00)
 
 AS_DeletePrompt1:
     %AS_WAIT($01)
-    %AS_ASMCALL(CODE_878F4D, $00)
+    %AS_ASMCall(CODE_878F4D, $00)
     %AS_MULTIJMP(AS_DeletePrompt1,
     AS_ReturnToMainLoop,
     AS_OK_Prompt1)
 
 AS_OK_Prompt1:
-    %AS_ASMCALL(CODE_878F3D, $00)
+    %AS_ASMCall(CODE_878F3D, $00)
 
 AS_DeletePrompt2:
     %AS_WAIT($01)
-    %AS_ASMCALL(CODE_878F4D, $00)
+    %AS_ASMCall(CODE_878F4D, $00)
     %AS_MULTIJMP(AS_DeletePrompt2,
     AS_ReturnToMainLoop,
     AS_OK_Prompt2)
 
 AS_OK_Prompt2:
-    %AS_ASMCALL(CODE_878F42, $00)
+    %AS_ASMCall(CODE_878F42, $00)
 
 AS_DeletePrompt3:
     %AS_WAIT($01)
-    %AS_ASMCALL(CODE_878F4D, $00)
+    %AS_ASMCall(CODE_878F4D, $00)
     %AS_MULTIJMP(AS_DeletePrompt3,
     AS_ReturnToMainLoop,
     AS_ExecuteFileDeletion)
 
 AS_ExecuteFileDeletion:
-    %AS_ASMCALL(ReadPlayMusic, $00)
+    %AS_ASMCall(ReadPlayMusic, $00)
         db $0C
-    %AS_ASMCALL(CODE_878F21, $00)
-    %AS_ASMCALL(ReadPlayMusic, $00)
+    %AS_ASMCall(CODE_878F21, $00)
+    %AS_ASMCall(ReadPlayMusic, $00)
         db $00
 
 AS_ReturnToMainLoop:
-    %AS_ASMCALL(CODE_078F6A, $01)
+    %AS_ASMCall(CODE_078F6A, $01)
     %AS_ONTICK(CODE_879123)
-    %AS_SETPOSE_IMM8($07, $00)
-    %AS_ASMCALL(CODE_878F9F, $00)
+    %AS_SetPose_imm8($07, $00)
+    %AS_ASMCall(CODE_878F9F, $00)
     %AS_JMP(AS_FileSelectMainLoop)
 
 AS_FileSelected:
     %AS_WAIT($1E)
     %AS_LOOP_IMM8($10)
-        %AS_ASMCALL(FadeOut_Step, $00)
-        %AS_ASMCALL(CODE_FL_00CE78, $01)
+        %AS_ASMCall(FadeOut_Step, $00)
+        %AS_ASMCall(CODE_FL_00CE78, $01)
         db $F0      ; -16
     %AS_ENDLOOP()
     %AS_MOV_VAR_IMM16($00, $0000)
-    %AS_SETPOSE_IMM8($FF, $00)
-    %AS_ASMCALL(UpdateVramSprSize, $00)
+    %AS_SetPose_imm8($FF, $00)
+    %AS_ASMCall(UpdateVramSprSize, $00)
     %AS_MOV_ABS_IMM16(ReloadRoom, $0001)
     %AS_HALT()
 
 AS_07895F:
-    %AS_ASMCALL(CODE_FL_00D883, $00)
+    %AS_ASMCall(CODE_FL_00D883, $00)
     %AS_UNK16($A6F1)
     %AS_ONDRAW($AB7E)
     %AS_SPRITEMAP($CC96CD)
-    %AS_SETPOSE_IMM8($FF, $00)
-    %AS_PRESETCALL($03, $00)            ; ASMCALL $009C94: Set background mode
+    %AS_SetPose_imm8($FF, $00)
+    %AS_PresetCall($03, $00)            ; ASMCALL $009C94: Set background mode
         db $02 
-    %AS_PRESETCALL($06, $00)            ; ASMCALL $009CCE: Set main screen layers to `arg` (hardware register TM)
+    %AS_PresetCall($06, $00)            ; ASMCALL $009CCE: Set main screen layers to `arg` (hardware register TM)
         db $10
-    %AS_PRESETCALL($04, $00)            ; ASMCALL $009C9A: Configure layer `arg1` (tilemap size=`arg2`, tilemap VRAM address=`arg3`, tileset VRAM address=`arg4`)
+    %AS_PresetCall($04, $00)            ; ASMCALL $009C9A: Configure layer `arg1` (tilemap size=`arg2`, tilemap VRAM address=`arg3`, tileset VRAM address=`arg4`)
         db $00
         db $02
         dw $0000
         dw $4000
-    %AS_PRESETCALL($04, $00)
+    %AS_PresetCall($04, $00)
         db $01
         db $00
         dw $2000
         dw $4800
-    %AS_PRESETCALL($04, $00)
+    %AS_PresetCall($04, $00)
         db $02
         db $00
         dw $5000
         dw $5800
-    %AS_PRESETCALL($05, $00)            ; ASMCALL $009CBB: Set sprite sizes and VRAM address
+    %AS_PresetCall($05, $00)            ; ASMCALL $009CBB: Set sprite sizes and VRAM address
         db $00
         dw $6000
         db $00
-    %AS_PRESETCALL($02, $00)            ; ASMCALL $009C6C: Load VRAM data from list of (transfermode, size, src, dst)
+    %AS_PresetCall($02, $00)            ; ASMCALL $009C6C: Load VRAM data from list of (transfermode, size, src, dst)
         dl DATA16_078DF6
-    %AS_PRESETCALL($0A, $00)            ; ASMCALL $009FEA: Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
+    %AS_PresetCall($0A, $00)            ; ASMCALL $009FEA: Copy `arg3` bytes from `arg1` into [$0500+(`arg2` * 2)]
         dl $EB9325
         db $00
         dw $0100
-    %AS_PRESETCALL($0A, $00)
+    %AS_PresetCall($0A, $00)
         dl $EFDE18
         db $91
         dw $001E
-    %AS_PRESETCALL($0A, $00)
+    %AS_PresetCall($0A, $00)
         dl $EE9080
         db $A0
         dw $0080
-    %AS_UNK24()
+    %AS_StopMovement()
     %AS_UNK2B($00, $00E8)
-    %AS_SETXPOS($007C)
-    %AS_SETYPOS($0056)
-    %AS_ASMCALL(CODE_078E46, $00)       ; Set $7F8800 to zero
-    %AS_ASMCALL(CODE_FL_009FC7, $00)    ; Set screen brightness
+    %AS_SetPositionX($007C)
+    %AS_SetPositionY($0056)
+    %AS_ASMCall(CODE_078E46, $00)       ; Set $7F8800 to zero
+    %AS_ASMCall(CODE_FL_009FC7, $00)    ; Set screen brightness
         db $0F
     %AS_RTS()
 
