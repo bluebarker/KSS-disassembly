@@ -5490,6 +5490,7 @@ CODE_FL_00A664:					;			|
 CODE_FL_00A668:					;-----------|
 	EOR #$FFFF					;$00A668	|
 	INC A						;$00A66B	|
+CODE_FL_00A66C:
 	STA $49						;$00A66C	|
 	STX $4B						;$00A66E	|
 	STY $4D						;$00A670	|
@@ -13275,6 +13276,7 @@ CODE_FL_00E5C3:					;			|
 	INC A						;$00E5CB	|
 CODE_FL_00E5CC:					;			|
 	LDY $39						;$00E5CC	|
+CODE_FL_00E5CE:
 	STA $6C62,Y					;$00E5CE	|
 	TXA							;$00E5D1	|
 	STA $6CDC,Y					;$00E5D2	|

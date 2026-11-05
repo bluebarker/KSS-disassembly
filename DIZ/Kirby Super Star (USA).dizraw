@@ -38,6 +38,8 @@
         <sys:Item Key="647801" Value="Initial velocity during a regular jump" />
         <sys:Item Key="647839" Value="Initial velocity when jumping out of water" />
         <sys:Item Key="647877" Value="Putting label here to mark the end of the previous table" />
+        <sys:Item Key="1409671" Value="ActionScript" />
+        <sys:Item Key="1410173" Value="ActionScript" />
         <sys:Item Key="1423017" Value="This table provides what buttons move the corkboard in which directions" />
         <sys:Item Key="1423057" Value="Spring Breeze X" />
         <sys:Item Key="1423059" Value="Spring Breeze Y" />
@@ -8008,11 +8010,80 @@
         <sys:Item Key="1409622">
           <Value exs:type="ns1:Label" Name="CODE_958256" Comment="" />
         </sys:Item>
+        <sys:Item Key="1409671">
+          <Value exs:type="ns1:Label" Name="AS_CA8287" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409685">
+          <Value exs:type="ns1:Label" Name="AS_CA8295" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409774">
+          <Value exs:type="ns1:Label" Name="AS_CA82EE" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409788">
+          <Value exs:type="ns1:Label" Name="AS_CA82FC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409799">
+          <Value exs:type="ns1:Label" Name="AS_CA8307" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409838">
+          <Value exs:type="ns1:Label" Name="AS_CA832E" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409847">
+          <Value exs:type="ns1:Label" Name="AS_CA8337" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409867">
+          <Value exs:type="ns1:Label" Name="AS_CA834B" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409890">
+          <Value exs:type="ns1:Label" Name="AS_CA8362" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409913">
+          <Value exs:type="ns1:Label" Name="AS_CA8379" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409936">
+          <Value exs:type="ns1:Label" Name="AS_CA8390" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409959">
+          <Value exs:type="ns1:Label" Name="AS_CA83A7" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409979">
+          <Value exs:type="ns1:Label" Name="AS_CA83BB" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409982">
+          <Value exs:type="ns1:Label" Name="AS_CA83BE" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409989">
+          <Value exs:type="ns1:Label" Name="AS_CA83C5" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1409996">
+          <Value exs:type="ns1:Label" Name="AS_CA83CC" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410003">
+          <Value exs:type="ns1:Label" Name="AS_CA83D3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410010">
+          <Value exs:type="ns1:Label" Name="AS_CA83DA" Comment="" />
+        </sys:Item>
         <sys:Item Key="1410165">
           <Value exs:type="ns1:Label" Name="CODE_958475" Comment="" />
         </sys:Item>
         <sys:Item Key="1410169">
           <Value exs:type="ns1:Label" Name="CODE_958479" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410173">
+          <Value exs:type="ns1:Label" Name="AS_CA847D" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410211">
+          <Value exs:type="ns1:Label" Name="AS_CA84A3" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410214">
+          <Value exs:type="ns1:Label" Name="AS_CA84A6" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410217">
+          <Value exs:type="ns1:Label" Name="AS_CA84A9" Comment="" />
+        </sys:Item>
+        <sys:Item Key="1410220">
+          <Value exs:type="ns1:Label" Name="AS_CA84AC" Comment="" />
         </sys:Item>
         <sys:Item Key="1410270">
           <Value exs:type="ns1:Label" Name="CODE_9584DE" Comment="" />
@@ -8519,283 +8590,283 @@
           <Value exs:type="ns1:Label" Name="TestLabel" Comment="" />
         </sys:Item>
         <sys:Item Key="1823938">
-          <Value exs:type="ns1:Label" Name="ObjMap_ParasolDeeRight1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_ParasolDeeRight1" Comment="" />
         </sys:Item>
         <sys:Item Key="1823968">
           <Value exs:type="ns1:Label" Name="" Comment="" />
         </sys:Item>
         <sys:Item Key="1823983">
-          <Value exs:type="ns1:Label" Name="ObjMap_ParasolDeeLeft1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_ParasolDeeLeft1" Comment="" />
         </sys:Item>
         <sys:Item Key="1824028">
-          <Value exs:type="ns1:Label" Name="ObjMap_ParasolDeeRight1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_ParasolDeeRight1" Comment="" />
         </sys:Item>
         <sys:Item Key="1824073">
-          <Value exs:type="ns1:Label" Name="ObjMap_ParasolDeeLeft2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_ParasolDeeLeft2" Comment="" />
         </sys:Item>
         <sys:Item Key="1828134">
-          <Value exs:type="ns1:Label" Name="ObjMapTable_DynaBladeMap" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMapTable_DynaBladeMap" Comment="" />
         </sys:Item>
         <sys:Item Key="1828178">
-          <Value exs:type="ns1:Label" Name="ObjMapTable_MetaKnightCutscene" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMapTable_MetaKnightCutscene" Comment="" />
         </sys:Item>
         <sys:Item Key="1828252">
-          <Value exs:type="ns1:Label" Name="ObjMapTable_MilkyWayMap" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMapTable_MilkyWayMap" Comment="" />
         </sys:Item>
         <sys:Item Key="1828288">
-          <Value exs:type="ns1:Label" Name="ObjMapTable_Corkboard" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMapTable_Corkboard" Comment="" />
         </sys:Item>
         <sys:Item Key="1828368">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapKirby1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapKirby1" Comment="" />
         </sys:Item>
         <sys:Item Key="1828373">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapKirby2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapKirby2" Comment="" />
         </sys:Item>
         <sys:Item Key="1828378">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapKirby3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapKirby3" Comment="" />
         </sys:Item>
         <sys:Item Key="1828383">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapEnemy" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapEnemy" Comment="" />
         </sys:Item>
         <sys:Item Key="1828413">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaLeft1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaLeft1" Comment="" />
         </sys:Item>
         <sys:Item Key="1828418">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaRight1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaRight1" Comment="" />
         </sys:Item>
         <sys:Item Key="1828423">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaLeft2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaLeft2" Comment="" />
         </sys:Item>
         <sys:Item Key="1828428">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaRight2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaRight2" Comment="" />
         </sys:Item>
         <sys:Item Key="1828433">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaLeft3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaLeft3" Comment="" />
         </sys:Item>
         <sys:Item Key="1828438">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapDynaRight3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapDynaRight3" Comment="" />
         </sys:Item>
         <sys:Item Key="1828443">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapLevelsInit" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapLevelsInit" Comment="" />
         </sys:Item>
         <sys:Item Key="1828593">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapLevels1Clear" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapLevels1Clear" Comment="" />
         </sys:Item>
         <sys:Item Key="1828778">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapLevels2Clear" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapLevels2Clear" Comment="" />
         </sys:Item>
         <sys:Item Key="1828978">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapLevels3Clear" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapLevels3Clear" Comment="" />
         </sys:Item>
         <sys:Item Key="1829218">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapLevels4Clear" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapLevels4Clear" Comment="" />
         </sys:Item>
         <sys:Item Key="1829468">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapSecret1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapSecret1" Comment="" />
         </sys:Item>
         <sys:Item Key="1829523">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapSecret2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapSecret2" Comment="" />
         </sys:Item>
         <sys:Item Key="1829563">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapAllSecrets" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapAllSecrets" Comment="" />
         </sys:Item>
         <sys:Item Key="1829658">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapMountainMask" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapMountainMask" Comment="" />
         </sys:Item>
         <sys:Item Key="1829743">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapConnector2to3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapConnector2to3" Comment="" />
         </sys:Item>
         <sys:Item Key="1829758">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapConnector3to4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapConnector3to4" Comment="" />
         </sys:Item>
         <sys:Item Key="1829788">
-          <Value exs:type="ns1:Label" Name="ObjMap_DynaMapConnector4toBoss" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_DynaMapConnector4toBoss" Comment="" />
         </sys:Item>
         <sys:Item Key="1829798">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirby1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirby1" Comment="" />
         </sys:Item>
         <sys:Item Key="1829803">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirby2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirby2" Comment="" />
         </sys:Item>
         <sys:Item Key="1829808">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirby3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirby3" Comment="" />
         </sys:Item>
         <sys:Item Key="1829813">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirby4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirby4" Comment="" />
         </sys:Item>
         <sys:Item Key="1829818">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneReticle" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneReticle" Comment="" />
         </sys:Item>
         <sys:Item Key="1829898">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneHalberdRight" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneHalberdRight" Comment="" />
         </sys:Item>
         <sys:Item Key="1829953">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneHalberdBack" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneHalberdBack" Comment="" />
         </sys:Item>
         <sys:Item Key="1830003">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneHalberdDistant" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneHalberdDistant" Comment="" />
         </sys:Item>
         <sys:Item Key="1830028">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830048">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830053">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830058">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion4" Comment="" />
         </sys:Item>
         <sys:Item Key="1830063">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion5" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion5" Comment="" />
         </sys:Item>
         <sys:Item Key="1830068">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion6" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion6" Comment="" />
         </sys:Item>
         <sys:Item Key="1830088">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion7" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion7" Comment="" />
         </sys:Item>
         <sys:Item Key="1830093">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion8" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion8" Comment="" />
         </sys:Item>
         <sys:Item Key="1830098">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosion9" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosion9" Comment="" />
         </sys:Item>
         <sys:Item Key="1830103">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneSplash1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneSplash1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830113">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneSplash2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneSplash2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830133">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneSplash3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneSplash3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830163">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneFarawayObject" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneFarawayObject" Comment="" />
         </sys:Item>
         <sys:Item Key="1830168">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneSmallStar" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneSmallStar" Comment="" />
         </sys:Item>
         <sys:Item Key="1830173">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneSmallStarFlipped" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneSmallStarFlipped" Comment="" />
         </sys:Item>
         <sys:Item Key="1830178">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneFarawayHalberd1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneFarawayHalberd1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830183">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneFarawayHalberd2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneFarawayHalberd2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830188">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneFarawayHalberd3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneFarawayHalberd3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830198">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneFarawayHalberd4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneFarawayHalberd4" Comment="" />
         </sys:Item>
         <sys:Item Key="1830203">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneBlueSmoke1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneBlueSmoke1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830223">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneBlueSmoke2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneBlueSmoke2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830253">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830273">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830293">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830298">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror4" Comment="" />
         </sys:Item>
         <sys:Item Key="1830303">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror5" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror5" Comment="" />
         </sys:Item>
         <sys:Item Key="1830308">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneExplosionMirror6" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneExplosionMirror6" Comment="" />
         </sys:Item>
         <sys:Item Key="1830313">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirbyMirror1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirbyMirror1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830318">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneKirbyMirror2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneKirbyMirror2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830324">
-          <Value exs:type="ns1:Label" Name="ObjMap_MetaKnightCutsceneUnused" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MetaKnightCutsceneUnused" Comment="" />
         </sys:Item>
         <sys:Item Key="1830413">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapNova" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapNova" Comment="" />
         </sys:Item>
         <sys:Item Key="1830478">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapMecheye" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapMecheye" Comment="" />
         </sys:Item>
         <sys:Item Key="1830498">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapSun" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapSun" Comment="" />
         </sys:Item>
         <sys:Item Key="1830518">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapHotbeat1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapHotbeat1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830538">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapHotbeat2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapHotbeat2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830558">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapHotbeat3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapHotbeat3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830578">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapHotbeat4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapHotbeat4" Comment="" />
         </sys:Item>
         <sys:Item Key="1830603">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapMoon" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapMoon" Comment="" />
         </sys:Item>
         <sys:Item Key="1830613">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapKirby" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapKirby" Comment="" />
         </sys:Item>
         <sys:Item Key="1830618">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapStarTrail1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapStarTrail1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830623">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapStarTrail2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapStarTrail2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830628">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapStarTrail3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapStarTrail3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830633">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapStarTrail4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapStarTrail4" Comment="" />
         </sys:Item>
         <sys:Item Key="1830638">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapPlanetConnector1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapPlanetConnector1" Comment="" />
         </sys:Item>
         <sys:Item Key="1830643">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapPlanetConnector2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapPlanetConnector2" Comment="" />
         </sys:Item>
         <sys:Item Key="1830648">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapPlanetConnector3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapPlanetConnector3" Comment="" />
         </sys:Item>
         <sys:Item Key="1830653">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapPlanetShine" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapPlanetShine" Comment="" />
         </sys:Item>
         <sys:Item Key="1830673">
-          <Value exs:type="ns1:Label" Name="ObjMap_MilkMapStaticPlanets" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_MilkMapStaticPlanets" Comment="" />
         </sys:Item>
         <sys:Item Key="1830803">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorSpringBreeze" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorSpringBreeze" Comment="" />
         </sys:Item>
         <sys:Item Key="1830953">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorGourmetRace" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorGourmetRace" Comment="" />
         </sys:Item>
         <sys:Item Key="1831113">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorDynaBlade" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorDynaBlade" Comment="" />
         </sys:Item>
         <sys:Item Key="1831264">
           <Value exs:type="ns1:Label" Name="" Comment="" />
         </sys:Item>
         <sys:Item Key="1831273">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorGreatCave" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorGreatCave" Comment="" />
         </sys:Item>
         <sys:Item Key="1831433">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorMetaKnight" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorMetaKnight" Comment="" />
         </sys:Item>
         <sys:Item Key="1831444">
           <Value exs:type="ns1:Label" Name="" Comment="" />
@@ -8804,115 +8875,115 @@
           <Value exs:type="ns1:Label" Name="" Comment="" />
         </sys:Item>
         <sys:Item Key="1831603">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorMilkyWay" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorMilkyWay" Comment="" />
         </sys:Item>
         <sys:Item Key="1831760">
           <Value exs:type="ns1:Label" Name="" Comment="" />
         </sys:Item>
         <sys:Item Key="1831763">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorArena" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorArena" Comment="" />
         </sys:Item>
         <sys:Item Key="1831857">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMetaKnightLocked" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMetaKnightLocked" Comment="" />
         </sys:Item>
         <sys:Item Key="1831883">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorSoundTest" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorSoundTest" Comment="" />
         </sys:Item>
         <sys:Item Key="1831943">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorStereoMono" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorStereoMono" Comment="" />
         </sys:Item>
         <sys:Item Key="1832003">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardCursorMegatonSamurai" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardCursorMegatonSamurai" Comment="" />
         </sys:Item>
         <sys:Item Key="1832083">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardGreatCaveLocked" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardGreatCaveLocked" Comment="" />
         </sys:Item>
         <sys:Item Key="1832113">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMetaKnightLocked" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMetaKnightLocked" Comment="" />
         </sys:Item>
         <sys:Item Key="1832198">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMilkyWayLocked" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMilkyWayLocked" Comment="" />
         </sys:Item>
         <sys:Item Key="1832248">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardLose" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardLose" Comment="" />
         </sys:Item>
         <sys:Item Key="1832268">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardWin" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardWin" Comment="" />
         </sys:Item>
         <sys:Item Key="1832288">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum1" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum1" Comment="" />
         </sys:Item>
         <sys:Item Key="1832293">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum2" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum2" Comment="" />
         </sys:Item>
         <sys:Item Key="1832298">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum3" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum3" Comment="" />
         </sys:Item>
         <sys:Item Key="1832303">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum4" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum4" Comment="" />
         </sys:Item>
         <sys:Item Key="1832308">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum5" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum5" Comment="" />
         </sys:Item>
         <sys:Item Key="1832313">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum6" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum6" Comment="" />
         </sys:Item>
         <sys:Item Key="1832318">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum7" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum7" Comment="" />
         </sys:Item>
         <sys:Item Key="1832323">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum8" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum8" Comment="" />
         </sys:Item>
         <sys:Item Key="1832328">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum9" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum9" Comment="" />
         </sys:Item>
         <sys:Item Key="1832333">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNum0" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNum0" Comment="" />
         </sys:Item>
         <sys:Item Key="1832338">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardNumDash" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardNumDash" Comment="" />
         </sys:Item>
         <sys:Item Key="1832343">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardArrowLeftRed" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardArrowLeftRed" Comment="" />
         </sys:Item>
         <sys:Item Key="1832348">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardArrowLeftYellow" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardArrowLeftYellow" Comment="" />
         </sys:Item>
         <sys:Item Key="1832353">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardArrowRightRed" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardArrowRightRed" Comment="" />
         </sys:Item>
         <sys:Item Key="1832358">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardArrowRightYellow" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardArrowRightYellow" Comment="" />
         </sys:Item>
         <sys:Item Key="1832363">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardRibbon" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardRibbon" Comment="" />
         </sys:Item>
         <sys:Item Key="1832393">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMassiveCursor" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMassiveCursor" Comment="" />
         </sys:Item>
         <sys:Item Key="1832583">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardDynaBladeCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardDynaBladeCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1832683">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardGourmetCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardGourmetCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1832843">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMetaKnightCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMetaKnightCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1833008">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardGreatCaveCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardGreatCaveCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1833158">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardMilkyWayCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardMilkyWayCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1833258">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardArenaCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardArenaCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1833368">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardSoundTestCover" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardSoundTestCover" Comment="" />
         </sys:Item>
         <sys:Item Key="1833388">
-          <Value exs:type="ns1:Label" Name="ObjMap_CorkboardBeginnerSymbol" Comment="" />
+          <Value exs:type="ns1:Label" Name="SpriteMap_CorkboardBeginnerSymbol" Comment="" />
         </sys:Item>
         <sys:Item Key="2015137">
           <Value exs:type="ns1:Label" Name="CheckChestRespawn" Comment="" />
@@ -199259,8 +199330,678 @@ r 40 B
 .
 .
 .
-+
-r 710 U
++Q
+B
+B
+B007
+B007
+A007
+B007
+B
+B007
+B007
+A007
+B
+B
+B007
+B007
+A007
+B
+B007
+B007
+B007
+B007
+A
+B
+B007
+B007
+B007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+U
+U
+F007
+F007
+F007
+r 40 U
 r 771 A
 ;pos=039800
 r 2048 A
@@ -199286,7 +200027,7 @@ r 1248 U
 r 740 A
 ;pos=03D000
 r 1484 A
-+
++I
 .
 .
 .
@@ -226590,7 +227331,7 @@ r 8 E015
 .
 .
 +
-r 8 A
+r 8 B
 +
 .
 .
@@ -226828,7 +227569,217 @@ r 8 A
 .
 .
 +
-r 398 A
+r 32 B
+A
+A
+A
+A015
+F015
+F015
+F015
+A
+A
+A
+A
+A
+A015
+A015
+A015
+r 86 A
+E015
+E015
+A
+A
+A
+A
+F015
+F015
+F015
+r 16 A
+E015
+E015
+A015
+F015
+F015
+F015
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+B
+B
+A
+B015
+B015
+A
+F015
+F015
+F015
+A
+A
+A
+A
+A
+A
+E015
+E015
+E015
+E015
+E015
+E015
+A
+A
+A
+A
+A
+E015
+E015
+E015
+E015
+A
+F015
+F015
+F015
+B
+B
+A
+A
+r 12 E015
+A
+F015
+F015
+F015
+A
+A
+B015
+B015
+r 8 B
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+r 10 B
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+r 10 B
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+r 10 B
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+B
+B
+A
+A
+r 12 E015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
+A
+F015
+F015
+F015
+A
+A
+A
++
+.
+.
++I
+.
+.
+.
++
++
+.
+.
++
+.
+.
++
+.
+.
++
+.
+.
 +
 .
 .
@@ -226965,7 +227916,38 @@ r 398 A
 .
 .
 +
-r 50 A
+A
+F015
+F015
+F015
+A
+B
+B
+A
+B
+B
+A
+B
+B
+A
+F015
+F015
+F015
+A
+A
+F015
+F015
+F015
+A
+F015
+F015
+F015
+B
+B
+A
+A
+r 8 E015
+r 12 A
 +
 .
 +
