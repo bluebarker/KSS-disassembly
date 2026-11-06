@@ -1,3 +1,5 @@
+; TODO - This would be better if it had labels...
+
 spcblock $0700 nspc
 
 SPCEngine_Start:
