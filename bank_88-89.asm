@@ -3,7 +3,7 @@
 ; Although this bank is technically mapped at $880000, the Super MMC maps it to the lower half of bank E4.
 ; The Super MMC also maps $890000 to the upper half of E4.
 
-; Called from CODE_1588FC
+; Called from CODE_CA88FC
 DATA8_88AF88 = $88AF88
 
 

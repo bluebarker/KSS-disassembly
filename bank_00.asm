@@ -2598,8 +2598,8 @@ AS_OpPointers:					;$0092E4	| Pointers to all of the ActionScript routines. Simi
 	dw AS_MovRegVar				; 21
 	dw AS_WaitReg				; 22
 	dw AS_SetPoseVar			; 23
-	dw AS_Unk24					; 24
-	dw AS_Unk25					; 25
+	dw AS_StopMove				; 24
+	dw AS_StopAccel				; 25
 	dw AS_SetXPos				; 26
 	dw AS_SetYPos				; 27
 	dw AS_AddXPos				; 28
@@ -2621,14 +2621,14 @@ AS_OpWaitPointers:					;````
 	dw AS_AddPose				; 37 / 5x
 	dw AS_IncPose				; 38 / 6x
 	dw AS_DecPose				; 39 / 7x
-	dw AS_Unk8x					; 3A / 8x
-	dw AS_Unk9x					; 3B / 9x
-	dw AS_UnkAx					; 3C / Ax
-	dw AS_UnkBx					; 3D / Bx
+	dw AS_SetXSpeed				; 3A / 8x
+	dw AS_SetYSpeed				; 3B / 9x
+	dw AS_SetXAccel				; 3C / Ax
+	dw AS_SetYAccel				; 3D / Bx
 	dw AS_AsmCall				; 3E / Cx
 	dw AS_PresetCall			; 3F / Dx
-	dw AS_UnkEx					; 40 / Ex
-	dw AS_UnkFx					; 41 / Fx
+	dw AS_PlaySFX				; 40 / Ex
+	dw AS_PlayMusic				; 41 / Fx
 
 
 AS_BeginAltInterpreter:
@@ -2733,11 +2733,11 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw AS_MovRegVar				; 17
 	dw AS_Unk33					; 18
 	dw AS_Unk34					; 19
-	dw AS_Unk24					; 1A
-	dw AS_Unk8x					; 1B
-	dw AS_Unk9x					; 1C
-	dw AS_UnkAx					; 1D
-	dw AS_UnkBx					; 1E
+	dw AS_StopMove					; 1A
+	dw AS_SetXSpeed					; 1B
+	dw AS_SetYSpeed					; 1C
+	dw AS_SetXAccel					; 1D
+	dw AS_SetYAccel					; 1E
 	dw AS_SetPoseImm8			; 1F
 	dw AS_AddPose				; 20
 	dw AS_IncPose				; 21
@@ -2748,8 +2748,8 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw CODE_FL_009936			; 26
 	dw AS_AsmCall				; 27
 	dw AS_PresetCall			; 28
-	dw AS_UnkEx					; 29
-	dw AS_UnkFx					; 2A
+	dw AS_PlaySFX					; 29
+	dw AS_PlayMusic					; 2A
 	dw CODE_FL_009A21			; 2B
 	dw CODE_FL_009A31			; 2C
 	dw CODE_FL_009A3D			; 2D
@@ -3614,7 +3614,7 @@ AS_Unk34:						;-----------| ActionScript instruction 34
 	INC $3D						;$0099B8	|
 	RTS							;$0099BA	|
 
-AS_UnkEx:					;-----------|
+AS_PlaySFX:					;-----------|
 	INC $3D						;$0099BB	|
 	LDA [$3D]					;$0099BD	|
 	AND #$00FF					;$0099BF	|
@@ -3622,7 +3622,7 @@ AS_UnkEx:					;-----------|
 	INC $3D						;$0099C6	|
 	RTS							;$0099C8	|
 
-AS_UnkFx:					;-----------|
+AS_PlayMusic:					;-----------|
 	INC $3D						;$0099C9	|
 	LDA [$3D]					;$0099CB	|
 	AND #$00FF					;$0099CD	|
@@ -3630,7 +3630,7 @@ AS_UnkFx:					;-----------|
 	INC $3D						;$0099D4	|
 	RTS							;$0099D6	|
 
-AS_Unk24:						;-----------| ActionScript instruction 24
+AS_StopMove:						;-----------| ActionScript instruction 24
 	TYX							;$0099D7	|
 	STZ $6B6E,X					;$0099D8	|
 	STZ $6BE8,X					;$0099DB	|
@@ -3639,14 +3639,14 @@ AS_Unk24:						;-----------| ActionScript instruction 24
 	INC $3D						;$0099E4	|
 	RTS							;$0099E6	|
 
-AS_Unk25:						;-----------| ActionScript instruction 25
+AS_StopAccel:						;-----------| ActionScript instruction 25
 	TYX							;$0099E7	|
 	STZ $6C62,X					;$0099E8	|
 	STZ $6CDC,X					;$0099EB	|
 	INC $3D						;$0099EE	|
 	RTS							;$0099F0	|
 
-AS_Unk8x:						;-----------| ActionScript instruction 8x
+AS_SetXSpeed:						;-----------| ActionScript instruction 8x
 	INC $3D						;$0099F1	|
 	LDA [$3D]					;$0099F3	|
 	STA $6B6E,Y					;$0099F5	|
@@ -3654,7 +3654,7 @@ AS_Unk8x:						;-----------| ActionScript instruction 8x
 	INC $3D						;$0099FA	|
 	RTS							;$0099FC	|
 
-AS_Unk9x:						;-----------| ActionScript instruction 9x
+AS_SetYSpeed:						;-----------| ActionScript instruction 9x
 	INC $3D						;$0099FD	|
 	LDA [$3D]					;$0099FF	|
 	STA $6BE8,Y					;$009A01	|
@@ -3662,7 +3662,7 @@ AS_Unk9x:						;-----------| ActionScript instruction 9x
 	INC $3D						;$009A06	|
 	RTS							;$009A08	|
 
-AS_UnkAx:						;-----------| ActionScript instruction Ax
+AS_SetXAccel:						;-----------| ActionScript instruction Ax
 	INC $3D						;$009A09	|
 	LDA [$3D]					;$009A0B	|
 	STA $6C62,Y					;$009A0D	|
@@ -3670,7 +3670,7 @@ AS_UnkAx:						;-----------| ActionScript instruction Ax
 	INC $3D						;$009A12	|
 	RTS							;$009A14	|
 
-AS_UnkBx:						;-----------| ActionScript instruction Bx
+AS_SetYAccel:						;-----------| ActionScript instruction Bx
 	INC $3D						;$009A15	|
 	LDA [$3D]					;$009A17	|
 	STA $6CDC,Y					;$009A19	|

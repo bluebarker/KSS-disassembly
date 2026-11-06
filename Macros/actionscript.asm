@@ -333,6 +333,6 @@ macro AS_PlaySFX(imm8, wait)
     db $E0|(<wait>&$0F), <imm8>
 endmacro
 
-macro AS_UNKFx(imm8, wait)
+macro AS_PlayMusic(imm8, wait)
     db $F0|(<wait>&$0F), <imm8>
 endmacro

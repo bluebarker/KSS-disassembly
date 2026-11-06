@@ -1975,28 +1975,28 @@
           <Value exs:type="ns1:Label" Name="AS_Unk34" Comment="Actionscript instruction 34&#xA;" />
         </sys:Item>
         <sys:Item Key="39355">
-          <Value exs:type="ns1:Label" Name="AS_UnkEx" Comment="Actionscript instruction Ex&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_PlaySFX" Comment="Actionscript instruction Ex&#xA;" />
         </sys:Item>
         <sys:Item Key="39369">
-          <Value exs:type="ns1:Label" Name="AS_UnkFx" Comment="Actionscript instruction Fx&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_PlayMusic" Comment="Actionscript instruction Fx&#xA;" />
         </sys:Item>
         <sys:Item Key="39383">
-          <Value exs:type="ns1:Label" Name="AS_Unk24" Comment="Actionscript instruction 24&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_StopMove" Comment="Actionscript instruction 24&#xA;" />
         </sys:Item>
         <sys:Item Key="39399">
-          <Value exs:type="ns1:Label" Name="AS_Unk25" Comment="Actionscript instruction 25&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_StopAccel" Comment="Actionscript instruction 25&#xA;" />
         </sys:Item>
         <sys:Item Key="39409">
-          <Value exs:type="ns1:Label" Name="AS_Unk8x" Comment="Actionscript instruction 8x&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_SetXSpeed" Comment="Actionscript instruction 8x&#xA;" />
         </sys:Item>
         <sys:Item Key="39421">
-          <Value exs:type="ns1:Label" Name="AS_Unk9x" Comment="Actionscript instruction 9x&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_SetYSpeed" Comment="Actionscript instruction 9x&#xA;" />
         </sys:Item>
         <sys:Item Key="39433">
-          <Value exs:type="ns1:Label" Name="AS_UnkAx" Comment="Actionscript instruction Ax&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_SetXAccel" Comment="Actionscript instruction Ax&#xA;" />
         </sys:Item>
         <sys:Item Key="39445">
-          <Value exs:type="ns1:Label" Name="AS_UnkBx" Comment="Actionscript instruction Bx&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_SetYAccel" Comment="Actionscript instruction Bx&#xA;" />
         </sys:Item>
         <sys:Item Key="39709">
           <Value exs:type="ns1:Label" Name="CODE_809B1D" Comment="" />
