@@ -274,7 +274,7 @@ AS_078812:
     %AS_ASMCall(CODE_078FA9, $00)
         dw $0000
         dw CODE_878BBA
-    %AS_WAIT($20)
+    %AS_Wait($20)
     %AS_PresetCall($06, $00)
         db $13
     %AS_ASMCall(CODE_078FA9, $00)
@@ -283,7 +283,7 @@ AS_078812:
     %AS_ASMCall(CODE_078FA9, $00)
         dw $0002
         dw CODE_878CE5
-    %AS_WAIT($10)
+    %AS_Wait($10)
     %AS_SetPose_imm8($00, $00)
     %AS_ASMCall(CODE_078FA9, $00)
         dw $0004
@@ -293,19 +293,19 @@ AS_078812:
         dw $0002
 
 AS_DelayTitleScreenSkip:                ; Add a delay before you can press a button to bring up file select
-    %AS_WAIT($3C)
-    %AS_MOV_VAR_IMM16($00, $0078)
+    %AS_Wait($3C)
+    %AS_MOV_var_imm16($00, $0078)
 
 AS_078854:
     %AS_BinOp_var($00, !ADD, $FFFF)
-    %AS_Mov_reg_var($00)
+    %AS_MOV_reg_var($00)
     %AS_JNE(AS_InitializeFileSelect)
     %AS_ASMCall(CODE_078E3F, $00)       ; inc $7396 : inc $7392
 
 AS_InitializeFileSelect:
     %AS_ASMCall(CODE_FL_00A32B, $00)
         db $00
-    %AS_MOV_REG_IMM16($0000)
+    %AS_MOV_reg_imm16($0000)
     %AS_ASMCall(CODE_FL_00A26B, $01)    ; Check if buttons started being pressed this frame on controller REG
         dw $D0C0
     %AS_JEQ(AS_078854)
@@ -324,9 +324,9 @@ AS_InitializeFileSelect:
         dw $0002
         dw CODE_8789C5
     %AS_ASMCall(CODE_078E59, $00)
-    %AS_ONTICK(CODE_079103)
+    %AS_OnTickCallback(CODE_079103)
     %AS_UNK30($00, $F800)
-    %AS_WAIT($1D)
+    %AS_Wait($1D)
     %AS_UNK30($00, $0000)
     %AS_StopMovement()
     %AS_PresetCall($03, $00)            ; ASMCALL $009C94: Set background mode
@@ -335,8 +335,8 @@ AS_InitializeFileSelect:
         db $00
     %AS_ASMCall(ReadPlaySFX, $01)       ; SFX to play when the files stop moving
         db $07
-    %AS_SPRITEMAP($CC96AF)
-    %AS_ONTICK(CODE_879123)
+    %AS_SpriteMap($CC96AF)
+    %AS_OnTickCallback(CODE_879123)
     %AS_ASMCall(CODE_078E67, $01)
     %AS_SetPose_imm8($07, $00)
     %AS_ASMCall(CODE_078F6A, $01)
@@ -345,7 +345,7 @@ AS_InitializeFileSelect:
 
 AS_FileSelectMainLoop:
     %AS_ASMCall(FileSelectMainLoop, $01)
-    %AS_MULTIJMP(AS_FileSelectMainLoop,
+    %AS_MultiJMP(AS_FileSelectMainLoop,
         AS_FileDeletePrompt,
         AS_FileSelected)
 
@@ -354,15 +354,15 @@ AS_FileDeletePrompt:
     %AS_JEQ(AS_FileSelectMainLoop)
     %AS_ASMCall(ReadPlaySFX, $00)
         db $46
-    %AS_ONTICK(CODE_FL_008F63)
+    %AS_OnTickCallback(CODE_FL_008F63)
     %AS_SetPose_imm8($FF, $00)
     %AS_ASMCall(CODE_878F80, $00)
     %AS_ASMCall(CODE_878F38, $00)
 
 AS_DeletePrompt1:
-    %AS_WAIT($01)
+    %AS_Wait($01)
     %AS_ASMCall(CODE_878F4D, $00)
-    %AS_MULTIJMP(AS_DeletePrompt1,
+    %AS_MultiJMP(AS_DeletePrompt1,
     AS_ReturnToMainLoop,
     AS_OK_Prompt1)
 
@@ -370,9 +370,9 @@ AS_OK_Prompt1:
     %AS_ASMCall(CODE_878F3D, $00)
 
 AS_DeletePrompt2:
-    %AS_WAIT($01)
+    %AS_Wait($01)
     %AS_ASMCall(CODE_878F4D, $00)
-    %AS_MULTIJMP(AS_DeletePrompt2,
+    %AS_MultiJMP(AS_DeletePrompt2,
     AS_ReturnToMainLoop,
     AS_OK_Prompt2)
 
@@ -380,9 +380,9 @@ AS_OK_Prompt2:
     %AS_ASMCall(CODE_878F42, $00)
 
 AS_DeletePrompt3:
-    %AS_WAIT($01)
+    %AS_Wait($01)
     %AS_ASMCall(CODE_878F4D, $00)
-    %AS_MULTIJMP(AS_DeletePrompt3,
+    %AS_MultiJMP(AS_DeletePrompt3,
     AS_ReturnToMainLoop,
     AS_ExecuteFileDeletion)
 
@@ -395,29 +395,29 @@ AS_ExecuteFileDeletion:
 
 AS_ReturnToMainLoop:
     %AS_ASMCall(CODE_078F6A, $01)
-    %AS_ONTICK(CODE_879123)
+    %AS_OnTickCallback(CODE_879123)
     %AS_SetPose_imm8($07, $00)
     %AS_ASMCall(CODE_878F9F, $00)
     %AS_JMP(AS_FileSelectMainLoop)
 
 AS_FileSelected:
-    %AS_WAIT($1E)
-    %AS_LOOP_IMM8($10)
+    %AS_Wait($1E)
+    %AS_Loop_imm8($10)
         %AS_ASMCall(FadeOut_Step, $00)
         %AS_ASMCall(CODE_FL_00CE78, $01)
         db $F0      ; -16
-    %AS_ENDLOOP()
-    %AS_MOV_VAR_IMM16($00, $0000)
+    %AS_EndLoop()
+    %AS_MOV_var_imm16($00, $0000)
     %AS_SetPose_imm8($FF, $00)
     %AS_ASMCall(UpdateVramSprSize, $00)
-    %AS_MOV_ABS_IMM16(ReloadRoom, $0001)
-    %AS_HALT()
+    %AS_MOV_abs_imm16(ReloadRoom, $0001)
+    %AS_Halt()
 
 AS_07895F:
     %AS_ASMCall(CODE_FL_00D883, $00)
-    %AS_UNK16($A6F1)
-    %AS_ONDRAW($AB7E)
-    %AS_SPRITEMAP($CC96CD)
+    %AS_SetTickLoop($A6F1)
+    %AS_OnDraw($AB7E)
+    %AS_SpriteMap($CC96CD)
     %AS_SetPose_imm8($FF, $00)
     %AS_PresetCall($03, $00)            ; ASMCALL $009C94: Set background mode
         db $02 

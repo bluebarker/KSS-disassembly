@@ -96,6 +96,7 @@ macro TEXT_SecondaryColorDisable()
 endmacro
 
 ; could probably combine these two macros
+; WriteChar1 and WriteChar2 are mostly used for writing kanji in the JP ROM
 macro TEXT_WriteChar1(x)     ; writes character 1xx
     db $18, <x>
 endmacro

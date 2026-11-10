@@ -1382,7 +1382,7 @@ UpdtLyrsCtrl:					;-----------| Routine to update layer positions and fetch cont
 	STA $51						;$008A1D	|
 	LDA $3B						;$008A1F	|
 	STA $53						;$008A21	|
-	LDA $3D						;$008A23	|
+	LDA.B AS_PC						;$008A23	|
 	SEC							;$008A25	|
 	SBC $5D						;$008A26	|
 	STA $55						;$008A28	|
@@ -1786,8 +1786,8 @@ FixDpadInput:					;-----------| Directional input conflict handler. Prevents U+D
 	dw !BTN_NONE
 
 	dw !BTN_DOWN			; down
-	dw !BTN_DOWN|!BTN_RIGHT	; down right 
-	dw !BTN_DOWN|!BTN_LEFT	; down left 
+	dw !BTN_DOWN|!BTN_RIGHT	; down right
+	dw !BTN_DOWN|!BTN_LEFT	; down left
 	dw !BTN_NONE
 
 	dw !BTN_UP				; up
@@ -1802,17 +1802,17 @@ FixDpadInput:					;-----------| Directional input conflict handler. Prevents U+D
 
 
 ObjectVariablePointers:			;$008D6F	|
-	dw $6D56					; 00 - 
-	dw $6DD0					; 02 - 
-	dw $6E4A					; 04 - 
-	dw $6EC4					; 06 - 
-	dw $6F3E					; 08 - 
-	dw $6FB8					; 0A - 
-	dw $7032					; 0C - 
-	dw $70AC					; 0E - 
-	dw $7126					; 10 - 
-	dw $71A0					; 12 - 
-	dw $623C					; 14 - ?
+	dw Obj_VAR0					; 00
+	dw Obj_VAR1					; 02
+	dw Obj_VAR2					; 04
+	dw Obj_VAR3					; 06
+	dw Obj_VAR4					; 08
+	dw Obj_VAR5					; 0A
+	dw Obj_VAR6					; 0C
+	dw Obj_VAR7					; 0E
+	dw Obj_VAR8					; 10
+	dw Obj_VAR9					; 12
+	dw Obj_Table623C			; 14
 
 
 
@@ -1847,8 +1847,8 @@ InitializeObjects:				;-----------|
 	STA $6338					;$008DD6	|
 	STA $633A					;$008DD9	|
 	LDA #$FFFF					;$008DDC	|
-	STA $60BC,X					;$008DDF	|
-	STA $603C,Y					;$008DE2	|
+	STA.W Obj_Table60BC,X					;$008DDF	|
+	STA.W Obj_NextInList,Y					;$008DE2	|
 	STA $601A					;$008DE5	|
 	STA $601C					;$008DE8	|
 	STA $62B6					;$008DEB	|
@@ -1871,12 +1871,12 @@ InitializeObjects:				;-----------|
 	STA $6038					;$008E1E	|
 	LDX #$0078					;$008E21	|
 CODE_FL_008E24:					;			|
-	STA $623C,X					;$008E24	|
-	STA $603C,X					;$008E27	|
-	STA $60BC,X					;$008E2A	|
-	STA $613C,X					;$008E2D	|
-	STA $62BC,X					;$008E30	|
-	STZ $61BC,X					;$008E33	|
+	STA.W Obj_Table623C,X		;$008E24	|
+	STA.W Obj_NextInList,X		;$008E27	|
+	STA.W Obj_Table60BC,X		;$008E2A	|
+	STA.W Obj_Table613C,X		;$008E2D	|
+	STA.W Obj_Table62BC,X		;$008E30	|
+	STZ.W Obj_Table61BC,X		;$008E33	|
 	DEX							;$008E36	|
 	DEX							;$008E37	|
 	BPL CODE_FL_008E24			;$008E38	|
@@ -1928,26 +1928,26 @@ CreateNewObject:				; Otherwise every single object will start here on creation
 
 InitializeNewObject:			; X = Object slot
 	LDA #CODE_FL_00AB78			;$008E9E	|
-	STA $6630,X					;$008EA1	|
+	STA.W Obj_DrawCallback,X					;$008EA1	|
 	LDA #CODE_FL_00A6FB			;$008EA4	|
-	STA $66AA,X					;$008EA7	|
+	STA.W Obj_UnknownCallback,X					;$008EA7	|
 	LDA $6000					;$008EAA	|
-	STA $6D56,X					;$008EAD	|
+	STA.W Obj_VAR0,X					;$008EAD	|
 	LDA $6002					;$008EB0	|
-	STA $6DD0,X					;$008EB3	|
+	STA.W Obj_VAR1,X					;$008EB3	|
 	LDA $6004					;$008EB6	|
-	STA $6E4A,X					;$008EB9	|
+	STA.W Obj_VAR2,X					;$008EB9	|
 	LDA $6006					;$008EBC	|
-	STA $6EC4,X					;$008EBF	|
+	STA.W Obj_VAR3,X					;$008EBF	|
 	LDA $6008					;$008EC2	|
-	STA $6F3E,X					;$008EC5	|
-	STZ $6FB8,X					;$008EC8	|
-	STZ $7032,X					;$008ECB	|
-	STZ $70AC,X					;$008ECE	|
-	STZ $7126,X					;$008ED1	|
-	STZ $71A0,X					;$008ED4	|
-	STZ $64B6,X					;$008ED7	|
-	STZ $65B0,X					;$008EDA	|
+	STA.W Obj_VAR4,X					;$008EC5	|
+	STZ.W Obj_VAR5,X					;$008EC8	|
+	STZ.W Obj_VAR6,X					;$008ECB	|
+	STZ.W Obj_VAR7,X					;$008ECE	|
+	STZ.W Obj_VAR8,X					;$008ED1	|
+	STZ.W Obj_VAR9,X					;$008ED4	|
+	STZ.W Obj_ZLayer,X					;$008ED7	|
+	STZ.W Obj_SpriteMapBank,X					;$008EDA	|
 	LDA #$8000					;$008EDD	|
 	STA $6A7A,X					;$008EE0	|
 	STA $6AF4,X					;$008EE3	|
@@ -1958,14 +1958,14 @@ InitializeNewObject:			; X = Object slot
 	STA $6A00,X					;$008EF2	|
 	STA $690C,X					;$008EF5	|
 	LDA $600A					;$008EF8	|
-	STA $623C,X					;$008EFB	|
-	STZ $6436,X					;$008EFE	|
-	DEC $6436,X					;$008F01	|
+	STA.W Obj_Table623C,X					;$008EFB	|
+	STZ.W Obj_Pose,X					;$008EFE	|
+	DEC.W Obj_Pose,X					;$008F01	|
 	STZ $6B6E,X					;$008F04	|
 	STZ $6C62,X					;$008F07	|
 	STZ $6BE8,X					;$008F0A	|
 	STZ $6CDC,X					;$008F0D	|
-	STZ $62BC,X					;$008F10	|
+	STZ.W Obj_Table62BC,X					;$008F10	|
 	PHX							;$008F13	|
 	ASL A						;$008F14	|
 	ASL A						;$008F15	|
@@ -1977,7 +1977,7 @@ InitializeNewObject:			; X = Object slot
 	PLX							;$008F21	|
 	JSL InitializeObjectScript	;$008F22	|
 	TYA							;$008F26	|
-	STA $61BC,X					;$008F27	|
+	STA.W Obj_Table61BC,X					;$008F27	|
 	JSR CODE_FL_009180			;$008F2A	|
 	JSR CODE_FL_0091AC			;$008F2D	|
 	LDY $39						;$008F30	|
@@ -1986,12 +1986,12 @@ InitializeNewObject:			; X = Object slot
 	RTL							;$008F34	|
 
 InitializeObjectScript:			;-----------| Initialize script for object. X = Object slot, A = Script address, Y = Script bank
-	STZ $6724,X					;$008F35	|
-	STA $679E,X					;$008F38	|
+	STZ.W Obj_ScriptSleepTimer,X					;$008F35	|
+	STA.W Obj_ScriptProgramCounter,X					;$008F38	|
 	TYA							;$008F3B	|
-	STA $6818,X					;$008F3C	|
+	STA.W Obj_ScriptProgramBank,X					;$008F3C	|
 	TYA							;$008F3F	|
-	LDY $61BC,X					;$008F40	|
+	LDY.W Obj_Table61BC,X					;$008F40	|
 	XBA							;$008F43	|
 	AND #$001F					;$008F44	|
 	BEQ CODE_FL_008F4C			;$008F47	|
@@ -2006,9 +2006,9 @@ CODE_FL_008F4C:					;			|
 	ASL A						;$008F53	|
 	STA $721A,X					;$008F54	|
 CODE_FL_008F57:					;			|
-	LDA $62BC,X					;$008F57	|
+	LDA.W Obj_Table62BC,X					;$008F57	|
 	AND #$8000					;$008F5A	|
-	STA $62BC,X					;$008F5D	|
+	STA.W Obj_Table62BC,X					;$008F5D	|
 	JSR RemoveTickCallback		;$008F60	|
 CODE_FL_008F63:
 	RTL							;$008F63	|
@@ -2023,7 +2023,7 @@ CODE_FL_008F64:					;-----------|
 	BEQ CODE_FL_008F75			;$008F6C	|
 	DEC A						;$008F6E	|
 	DEC A						;$008F6F	|
-	CMP $61BC,X					;$008F70	|
+	CMP.W Obj_Table61BC,X					;$008F70	|
 	BNE CODE_FL_008F7E			;$008F73	|
 CODE_FL_008F75:					;			|
 	PLY							;$008F75	|
@@ -2039,20 +2039,20 @@ CODE_FL_008F7E:
 	PLX							;$008F82	|
 	PLA							;$008F83	|
 	JSL InitializeObjectScript	;$008F84	|
-	LDA $62BC,X					;$008F88	|
+	LDA.W Obj_Table62BC,X					;$008F88	|
 	BMI CODE_FL_008F91			;$008F8B	|
 	CPX $39						;$008F8D	|
 	BNE CODE_FL_008F9A			;$008F8F	|
 CODE_FL_008F91:					;			|
 	TYA							;$008F91	|
-	STA $61BC,X					;$008F92	|
+	STA.W Obj_Table61BC,X					;$008F92	|
 	JSR CODE_FL_009180			;$008F95	|
 	TXA							;$008F98	|
 	RTL							;$008F99	|
 
 CODE_FL_008F9A:
 	PHX							;$008F9A	|
-	LDA $61BC,X					;$008F9B	|
+	LDA.W Obj_Table61BC,X					;$008F9B	|
 	LDX #$0000					;$008F9E	|
 	CPY $601E					;$008FA1	|
 	BEQ CODE_FL_008FA8			;$008FA4	|
@@ -2078,7 +2078,7 @@ CODE_FL_008FB7:					;$008FB7	|
 CODE_FL_008FBF:
 	PLX							;$008FBF	|
 	TYA							;$008FC0	|
-	STA $61BC,X					;$008FC1	|
+	STA.W Obj_Table61BC,X					;$008FC1	|
 	JSR CODE_FL_009180			;$008FC4	|
 	TXA							;$008FC7	|
 	RTL							;$008FC8	|
@@ -2086,23 +2086,23 @@ CODE_FL_008FBF:
 CODE_FL_008FC9:
 	PLX							;$008FC9	|
 	TYA							;$008FCA	|
-	STA $61BC,X					;$008FCB	|
+	STA.W Obj_Table61BC,X					;$008FCB	|
 	JSR CODE_FL_009180			;$008FCE	|
 	JSR CODE_FL_0091C2			;$008FD1	|
-	LDA $623C,X					;$008FD4	|
+	LDA.W Obj_Table623C,X					;$008FD4	|
 	AND #$BFFF					;$008FD7	|
-	STA $623C,X					;$008FDA	|
+	STA.W Obj_Table623C,X					;$008FDA	|
 	TXA							;$008FDD	|
 	RTL							;$008FDE	|
 
 CODE_FL_008FDF:
 	PLX							;$008FDF	|
 	TYA							;$008FE0	|
-	STA $61BC,X					;$008FE1	|
+	STA.W Obj_Table61BC,X					;$008FE1	|
 	JSR CODE_FL_009180			;$008FE4	|
-	LDA $623C,X					;$008FE7	|
+	LDA.W Obj_Table623C,X					;$008FE7	|
 	ORA #$4000					;$008FEA	|
-	STA $623C,X					;$008FED	|
+	STA.W Obj_Table623C,X					;$008FED	|
 	TXA							;$008FF0	|
 	RTL							;$008FF1	|
 
@@ -2127,9 +2127,9 @@ CODE_FL_00900F:					;			|
 	CPX #$0080					;$00900F	|
 	BCS CODE_FL_00900F			;$009012	|
 	STX $736E					;$009014	|
-	LDA $603C,X					;$009017	|
+	LDA.W Obj_NextInList,X					;$009017	|
 	STA $6018					;$00901A	|
-	LDA $61BC,X					;$00901D	|
+	LDA.W Obj_Table61BC,X					;$00901D	|
 	STA $601E					;$009020	|
 	JSR CODE_FL_009091			;$009023	|
 	LDX $601A					;$009026	|
@@ -2138,10 +2138,10 @@ CODE_FL_00900F:					;			|
 	PHA							;$00902E	|
 CODE_FL_00902F:					;			|
 	STX $39						;$00902F	|
-	LDA $613C,X					;$009031	|
+	LDA.W Obj_Table613C,X					;$009031	|
 	STA $6018					;$009034	|
 	LDA #$FFFF					;$009037	|
-	STA $613C,X					;$00903A	|
+	STA.W Obj_Table613C,X					;$00903A	|
 	JSR CODE_FL_009091			;$00903D	|
 	LDX $6018					;$009040	|
 	BPL CODE_FL_00902F			;$009043	|
@@ -2173,22 +2173,22 @@ CODE_FL_00907E:					;			|
 	LDY $6014					;$00907E	|
 CODE_FL_009081:					;			|
 	TYX							;$009081	|
-	LDA $62BC,X					;$009082	|
+	LDA.W Obj_Table62BC,X					;$009082	|
 	AND #$7FFF					;$009085	|
-	STA $62BC,X					;$009088	|
-	LDY $603C,X					;$00908B	|
+	STA.W Obj_Table62BC,X					;$009088	|
+	LDY.W Obj_NextInList,X					;$00908B	|
 	BPL CODE_FL_009081			;$00908E	|
 	RTL							;$009090	|
 
 CODE_FL_009091:
 	LDA #$2000					;$009091	|
-	BIT $62BC,X					;$009094	|
+	BIT.W Obj_Table62BC,X					;$009094	|
 	BPL CODE_FL_00909C			;$009097	|
 	JMP CODE_FL_00911B			;$009099	|
 CODE_FL_00909C:					;			|
 	BVS CODE_FL_009110			;$00909C	|
 	BNE CODE_FL_0090E7			;$00909E	|
-	BIT $6818,X					;$0090A0	|
+	BIT.W Obj_ScriptProgramBank,X					;$0090A0	|
 	BMI CODE_FL_0090E2			;$0090A3	|
 	BVS CODE_FL_0090BB			;$0090A5	|
 	BEQ CODE_FL_0090B5			;$0090A7	|
@@ -2201,11 +2201,11 @@ CODE_FL_0090B5:
 	BRA CODE_FL_0090E2			;$0090B9	|
 
 CODE_FL_0090BB:
-	DEC $6724,X					;$0090BB	|
+	DEC.W Obj_ScriptSleepTimer,X					;$0090BB	|
 	BPL CODE_FL_0090E2			;$0090BE	|
-	LDA $679E,X					;$0090C0	|
+	LDA.W Obj_ScriptProgramCounter,X					;$0090C0	|
 	STA $6028					;$0090C3	|
-	LDA $6818,X					;$0090C6	|
+	LDA.W Obj_ScriptProgramBank,X					;$0090C6	|
 	STA $602A					;$0090C9	|
 	AND #$2000					;$0090CC	|
 	BEQ CODE_FL_0090DD			;$0090CF	|
@@ -2221,12 +2221,12 @@ CODE_FL_0090E2:					;			|
 	JSR ($66AA,X)				;$0090E4	|
 CODE_FL_0090E7:					;			|
 	LDX $39						;$0090E7	|
-	LDA $63B6,X					;$0090E9	|
+	LDA.W Obj_TickCallbackBank,X					;$0090E9	|
 	BMI CODE_FL_009110			;$0090EC	|
 	STA $602A					;$0090EE	|
-	LDA $633C,X					;$0090F1	|
+	LDA.W Obj_TickCallbackAddr,X					;$0090F1	|
 	STA $6028					;$0090F4	|
-	LDA $6818,X					;$0090F7	|
+	LDA.W Obj_ScriptProgramBank,X					;$0090F7	|
 	AND #$2000					;$0090FA	|
 	BEQ CODE_FL_00910B			;$0090FD	|
 	%LoadLongToAX(CODE_FL_009126)
@@ -2238,9 +2238,9 @@ CODE_FL_00910B:
 	JSL LongCall_6028			;$00910C	|
 CODE_FL_009110:					;			|
 	LDX $39						;$009110	|
-	LDA $62BC,X					;$009112	|
+	LDA.W Obj_Table62BC,X					;$009112	|
 	ORA #$8000					;$009115	|
-	STA $62BC,X					;$009118	|
+	STA.W Obj_Table62BC,X					;$009118	|
 CODE_FL_00911B:					;			|
 	LDX $39						;$00911B	|
 CODE_FL_00911D:					;			|
@@ -2262,7 +2262,7 @@ CODE_FL_009126:
 FindFreeObjectSlot:
 	LDX $6010					;$009130	|
 CODE_FL_009133:					;			|
-	LDA $623C,X					;$009133	|
+	LDA.W Obj_Table623C,X					;$009133	|
 	BMI CODE_FL_009140			;$009136	|
 	INX							;$009138	|
 	INX							;$009139	|
@@ -2283,7 +2283,7 @@ DestroyObject:
 	BCS CODE_FL_00917B			;$009149	|
 	PHA							;$00914B	|
 	PHY							;$00914C	|
-	LDA $623C,X					;$00914D	|
+	LDA.W Obj_Table623C,X					;$00914D	|
 	BMI CODE_FL_009179			;$009150	|
 	CPX #$0006					;$009152	|
 	BCC CODE_FL_009167			;$009155	|
@@ -2297,10 +2297,10 @@ CODE_FL_009164:					;			|
 CODE_FL_009167:					;			|
 	JSR MAYBE_UnlinkObject		;$009167	|
 	LDA #$FFFF					;$00916A	|
-	STA $623C,X					;$00916D	|
-	STA $62BC,X					;$009170	|
-	STA $603C,X					;$009173	|
-	STA $60BC,X					;$009176	|
+	STA.W Obj_Table623C,X					;$00916D	|
+	STA.W Obj_Table62BC,X					;$009170	|
+	STA.W Obj_NextInList,X					;$009173	|
+	STA.W Obj_Table60BC,X					;$009176	|
 CODE_FL_009179:					;			|
 	PLY							;$009179	|
 	PLA							;$00917A	|
@@ -2333,14 +2333,14 @@ CODE_FL_009192:					;			|
 	PLA							;$009197	|
 CODE_FL_009198:					;			|
 	TAY							;$009198	|
-	STA $60BC,X					;$009199	|
-	LDA $603C,Y					;$00919C	|
-	STA $603C,X					;$00919F	|
+	STA.W Obj_Table60BC,X					;$009199	|
+	LDA.W Obj_NextInList,Y					;$00919C	|
+	STA.W Obj_NextInList,X					;$00919F	|
 	PHA							;$0091A2	|
 	TXA							;$0091A3	|
-	STA $603C,Y					;$0091A4	|
+	STA.W Obj_NextInList,Y					;$0091A4	|
 	PLY							;$0091A7	|
-	STA $60BC,Y					;$0091A8	|
+	STA.W Obj_Table60BC,Y					;$0091A8	|
 	RTS							;$0091AB	|
 
 
@@ -2350,18 +2350,18 @@ CODE_FL_009198:					;			|
 CODE_FL_0091AC:
 	LDY $39						;$0091AC	|
 	BMI CODE_FL_0091DE			;$0091AE	|
-	LDA $61BC,X					;$0091B0	|
+	LDA.W Obj_Table61BC,X					;$0091B0	|
 	CMP $601E					;$0091B3	|
 	BCC CODE_FL_0091C2			;$0091B6	|
 	TYA							;$0091B8	|
-	CMP $60BC,X					;$0091B9	|
+	CMP.W Obj_Table60BC,X					;$0091B9	|
 	BNE CODE_FL_0091C1			;$0091BC	|
 	STX $6018					;$0091BE	|
 CODE_FL_0091C1:					;			|
 	RTS							;$0091C1	|
 
 CODE_FL_0091C2:
-	LDA $613C,X					;$0091C2	|
+	LDA.W Obj_Table613C,X					;$0091C2	|
 	BPL CODE_FL_0091DE			;$0091C5	|
 	LDY $601C					;$0091C7	|
 	BPL CODE_FL_0091D1			;$0091CA	|
@@ -2370,10 +2370,10 @@ CODE_FL_0091C2:
 
 CODE_FL_0091D1:
 	TXA							;$0091D1	|
-	STA $613C,Y					;$0091D2	|
+	STA.W Obj_Table613C,Y					;$0091D2	|
 CODE_FL_0091D5:					;			|
 	LDA #$FFFF					;$0091D5	|
-	STA $613C,X					;$0091D8	|
+	STA.W Obj_Table613C,X					;$0091D8	|
 	STX $601C					;$0091DB	|
 CODE_FL_0091DE:					;			|
 	RTS							;$0091DE	|
@@ -2389,20 +2389,20 @@ MAYBE_UnlinkObject_L:
 MAYBE_UnlinkObject:
 	PHX							;$0091E3	|
 	PHX							;$0091E4	|
-	LDY $60BC,X					;$0091E5	|
-	LDA $603C,X					;$0091E8	|
+	LDY.W Obj_Table60BC,X					;$0091E5	|
+	LDA.W Obj_NextInList,X					;$0091E8	|
 	TAX							;$0091EB	|
-	STA $603C,Y					;$0091EC	|
+	STA.W Obj_NextInList,Y					;$0091EC	|
 	TYA							;$0091EF	|
-	STA $60BC,X					;$0091F0	|
+	STA.W Obj_Table60BC,X					;$0091F0	|
 	PLX							;$0091F3	|
-	LDY $61BC,X					;$0091F4	|
+	LDY.W Obj_Table61BC,X					;$0091F4	|
 	TXA							;$0091F7	|
 	CMP $602C,Y					;$0091F8	|
 	BNE CODE_FL_00920E			;$0091FB	|
 	TYA							;$0091FD	|
-	LDY $60BC,X					;$0091FE	|
-	CMP $61BC,Y					;$009201	|
+	LDY.W Obj_Table60BC,X					;$0091FE	|
+	CMP.W Obj_Table61BC,Y					;$009201	|
 	BEQ CODE_FL_009209			;$009204	|
 	LDY #$FFFF					;$009206	|
 CODE_FL_009209:					;			|
@@ -2413,7 +2413,7 @@ CODE_FL_00920E:					;			|
 	PLX							;$00920E	|
 	CPX $6018					;$00920F	|
 	BNE CODE_FL_00921A			;$009212	|
-	LDA $603C,X					;$009214	|
+	LDA.W Obj_NextInList,X					;$009214	|
 	STA $6018					;$009217	|
 CODE_FL_00921A:					;			|
 	RTS							;$00921A	|
@@ -2425,15 +2425,15 @@ CODE_FL_00921A:					;			|
 CODE_FL_00921B:
 	DEC A						;$00921B	|
 	DEC A						;$00921C	|
-	CMP $61BC,X					;$00921D	|
+	CMP.W Obj_Table61BC,X					;$00921D	|
 	CLC							;$009220	|
 	BEQ CODE_FL_009239			;$009221	|
 	PHA							;$009223	|
 	CPX $39						;$009224	|
 	BNE CODE_FL_009231			;$009226	|
-	LDA $623C,X					;$009228	|
+	LDA.W Obj_Table623C,X					;$009228	|
 	ORA #$4000					;$00922B	|
-	STA $623C,X					;$00922E	|
+	STA.W Obj_Table623C,X					;$00922E	|
 CODE_FL_009231:					;			|
 	JSR MAYBE_UnlinkObject		;$009231	|
 	PLY							;$009234	|
@@ -2447,27 +2447,27 @@ CODE_FL_009239:					;			|
 
 
 AS_ReadByte:
-	INC $3D						;$00923A	|
-	LDA [$3D]					;$00923C	|
+	INC.B AS_PC						;$00923A	|
+	LDA.B [AS_PC]					;$00923C	|
 	AND #$00FF					;$00923E	|
 	RTS							;$009241	|
 
 AS_ReadByte_L:
-	INC $3D						;$009242	|
-	LDA [$3D]					;$009244	|
+	INC.B AS_PC						;$009242	|
+	LDA.B [AS_PC]					;$009244	|
 	AND #$00FF					;$009246	|
 	RTL							;$009249	|
 
 AS_ReadWord:
-	INC $3D						;$00924A	|
-	LDA [$3D]					;$00924C	|
-	INC $3D						;$00924E	|
+	INC.B AS_PC						;$00924A	|
+	LDA.B [AS_PC]					;$00924C	|
+	INC.B AS_PC						;$00924E	|
 	RTS							;$009250	|
 
 AS_ReadWord_L:
-	INC $3D						;$009251	|
-	LDA [$3D]					;$009253	|
-	INC $3D						;$009255	|
+	INC.B AS_PC						;$009251	|
+	LDA.B [AS_PC]					;$009253	|
+	INC.B AS_PC						;$009255	|
 	RTL							;$009257	|
 
 
@@ -2481,9 +2481,9 @@ RemoveTickCallback_L:
 
 RemoveTickCallback:
 	LDA #$8F63					;$00925F	|
-	STA $633C,X					;$009262	|
+	STA.W Obj_TickCallbackAddr,X					;$009262	|
 	LDA #$0000					;$009265	|
-	STA $63B6,X					;$009268	|
+	STA.W Obj_TickCallbackBank,X					;$009268	|
 	RTS							;$00926B	|
 
 
@@ -2493,8 +2493,8 @@ MoveCurrentScriptToSCPU:
 	LDX $39						;$00926E	|
 	LDA #$2000					;$009270	|
 	TSB $3F						;$009273	|
-	ORA $6818,X					;$009275	|
-	STA $6818,X					;$009278	|
+	ORA.W Obj_ScriptProgramBank,X					;$009275	|
+	STA.W Obj_ScriptProgramBank,X					;$009278	|
 	PLX							;$00927B	|
 	PLA							;$00927C	|
 	RTL							;$00927D	|
@@ -2506,44 +2506,42 @@ MoveCurrentScriptToSA1:
 	LDA $3F						;$009282	|
 	AND #$DFFF					;$009284	|
 	STA $3F						;$009287	|
-	STA $6818,X					;$009289	|
+	STA.W Obj_ScriptProgramBank,X					;$009289	|
 	PLX							;$00928C	|
 	PLA							;$00928D	|
 	RTL							;$00928E	|
 
 
 AS_Interpret:
-	LDY $39						;$00928F	|
-	LDA $679E,Y					;$009291	|
-	STA $3D						;$009294	|
-	LDA $6818,Y					;$009296	|
-	STA $3F						;$009299	|
-	LDA $721A,Y					;$00929B	|
-	STA $3B						;$00929E	|
-	LDA $6724,Y					;$0092A0	|
-	BNE CODE_FL_0092AF			;$0092A3	|
-CODE_FL_0092A5:					;			|
+	LDY.B $39					;$00928F	|
+	LDA.W Obj_ScriptProgramCounter,Y				;$009291	|
+	STA.B AS_PC					;$009294	|
+	LDA.W Obj_ScriptProgramBank,Y				;$009296	|
+	STA.B $3F					;$009299	|
+	LDA.W $721A,Y				;$00929B	|
+	STA.B $3B					;$00929E	|
+	LDA.W Obj_ScriptSleepTimer,Y				;$0092A0	|
+	BNE .StopLoop				;$0092A3	|
+  .RunLoop:						;			|
 	JSR AS_RunInstruction		;$0092A5	|
-	LDY $39						;$0092A8	|
-	LDA $6724,Y					;$0092AA	|
-	BEQ CODE_FL_0092A5			;$0092AD	|
-CODE_FL_0092AF:
+	LDY.B $39					;$0092A8	|
+	LDA.W Obj_ScriptSleepTimer,Y				;$0092AA	| Continue to run ActionScript until the object's ScriptSleepTimer reaches 0x0000
+	BEQ .RunLoop				;$0092AD	|
+  .StopLoop:
 	DEC A						;$0092AF	|
-	STA $6724,Y					;$0092B0	|
-	LDA $3D						;$0092B3	|
-	STA $679E,Y					;$0092B5	|
-	LDA $3F						;$0092B8	|
-	STA $6818,Y					;$0092BA	|
-	LDA $3B						;$0092BD	|
-	STA $721A,Y					;$0092BF	|
+	STA.W Obj_ScriptSleepTimer,Y				;$0092B0	|
+	LDA.B AS_PC					;$0092B3	|
+	STA.W Obj_ScriptProgramCounter,Y				;$0092B5	|
+	LDA.B $3F					;$0092B8	|
+	STA.W Obj_ScriptProgramBank,Y				;$0092BA	|
+	LDA.B $3B					;$0092BD	|
+	STA.W $721A,Y				;$0092BF	|
 	RTL							;$0092C2	|
 
-
-
 AS_RunInstruction:
-	LDA [$3D]					;$0092C3	|
-	AND #$00FF					;$0092C5	|
-	CMP #$0040					;$0092C8	|
+	LDA.B [AS_PC]				;$0092C3	|
+	AND.W #$00FF				;$0092C5	|
+	CMP.W #$0040				;$0092C8	|
 	BCS CODE_FL_0092D2			;$0092CB	|
 	ASL A						;$0092CD	|
 	TAX							;$0092CE	|
@@ -2551,10 +2549,10 @@ AS_RunInstruction:
 
 CODE_FL_0092D2:
 	TAX							;$0092D2	|
-	AND #$000F					;$0092D3	|
-	STA $6724,Y					;$0092D6	|
+	AND.W #$000F				;$0092D3	|
+	STA.W Obj_ScriptSleepTimer,Y				;$0092D6	|
 	TXA							;$0092D9	|
-	AND #$00F0					;$0092DA	|
+	AND.W #$00F0				;$0092DA	|
 	LSR A						;$0092DD	|
 	LSR A						;$0092DE	|
 	LSR A						;$0092DF	|
@@ -2565,7 +2563,7 @@ AS_OpPointers:					;$0092E4	| Pointers to all of the ActionScript routines. Simi
 	dw AS_End				    ; 00
 	dw AS_Halt				    ; 01
 	dw AS_WaitImm				; 02
-	dw AS_OnTick				; 03
+	dw AS_OnTickCallback		; 03
 	dw AS_EndTick				; 04
 	dw AS_LoopImm				; 05
 	dw AS_LoopReg				; 06
@@ -2584,7 +2582,7 @@ AS_OpPointers:					;$0092E4	| Pointers to all of the ActionScript routines. Simi
 	dw AS_BreakNe				; 13
 	dw AS_Spritemap				; 14
 	dw AS_OnDraw				; 15
-	dw AS_Unk16			     	; 16
+	dw AS_SetTickLoop			; 16
 	dw AS_MovRegImm				; 17
 	dw AS_MovRegAbs				; 18
 	dw AS_MovVarAbs				; 19
@@ -2646,59 +2644,59 @@ CODE_FL_009379:					;			|
 
 
 SetScriptPointer:				; Set script pointer for object in slot Y. Y = Object slot, A = Script address, X = Script bank
-	STA $679E,Y					;$00937A	|
+	STA.W Obj_ScriptProgramCounter,Y					;$00937A	|
 	TXA							;$00937D	|
 	SEP #$20					;$00937E	|
-	STA $6818,Y					;$009380	|
+	STA.W Obj_ScriptProgramBank,Y					;$009380	|
 	REP #$20					;$009383	|
 	TYA							;$009385	|
 	ASL A						;$009386	|
 	ASL A						;$009387	|
 	STA $721A,Y					;$009388	|
 	LDA #$0000					;$00938B	|
-	STA $6724,Y					;$00938E	|
+	STA.W Obj_ScriptSleepTimer,Y					;$00938E	|
 	RTL							;$009391	|
 
 
 
 AS_AltInterpret:
 	LDY $39						;$009392	|
-	LDA $679E,Y					;$009394	|
-	STA $3D						;$009397	|
-	LDA $6818,Y					;$009399	|
+	LDA.W Obj_ScriptProgramCounter,Y					;$009394	|
+	STA.B AS_PC					;$009397	|
+	LDA.W Obj_ScriptProgramBank,Y					;$009399	|
 	STA $3F						;$00939C	|
 	LDA $721A,Y					;$00939E	|
 	STA $3B						;$0093A1	|
-	LDA $6724,Y					;$0093A3	|
+	LDA.W Obj_ScriptSleepTimer,Y					;$0093A3	|
 	BNE CODE_FL_0093B2			;$0093A6	|
 CODE_FL_0093A8:					;			|
 	JSR AS_AltRunInstruction	;$0093A8	|
 	LDY $39						;$0093AB	|
-	LDA $6724,Y					;$0093AD	|
+	LDA.W Obj_ScriptSleepTimer,Y					;$0093AD	|
 	BEQ CODE_FL_0093A8			;$0093B0	|
 CODE_FL_0093B2:					;			|
 	DEC A						;$0093B2	|
-	STA $6724,Y					;$0093B3	|
-	LDA $3D						;$0093B6	|
-	STA $679E,Y					;$0093B8	|
+	STA.W Obj_ScriptSleepTimer,Y					;$0093B3	|
+	LDA.B AS_PC					;$0093B6	|
+	STA.W Obj_ScriptProgramCounter,Y					;$0093B8	|
 CODE_FL_0093B9:					;			|
 	LDA $3F						;$0093BB	|
-	STA $6818,Y					;$0093BD	|
+	STA.W Obj_ScriptProgramBank,Y					;$0093BD	|
 	LDA $3B						;$0093C0	|
 	STA $721A,Y					;$0093C2	|
 	RTL							;$0093C5	|
 
 
 AS_AltRunInstruction:
-	LDA [$3D]					;$0093C6	|
+	LDA.B [AS_PC]				;$0093C6	|
 	AND #$00FF					;$0093C8	|
 	LSR A						;$0093CB	|
 	BCC CODE_FL_0093DA			;$0093CC	|
 	PHA							;$0093CE	|
-	INC $3D						;$0093CF	|
-	LDA [$3D]					;$0093D1	|
+	INC.B AS_PC					;$0093CF	|
+	LDA.B [AS_PC]				;$0093D1	|
 	AND #$00FF					;$0093D3	|
-	STA $6724,Y					;$0093D6	|
+	STA.W Obj_ScriptSleepTimer,Y					;$0093D6	|
 	PLA							;$0093D9	|
 CODE_FL_0093DA:					;			|
 	ASL A						;$0093DA	|
@@ -2721,7 +2719,7 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw AS_Jne					; 0B
 	dw AS_Spritemap				; 0C
 	dw AS_OnDraw				; 0D
-	dw AS_Unk16					; 0E
+	dw AS_SetTickLoop			; 0E
 	dw AS_MovRegImm				; 0F
 	dw AS_MovRegAbs				; 10
 	dw AS_MovVarAbs				; 11
@@ -2733,11 +2731,11 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw AS_MovRegVar				; 17
 	dw AS_Unk33					; 18
 	dw AS_Unk34					; 19
-	dw AS_StopMove					; 1A
-	dw AS_SetXSpeed					; 1B
-	dw AS_SetYSpeed					; 1C
-	dw AS_SetXAccel					; 1D
-	dw AS_SetYAccel					; 1E
+	dw AS_StopMove				; 1A
+	dw AS_SetXSpeed				; 1B
+	dw AS_SetYSpeed				; 1C
+	dw AS_SetXAccel				; 1D
+	dw AS_SetYAccel				; 1E
 	dw AS_SetPoseImm8			; 1F
 	dw AS_AddPose				; 20
 	dw AS_IncPose				; 21
@@ -2748,8 +2746,8 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw CODE_FL_009936			; 26
 	dw AS_AsmCall				; 27
 	dw AS_PresetCall			; 28
-	dw AS_PlaySFX					; 29
-	dw AS_PlayMusic					; 2A
+	dw AS_PlaySFX				; 29
+	dw AS_PlayMusic				; 2A
 	dw CODE_FL_009A21			; 2B
 	dw CODE_FL_009A31			; 2C
 	dw CODE_FL_009A3D			; 2D
@@ -2769,53 +2767,53 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 
 AS_End:							;-----------| ActionScript instruction 00
 	TYX							;$009453	|
-	INC $6724,X					;$009454	|
+	INC.W Obj_ScriptSleepTimer,X					;$009454	|
 	LDA #$A6EC					;$009457	|
-	STA $66AA,X					;$00945A	|
+	STA.W Obj_UnknownCallback,X					;$00945A	|
 	JSR RemoveTickCallback		;$00945D	|
 	JMP DestroyObject			;$009460	|
 
 AS_Halt:						;-----------| ActionScript instruction 01
 	TYX							;$009463	|
-	INC $6724,X					;$009464	|
+	INC.W Obj_ScriptSleepTimer,X					;$009464	|
 	LDA #$8000					;$009467	|
 	TSB $3F						;$00946A	|
 	RTS							;$00946C	|
 
 AS_WaitImm:						;-----------| ActionScript instruction 02
-	INC $3D						;$00946D	|
-	LDA [$3D]					;$00946F	|
+	INC.B AS_PC					;$00946D	|
+	LDA.B [AS_PC]				;$00946F	|
 	AND #$00FF					;$009471	|
-	STA $6724,Y					;$009474	|
-	INC $3D						;$009477	|
+	STA.W Obj_ScriptSleepTimer,Y					;$009474	|
+	INC.B AS_PC					;$009477	|
 	RTS							;$009479	|
 
-AS_OnTick:						;-----------| ActionScript instruction 03
-	INC $3D						;$00947A	|
-	LDA [$3D]					;$00947C	|
-	STA $633C,Y					;$00947E	|
-	INC $3D						;$009481	|
-	INC $3D						;$009483	|
+AS_OnTickCallback:				;-----------| ActionScript instruction 03
+	INC.B AS_PC					;$00947A	|
+	LDA.B [AS_PC]				;$00947C	|
+	STA.W Obj_TickCallbackAddr,Y					;$00947E	|
+	INC.B AS_PC					;$009481	|
+	INC.B AS_PC					;$009483	|
 	SEP #$20					;$009485	|
-	LDA [$3D]					;$009487	|
-	STA $63B6,Y					;$009489	|
+	LDA.B [AS_PC]				;$009487	|
+	STA.W Obj_TickCallbackBank,Y					;$009489	|
 	REP #$20					;$00948C	|
-	INC $3D						;$00948E	|
+	INC.B AS_PC					;$00948E	|
 	RTS							;$009490	|
 
 AS_EndTick:						;-----------| ActionScript instruction 04
 	TYX							;$009491	|
-	INC $3D						;$009492	|
+	INC.B AS_PC					;$009492	|
 	JMP RemoveTickCallback		;$009494	|
 
 AS_LoopImm:						;-----------| ActionScript instruction 05
-	INC $3D						;$009497	|
-	LDA [$3D]					;$009499	|
+	INC.B AS_PC					;$009497	|
+	LDA.B [AS_PC]				;$009499	|
 CODE_FL_00949B:					;			|
 	PHA							;$00949B	|
 	LDX $3B						;$00949C	|
-	INC $3D						;$00949E	|
-	LDA $3D						;$0094A0	|
+	INC.B AS_PC					;$00949E	|
+	LDA.B AS_PC					;$0094A0	|
 	STA $727A,X					;$0094A2	|
 	INX							;$0094A5	|
 	INX							;$0094A6	|
@@ -2828,7 +2826,7 @@ CODE_FL_00949B:					;			|
 	RTS							;$0094B2	|
 
 AS_LoopReg:						;-----------| ActionScript instruction 06
-	LDA $724A,Y					;$0094B3	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0094B3	|
 	BRA CODE_FL_00949B			;$0094B6	|
 
 
@@ -2839,7 +2837,7 @@ AS_EndLoop:						;-----------| ActionScript instruction 07
 	REP #$20					;$0094BF	|
 	BEQ CODE_FL_0094C9			;$0094C1	|
 	LDA $7277,X					;$0094C3	|
-	STA $3D						;$0094C6	|
+	STA.B AS_PC					;$0094C6	|
 	RTS							;$0094C8	|
 
 CODE_FL_0094C9:					;-----------|
@@ -2847,48 +2845,47 @@ CODE_FL_0094C9:					;-----------|
 	DEX							;$0094CA	|
 	DEX							;$0094CB	|
 	STX $3B						;$0094CC	|
-	INC $3D						;$0094CE	|
+	INC.B AS_PC					;$0094CE	|
 	RTS							;$0094D0	|
 
 AS_BreakEq:						;-----------| ActionScript instruction 12
-	LDA $724A,Y					;$0094D1	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0094D1	|
 	BNE CODE_FL_0094E4			;$0094D4	|
 CODE_FL_0094D6:					;			|
-	INC $3D						;$0094D6	|
-	LDA [$3D]					;$0094D8	|
-	STA $3D						;$0094DA	|
+	INC.B AS_PC					;$0094D6	|
+	LDA.B [AS_PC]				;$0094D8	|
+	STA.B AS_PC					;$0094DA	|
 	LDX $3B						;$0094DC	|
 	DEX							;$0094DE	|
 	DEX							;$0094DF	|
 	DEX							;$0094E0	|
 	STX $3B						;$0094E1	|
 	RTS							;$0094E3	|
-
 CODE_FL_0094E4:					;-----------|
-	INC $3D						;$0094E4	|
-	INC $3D						;$0094E6	|
-	INC $3D						;$0094E8	|
+	INC.B AS_PC					;$0094E4	|
+	INC.B AS_PC					;$0094E6	|
+	INC.B AS_PC					;$0094E8	|
 	RTS							;$0094EA	|
 
 AS_BreakNe:						;-----------| ActionScript instruction 13
-	LDA $724A,Y					;$0094EB	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0094EB	|
 	BEQ CODE_FL_0094E4			;$0094EE	|
 	BNE CODE_FL_0094D6			;$0094F0	|
 
 AS_Jsl:							;-----------| ActionScript instruction 08
 	LDX $3B						;$0094F2	|
-	INC $3D						;$0094F4	|
-	LDA [$3D]					;$0094F6	|
+	INC.B AS_PC					;$0094F4	|
+	LDA.B [AS_PC]				;$0094F6	|
 	TAY							;$0094F8	|
-	INC $3D						;$0094F9	|
-	INC $3D						;$0094FB	|
+	INC.B AS_PC					;$0094F9	|
+	INC.B AS_PC					;$0094FB	|
 	SEP #$20					;$0094FD	|
 	LDA $3F						;$0094FF	|
 	STA $727C,X					;$009501	|
-	LDA [$3D]					;$009504	|
+	LDA.B [AS_PC]				;$009504	|
 	STA $3F						;$009506	|
 	REP #$20					;$009508	|
-	LDA $3D						;$00950A	|
+	LDA.B AS_PC					;$00950A	|
 	INC A						;$00950C	|
 	STA $727A,X					;$00950D	|
 	STY $373D					;$009510	|
@@ -2908,52 +2905,52 @@ AS_Rtl:							;-----------| ActionScript instruction 09
 	DEX							;$009525	|
 	DEX							;$009526	|
 	LDA $727A,X					;$009527	|
-	STA $3D						;$00952A	|
+	STA.B AS_PC					;$00952A	|
 	STX $3B						;$00952C	|
 	RTS							;$00952E	|
 
 AS_Jsr:							;-----------| ActionScript instruction 0A
 	LDX $3B						;$00952F	|
-	INC $3D						;$009531	|
-	LDA [$3D]					;$009533	|
+	INC.B AS_PC					;$009531	|
+	LDA.B [AS_PC]				;$009533	|
 	TAY							;$009535	|
-	LDA $3D						;$009536	|
+	LDA.B AS_PC					;$009536	|
 	INC A						;$009538	|
 	INC A						;$009539	|
 	STA $727A,X					;$00953A	|
-	STY $3D						;$00953D	|
+	STY.B AS_PC					;$00953D	|
 	INX							;$00953F	|
 	INX							;$009540	|
 	STX $3B						;$009541	|
 	RTS							;$009543	|
 
 AS_MultiJsr:					;-----------| ActionScript instruction 0B
-	INC $3D						;$009544	|
-	LDA [$3D]					;$009546	|
-	INC $3D						;$009548	|
+	INC.B AS_PC					;$009544	|
+	LDA.B [AS_PC]				;$009546	|
+	INC.B AS_PC					;$009548	|
 	AND #$00FF					;$00954A	|
-	CMP $724A,Y					;$00954D	|
+	CMP.W Obj_ScriptWorkRegister,Y					;$00954D	|
 	BCC CODE_FL_00956A			;$009550	|
 	BEQ CODE_FL_00956A			;$009552	|
 	LDX $3B						;$009554	|
 	ASL A						;$009556	|
-	ADC $3D						;$009557	|
+	ADC.B AS_PC					;$009557	|
 	STA $727A,X					;$009559	|
 	INX							;$00955C	|
 	INX							;$00955D	|
 	STX $3B						;$00955E	|
 CODE_FL_009560:					;			|
-	LDA $724A,Y					;$009560	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$009560	|
 	ASL A						;$009563	|
 	TAY							;$009564	|
-	LDA [$3D],Y					;$009565	|
-	STA $3D						;$009567	|
+	LDA.B [AS_PC],Y				;$009565	|
+	STA.B AS_PC					;$009567	|
 	RTS							;$009569	|
 
 CODE_FL_00956A:					;-----------|
 	ASL A						;$00956A	|
-	ADC $3D						;$00956B	|
-	STA $3D						;$00956D	|
+	ADC.B AS_PC					;$00956B	|
+	STA.B AS_PC					;$00956D	|
 	RTS							;$00956F	|
 
 AS_Rts:							;-----------| ActionScript instruction 0C
@@ -2961,104 +2958,104 @@ AS_Rts:							;-----------| ActionScript instruction 0C
 	DEX							;$009572	|
 	DEX							;$009573	|
 	LDA $727A,X					;$009574	|
-	STA $3D						;$009577	|
+	STA.B AS_PC					;$009577	|
 	STX $3B						;$009579	|
 	RTS							;$00957B	|
 
 AS_Jml:							;-----------| ActionScript instruction 0D
 	LDY #$0001					;$00957C	|
-	LDA [$3D],Y					;$00957F	|
+	LDA.B [AS_PC],Y				;$00957F	|
 	TAX							;$009581	|
 	SEP #$20					;$009582	|
 	INY							;$009584	|
 	INY							;$009585	|
-	LDA [$3D],Y					;$009586	|
+	LDA.B [AS_PC],Y				;$009586	|
 	STA $3F						;$009588	|
 	REP #$20					;$00958A	|
-	STX $3D						;$00958C	|
+	STX.B AS_PC					;$00958C	|
 	RTS							;$00958E	|
 
 AS_Jmp:							;-----------| ActionScript instruction 0E
 	LDY #$0001					;$00958F	|
-	LDA [$3D],Y					;$009592	|
-	STA $3D						;$009594	|
+	LDA.B [AS_PC],Y				;$009592	|
+	STA.B AS_PC					;$009594	|
 	RTS							;$009596	|
 
 AS_MultiJmp:					;-----------| ActionScript instruction 0F
-	INC $3D						;$009597	|
-	LDA [$3D]					;$009599	|
-	INC $3D						;$00959B	|
+	INC.B AS_PC					;$009597	|
+	LDA.B [AS_PC]				;$009599	|
+	INC.B AS_PC					;$00959B	|
 	AND #$00FF					;$00959D	|
-	CMP $724A,Y					;$0095A0	|
+	CMP.W Obj_ScriptWorkRegister,Y					;$0095A0	|
 	BCC CODE_FL_00956A			;$0095A3	|
 	BNE CODE_FL_009560			;$0095A5	|
 	BRA CODE_FL_00956A			;$0095A7	|
 
 AS_Jeq:							;-----------| ActionScript instruction 10
-	LDA $724A,Y					;$0095A9	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0095A9	|
 	BEQ AS_Jmp					;$0095AC	|
-	INC $3D						;$0095AE	|
-	INC $3D						;$0095B0	|
-	INC $3D						;$0095B2	|
+	INC.B AS_PC					;$0095AE	|
+	INC.B AS_PC					;$0095B0	|
+	INC.B AS_PC					;$0095B2	|
 	RTS							;$0095B4	|
 
 AS_Jne:							;-----------| ActionScript instruction 11
-	LDA $724A,Y					;$0095B5	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0095B5	|
 	BNE AS_Jmp					;$0095B8	|
-	INC $3D						;$0095BA	|
-	INC $3D						;$0095BC	|
-	INC $3D						;$0095BE	|
+	INC.B AS_PC					;$0095BA	|
+	INC.B AS_PC					;$0095BC	|
+	INC.B AS_PC					;$0095BE	|
 	RTS							;$0095C0	|
 
 AS_Spritemap:					;-----------| ActionScript instruction 14
-	INC $3D						;$0095C1	|
-	LDA [$3D]					;$0095C3	|
-	STA $6536,Y					;$0095C5	|
-	INC $3D						;$0095C8	|
-	INC $3D						;$0095CA	|
-	LDA [$3D]					;$0095CC	|
+	INC.B AS_PC					;$0095C1	|
+	LDA.B [AS_PC]				;$0095C3	|
+	STA.W Obj_SpriteMapAddr,Y					;$0095C5	|
+	INC.B AS_PC					;$0095C8	|
+	INC.B AS_PC					;$0095CA	|
+	LDA.B [AS_PC]				;$0095CC	|
 	AND #$00FF					;$0095CE	|
-	STA $65B0,Y					;$0095D1	|
-	INC $3D						;$0095D4	|
+	STA.W Obj_SpriteMapBank,Y					;$0095D1	|
+	INC.B AS_PC					;$0095D4	|
 	RTS							;$0095D6	|
 
 AS_OnDraw:						;-----------| ActionScript instruction 15
-	INC $3D						;$0095D7	|
-	LDA [$3D]					;$0095D9	|
-	STA $6630,Y					;$0095DB	|
-	INC $3D						;$0095DE	|
-	INC $3D						;$0095E0	|
+	INC.B AS_PC					;$0095D7	|
+	LDA.B [AS_PC]				;$0095D9	|
+	STA.W Obj_DrawCallback,Y					;$0095DB	|
+	INC.B AS_PC					;$0095DE	|
+	INC.B AS_PC					;$0095E0	|
 	RTS							;$0095E2	|
 
-AS_Unk16:						;-----------| ActionScript instruction 16
-	INC $3D						;$0095E3	|
-	LDA [$3D]					;$0095E5	|
-	STA $66AA,Y					;$0095E7	|
-	INC $3D						;$0095EA	|
-	INC $3D						;$0095EC	|
+AS_SetTickLoop:						;-----------| ActionScript instruction 16
+	INC.B AS_PC					;$0095E3	|
+	LDA.B [AS_PC]				;$0095E5	|
+	STA.W Obj_UnknownCallback,Y					;$0095E7	|
+	INC.B AS_PC					;$0095EA	|
+	INC.B AS_PC					;$0095EC	|
 	RTS							;$0095EE	|
 
 AS_MovRegImm:					;-----------| ActionScript instruction 17
-	INC $3D						;$0095EF	|
-	LDA [$3D]					;$0095F1	|
-	STA $724A,Y					;$0095F3	|
-	INC $3D						;$0095F6	|
-	INC $3D						;$0095F8	|
+	INC.B AS_PC					;$0095EF	|
+	LDA.B [AS_PC]				;$0095F1	|
+	STA.W Obj_ScriptWorkRegister,Y					;$0095F3	|
+	INC.B AS_PC					;$0095F6	|
+	INC.B AS_PC					;$0095F8	|
 	RTS							;$0095FA	|
 
 AS_MovRegAbs:					;-----------| ActionScript instruction 18
-	INC $3D						;$0095FB	|
-	LDA [$3D]					;$0095FD	|
+	INC.B AS_PC					;$0095FB	|
+	LDA.B [AS_PC]				;$0095FD	|
 	STA $14						;$0095FF	|
 	LDA ($14)					;$009601	|
-	STA $724A,Y					;$009603	|
-	INC $3D						;$009606	|
-	INC $3D						;$009608	|
+	STA.W Obj_ScriptWorkRegister,Y					;$009603	|
+	INC.B AS_PC					;$009606	|
+	INC.B AS_PC					;$009608	|
 	RTS							;$00960A	|
 
 AS_MovVarAbs:					;-----------| ActionScript instruction 19
-	INC $3D						;$00960B	|
-	LDA [$3D]					;$00960D	|
+	INC.B AS_PC					;$00960B	|
+	LDA.B [AS_PC]				;$00960D	|
 	AND #$00FF					;$00960F	|
 	ASL A						;$009612	|
 	TAX							;$009613	|
@@ -3066,77 +3063,77 @@ AS_MovVarAbs:					;-----------| ActionScript instruction 19
 	STA $14						;$009618	|
 	LDA #$0000					;$00961A	|
 	STA $16						;$00961D	|
-	INC $3D						;$00961F	|
-	LDA [$3D]					;$009621	|
+	INC.B AS_PC					;$00961F	|
+	LDA.B [AS_PC]				;$009621	|
 	STA [$14],Y					;$009623	|
-	INC $3D						;$009625	|
-	INC $3D						;$009627	|
+	INC.B AS_PC					;$009625	|
+	INC.B AS_PC					;$009627	|
 	RTS							;$009629	|
 
 AS_MovAbsImm8:					;-----------| ActionScript instruction 1A
-	INC $3D						;$00962A	|
-	LDA [$3D]					;$00962C	|
+	INC.B AS_PC					;$00962A	|
+	LDA.B [AS_PC]				;$00962C	|
 	STA $14						;$00962E	|
-	INC $3D						;$009630	|
-	INC $3D						;$009632	|
+	INC.B AS_PC					;$009630	|
+	INC.B AS_PC					;$009632	|
 	SEP #$20					;$009634	|
-	LDA [$3D]					;$009636	|
+	LDA.B [AS_PC]				;$009636	|
 	STA ($14)					;$009638	|
 	REP #$20					;$00963A	|
-	INC $3D						;$00963C	|
+	INC.B AS_PC					;$00963C	|
 	RTS							;$00963E	|
 
 AS_MovAbsImm16:					;-----------| ActionScript instruction 1B
-	INC $3D						;$00963F	|
-	LDA [$3D]					;$009641	|
+	INC.B AS_PC					;$00963F	|
+	LDA.B [AS_PC]				;$009641	|
 	STA $14						;$009643	|
-	INC $3D						;$009645	|
-	INC $3D						;$009647	|
-	LDA [$3D]					;$009649	|
+	INC.B AS_PC					;$009645	|
+	INC.B AS_PC					;$009647	|
+	LDA.B [AS_PC]				;$009649	|
 	STA ($14)					;$00964B	|
-	INC $3D						;$00964D	|
-	INC $3D						;$00964F	|
+	INC.B AS_PC					;$00964D	|
+	INC.B AS_PC					;$00964F	|
 	RTS							;$009651	|
 
 CODE_FL_009652:					;-----------|
-	INC $3D						;$009652	|
-	LDA [$3D]					;$009654	|
+	INC.B AS_PC						;$009652	|
+	LDA.B [AS_PC]					;$009654	|
 	CLC							;$009656	|
 	ADC $39						;$009657	|
 	STA $14						;$009659	|
-	INC $3D						;$00965B	|
-	INC $3D						;$00965D	|
-	LDA [$3D]					;$00965F	|
+	INC.B AS_PC						;$00965B	|
+	INC.B AS_PC						;$00965D	|
+	LDA.B [AS_PC]					;$00965F	|
 	STA ($14)					;$009661	|
-	INC $3D						;$009663	|
-	INC $3D						;$009665	|
+	INC.B AS_PC						;$009663	|
+	INC.B AS_PC						;$009665	|
 	RTS							;$009667	|
 
 CODE_FL_009668:					;-----------|
-	INC $3D						;$009668	|
-	LDA [$3D]					;$00966A	|
+	INC.B AS_PC						;$009668	|
+	LDA.B [AS_PC]					;$00966A	|
 	CLC							;$00966C	|
 	ADC $39						;$00966D	|
 	STA $14						;$00966F	|
 	LDA ($14)					;$009671	|
-	STA $724A,Y					;$009673	|
-	INC $3D						;$009676	|
-	INC $3D						;$009678	|
+	STA.W Obj_ScriptWorkRegister,Y					;$009673	|
+	INC.B AS_PC						;$009676	|
+	INC.B AS_PC						;$009678	|
 	RTS							;$00967A	|
 
 AS_BinopAbsImm8:				;-----------| ActionScript instruction 1D
-	INC $3D						;$00967B	|
-	LDA [$3D]					;$00967D	|
+	INC.B AS_PC						;$00967B	|
+	LDA.B [AS_PC]					;$00967D	|
 	STA $14						;$00967F	|
-	INC $3D						;$009681	|
-	INC $3D						;$009683	|
-	LDA [$3D]					;$009685	|
+	INC.B AS_PC						;$009681	|
+	INC.B AS_PC						;$009683	|
+	LDA.B [AS_PC]					;$009685	|
 	AND #$00FF					;$009687	|
 	ASL A						;$00968A	|
 	TAX							;$00968B	|
-	INC $3D						;$00968C	|
-	LDA [$3D]					;$00968E	|
-	INC $3D						;$009690	|
+	INC.B AS_PC						;$00968C	|
+	LDA.B [AS_PC]					;$00968E	|
+	INC.B AS_PC						;$009690	|
 	SEP #$20					;$009692	|
 	JSR (CODE_FL_0096CF,X)		;$009694	|
 
@@ -3145,8 +3142,8 @@ CODE_FL_009697:					;-----------|
 	RTS							;$009699	|
 
 AS_BinopVarImm:					;-----------| ActionScript instruction 1C
-	INC $3D						;$00969A	|
-	LDA [$3D]					;$00969C	|
+	INC.B AS_PC						;$00969A	|
+	LDA.B [AS_PC]					;$00969C	|
 	AND #$00FF					;$00969E	|
 	ASL A						;$0096A1	|
 	TAX							;$0096A2	|
@@ -3162,20 +3159,20 @@ AS_BinopRegImm:					;-----------| ActionScript instruction 1F
 	BRA CODE_FL_0096B9			;$0096B1	|
 
 AS_BinopAbsImm16:				;-----------| ActionScript instruction 1E
-	INC $3D						;$0096B3	|
-	LDA [$3D]					;$0096B5	|
-	INC $3D						;$0096B7	|
+	INC.B AS_PC						;$0096B3	|
+	LDA.B [AS_PC]					;$0096B5	|
+	INC.B AS_PC						;$0096B7	|
 CODE_FL_0096B9:					;			|
-	INC $3D						;$0096B9	|
+	INC.B AS_PC						;$0096B9	|
 	STA $14						;$0096BB	|
-	LDA [$3D]					;$0096BD	|
+	LDA.B [AS_PC]					;$0096BD	|
 	AND #$00FF					;$0096BF	|
 	ASL A						;$0096C2	|
 	TAX							;$0096C3	|
-	INC $3D						;$0096C4	|
-	LDA [$3D]					;$0096C6	|
-	INC $3D						;$0096C8	|
-	INC $3D						;$0096CA	|
+	INC.B AS_PC						;$0096C4	|
+	LDA.B [AS_PC]					;$0096C6	|
+	INC.B AS_PC						;$0096C8	|
+	INC.B AS_PC						;$0096CA	|
 	JMP (CODE_FL_0096CF,X)		;$0096CC	|
 
 CODE_FL_0096CF:
@@ -3207,158 +3204,158 @@ CODE_FL_0096E7:					;```````````|
 
 
 AS_MovVarReg:					;-----------| ActionScript instruction 20
-	INC $3D						;$0096EC	|
-	LDA [$3D]					;$0096EE	|
+	INC.B AS_PC						;$0096EC	|
+	LDA.B [AS_PC]					;$0096EE	|
 	AND #$00FF					;$0096F0	|
 	ASL A						;$0096F3	|
 	TAX							;$0096F4	|
 	LDA.l ObjectVariablePointers,X	;$0096F5	|
 	STA $14						;$0096F9	|
-	LDA $724A,Y					;$0096FB	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$0096FB	|
 	STA ($14),Y					;$0096FE	|
-	INC $3D						;$009700	|
+	INC.B AS_PC						;$009700	|
 	RTS							;$009702	|
 
 AS_MovRegVar:					;-----------| ActionScript instruction 21
-	INC $3D						;$009703	|
-	LDA [$3D]					;$009705	|
+	INC.B AS_PC						;$009703	|
+	LDA.B [AS_PC]					;$009705	|
 	AND #$00FF					;$009707	|
 	ASL A						;$00970A	|
 	TAX							;$00970B	|
 	LDA.l ObjectVariablePointers,X	;$00970C	|
 	STA $14						;$009710	|
 	LDA ($14),Y					;$009712	|
-	STA $724A,Y					;$009714	|
-	INC $3D						;$009717	|
+	STA.W Obj_ScriptWorkRegister,Y					;$009714	|
+	INC.B AS_PC						;$009717	|
 	RTS							;$009719	|
 
 AS_WaitReg:						;-----------| ActionScript instruction 22
-	INC $3D						;$00971A	|
-	LDA [$3D]					;$00971C	|
+	INC.B AS_PC						;$00971A	|
+	LDA.B [AS_PC]					;$00971C	|
 	AND #$00FF					;$00971E	|
 	ASL A						;$009721	|
 	TAX							;$009722	|
 	LDA.l ObjectVariablePointers,X	;$009723	|
 	STA $14						;$009727	|
 	LDA ($14),Y					;$009729	|
-	STA $6724,Y					;$00972B	|
-	INC $3D						;$00972E	|
+	STA.W Obj_ScriptSleepTimer,Y					;$00972B	|
+	INC.B AS_PC						;$00972E	|
 	RTS							;$009730	|
 
 AS_SetPoseVar:					;-----------| ActionScript instruction 23
-	INC $3D						;$009731	|
-	LDA [$3D]					;$009733	|
+	INC.B AS_PC						;$009731	|
+	LDA.B [AS_PC]					;$009733	|
 	AND #$00FF					;$009735	|
 	ASL A						;$009738	|
 	TAX							;$009739	|
 	LDA.l ObjectVariablePointers,X	;$00973A	|
 	STA $14						;$00973E	|
 	LDA ($14),Y					;$009740	|
-	STA $6436,Y					;$009742	|
-	INC $3D						;$009745	|
+	STA.W Obj_Pose,Y					;$009742	|
+	INC.B AS_PC						;$009745	|
 	RTS							;$009747	|
 
 AS_SetXPos:						;-----------| ActionScript instruction 26
-	INC $3D						;$009748	|
-	LDA [$3D]					;$00974A	|
+	INC.B AS_PC						;$009748	|
+	LDA.B [AS_PC]					;$00974A	|
 	STA $6986,Y					;$00974C	|
 	LDA #$8000					;$00974F	|
 	STA $6A7A,Y					;$009752	|
-	INC $3D						;$009755	|
-	INC $3D						;$009757	|
+	INC.B AS_PC						;$009755	|
+	INC.B AS_PC						;$009757	|
 	RTS							;$009759	|
 
 AS_SetYPos:						;-----------| ActionScript instruction 27
-	INC $3D						;$00975A	|
-	LDA [$3D]					;$00975C	|
+	INC.B AS_PC						;$00975A	|
+	LDA.B [AS_PC]					;$00975C	|
 	STA $6A00,Y					;$00975E	|
 	LDA #$8000					;$009761	|
 	STA $6AF4,Y					;$009764	|
-	INC $3D						;$009767	|
-	INC $3D						;$009769	|
+	INC.B AS_PC						;$009767	|
+	INC.B AS_PC						;$009769	|
 	RTS							;$00976B	|
 
 AS_AddXPos:						;-----------| ActionScript instruction 28
-	INC $3D						;$00976C	|
-	LDA [$3D]					;$00976E	|
+	INC.B AS_PC						;$00976C	|
+	LDA.B [AS_PC]					;$00976E	|
 	CLC							;$009770	|
 	ADC $6986,Y					;$009771	|
 	STA $6986,Y					;$009774	|
-	INC $3D						;$009777	|
-	INC $3D						;$009779	|
+	INC.B AS_PC						;$009777	|
+	INC.B AS_PC						;$009779	|
 	RTS							;$00977B	|
 
 AS_AddYPos:						;-----------| ActionScript instruction 29
-	INC $3D						;$00977C	|
-	LDA [$3D]					;$00977E	|
+	INC.B AS_PC						;$00977C	|
+	LDA.B [AS_PC]					;$00977E	|
 	CLC							;$009780	|
 	ADC $6A00,Y					;$009781	|
 	STA $6A00,Y					;$009784	|
-	INC $3D						;$009787	|
-	INC $3D						;$009789	|
+	INC.B AS_PC						;$009787	|
+	INC.B AS_PC						;$009789	|
 	RTS							;$00978B	|
 
 AS_Unk2A:						;-----------| ActionScript instruction 2A
-	INC $3D						;$00978C	|
-	LDA [$3D]					;$00978E	|
+	INC.B AS_PC						;$00978C	|
+	LDA.B [AS_PC]					;$00978E	|
 	AND #$00FF					;$009790	|
 	ASL A						;$009793	|
 	TAX							;$009794	|
-	INC $3D						;$009795	|
-	LDA [$3D]					;$009797	|
+	INC.B AS_PC						;$009795	|
+	LDA.B [AS_PC]					;$009797	|
 	STA $3037,X					;$009799	|
 	STZ $3043,X					;$00979C	|
-	INC $3D						;$00979F	|
-	INC $3D						;$0097A1	|
+	INC.B AS_PC						;$00979F	|
+	INC.B AS_PC						;$0097A1	|
 	RTS							;$0097A3	|
 
 AS_Unk2B:						;-----------| ActionScript instruction 2B
-	INC $3D						;$0097A4	|
-	LDA [$3D]					;$0097A6	|
+	INC.B AS_PC						;$0097A4	|
+	LDA.B [AS_PC]					;$0097A6	|
 	AND #$00FF					;$0097A8	|
 	ASL A						;$0097AB	|
 	TAX							;$0097AC	|
-	INC $3D						;$0097AD	|
-	LDA [$3D]					;$0097AF	|
+	INC.B AS_PC						;$0097AD	|
+	LDA.B [AS_PC]					;$0097AF	|
 	STA $303D,X					;$0097B1	|
 	STZ $3049,X					;$0097B4	|
-	INC $3D						;$0097B7	|
-	INC $3D						;$0097B9	|
+	INC.B AS_PC						;$0097B7	|
+	INC.B AS_PC						;$0097B9	|
 	RTS							;$0097BB	|
 
 AS_Unk2C:						;-----------| ActionScript instruction 2C
-	INC $3D						;$0097BC	|
-	LDA [$3D]					;$0097BE	|
+	INC.B AS_PC						;$0097BC	|
+	LDA.B [AS_PC]					;$0097BE	|
 	AND #$00FF					;$0097C0	|
 	ASL A						;$0097C3	|
 	TAX							;$0097C4	|
-	INC $3D						;$0097C5	|
-	LDA [$3D]					;$0097C7	|
+	INC.B AS_PC						;$0097C5	|
+	LDA.B [AS_PC]					;$0097C7	|
 	CLC							;$0097C9	|
 	ADC $3037,X					;$0097CA	|
 	STA $3037,X					;$0097CD	|
-	INC $3D						;$0097D0	|
-	INC $3D						;$0097D2	|
+	INC.B AS_PC						;$0097D0	|
+	INC.B AS_PC						;$0097D2	|
 	RTS							;$0097D4	|
 
 AS_Unk2D:						;-----------| ActionScript instruction 2D
-	INC $3D						;$0097D5	|
-	LDA [$3D]					;$0097D7	|
+	INC.B AS_PC						;$0097D5	|
+	LDA.B [AS_PC]					;$0097D7	|
 	AND #$00FF					;$0097D9	|
 	ASL A						;$0097DC	|
 	TAX							;$0097DD	|
-	INC $3D						;$0097DE	|
-	LDA [$3D]					;$0097E0	|
+	INC.B AS_PC						;$0097DE	|
+	LDA.B [AS_PC]					;$0097E0	|
 	CLC							;$0097E2	|
 	ADC $303D,X					;$0097E3	|
 	STA $303D,X					;$0097E6	|
-	INC $3D						;$0097E9	|
-	INC $3D						;$0097EB	|
+	INC.B AS_PC						;$0097E9	|
+	INC.B AS_PC						;$0097EB	|
 	RTS							;$0097ED	|
 
 AS_Unk2E:						;-----------| ActionScript instruction 2E
-	INC $3D						;$0097EE	|
-	LDA [$3D]					;$0097F0	|
+	INC.B AS_PC						;$0097EE	|
+	LDA.B [AS_PC]					;$0097F0	|
 	AND #$00FF					;$0097F2	|
 	ASL A						;$0097F5	|
 	TAX							;$0097F6	|
@@ -3366,17 +3363,17 @@ AS_Unk2E:						;-----------| ActionScript instruction 2E
 	STZ $733A,X					;$0097FA	|
 	STZ $7352,X					;$0097FD	|
 	STZ $7342,X					;$009800	|
-	INC $3D						;$009803	|
+	INC.B AS_PC						;$009803	|
 	RTS							;$009805	|
 
 AS_Unk2F:						;-----------| ActionScript instruction 2F
-	INC $3D						;$009806	|
-	LDA [$3D]					;$009808	|
+	INC.B AS_PC						;$009806	|
+	LDA.B [AS_PC]					;$009808	|
 	AND #$00FF					;$00980A	|
 	ASL A						;$00980D	|
 	TAX							;$00980E	|
-	INC $3D						;$00980F	|
-	LDA [$3D]					;$009811	|
+	INC.B AS_PC						;$00980F	|
+	LDA.B [AS_PC]					;$009811	|
 	PHA							;$009813	|
 	AND #$00FF					;$009814	|
 	XBA							;$009817	|
@@ -3388,18 +3385,18 @@ AS_Unk2F:						;-----------| ActionScript instruction 2F
 CODE_FL_009824:					;			|
 	XBA							;$009824	|
 	STA $733A,X					;$009825	|
-	INC $3D						;$009828	|
-	INC $3D						;$00982A	|
+	INC.B AS_PC						;$009828	|
+	INC.B AS_PC						;$00982A	|
 	RTS							;$00982C	|
 
 AS_Unk30:						;-----------| ActionScript instruction 30
-	INC $3D						;$00982D	|
-	LDA [$3D]					;$00982F	|
+	INC.B AS_PC						;$00982D	|
+	LDA.B [AS_PC]					;$00982F	|
 	AND #$00FF					;$009831	|
 	ASL A						;$009834	|
 	TAX							;$009835	|
-	INC $3D						;$009836	|
-	LDA [$3D]					;$009838	|
+	INC.B AS_PC						;$009836	|
+	LDA.B [AS_PC]					;$009838	|
 	PHA							;$00983A	|
 	AND #$00FF					;$00983B	|
 	XBA							;$00983E	|
@@ -3411,18 +3408,18 @@ AS_Unk30:						;-----------| ActionScript instruction 30
 CODE_FL_00984B:					;			|
 	XBA							;$00984B	|
 	STA $7342,X					;$00984C	|
-	INC $3D						;$00984F	|
-	INC $3D						;$009851	|
+	INC.B AS_PC						;$00984F	|
+	INC.B AS_PC						;$009851	|
 	RTS							;$009853	|
 
 AS_Unk31:						;-----------| ActionScript instruction 31
-	INC $3D						;$009854	|
-	LDA [$3D]					;$009856	|
+	INC.B AS_PC						;$009854	|
+	LDA.B [AS_PC]					;$009856	|
 	AND #$00FF					;$009858	|
 	ASL A						;$00985B	|
 	TAX							;$00985C	|
-	INC $3D						;$00985D	|
-	LDA [$3D]					;$00985F	|
+	INC.B AS_PC						;$00985D	|
+	LDA.B [AS_PC]					;$00985F	|
 	PHA							;$009861	|
 	AND #$00FF					;$009862	|
 	XBA							;$009865	|
@@ -3437,18 +3434,18 @@ CODE_FL_009876:					;			|
 	XBA							;$009876	|
 	ADC $733A,X					;$009877	|
 	STA $733A,X					;$00987A	|
-	INC $3D						;$00987D	|
-	INC $3D						;$00987F	|
+	INC.B AS_PC						;$00987D	|
+	INC.B AS_PC						;$00987F	|
 	RTS							;$009881	|
 
 AS_Unk32:						;-----------| ActionScript instruction 32
-	INC $3D						;$009882	|
-	LDA [$3D]					;$009884	|
+	INC.B AS_PC						;$009882	|
+	LDA.B [AS_PC]					;$009884	|
 	AND #$00FF					;$009886	|
 	ASL A						;$009889	|
 	TAX							;$00988A	|
-	INC $3D						;$00988B	|
-	LDA [$3D]					;$00988D	|
+	INC.B AS_PC						;$00988B	|
+	LDA.B [AS_PC]					;$00988D	|
 	PHA							;$00988F	|
 	AND #$00FF					;$009890	|
 	XBA							;$009893	|
@@ -3463,76 +3460,76 @@ CODE_FL_0098A4:					;			|
 	XBA							;$0098A4	|
 	ADC $7342,X					;$0098A5	|
 	STA $7342,X					;$0098A8	|
-	INC $3D						;$0098AB	|
-	INC $3D						;$0098AD	|
+	INC.B AS_PC						;$0098AB	|
+	INC.B AS_PC						;$0098AD	|
 	RTS							;$0098AF	|
 
 AS_SetPoseImm8:					;-----------| ActionScript instruction 4x
-	INC $3D						;$0098B0	|
-	LDA [$3D]					;$0098B2	|
+	INC.B AS_PC						;$0098B0	|
+	LDA.B [AS_PC]					;$0098B2	|
 	AND #$00FF					;$0098B4	|
 	CMP #$00FF					;$0098B7	|
 	BNE CODE_FL_0098BF			;$0098BA	|
 	LDA #$FFFF					;$0098BC	|
 CODE_FL_0098BF:					;			|
-	STA $6436,Y					;$0098BF	|
-	INC $3D						;$0098C2	|
+	STA.W Obj_Pose,Y					;$0098BF	|
+	INC.B AS_PC						;$0098C2	|
 	RTS							;$0098C4	|
 
 AS_SetPoseImm16:				;-----------| ActionScript instruction 35
-	INC $3D						;$0098C5	|
-	LDA [$3D]					;$0098C7	|
-	STA $6436,Y					;$0098C9	|
-	INC $3D						;$0098CC	|
-	INC $3D						;$0098CE	|
+	INC.B AS_PC						;$0098C5	|
+	LDA.B [AS_PC]					;$0098C7	|
+	STA.W Obj_Pose,Y					;$0098C9	|
+	INC.B AS_PC						;$0098CC	|
+	INC.B AS_PC						;$0098CE	|
 	RTS							;$0098D0	|
 
 CODE_FL_0098D1:					;-----------|
-	INC $3D						;$0098D1	|
-	LDA [$3D]					;$0098D3	|
-	STA $6436,Y					;$0098D5	|
-	INC $3D						;$0098D8	|
-	INC $3D						;$0098DA	|
+	INC.B AS_PC						;$0098D1	|
+	LDA.B [AS_PC]					;$0098D3	|
+	STA.W Obj_Pose,Y					;$0098D5	|
+	INC.B AS_PC						;$0098D8	|
+	INC.B AS_PC						;$0098DA	|
 	LDA $7435,Y					;$0098DC	|
 	BEQ CODE_FL_0098F4			;$0098DF	|
 	LDA $36F2,Y					;$0098E1	|
 	BEQ CODE_FL_0098F4			;$0098E4	|
-	LDA $6436,Y					;$0098E6	|
+	LDA.W Obj_Pose,Y					;$0098E6	|
 	CMP #$0022					;$0098E9	|
 	BCC CODE_FL_0098F4			;$0098EC	|
 	LDA #$0036					;$0098EE	|
-	STA $6436,Y					;$0098F1	|
+	STA.W Obj_Pose,Y					;$0098F1	|
 CODE_FL_0098F4:					;			|
-	LDA [$3D]					;$0098F4	|
+	LDA.B [AS_PC]					;$0098F4	|
 	LDX #$0000					;$0098F6	|
 	JSL $03D6B9					;$0098F9	|
-	INC $3D						;$0098FD	|
-	INC $3D						;$0098FF	|
+	INC.B AS_PC						;$0098FD	|
+	INC.B AS_PC						;$0098FF	|
 	RTS							;$009901	|
 
 CODE_FL_009902:
-	INC $3D						;$009902	|
-	LDA [$3D]					;$009904	|
+	INC.B AS_PC						;$009902	|
+	LDA.B [AS_PC]					;$009904	|
 	STA $00						;$009906	|
-	INC $3D						;$009908	|
-	INC $3D						;$00990A	|
-	LDA [$3D]					;$00990C	|
+	INC.B AS_PC						;$009908	|
+	INC.B AS_PC						;$00990A	|
+	LDA.B [AS_PC]					;$00990C	|
 	STA $02						;$00990E	|
 	LDA $760F,Y					;$009910	|
 	TAY							;$009913	|
 	LDA [$00],Y					;$009914	|
 	LDY $39						;$009916	|
-	STA $6436,Y					;$009918	|
-	INC $3D						;$00991B	|
+	STA.W Obj_Pose,Y					;$009918	|
+	INC.B AS_PC						;$00991B	|
 	LDA $7435,Y					;$00991D	|
 	BEQ CODE_FL_009935			;$009920	|
 	LDA $36F2,Y					;$009922	|
 	BEQ CODE_FL_009935			;$009925	|
-	LDA $6436,Y					;$009927	|
+	LDA.W Obj_Pose,Y					;$009927	|
 	CMP #$0022					;$00992A	|
 	BCC CODE_FL_009935			;$00992D	|
 	LDA #$0036					;$00992F	|
-	STA $6436,Y					;$009932	|
+	STA.W Obj_Pose,Y					;$009932	|
 CODE_FL_009935:					;			|
 	RTS							;$009935	|
 
@@ -3541,51 +3538,51 @@ CODE_FL_009936:					;-----------|
 	JMP CODE_FL_0098F4			;$009939	|
 
 AS_AddPose:						;-----------| ActionScript instruction 5x
-	INC $3D						;$00993C	|
-	LDA [$3D]					;$00993E	|
+	INC.B AS_PC						;$00993C	|
+	LDA.B [AS_PC]					;$00993E	|
 	AND #$00FF					;$009940	|
 	CMP #$0080					;$009943	|
 	BCC CODE_FL_00994C			;$009946	|
 	ORA #$FF00					;$009948	|
 	CLC							;$00994B	|
 CODE_FL_00994C:					;			|
-	ADC $6436,Y					;$00994C	|
-	STA $6436,Y					;$00994F	|
-	INC $3D						;$009952	|
+	ADC.W Obj_Pose,Y					;$00994C	|
+	STA.W Obj_Pose,Y					;$00994F	|
+	INC.B AS_PC						;$009952	|
 	RTS							;$009954	|
 
 AS_IncPose:						;-----------| ActionScript instruction 6x
 	TYX							;$009955	|
-	INC $6436,X					;$009956	|
-	INC $3D						;$009959	|
+	INC.W Obj_Pose,X					;$009956	|
+	INC.B AS_PC						;$009959	|
 	RTS							;$00995B	|
 
 AS_DecPose:						;-----------| ActionScript instruction 7x
 	TYX							;$00995C	|
-	DEC $6436,X					;$00995D	|
-	INC $3D						;$009960	|
+	DEC.W Obj_Pose,X					;$00995D	|
+	INC.B AS_PC						;$009960	|
 	RTS							;$009962	|
 
 AS_AsmCall:						;-----------| ActionScript instruction Cx
-	INC $3D						;$009963	|
-	LDA [$3D]					;$009965	|
+	INC.B AS_PC						;$009963	|
+	LDA.B [AS_PC]					;$009965	|
 	STA $6028					;$009967	|
-	INC $3D						;$00996A	|
-	INC $3D						;$00996C	|
-	LDA [$3D]					;$00996E	|
+	INC.B AS_PC						;$00996A	|
+	INC.B AS_PC						;$00996C	|
+	LDA.B [AS_PC]					;$00996E	|
 	STA $602A					;$009970	|
 CODE_FL_009973:					;			|
 	TYX							;$009973	|
-	LDA $724A,Y					;$009974	|
+	LDA.W Obj_ScriptWorkRegister,Y					;$009974	|
 	JSL LongCall_6028			;$009977	|
 	LDY $39						;$00997B	|
-	STA $724A,Y					;$00997D	|
-	INC $3D						;$009980	|
+	STA.W Obj_ScriptWorkRegister,Y					;$00997D	|
+	INC.B AS_PC						;$009980	|
 	RTS							;$009982	|
 
 AS_PresetCall:					;-----------| ActionScript instruction Dx
-	INC $3D						;$009983	|
-	LDA [$3D]					;$009985	|
+	INC.B AS_PC						;$009983	|
+	LDA.B [AS_PC]					;$009985	|
 	AND #$00FF					;$009987	|
 	STA $28						;$00998A	|
 	ASL A						;$00998C	|
@@ -3598,36 +3595,36 @@ AS_PresetCall:					;-----------| ActionScript instruction Dx
 	BRA CODE_FL_009973			;$00999E	|
 
 AS_Unk33:						;-----------| ActionScript instruction 33
-	INC $3D						;$0099A0	|
-	LDA [$3D]					;$0099A2	|
-	STA $64B6,Y					;$0099A4	|
-	INC $3D						;$0099A7	|
-	INC $3D						;$0099A9	|
+	INC.B AS_PC						;$0099A0	|
+	LDA.B [AS_PC]					;$0099A2	|
+	STA.W Obj_ZLayer,Y					;$0099A4	|
+	INC.B AS_PC						;$0099A7	|
+	INC.B AS_PC						;$0099A9	|
 	RTS							;$0099AB	|
 
 AS_Unk34:						;-----------| ActionScript instruction 34
-	INC $3D						;$0099AC	|
-	LDA [$3D]					;$0099AE	|
+	INC.B AS_PC						;$0099AC	|
+	LDA.B [AS_PC]					;$0099AE	|
 	AND #$00FF					;$0099B0	|
 	TYX							;$0099B3	|
 	JSL CODE_FL_00921B			;$0099B4	|
-	INC $3D						;$0099B8	|
+	INC.B AS_PC						;$0099B8	|
 	RTS							;$0099BA	|
 
 AS_PlaySFX:					;-----------|
-	INC $3D						;$0099BB	|
-	LDA [$3D]					;$0099BD	|
+	INC.B AS_PC						;$0099BB	|
+	LDA.B [AS_PC]					;$0099BD	|
 	AND #$00FF					;$0099BF	|
 	JSL PlaySFX			;$0099C2	|
-	INC $3D						;$0099C6	|
+	INC.B AS_PC						;$0099C6	|
 	RTS							;$0099C8	|
 
 AS_PlayMusic:					;-----------|
-	INC $3D						;$0099C9	|
-	LDA [$3D]					;$0099CB	|
+	INC.B AS_PC						;$0099C9	|
+	LDA.B [AS_PC]					;$0099CB	|
 	AND #$00FF					;$0099CD	|
 	JSL PlayMusic			;$0099D0	|
-	INC $3D						;$0099D4	|
+	INC.B AS_PC						;$0099D4	|
 	RTS							;$0099D6	|
 
 AS_StopMove:						;-----------| ActionScript instruction 24
@@ -3636,46 +3633,46 @@ AS_StopMove:						;-----------| ActionScript instruction 24
 	STZ $6BE8,X					;$0099DB	|
 	STZ $6C62,X					;$0099DE	|
 	STZ $6CDC,X					;$0099E1	|
-	INC $3D						;$0099E4	|
+	INC.B AS_PC						;$0099E4	|
 	RTS							;$0099E6	|
 
 AS_StopAccel:						;-----------| ActionScript instruction 25
 	TYX							;$0099E7	|
 	STZ $6C62,X					;$0099E8	|
 	STZ $6CDC,X					;$0099EB	|
-	INC $3D						;$0099EE	|
+	INC.B AS_PC						;$0099EE	|
 	RTS							;$0099F0	|
 
 AS_SetXSpeed:						;-----------| ActionScript instruction 8x
-	INC $3D						;$0099F1	|
-	LDA [$3D]					;$0099F3	|
+	INC.B AS_PC						;$0099F1	|
+	LDA.B [AS_PC]					;$0099F3	|
 	STA $6B6E,Y					;$0099F5	|
-	INC $3D						;$0099F8	|
-	INC $3D						;$0099FA	|
+	INC.B AS_PC						;$0099F8	|
+	INC.B AS_PC						;$0099FA	|
 	RTS							;$0099FC	|
 
 AS_SetYSpeed:						;-----------| ActionScript instruction 9x
-	INC $3D						;$0099FD	|
-	LDA [$3D]					;$0099FF	|
+	INC.B AS_PC						;$0099FD	|
+	LDA.B [AS_PC]					;$0099FF	|
 	STA $6BE8,Y					;$009A01	|
-	INC $3D						;$009A04	|
-	INC $3D						;$009A06	|
+	INC.B AS_PC						;$009A04	|
+	INC.B AS_PC						;$009A06	|
 	RTS							;$009A08	|
 
 AS_SetXAccel:						;-----------| ActionScript instruction Ax
-	INC $3D						;$009A09	|
-	LDA [$3D]					;$009A0B	|
+	INC.B AS_PC						;$009A09	|
+	LDA.B [AS_PC]					;$009A0B	|
 	STA $6C62,Y					;$009A0D	|
-	INC $3D						;$009A10	|
-	INC $3D						;$009A12	|
+	INC.B AS_PC						;$009A10	|
+	INC.B AS_PC						;$009A12	|
 	RTS							;$009A14	|
 
 AS_SetYAccel:						;-----------| ActionScript instruction Bx
-	INC $3D						;$009A15	|
-	LDA [$3D]					;$009A17	|
+	INC.B AS_PC						;$009A15	|
+	LDA.B [AS_PC]					;$009A17	|
 	STA $6CDC,Y					;$009A19	|
-	INC $3D						;$009A1C	|
-	INC $3D						;$009A1E	|
+	INC.B AS_PC						;$009A1C	|
+	INC.B AS_PC						;$009A1E	|
 	RTS							;$009A20	|
 
 CODE_FL_009A21:					;-----------|
@@ -3684,39 +3681,39 @@ CODE_FL_009A21:					;-----------|
 	STZ $7667,X					;$009A25	|
 	STZ $765B,X					;$009A28	|
 	STZ $765F,X					;$009A2B	|
-	INC $3D						;$009A2E	|
+	INC.B AS_PC					;$009A2E	|
 	RTS							;$009A30	|
 
 CODE_FL_009A31:					;-----------|
-	INC $3D						;$009A31	|
-	LDA [$3D]					;$009A33	|
+	INC.B AS_PC					;$009A31	|
+	LDA.B [AS_PC]				;$009A33	|
 	STA $765B,Y					;$009A35	|
-	INC $3D						;$009A38	|
-	INC $3D						;$009A3A	|
+	INC.B AS_PC					;$009A38	|
+	INC.B AS_PC					;$009A3A	|
 	RTS							;$009A3C	|
 
 CODE_FL_009A3D:					;-----------|
-	INC $3D						;$009A3D	|
-	LDA [$3D]					;$009A3F	|
+	INC.B AS_PC					;$009A3D	|
+	LDA.B [AS_PC]				;$009A3F	|
 	STA $765F,Y					;$009A41	|
-	INC $3D						;$009A44	|
-	INC $3D						;$009A46	|
+	INC.B AS_PC					;$009A44	|
+	INC.B AS_PC					;$009A46	|
 	RTS							;$009A48	|
 
 CODE_FL_009A49:					;-----------|
-	INC $3D						;$009A49	|
-	LDA [$3D]					;$009A4B	|
+	INC.B AS_PC						;$009A49	|
+	LDA.B [AS_PC]					;$009A4B	|
 	STA $7663,Y					;$009A4D	|
-	INC $3D						;$009A50	|
-	INC $3D						;$009A52	|
+	INC.B AS_PC						;$009A50	|
+	INC.B AS_PC						;$009A52	|
 	RTS							;$009A54	|
 
 CODE_FL_009A55:					;-----------|
-	INC $3D						;$009A55	|
-	LDA [$3D]					;$009A57	|
+	INC.B AS_PC						;$009A55	|
+	LDA.B [AS_PC]					;$009A57	|
 	STA $7667,Y					;$009A59	|
-	INC $3D						;$009A5C	|
-	INC $3D						;$009A5E	|
+	INC.B AS_PC						;$009A5C	|
+	INC.B AS_PC						;$009A5E	|
 	RTS							;$009A60	|
 
 CODE_FL_009A61:					;-----------|
@@ -3725,71 +3722,71 @@ CODE_FL_009A61:					;-----------|
 	STZ $769F,X					;$009A65	|
 	STZ $7693,X					;$009A68	|
 	STZ $7697,X					;$009A6B	|
-	INC $3D						;$009A6E	|
+	INC.B AS_PC						;$009A6E	|
 	RTS							;$009A70	|
 
 CODE_FL_009A71:					;-----------|
-	INC $3D						;$009A71	|
-	LDA [$3D]					;$009A73	|
+	INC.B AS_PC						;$009A71	|
+	LDA.B [AS_PC]					;$009A73	|
 	STA $7693,Y					;$009A75	|
-	INC $3D						;$009A78	|
-	INC $3D						;$009A7A	|
+	INC.B AS_PC						;$009A78	|
+	INC.B AS_PC						;$009A7A	|
 	RTS							;$009A7C	|
 
 CODE_FL_009A7D:					;-----------|
-	INC $3D						;$009A7D	|
-	LDA [$3D]					;$009A7F	|
+	INC.B AS_PC						;$009A7D	|
+	LDA.B [AS_PC]					;$009A7F	|
 	STA $7697,Y					;$009A81	|
-	INC $3D						;$009A84	|
-	INC $3D						;$009A86	|
+	INC.B AS_PC						;$009A84	|
+	INC.B AS_PC						;$009A86	|
 	RTS							;$009A88	|
 
 CODE_FL_009A89:					;-----------|
-	INC $3D						;$009A89	|
-	LDA [$3D]					;$009A8B	|
+	INC.B AS_PC						;$009A89	|
+	LDA.B [AS_PC]					;$009A8B	|
 	STA $769B,Y					;$009A8D	|
-	INC $3D						;$009A90	|
-	INC $3D						;$009A92	|
+	INC.B AS_PC						;$009A90	|
+	INC.B AS_PC						;$009A92	|
 	RTS							;$009A94	|
 
 CODE_FL_009A95:					;-----------|
-	INC $3D						;$009A95	|
-	LDA [$3D]					;$009A97	|
+	INC.B AS_PC						;$009A95	|
+	LDA.B [AS_PC]					;$009A97	|
 	STA $769F,Y					;$009A99	|
-	INC $3D						;$009A9C	|
-	INC $3D						;$009A9E	|
+	INC.B AS_PC						;$009A9C	|
+	INC.B AS_PC						;$009A9E	|
 	RTS							;$009AA0	|
 
 CODE_FL_009AA1:					;-----------|
-	INC $3D						;$009AA1	|
+	INC.B AS_PC						;$009AA1	|
 	LDA #$0000					;$009AA3	|
 	STA $76A3,Y					;$009AA6	|
 	STA $76A7,Y					;$009AA9	|
 	RTS							;$009AAC	|
 
 CODE_FL_009AAD:					;-----------|
-	INC $3D						;$009AAD	|
+	INC.B AS_PC						;$009AAD	|
 	LDA #$0000					;$009AAF	|
 	STA $76AB,Y					;$009AB2	|
 	STA $76AF,Y					;$009AB5	|
 	RTS							;$009AB8	|
 
 CODE_FL_009AB9:					;-----------|
-	INC $3D						;$009AB9	|
-	LDA [$3D]					;$009ABB	|
+	INC.B AS_PC						;$009AB9	|
+	LDA.B [AS_PC]					;$009ABB	|
 	STA $747D,Y					;$009ABD	|
-	INC $3D						;$009AC0	|
-	INC $3D						;$009AC2	|
+	INC.B AS_PC						;$009AC0	|
+	INC.B AS_PC						;$009AC2	|
 	RTS							;$009AC4	|
 
 CODE_FL_009AC5:					;-----------|
-	INC $3D						;$009AC5	|
-	LDA [$3D]					;$009AC7	|
+	INC.B AS_PC						;$009AC5	|
+	LDA.B [AS_PC]					;$009AC7	|
 	CLC							;$009AC9	|
 	ADC $6BE8,Y					;$009ACA	|
 	STA $6BE8,Y					;$009ACD	|
-	INC $3D						;$009AD0	|
-	INC $3D						;$009AD2	|
+	INC.B AS_PC						;$009AD0	|
+	INC.B AS_PC						;$009AD2	|
 	RTS							;$009AD4	|
 
 
@@ -3821,7 +3818,7 @@ CODE_FL_009AEB:					;			|
 	BCC CODE_FL_009B1D			;$009B05	|
 	LDX #$007C					;$009B07	|
 CODE_FL_009B0A:					;			|
-	LDY $603C,X					;$009B0A	|
+	LDY.W Obj_NextInList,X					;$009B0A	|
 	BMI CODE_FL_009B20			;$009B0D	|
 	TYX							;$009B0F	|
 	CPX #$0040					;$009B10	|
@@ -3862,7 +3859,7 @@ CODE_FL_009B34:					;			|
 	STA $6000					;$009B4D	|
 	JSR AS_ReadWord			;$009B50	|
 	CLC							;$009B53	|
-	ADC $6DD0,X					;$009B54	|
+	ADC.W Obj_VAR1,X					;$009B54	|
 	STA $6002					;$009B57	|
 	STX $6004					;$009B5A	|
 	PLX							;$009B5D	|
@@ -3944,7 +3941,7 @@ CODE_FL_009BE8:					;-----------|
 CODE_FL_009BEF:					;-----------|
 	LDX $6014					;$009BEF	|
 CODE_FL_009BF2:					;			|
-	LDA $603C,X					;$009BF2	|
+	LDA.W Obj_NextInList,X					;$009BF2	|
 	PHA							;$009BF5	|
 	CPX $39						;$009BF6	|
 	BEQ CODE_FL_009BFD			;$009BF8	|
@@ -3964,7 +3961,7 @@ CODE_FL_009C01:					;-----------|
 	STX $02						;$009C0C	|
 	TAX							;$009C0E	|
 CODE_FL_009C0F:					;			|
-	LDA $623C,X					;$009C0F	|
+	LDA.W Obj_Table623C,X					;$009C0F	|
 	BMI CODE_FL_009C19			;$009C12	|
 	PHX							;$009C14	|
 	JSR DestroyObject			;$009C15	|
@@ -3980,9 +3977,9 @@ CODE_FL_009C20:					;-----------|
 	JSR AS_ReadWord			;$009C20	|
 	LDX $6014					;$009C23	|
 CODE_FL_009C26:					;			|
-	LDY $603C,X					;$009C26	|
+	LDY.W Obj_NextInList,X					;$009C26	|
 	PHY							;$009C29	|
-	CMP $623C,X					;$009C2A	|
+	CMP.W Obj_Table623C,X					;$009C2A	|
 	BNE CODE_FL_009C38			;$009C2D	|
 	CPX $39						;$009C2F	|
 	BEQ CODE_FL_009C38			;$009C31	|
@@ -3998,11 +3995,11 @@ CODE_FL_009C3C:					;-----------|
 	STA $00						;$009C3C	|
 	LDX $6014					;$009C3E	|
 CODE_FL_009C41:					;			|
-	LDY $603C,X					;$009C41	|
+	LDY.W Obj_NextInList,X					;$009C41	|
 	PHY							;$009C44	|
 	CPX $39						;$009C45	|
 	BEQ CODE_FL_009C56			;$009C47	|
-	LDA $623C,X					;$009C49	|
+	LDA.W Obj_Table623C,X					;$009C49	|
 	AND #$3FFF					;$009C4C	|
 	CMP $00						;$009C4F	|
 	BNE CODE_FL_009C56			;$009C51	|
@@ -4360,22 +4357,22 @@ CODE_FL_009EA9:					;-----------|
 CODE_FL_009EB4:					;-----------|
 	SEP #$20					;$009EB4	|
 	LDY #$0001					;$009EB6	|
-	LDA [$3D],Y					;$009EB9	|
+	LDA.B [AS_PC],Y					;$009EB9	|
 	ORA #$20					;$009EBB	|
 	STA $3078					;$009EBD	|
 	INY							;$009EC0	|
-	LDA [$3D],Y					;$009EC1	|
+	LDA.B [AS_PC],Y					;$009EC1	|
 	ORA #$40					;$009EC3	|
 	STA $3079					;$009EC5	|
 	INY							;$009EC8	|
-	LDA [$3D],Y					;$009EC9	|
+	LDA.B [AS_PC],Y					;$009EC9	|
 	ORA #$80					;$009ECB	|
 	STA $307A					;$009ECD	|
 	REP #$20					;$009ED0	|
 	TYA							;$009ED2	|
 	CLC							;$009ED3	|
-	ADC $3D						;$009ED4	|
-	STA $3D						;$009ED6	|
+	ADC.B AS_PC						;$009ED4	|
+	STA.B AS_PC						;$009ED6	|
 	RTL							;$009ED8	|
 
 
@@ -4385,7 +4382,7 @@ CODE_FL_009ED9:					;-----------|
 	CLC							;$009EDE	|
 	LDA $3078					;$009EDF	|
 	AND #$1F					;$009EE2	|
-	ADC [$3D],Y					;$009EE4	|
+	ADC.B [AS_PC],Y					;$009EE4	|
 	BPL CODE_FL_009EEC			;$009EE6	|
 	LDA #$00					;$009EE8	|
 	BRA CODE_FL_009EF2			;$009EEA	|
@@ -4401,7 +4398,7 @@ CODE_FL_009EF2:					;			|
 	CLC							;$009EF8	|
 	LDA $3079					;$009EF9	|
 	AND #$1F					;$009EFC	|
-	ADC [$3D],Y					;$009EFE	|
+	ADC.B [AS_PC],Y					;$009EFE	|
 	BPL CODE_FL_009F06			;$009F00	|
 	LDA #$00					;$009F02	|
 	BRA CODE_FL_009F0C			;$009F04	|
@@ -4417,7 +4414,7 @@ CODE_FL_009F0C:					;			|
 	CLC							;$009F12	|
 	LDA $307A					;$009F13	|
 	AND #$1F					;$009F16	|
-	ADC [$3D],Y					;$009F18	|
+	ADC.B [AS_PC],Y					;$009F18	|
 	BPL CODE_FL_009F20			;$009F1A	|
 	LDA #$00					;$009F1C	|
 	BRA CODE_FL_009F26			;$009F1E	|
@@ -4432,58 +4429,58 @@ CODE_FL_009F26:					;			|
 	REP #$20					;$009F2B	|
 	TYA							;$009F2D	|
 	CLC							;$009F2E	|
-	ADC $3D						;$009F2F	|
-	STA $3D						;$009F31	|
+	ADC.B AS_PC						;$009F2F	|
+	STA.B AS_PC						;$009F31	|
 	RTL							;$009F33	|
 
 
 CODE_FL_009F34:					;-----------|
-	INC $3D						;$009F34	|
-	LDA [$3D]					;$009F36	|
+	INC.B AS_PC						;$009F34	|
+	LDA.B [AS_PC]					;$009F36	|
 	AND #$0001					;$009F38	|
 	ASL A						;$009F3B	|
 	TAX							;$009F3C	|
-	INC $3D						;$009F3D	|
-	LDA [$3D]					;$009F3F	|
+	INC.B AS_PC						;$009F3D	|
+	LDA.B [AS_PC]					;$009F3F	|
 	STA $306C,X					;$009F41	|
-	INC $3D						;$009F44	|
+	INC.B AS_PC						;$009F44	|
 	RTL							;$009F46	|
 
 CODE_FL_009F47:					;-----------|
 	LDY #$0001					;$009F47	|
-	LDA [$3D],Y					;$009F4A	|
+	LDA.B [AS_PC],Y					;$009F4A	|
 	AND #$0001					;$009F4C	|
 	ASL A						;$009F4F	|
 	TAX							;$009F50	|
 	SEP #$20					;$009F51	|
 	INY							;$009F53	|
-	LDA [$3D],Y					;$009F54	|
+	LDA.B [AS_PC],Y					;$009F54	|
 	ADC $306C,X					;$009F56	|
 	STA $306C,X					;$009F59	|
 	INY							;$009F5C	|
-	LDA [$3D],Y					;$009F5D	|
+	LDA.B [AS_PC],Y					;$009F5D	|
 	CLC							;$009F5F	|
 	ADC $306D,X					;$009F60	|
 	STA $306D,X					;$009F63	|
 	REP #$20					;$009F66	|
 	TYA							;$009F68	|
 	CLC							;$009F69	|
-	ADC $3D						;$009F6A	|
-	STA $3D						;$009F6C	|
+	ADC.B AS_PC						;$009F6A	|
+	STA.B AS_PC						;$009F6C	|
 	RTL							;$009F6E	|
 
 CODE_FL_009F6F:					;-----------|
 	LDY #$0001					;$009F6F	|
-	LDA [$3D],Y					;$009F72	|
+	LDA.B [AS_PC],Y					;$009F72	|
 	STA $3069					;$009F74	|
 	INY							;$009F77	|
-	LDA [$3D],Y					;$009F78	|
+	LDA.B [AS_PC],Y					;$009F78	|
 	STA $306A					;$009F7A	|
 	INY							;$009F7D	|
 	TYA							;$009F7E	|
 	CLC							;$009F7F	|
-	ADC $3D						;$009F80	|
-	STA $3D						;$009F82	|
+	ADC.B AS_PC						;$009F80	|
+	STA.B AS_PC						;$009F82	|
 	RTL							;$009F84	|
 
 CODE_FL_009F85:					;-----------|
@@ -4932,7 +4929,7 @@ CODE_FL_00A250:					;			|
 
 CODE_FL_00A26B:					;-----------|
 	LDX $39						;$00A26B	|
-	LDA $724A,X					;$00A26D	|
+	LDA.W Obj_ScriptWorkRegister,X					;$00A26D	|
 	ASL A						;$00A270	|
 	TAX							;$00A271	|
 	JSR AS_ReadWord			;$00A272	|
@@ -4943,7 +4940,7 @@ CODE_FL_00A26B:					;-----------|
 
 CODE_FL_00A27D:					;-----------|
 	LDX $39						;$00A27D	|
-	LDA $724A,X					;$00A27F	|
+	LDA.W Obj_ScriptWorkRegister,X					;$00A27F	|
 	ASL A						;$00A282	|
 	TAX							;$00A283	|
 	JSR AS_ReadWord				;$00A284	|
@@ -4976,13 +4973,13 @@ CODE_FL_00A2AC:					;-----------|
 	JSR AS_ReadWord				;$00A2B1	|
 	CMP ($28)					;$00A2B4	|
 	BEQ CODE_FL_00A2C8			;$00A2B6	|
-	LDA $3D						;$00A2B8	|
+	LDA.B AS_PC						;$00A2B8	|
 	SEC							;$00A2BA	|
 	SBC #$0006					;$00A2BB	|
-	STA $3D						;$00A2BE	|
+	STA.B AS_PC						;$00A2BE	|
 	LDX $39						;$00A2C0	|
 	LDA #$0001					;$00A2C2	|
-	STA $6724,X					;$00A2C5	|
+	STA.W Obj_ScriptSleepTimer,X					;$00A2C5	|
 CODE_FL_00A2C8:					;			|
 	RTL							;$00A2C8	|
 
@@ -5060,11 +5057,11 @@ CODE_FL_00A337:					;			|
 	TAX							;$00A337	|
 	CPX $39						;$00A338	|
 	BEQ CODE_FL_00A345			;$00A33A	|
-	LDA $62BC,X					;$00A33C	|
+	LDA.W Obj_Table62BC,X					;$00A33C	|
 	ORA #$4000					;$00A33F	|
-	STA $62BC,X					;$00A342	|
+	STA.W Obj_Table62BC,X					;$00A342	|
 CODE_FL_00A345:					;			|
-	LDA $603C,X					;$00A345	|
+	LDA.W Obj_NextInList,X					;$00A345	|
 	BPL CODE_FL_00A337			;$00A348	|
 	SEC							;$00A34A	|
 	RTL							;$00A34B	|
@@ -5075,11 +5072,11 @@ CODE_FL_00A34F:					;			|
 	TAX							;$00A34F	|
 	CPX $39						;$00A350	|
 	BEQ CODE_FL_00A35D			;$00A352	|
-	LDA $62BC,X					;$00A354	|
+	LDA.W Obj_Table62BC,X					;$00A354	|
 	AND #$BFFF					;$00A357	|
-	STA $62BC,X					;$00A35A	|
+	STA.W Obj_Table62BC,X					;$00A35A	|
 CODE_FL_00A35D:					;			|
-	LDA $603C,X					;$00A35D	|
+	LDA.W Obj_NextInList,X					;$00A35D	|
 	BPL CODE_FL_00A34F			;$00A360	|
 	LDY $39						;$00A362	|
 	STZ CameraLock			;$00A364	|
@@ -5087,15 +5084,15 @@ CODE_FL_00A35D:					;			|
 	RTL							;$00A368	|
 
 FreezeObject:					;-----------|
-	LDA $62BC,X					;$00A369	|
+	LDA.W Obj_Table62BC,X					;$00A369	|
 	ORA #$4000					;$00A36C	|
-	STA $62BC,X					;$00A36F	|
+	STA.W Obj_Table62BC,X					;$00A36F	|
 	RTL							;$00A372	|
 
 UnfreezeObject:					;-----------|
-	LDA $62BC,X					;$00A373	|
+	LDA.W Obj_Table62BC,X					;$00A373	|
 	AND #$BFFF					;$00A376	|
-	STA $62BC,X					;$00A379	|
+	STA.W Obj_Table62BC,X					;$00A379	|
 	RTL							;$00A37C	|
 
 CODE_FL_00A37D:					;-----------|
@@ -5104,11 +5101,11 @@ CODE_FL_00A380:					;			|
 	TAX							;$00A380	|
 	CPX $39						;$00A381	|
 	BEQ CODE_FL_00A38E			;$00A383	|
-	LDA $65B0,X					;$00A385	|
+	LDA.W Obj_SpriteMapBank,X					;$00A385	|
 	AND #$7FFF					;$00A388	|
-	STA $65B0,X					;$00A38B	|
+	STA.W Obj_SpriteMapBank,X					;$00A38B	|
 CODE_FL_00A38E:					;			|
-	LDA $603C,X					;$00A38E	|
+	LDA.W Obj_NextInList,X					;$00A38E	|
 	BPL CODE_FL_00A380			;$00A391	|
 	SEC							;$00A393	|
 	LDA #$0001					;$00A394	|
@@ -5121,11 +5118,11 @@ CODE_FL_00A39E:					;			|
 	TAX							;$00A39E	|
 	CPX $39						;$00A39F	|
 	BEQ CODE_FL_00A3AC			;$00A3A1	|
-	LDA $65B0,X					;$00A3A3	|
+	LDA.W Obj_SpriteMapBank,X					;$00A3A3	|
 	ORA #$8000					;$00A3A6	|
-	STA $65B0,X					;$00A3A9	|
+	STA.W Obj_SpriteMapBank,X					;$00A3A9	|
 CODE_FL_00A3AC:					;			|
-	LDA $603C,X					;$00A3AC	|
+	LDA.W Obj_NextInList,X					;$00A3AC	|
 	BPL CODE_FL_00A39E			;$00A3AF	|
 	SEC							;$00A3B1	|
 	STZ $770F					;$00A3B2	|
@@ -5134,11 +5131,11 @@ CODE_FL_00A3AC:					;			|
 HideAllObjectsExceptA:			;-----------|
 	STA $00						;$00A3B6	|
 CODE_FL_00A3B8:					;			|
-	LDA $623C,X					;$00A3B8	|
+	LDA.W Obj_Table623C,X					;$00A3B8	|
 	BMI CODE_FL_00A3C6			;$00A3BB	|
-	LDA $65B0,X					;$00A3BD	|
+	LDA.W Obj_SpriteMapBank,X					;$00A3BD	|
 	ORA #$8000					;$00A3C0	|
-	STA $65B0,X					;$00A3C3	|
+	STA.W Obj_SpriteMapBank,X					;$00A3C3	|
 CODE_FL_00A3C6:					;			|
 	INX							;$00A3C6	|
 	INX							;$00A3C7	|
@@ -5149,17 +5146,17 @@ CODE_FL_00A3C6:					;			|
 UnhideCurrentObject:			;-----------|
 	LDX $39						;$00A3CD	|
 UnhideObject:					;			|
-	LDA $65B0,X					;$00A3CF	|
+	LDA.W Obj_SpriteMapBank,X					;$00A3CF	|
 	AND #$7FFF					;$00A3D2	|
-	STA $65B0,X					;$00A3D5	|
+	STA.W Obj_SpriteMapBank,X					;$00A3D5	|
 	RTL							;$00A3D8	|
 
 HideCurrentObject:				;-----------|
 	LDX $39						;$00A3D9	|
 HideObject:						;			|
-	LDA $65B0,X					;$00A3DB	|
+	LDA.W Obj_SpriteMapBank,X					;$00A3DB	|
 	ORA #$8000					;$00A3DE	|
-	STA $65B0,X					;$00A3E1	|
+	STA.W Obj_SpriteMapBank,X					;$00A3E1	|
 	RTL							;$00A3E4	|
 
 CODE_FL_00A3E5:					;-----------|
@@ -5178,7 +5175,7 @@ CODE_FL_00A3F1:
 	RTL							;$00A3FC	|
 
 CODE_FL_00A3FD:					;-----------|
-	LDA $6DD0,Y					;$00A3FD	|
+	LDA.W Obj_VAR1,Y					;$00A3FD	|
 	STA $6002					;$00A400	|
 	STZ $6006					;$00A403	|
 	STZ $6008					;$00A406	|
@@ -5189,7 +5186,7 @@ CODE_FL_00A40B:					;-----------|
 	STA $14						;$00A40E	|
 	LDA ($14)					;$00A410	|
 	AND #$00FF					;$00A412	|
-	STA $724A,Y					;$00A415	|
+	STA.W Obj_ScriptWorkRegister,Y					;$00A415	|
 	RTL							;$00A418	|
 
 CODE_FL_00A419:					;-----------|
@@ -5255,20 +5252,20 @@ CODE_FL_00A47B:					;-----------|
 	STA $3F						;$00A491	|
 	LDA $28						;$00A493	|
 	DEC A						;$00A495	|
-	STA $3D						;$00A496	|
+	STA.B AS_PC						;$00A496	|
 	TYX							;$00A498	|
 	JML RemoveTickCallback_L			;$00A499	|
 
 CODE_FL_00A49D:					;-----------|
-	STA $679E,Y					;$00A49D	|
+	STA.W Obj_ScriptProgramCounter,Y					;$00A49D	|
 	STX $28						;$00A4A0	|
-	LDA $6818,Y					;$00A4A2	|
+	LDA.W Obj_ScriptProgramBank,Y					;$00A4A2	|
 	AND #$3F00					;$00A4A5	|
 	ORA #$0000					;$00A4A8	|
 	ORA $28						;$00A4AB	|
-	STA $6818,Y					;$00A4AD	|
+	STA.W Obj_ScriptProgramBank,Y					;$00A4AD	|
 	TYX							;$00A4B0	|
-	STZ $6724,X					;$00A4B1	|
+	STZ.W Obj_ScriptSleepTimer,X					;$00A4B1	|
 	JML RemoveTickCallback_L			;$00A4B4	|
 
 CODE_FL_00A4B8:					;-----------|
@@ -5312,22 +5309,22 @@ CODE_FL_00A4E4:					;-----------|
 	RTL							;$00A50F	|
 
 CODE_FL_00A510:					;-----------|
-	JSR AS_ReadByte			;$00A510	|
-	STA $6D56,Y					;$00A513	|
+	JSR AS_ReadByte				;$00A510	|
+	STA.W Obj_VAR0,Y			;$00A513	|
 	TAX							;$00A516	|
-	JSR AS_ReadWord			;$00A517	|
+	JSR AS_ReadWord				;$00A517	|
 	STA $3037,X					;$00A51A	|
-	JSR AS_ReadWord			;$00A51D	|
+	JSR AS_ReadWord				;$00A51D	|
 	STA $303D,X					;$00A520	|
 	RTL							;$00A523	|
 
 CODE_FL_00A524:					;-----------|
-	JSR AS_ReadByte			;$00A524	|
-	STA $6D56,Y					;$00A527	|
-	JSR AS_ReadWord			;$00A52A	|
+	JSR AS_ReadByte				;$00A524	|
+	STA.W Obj_VAR0,Y			;$00A527	|
+	JSR AS_ReadWord				;$00A52A	|
 	JSL $03AC43					;$00A52D	|
 	PHA							;$00A531	|
-	LDA $6D56,Y					;$00A532	|
+	LDA.W Obj_VAR0,Y			;$00A532	|
 	TAY							;$00A535	|
 	PLA							;$00A536	|
 	STA $733A,Y					;$00A537	|
@@ -5337,7 +5334,7 @@ CODE_FL_00A524:					;-----------|
 	JSR AS_ReadWord				;$00A540	|
 	JSL $03AC43					;$00A543	|
 	PHA							;$00A547	|
-	LDA $6D56,Y					;$00A548	|
+	LDA.W Obj_VAR0,Y			;$00A548	|
 	TAY							;$00A54B	|
 	PLA							;$00A54C	|
 	STA $7342,Y					;$00A54D	|
@@ -5622,7 +5619,7 @@ CODE_FL_00A744:					;			|
 	JSR CODE_FL_00A81B			;$00A744	|
 	JSR CODE_FL_00A7B8			;$00A747	|
 	LDY $39						;$00A74A	|
-	LDX $6E4A,Y					;$00A74C	|
+	LDX.W Obj_VAR2,Y					;$00A74C	|
 	LDA $6B6E,X					;$00A74F	|
 	JSR CODE_FL_00A802			;$00A752	|
 	STA $6892,Y					;$00A755	|
@@ -5637,11 +5634,11 @@ CODE_FL_00A763:					;			|
 	JSR CODE_FL_00A81B			;$00A763	|
 	JSR CODE_FL_00A7B8			;$00A766	|
 	LDY $39						;$00A769	|
-	LDX $6E4A,Y					;$00A76B	|
+	LDX.W Obj_VAR2,Y					;$00A76B	|
 	LDA $6B6E,X					;$00A76E	|
 	JSR CODE_FL_00A802			;$00A771	|
 	STA $6892,Y					;$00A774	|
-	LDX $6E4A,Y					;$00A777	|
+	LDX.W Obj_VAR2,Y					;$00A777	|
 	LDA $6BE8,X					;$00A77A	|
 	JSR CODE_FL_00A7ED			;$00A77D	|
 	STA $690C,Y					;$00A780	|
@@ -5653,7 +5650,7 @@ CODE_FL_00A784:					;-----------|
 	RTL							;$00A787	|
 CODE_FL_00A788:					;			|
 	JSR CODE_FL_00A81B			;$00A788	|
-	LDA $6DD0,Y					;$00A78B	|
+	LDA.W Obj_VAR1,Y			;$00A78B	|
 	BMI CODE_FL_00A796			;$00A78E	|
 	JSR CODE_FL_00A7B8			;$00A790	|
 	JMP CODE_FL_00A89D			;$00A793	|
@@ -5667,7 +5664,7 @@ CODE_FL_00A79C:					;-----------|
 	RTL							;$00A79F	|
 CODE_FL_00A7A0:					;			|
 	JSR CODE_FL_00A81B			;$00A7A0	|
-	LDA $6DD0,Y					;$00A7A3	|
+	LDA.W Obj_VAR1,Y			;$00A7A3	|
 	BMI CODE_FL_00A7AE			;$00A7A6	|
 	JSR CODE_FL_00A7B8			;$00A7A8	|
 	JMP CODE_FL_00A87F			;$00A7AB	|
@@ -5786,7 +5783,7 @@ CODE_FL_00A87B:					;-----------|
 	RTL							;$00A87E	|
 CODE_FL_00A87F:					;			|
 	LDY $39						;$00A87F	|
-	LDX $6E4A,Y					;$00A881	|
+	LDX.W Obj_VAR2,Y			;$00A881	|
 	LDA $6986,Y					;$00A884	|
 	CLC							;$00A887	|
 	ADC $6892,X					;$00A888	|
@@ -5810,7 +5807,7 @@ CODE_FL_00A89D:					;			|
 
 CODE_FL_00A8AC:					;-----------|
 	LDY $39						;$00A8AC	|
-	LDX $6D56,Y					;$00A8AE	|
+	LDX.W Obj_VAR0,Y					;$00A8AE	|
 	JSL CODE_FL_00A8D2			;$00A8B1	|
 	RTS							;$00A8B5	|
 
@@ -5988,14 +5985,14 @@ CODE_FL_00A9E0:					;			|
 CODE_FL_00A9FC:					;-----------|
 	LDX #$0000					;$00A9FC	|
 CODE_FL_00A9FF:					;			|
-	LDA $623C,X					;$00A9FF	|
+	LDA.W Obj_Table623C,X					;$00A9FF	|
 	BMI CODE_FL_00AA1E			;$00AA02	|
-	LDY $65B0,X					;$00AA04	|
+	LDY.W Obj_SpriteMapBank,X					;$00AA04	|
 	BMI CODE_FL_00AA1E			;$00AA07	|
-	LDA $6436,X					;$00AA09	|
+	LDA.W Obj_Pose,X					;$00AA09	|
 	BMI CODE_FL_00AA1E			;$00AA0C	|
 	ASL A						;$00AA0E	|
-	ADC $6536,X					;$00AA0F	|
+	ADC.W Obj_SpriteMapAddr,X					;$00AA0F	|
 	STA $14						;$00AA12	|
 	STY $16						;$00AA14	|
 	LDA [$14]					;$00AA16	|
@@ -6014,14 +6011,14 @@ CODE_FL_00AA26:
 	LDX #$0000					;$00AA29	|
 	TXA							;$00AA2C	|
 CODE_FL_00AA2D:					;			|
-	BIT $623C,x					;$00AA2D	|
+	BIT.W Obj_Table623C,x					;$00AA2D	|
 	BMI CODE_FL_00AA60			;$00AA30	|
-	BIT $65B0,x					;$00AA32	|
+	BIT.W Obj_SpriteMapBank,x					;$00AA32	|
 	BMI CODE_FL_00AA60			;$00AA35	|
 	BVS CODE_FL_00AA60			;$00AA37	|
-	BIT $6436,x					;$00AA39	|
+	BIT.W Obj_Pose,x					;$00AA39	|
 	BMI CODE_FL_00AA60			;$00AA3C	|
-	CMP $64B6,x					;$00AA3E	|
+	CMP.W Obj_ZLayer,x					;$00AA3E	|
 	BCC CODE_FL_00AA5C			;$00AA41	|
 	BEQ CODE_FL_00AA47			;$00AA43	|
 	BRA CODE_FL_00AA60			;$00AA45	|
@@ -6039,7 +6036,7 @@ CODE_FL_00AA47:
 	BRA CODE_FL_00AA60			;$00AA5A	|
 
 CODE_FL_00AA5C:
-	LDA $64B6,X					;$00AA5C	|
+	LDA.W Obj_ZLayer,X					;$00AA5C	|
 	TXY							;$00AA5F	|
 CODE_FL_00AA60:					;			|
 	INX							;$00AA60	|
@@ -6048,16 +6045,16 @@ CODE_FL_00AA60:					;			|
 	BCC CODE_FL_00AA2D			;$00AA65	|
 	TYX							;$00AA67	|
 	BMI CODE_FL_00AA8F			;$00AA68	|
-	LDA $6436,X					;$00AA6A	|
+	LDA.W Obj_Pose,X					;$00AA6A	|
 	ASL A						;$00AA6D	|
-	ADC $6536,X					;$00AA6E	|
+	ADC.W Obj_SpriteMapAddr,X					;$00AA6E	|
 	STA $14						;$00AA71	|
-	LDA $65B0,X					;$00AA73	|
+	LDA.W Obj_SpriteMapBank,X					;$00AA73	|
 	STA $16						;$00AA76	|
 	ORA #$4000					;$00AA78	|
-	STA $65B0,X					;$00AA7B	|
+	STA.W Obj_SpriteMapBank,X					;$00AA7B	|
 	STX $39						;$00AA7E	|
-	LDA $65B0,X					;$00AA80	|
+	LDA.W Obj_SpriteMapBank,X					;$00AA80	|
 	BMI CODE_FL_00AA26			;$00AA83	|
 	LDA [$14]					;$00AA85	|
 	TAY							;$00AA87	|
@@ -6068,9 +6065,9 @@ CODE_FL_00AA60:					;			|
 CODE_FL_00AA8F:
 	LDX #$0000					;$00AA8F	|
 CODE_FL_00AA92:					;			|
-	LDA $65B0,X					;$00AA92	|
+	LDA.W Obj_SpriteMapBank,X					;$00AA92	|
 	AND #$BFFF					;$00AA95	|
-	STA $65B0,X					;$00AA98	|
+	STA.W Obj_SpriteMapBank,X					;$00AA98	|
 	INX							;$00AA9B	|
 	INX							;$00AA9C	|
 	CPX #$007A					;$00AA9D	|
@@ -6151,9 +6148,9 @@ CODE_FL_00AB1B:
 	LDA $7A02					;$00AB1B	|
 	BNE CODE_FL_00AB2D			;$00AB1E	|
 	JSL DestroyObject_L			;$00AB20	|
-	LDA $65B0,X					;$00AB24	|
+	LDA.W Obj_SpriteMapBank,X					;$00AB24	|
 	ORA #$8000					;$00AB27	|
-	STA $65B0,X					;$00AB2A	|
+	STA.W Obj_SpriteMapBank,X					;$00AB2A	|
 CODE_FL_00AB2D:					;			|
 	PLA							;$00AB2D	|
 	RTS							;$00AB2E	|
@@ -6192,9 +6189,9 @@ CODE_FL_00AB5E:
 	LDA $7A02					;$00AB5E	|
 	BNE CODE_FL_00AB70			;$00AB61	|
 	JSL DestroyObject_L			;$00AB63	|
-	LDA $65B0,X					;$00AB67	|
+	LDA.W Obj_SpriteMapBank,X					;$00AB67	|
 	ORA #$8000					;$00AB6A	|
-	STA $65B0,X					;$00AB6D	|
+	STA.W Obj_SpriteMapBank,X					;$00AB6D	|
 CODE_FL_00AB70:					;			|
 	PLA							;$00AB70	|
 	RTS							;$00AB71	|
@@ -6890,7 +6887,7 @@ CODE_FL_00AFC7:					;			|
 	STA $14						;$00AFCA	|
 	LDA #$00C7					;$00AFCC	|
 	STA $16						;$00AFCF	|
-	LDA $6436,X					;$00AFD1	|
+	LDA.W Obj_Pose,X					;$00AFD1	|
 	ASL A						;$00AFD4	|
 	TAY							;$00AFD5	|
 	LDA [$14],Y					;$00AFD6	|
@@ -6927,7 +6924,7 @@ CODE_FL_00B004:					;			|
 
 CODE_FL_00B00C:
 	LDY $39						;$00B00C	|
-	LDA $6436,Y					;$00B00E	|
+	LDA.W Obj_Pose,Y					;$00B00E	|
 	LDX $36FA,Y					;$00B011	|
 	BPL CODE_FL_00B019			;$00B014	|
 	EOR #$0001					;$00B016	|
@@ -7166,7 +7163,7 @@ CODE_FL_00B19E:					;			|
 	SEC							;$00B1C1	|
 	SBC $7364					;$00B1C2	|
 	STA $3031					;$00B1C5	|
-	LDA $6436,X					;$00B1C8	|
+	LDA.W Obj_Pose,X					;$00B1C8	|
 	JSR CODE_FL_00B23C			;$00B1CB	|
 	JSL $059B06					;$00B1CE	|
 	JSL $059AF8					;$00B1D2	|
@@ -7231,9 +7228,9 @@ CODE_FL_00B244:					;			|
 	STA $00						;$00B244	|
 	ASL A						;$00B246	|
 	TAY							;$00B247	|
-	LDA $6536,X					;$00B248	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B248	|
 	STA $14						;$00B24B	|
-	LDA $65B0,X					;$00B24D	|
+	LDA.W Obj_SpriteMapBank,X					;$00B24D	|
 	STA $16						;$00B250	|
 	LDA [$14],Y					;$00B252	|
 	PHA							;$00B254	|
@@ -7348,16 +7345,16 @@ CODE_FL_00B325:					;			|
 	LDA #$FFFF					;$00B32A	|
 	STA $3033					;$00B32D	|
 	STZ $3035					;$00B330	|
-	LDA $6436,X					;$00B333	|
-	LDY $6DD0,X					;$00B336	|
+	LDA.W Obj_Pose,X					;$00B333	|
+	LDY.W Obj_VAR1,X					;$00B336	|
 	BPL CODE_FL_00B33E			;$00B339	|
 	EOR #$0001					;$00B33B	|
 CODE_FL_00B33E:					;			|
 	ASL A						;$00B33E	|
 	TAY							;$00B33F	|
-	LDA $6536,X					;$00B340	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B340	|
 	STA $14						;$00B343	|
-	LDA $65B0,X					;$00B345	|
+	LDA.W Obj_SpriteMapBank,X					;$00B345	|
 	STA $16						;$00B348	|
 	LDA [$14],Y					;$00B34A	|
 	TAY							;$00B34C	|
@@ -7374,16 +7371,16 @@ CODE_FL_00B356:					;			|
 	STA $3033					;$00B35E	|
 	LDA #$0A60					;$00B361	|
 	STA $3035					;$00B364	|
-	LDA $6436,X					;$00B367	|
-	LDY $6DD0,X					;$00B36A	|
+	LDA.W Obj_Pose,X					;$00B367	|
+	LDY.W Obj_VAR1,X					;$00B36A	|
 	BPL CODE_FL_00B372			;$00B36D	|
 	EOR #$0001					;$00B36F	|
 CODE_FL_00B372:					;			|
 	ASL A						;$00B372	|
 	TAY							;$00B373	|
-	LDA $6536,X					;$00B374	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B374	|
 	STA $14						;$00B377	|
-	LDA $65B0,X					;$00B379	|
+	LDA.W Obj_SpriteMapBank,X					;$00B379	|
 	STA $16						;$00B37C	|
 	LDA [$14],Y					;$00B37E	|
 	TAY							;$00B380	|
@@ -7418,7 +7415,7 @@ CODE_FL_00B3A6:					;			|
 	SEC							;$00B3B3	|
 	SBC $7360					;$00B3B4	|
 	STA $3031					;$00B3B7	|
-	LDA $6436,X					;$00B3BA	|
+	LDA.W Obj_Pose,X					;$00B3BA	|
 	BMI CODE_FL_00B3E4			;$00B3BD	|
 	ASL A						;$00B3BF	|
 	TAY							;$00B3C0	|
@@ -7450,12 +7447,12 @@ CODE_FL_00B3E5:					;-----------|
 	RTL							;$00B3E8	|
 CODE_FL_00B3E9:					;			|
 	LDY $39						;$00B3E9	|
-	LDA $6436,Y					;$00B3EB	|
+	LDA.W Obj_Pose,Y					;$00B3EB	|
 	BMI CODE_FL_00B3FD			;$00B3EE	|
-	LDX $6E4A,Y					;$00B3F0	|
-	LDA $65B0,X					;$00B3F3	|
+	LDX.W Obj_VAR2,Y					;$00B3F0	|
+	LDA.W Obj_SpriteMapBank,X					;$00B3F3	|
 	BMI CODE_FL_00B3FD			;$00B3F6	|
-	LDA $6436,X					;$00B3F8	|
+	LDA.W Obj_Pose,X					;$00B3F8	|
 	BPL CODE_FL_00B3FE			;$00B3FB	|
 CODE_FL_00B3FD:					;			|
 	RTS							;$00B3FD	|
@@ -7495,10 +7492,10 @@ CODE_FL_00B42D:					;-----------|
 	RTL							;$00B430	|
 CODE_FL_00B431:					;			|
 	LDY $39						;$00B431	|
-	LDA $6436,Y					;$00B433	|
+	LDA.W Obj_Pose,Y					;$00B433	|
 	BMI CODE_FL_00B440			;$00B436	|
-	LDX $6E4A,Y					;$00B438	|
-	LDA $6436,X					;$00B43B	|
+	LDX.W Obj_VAR2,Y					;$00B438	|
+	LDA.W Obj_Pose,X					;$00B43B	|
 	BPL CODE_FL_00B441			;$00B43E	|
 CODE_FL_00B440:					;			|
 	RTS							;$00B440	|
@@ -7584,12 +7581,12 @@ CODE_FL_00B4C6:					;-----------|
 	RTL							;$00B4C9	|
 CODE_FL_00B4CA:					;			|
 	LDY $39						;$00B4CA	|
-	LDA $6436,Y					;$00B4CC	|
+	LDA.W Obj_Pose,Y					;$00B4CC	|
 	BMI CODE_FL_00B4FD			;$00B4CF	|
-	LDX $6E4A,Y					;$00B4D1	|
-	LDA $65B0,X					;$00B4D4	|
+	LDX.W Obj_VAR2,Y					;$00B4D1	|
+	LDA.W Obj_SpriteMapBank,X					;$00B4D4	|
 	BMI CODE_FL_00B4FD			;$00B4D7	|
-	LDA $6436,X					;$00B4D9	|
+	LDA.W Obj_Pose,X					;$00B4D9	|
 	BMI CODE_FL_00B4FD			;$00B4DC	|
 	LDA $6892,Y					;$00B4DE	|
 	SEC							;$00B4E1	|
@@ -7599,8 +7596,8 @@ CODE_FL_00B4CA:					;			|
 	SEC							;$00B4EB	|
 	SBC $7364					;$00B4EC	|
 	STA $3031					;$00B4EF	|
-	LDX $6E4A,Y					;$00B4F2	|
-	LDA $6436,X					;$00B4F5	|
+	LDX.W Obj_VAR2,Y					;$00B4F2	|
+	LDA.W Obj_Pose,X					;$00B4F5	|
 	BMI CODE_FL_00B4FD			;$00B4F8	|
 	JMP CODE_FL_00B23C			;$00B4FA	|
 CODE_FL_00B4FD:					;			|
@@ -7611,7 +7608,7 @@ CODE_FL_00B4FE:					;-----------|
 	RTL							;$00B501	|
 CODE_FL_00B502:					;			|
 	LDY $39						;$00B502	|
-	LDA $6436,Y					;$00B504	|
+	LDA.W Obj_Pose,Y					;$00B504	|
 	BMI CODE_FL_00B526			;$00B507	|
 	LDA $6892,Y					;$00B509	|
 	SEC							;$00B50C	|
@@ -7621,8 +7618,8 @@ CODE_FL_00B502:					;			|
 	SEC							;$00B516	|
 	SBC $7364					;$00B517	|
 	STA $3031					;$00B51A	|
-	LDX $6E4A,Y					;$00B51D	|
-	LDA $6436,Y					;$00B520	|
+	LDX.W Obj_VAR2,Y					;$00B51D	|
+	LDA.W Obj_Pose,Y					;$00B520	|
 	JMP CODE_FL_00B23C			;$00B523	|
 CODE_FL_00B526:					;			|
 	RTS							;$00B526	|
@@ -7632,18 +7629,18 @@ CODE_FL_00B527:					;-----------|
 	RTL							;$00B52A	|
 CODE_FL_00B52B:					;			|
 	LDY $39						;$00B52B	|
-	LDA $6436,Y					;$00B52D	|
+	LDA.W Obj_Pose,Y					;$00B52D	|
 	BPL CODE_FL_00B533			;$00B530	|
 	RTS							;$00B532	|
 
 CODE_FL_00B533:
-	LDX $6DD0,Y					;$00B533	|
+	LDX.W Obj_VAR1,Y					;$00B533	|
 	BPL CODE_FL_00B53B			;$00B536	|
 	EOR #$0001					;$00B538	|
 CODE_FL_00B53B:					;			|
 	ASL A						;$00B53B	|
 	PHA							;$00B53C	|
-	LDX $6E4A,Y					;$00B53D	|
+	LDX.W Obj_VAR2,Y					;$00B53D	|
 	LDY $749D,X					;$00B540	|
 	BEQ CODE_FL_00B561			;$00B543	|
 	ASL A						;$00B545	|
@@ -7673,16 +7670,16 @@ CODE_FL_00B565:					;-----------|
 CODE_FL_00B569:					;			|
 	LDX $39						;$00B569	|
 	JSR CODE_FL_00AABA			;$00B56B	|
-	LDA $6436,X					;$00B56E	|
-	LDY $6DD0,X					;$00B571	|
+	LDA.W Obj_Pose,X					;$00B56E	|
+	LDY.W Obj_VAR1,X					;$00B571	|
 	BPL CODE_FL_00B579			;$00B574	|
 	EOR #$0001					;$00B576	|
 CODE_FL_00B579:					;			|
 	ASL A						;$00B579	|
 	TAY							;$00B57A	|
-	LDA $6536,X					;$00B57B	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B57B	|
 	STA $14						;$00B57E	|
-	LDA $65B0,X					;$00B580	|
+	LDA.W Obj_SpriteMapBank,X					;$00B580	|
 	STA $16						;$00B583	|
 	LDA [$14],Y					;$00B585	|
 	TAY							;$00B587	|
@@ -7695,16 +7692,16 @@ CODE_FL_00B58D:					;-----------|
 CODE_FL_00B591:					;			|
 	LDX $39						;$00B591	|
 	JSR CODE_FL_00AABA			;$00B593	|
-	LDA $6436,X					;$00B596	|
-	LDY $6DD0,X					;$00B599	|
+	LDA.W Obj_Pose,X					;$00B596	|
+	LDY.W Obj_VAR1,X					;$00B599	|
 	BPL CODE_FL_00B5A1			;$00B59C	|
 	EOR #$0001					;$00B59E	|
 CODE_FL_00B5A1:					;			|
 	ASL A						;$00B5A1	|
 	TAY							;$00B5A2	|
-	LDA $6536,X					;$00B5A3	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B5A3	|
 	STA $14						;$00B5A6	|
-	LDA $65B0,X					;$00B5A8	|
+	LDA.W Obj_SpriteMapBank,X					;$00B5A8	|
 	STA $16						;$00B5AB	|
 	LDA [$14],Y					;$00B5AD	|
 	TAY							;$00B5AF	|
@@ -7717,12 +7714,12 @@ CODE_FL_00B5B5:					;-----------|
 CODE_FL_00B5B9:					;			|
 	LDX $39						;$00B5B9	|
 	JSR CODE_FL_00AABA			;$00B5BB	|
-	LDA $6436,X					;$00B5BE	|
+	LDA.W Obj_Pose,X					;$00B5BE	|
 	ASL A						;$00B5C1	|
 	TAY							;$00B5C2	|
-	LDA $6536,X					;$00B5C3	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B5C3	|
 	STA $14						;$00B5C6	|
-	LDA $65B0,X					;$00B5C8	|
+	LDA.W Obj_SpriteMapBank,X					;$00B5C8	|
 	STA $16						;$00B5CB	|
 	LDA [$14],Y					;$00B5CD	|
 	TAY							;$00B5CF	|
@@ -7735,12 +7732,12 @@ CODE_FL_00B5D5:					;-----------|
 CODE_FL_00B5D9:					;			|
 	LDX $39						;$00B5D9	|
 	JSR CODE_FL_00AABA			;$00B5DB	|
-	LDA $6436,X					;$00B5DE	|
+	LDA.W Obj_Pose,X					;$00B5DE	|
 	ASL A						;$00B5E1	|
 	TAY							;$00B5E2	|
-	LDA $6536,X					;$00B5E3	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B5E3	|
 	STA $14						;$00B5E6	|
-	LDA $65B0,X					;$00B5E8	|
+	LDA.W Obj_SpriteMapBank,X					;$00B5E8	|
 	STA $16						;$00B5EB	|
 	LDA [$14],Y					;$00B5ED	|
 	TAY							;$00B5EF	|
@@ -7752,16 +7749,16 @@ CODE_FL_00B5F5:
 	RTL							;$00B5F8	|
 CODE_FL_00B5F9:					;			|
 	LDX $39						;$00B5F9	|
-	LDA $6436,X					;$00B5FB	|
-	LDY $6DD0,X					;$00B5FE	|
+	LDA.W Obj_Pose,X					;$00B5FB	|
+	LDY.W Obj_VAR1,X					;$00B5FE	|
 	BPL CODE_FL_00B606			;$00B601	|
 	EOR #$0001					;$00B603	|
 CODE_FL_00B606:					;			|
 	ASL A						;$00B606	|
 	TAY							;$00B607	|
-	LDA $6536,X					;$00B608	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B608	|
 	STA $14						;$00B60B	|
-	LDA $65B0,X					;$00B60D	|
+	LDA.W Obj_SpriteMapBank,X					;$00B60D	|
 	STA $16						;$00B610	|
 	LDA [$14],Y					;$00B612	|
 	TAY							;$00B614	|
@@ -7798,9 +7795,9 @@ CODE_FL_00B64B:					;			|
 	LDX $39						;$00B64B	|
 	JSL DestroyObject_L			;$00B64D	|
 	LDX $39						;$00B651	|
-	LDA $65B0,X					;$00B653	|
+	LDA.W Obj_SpriteMapBank,X					;$00B653	|
 	ORA #$8000					;$00B656	|
-	STA $65B0,X					;$00B659	|
+	STA.W Obj_SpriteMapBank,X					;$00B659	|
 CODE_FL_00B65C:					;			|
 	RTS							;$00B65C	|
 
@@ -7848,9 +7845,9 @@ CODE_FL_00B6A1:					;			|
 	LDX $39						;$00B6A1	|
 	JSL DestroyObject_L			;$00B6A3	|
 	LDX $39						;$00B6A7	|
-	LDA $65B0,X					;$00B6A9	|
+	LDA.W Obj_SpriteMapBank,X					;$00B6A9	|
 	ORA #$8000					;$00B6AC	|
-	STA $65B0,X					;$00B6AF	|
+	STA.W Obj_SpriteMapBank,X					;$00B6AF	|
 CODE_FL_00B6B2:					;			|
 	RTS							;$00B6B2	|
 
@@ -7890,9 +7887,9 @@ CODE_FL_00B6EE:					;			|
 	LDX $39						;$00B6EE	|
 	JSL DestroyObject_L			;$00B6F0	|
 	LDX $39						;$00B6F4	|
-	LDA $65B0,X					;$00B6F6	|
+	LDA.W Obj_SpriteMapBank,X					;$00B6F6	|
 	ORA #$8000					;$00B6F9	|
-	STA $65B0,X					;$00B6FC	|
+	STA.W Obj_SpriteMapBank,X					;$00B6FC	|
 	INC $751B					;$00B6FF	|
 CODE_FL_00B702:					;			|
 	RTS							;$00B702	|
@@ -7903,8 +7900,8 @@ CODE_FL_00B703:					;-----------|
 CODE_FL_00B707:					;			|
 	LDX $39						;$00B707	|
 	JSR CODE_FL_00AABA			;$00B709	|
-	LDA $6436,X					;$00B70C	|
-	LDY $6DD0,X					;$00B70F	|
+	LDA.W Obj_Pose,X					;$00B70C	|
+	LDY.W Obj_VAR1,X					;$00B70F	|
 	BPL CODE_FL_00B717			;$00B712	|
 	EOR #$0001					;$00B714	|
 CODE_FL_00B717:					;			|
@@ -7916,13 +7913,13 @@ CODE_FL_00B71A:					;-----------|
 CODE_FL_00B71E:					;			|
 	LDX $39						;$00B71E	|
 	JSR CODE_FL_00AABA			;$00B720	|
-	LDA $6436,X					;$00B723	|
+	LDA.W Obj_Pose,X					;$00B723	|
 CODE_FL_00B726:					;			|
 	ASL A						;$00B726	|
 	TAY							;$00B727	|
-	LDA $6536,X					;$00B728	|
+	LDA.W Obj_SpriteMapAddr,X					;$00B728	|
 	STA $14						;$00B72B	|
-	LDA $65B0,X					;$00B72D	|
+	LDA.W Obj_SpriteMapBank,X					;$00B72D	|
 	STA $16						;$00B730	|
 	LDA [$14],Y					;$00B732	|
 	TAY							;$00B734	|
@@ -8085,7 +8082,7 @@ DATA_00B84D:
 	dl CODE_FL_00A2AC
 	dl CODE_FL_00A2C9
 
-AS_Script_Pointers:			; Pointer table for all AS scripts in the game, though most are just ASM. 4th byte is a flag that is the same usage as RAM address $6818.
+AS_Script_Pointers:			; Pointer table for all AS scripts in the game, though most are just ASM. 4th byte is a flag that is the same usage as RAM address.W Obj_ScriptProgramBank.
 								; It could be nice to develop a macro to auto-populate this list when building ActionScripts instead of it being static in the code. Something to consider.
 	dl AS_Script_0000 : db $02	; 00
 	dl $028000 : db $04			; 01
@@ -8456,12 +8453,12 @@ CODE_FL_00BD70:					;-----------|
 CODE_FL_00BD7B:					;			|
 	BEQ CODE_FL_00BD7B			;$00BD7B	|
 	PLA							;$00BD7D	|
-	STA $6D56					;$00BD7E	|
+	STA.W Obj_VAR0					;$00BD7E	|
 	RTL							;$00BD81	|
 
 AS_Script_0000:
-	%AS_Mov_reg_var($0)
-	%AS_MULTIJMP(AS_MainIntroCutscene,
+	%AS_MOV_reg_var($0)
+	%AS_MultiJMP(AS_MainIntroCutscene,
 		AS_MainTitleScreen,
 		AS_MinigameTitleDemo,
 		AS_MapScreen,
@@ -8480,7 +8477,7 @@ AS_MainIntroCutscene:
 AS_MainTitleScreen:
 	%AS_JML($078807)
 AS_Tutorial:
-	%AS_MOV_VAR_IMM16($00, $0000)
+	%AS_MOV_var_imm16($00, $0000)
 	%AS_JML($D1A39A)
 AS_Corkboard:
 	%AS_JML($CAAC12)
@@ -8488,8 +8485,8 @@ AS_SubgameTitle:
 	%AS_ASMCall(CODE_FL_00A47B, $01)
 	dl $07D5CD
 AS_GameOver:
-	%AS_MOV_REG_ABS($738E)
-	%AS_Mov_var_reg($00)
+	%AS_MOV_reg_abs($738E)
+	%AS_MOV_var_reg($00)
 	%AS_JML($CAD6DF)
 AS_MinigameTitleDemo:
 	%AS_JML($CB94BC)
@@ -8897,7 +8894,7 @@ CODE_FL_00C15F:					;			|
 	JSL CODE_FL_00BCDE			;$00C15F	|
 	LDX $7A75					;$00C163	|
 	BMI CODE_FL_00C15F			;$00C166	|
-	LDA $623C,X					;$00C168	|
+	LDA.W Obj_Table623C,X					;$00C168	|
 	BMI CODE_FL_00C1AC			;$00C16B	|
 	LDA KirbyHP					;$00C16D	|
 	BMI CODE_FL_00C199			;$00C170	|
@@ -9352,7 +9349,7 @@ CODE_FL_00C57B:					;			|
 	INX							;$00C57C	|
 	CPX #$007A					;$00C57D	|
 	BEQ CODE_FL_00C59C			;$00C580	|
-	LDA $623C,X					;$00C582	|
+	LDA.W Obj_Table623C,X					;$00C582	|
 	CMP #$0000					;$00C585	|
 	BEQ CODE_FL_00C594			;$00C588	|
 	CMP #$0010					;$00C58A	|
@@ -12220,250 +12217,250 @@ Reset_SA1_Debug:				;-----------| Alternative SA-1 reset vector, used for the de
 
 CODE_FL_00DE6B:					;-----------| Subroutine to do... Something. Has a whole LOT of alternative entry points.
 	LDX $39						;$00DE6B	|
-	INC $6436,X					;$00DE6D	|
+	INC.W Obj_Pose,X					;$00DE6D	|
 	JMP CODE_FL_00E181			;$00DE70	|
 CODE_FL_00DE73:					;```````````|
 	LDX $39						;$00DE73	|
-	INC $6436,X					;$00DE75	|
+	INC.W Obj_Pose,X					;$00DE75	|
 	LDA #$0001					;$00DE78	|
 	JMP CODE_FL_00E181			;$00DE7B	|
 CODE_FL_00DE7E:					;```````````|
 	LDX $39						;$00DE7E	|
-	INC $6436,X					;$00DE80	|
+	INC.W Obj_Pose,X					;$00DE80	|
 	LDA #$0002					;$00DE83	|
 	JMP CODE_FL_00E181			;$00DE86	|
 CODE_FL_00DE89:					;```````````|
 	LDX $39						;$00DE89	|
-	INC $6436,X					;$00DE8B	|
+	INC.W Obj_Pose,X					;$00DE8B	|
 	LDA #$0003					;$00DE8E	|
 	JMP CODE_FL_00E181			;$00DE91	|
 CODE_FL_00DE94:					;```````````|
 	LDX $39						;$00DE94	|
-	INC $6436,X					;$00DE96	|
+	INC.W Obj_Pose,X					;$00DE96	|
 	LDA #$0004					;$00DE99	|
 	JMP CODE_FL_00E181			;$00DE9C	|
 CODE_FL_00DE9F:					;```````````|
 	LDX $39						;$00DE9F	|
-	INC $6436,X					;$00DEA1	|
+	INC.W Obj_Pose,X					;$00DEA1	|
 	LDA #$0005					;$00DEA4	|
 	JMP CODE_FL_00E181			;$00DEA7	|
 CODE_FL_00DEAA:					;```````````|
 	LDX $39						;$00DEAA	|
-	INC $6436,X					;$00DEAC	|
+	INC.W Obj_Pose,X					;$00DEAC	|
 	LDA #$0006					;$00DEAF	|
 	JMP CODE_FL_00E181			;$00DEB2	|
 CODE_FL_00DEB5:					;```````````|
 	LDX $39						;$00DEB5	|
-	INC $6436,X					;$00DEB7	|
+	INC.W Obj_Pose,X					;$00DEB7	|
 	LDA #$0007					;$00DEBA	|
 	JMP CODE_FL_00E181			;$00DEBD	|
 CODE_FL_00DEC0:					;```````````|
 	LDX $39						;$00DEC0	|
-	INC $6436,X					;$00DEC2	|
+	INC.W Obj_Pose,X					;$00DEC2	|
 	LDA #$0008					;$00DEC5	|
 	JMP CODE_FL_00E181			;$00DEC8	|
 CODE_FL_00DECB:					;```````````|
 	LDX $39						;$00DECB	|
-	INC $6436,X					;$00DECD	|
+	INC.W Obj_Pose,X					;$00DECD	|
 	LDA #$0009					;$00DED0	|
 	JMP CODE_FL_00E181			;$00DED3	|
 CODE_FL_00DED6:					;```````````|
 	LDX $39						;$00DED6	|
-	INC $6436,X					;$00DED8	|
+	INC.W Obj_Pose,X					;$00DED8	|
 	LDA #$000A					;$00DEDB	|
 	JMP CODE_FL_00E181			;$00DEDE	|
 CODE_FL_00DEE1:					;```````````|
 	LDX $39						;$00DEE1	|
-	INC $6436,X					;$00DEE3	|
+	INC.W Obj_Pose,X					;$00DEE3	|
 	LDA #$000B					;$00DEE6	|
 	JMP CODE_FL_00E181			;$00DEE9	|
 CODE_FL_00DEEC:					;```````````|
 	LDX $39						;$00DEEC	|
-	INC $6436,X					;$00DEEE	|
+	INC.W Obj_Pose,X					;$00DEEE	|
 	LDA #$000C					;$00DEF1	|
 	JMP CODE_FL_00E181			;$00DEF4	|
 CODE_FL_00DEF7:					;```````````|
 	LDX $39						;$00DEF7	|
-	INC $6436,X					;$00DEF9	|
+	INC.W Obj_Pose,X					;$00DEF9	|
 	LDA #$000D					;$00DEFC	|
 	JMP CODE_FL_00E181			;$00DEFF	|
 CODE_FL_00DF02:					;```````````|
 	LDX $39						;$00DF02	|
-	INC $6436,X					;$00DF04	|
+	INC.W Obj_Pose,X					;$00DF04	|
 	LDA #$000E					;$00DF07	|
 	JMP CODE_FL_00E181			;$00DF0A	|
 CODE_FL_00DF0D:					;```````````|
 	LDX $39						;$00DF0D	|
-	INC $6436,X					;$00DF0F	|
+	INC.W Obj_Pose,X					;$00DF0F	|
 	LDA #$000F					;$00DF12	|
 	JMP CODE_FL_00E181			;$00DF15	|
 CODE_FL_00DF18:					;```````````|
 	LDX $39						;$00DF18	|
-	INC $6436,X					;$00DF1A	|
+	INC.W Obj_Pose,X					;$00DF1A	|
 	LDA #$0010					;$00DF1D	|
 	JMP CODE_FL_00E181			;$00DF20	|
 CODE_FL_00DF23:					;```````````|
 	LDX $39						;$00DF23	|
-	DEC $6436,X					;$00DF25	|
+	DEC.W Obj_Pose,X					;$00DF25	|
 	JMP CODE_FL_00E181			;$00DF28	|
 CODE_FL_00DF2B:					;```````````|
 	LDX $39						;$00DF2B	|
-	DEC $6436,X					;$00DF2D	|
+	DEC.W Obj_Pose,X					;$00DF2D	|
 	LDA #$0001					;$00DF30	|
 	JMP CODE_FL_00E181			;$00DF33	|
 CODE_FL_00DF36:					;```````````|
 	LDX $39						;$00DF36	|
-	DEC $6436,X					;$00DF38	|
+	DEC.W Obj_Pose,X					;$00DF38	|
 	LDA #$0002					;$00DF3B	|
 	JMP CODE_FL_00E181			;$00DF3E	|
 CODE_FL_00DF41:					;```````````|
 	LDX $39						;$00DF41	|
-	DEC $6436,X					;$00DF43	|
+	DEC.W Obj_Pose,X					;$00DF43	|
 	LDA #$0003					;$00DF46	|
 	JMP CODE_FL_00E181			;$00DF49	|
 CODE_FL_00DF4C:					;```````````|
 	LDX $39						;$00DF4C	|
-	DEC $6436,X					;$00DF4E	|
+	DEC.W Obj_Pose,X					;$00DF4E	|
 	LDA #$0004					;$00DF51	|
 	JMP CODE_FL_00E181			;$00DF54	|
 CODE_FL_00DF57:					;```````````|
 	LDX $39						;$00DF57	|
-	DEC $6436,X					;$00DF59	|
+	DEC.W Obj_Pose,X					;$00DF59	|
 	LDA #$0005					;$00DF5C	|
 	JMP CODE_FL_00E181			;$00DF5F	|
 CODE_FL_00DF62:					;```````````|
 	LDX $39						;$00DF62	|
-	DEC $6436,X					;$00DF64	|
+	DEC.W Obj_Pose,X					;$00DF64	|
 	LDA #$0006					;$00DF67	|
 	JMP CODE_FL_00E181			;$00DF6A	|
 CODE_FL_00DF6D:					;```````````|
 	LDX $39						;$00DF6D	|
-	DEC $6436,X					;$00DF6F	|
+	DEC.W Obj_Pose,X					;$00DF6F	|
 	LDA #$0007					;$00DF72	|
 	JMP CODE_FL_00E181			;$00DF75	|
 CODE_FL_00DF78:					;```````````|
 	LDX $39						;$00DF78	|
-	DEC $6436,X					;$00DF7A	|
+	DEC.W Obj_Pose,X					;$00DF7A	|
 	LDA #$0008					;$00DF7D	|
 	JMP CODE_FL_00E181			;$00DF80	|
 CODE_FL_00DF83:					;```````````|
 	LDX $39						;$00DF83	|
-	DEC $6436,X					;$00DF85	|
+	DEC.W Obj_Pose,X					;$00DF85	|
 	LDA #$0009					;$00DF88	|
 	JMP CODE_FL_00E181			;$00DF8B	|
 CODE_FL_00DF8E:					;```````````|
 	LDX $39						;$00DF8E	|
-	DEC $6436,X					;$00DF90	|
+	DEC.W Obj_Pose,X					;$00DF90	|
 	LDA #$000A					;$00DF93	|
 	JMP CODE_FL_00E181			;$00DF96	|
 CODE_FL_00DF99:					;```````````|
 	LDX $39						;$00DF99	|
-	DEC $6436,X					;$00DF9B	|
+	DEC.W Obj_Pose,X					;$00DF9B	|
 	LDA #$000B					;$00DF9E	|
 	JMP CODE_FL_00E181			;$00DFA1	|
 CODE_FL_00DFA4:					;```````````|
 	LDX $39						;$00DFA4	|
-	DEC $6436,X					;$00DFA6	|
+	DEC.W Obj_Pose,X					;$00DFA6	|
 	LDA #$000C					;$00DFA9	|
 	JMP CODE_FL_00E181			;$00DFAC	|
 CODE_FL_00DFAF:					;```````````|
 	LDX $39						;$00DFAF	|
-	DEC $6436,X					;$00DFB1	|
+	DEC.W Obj_Pose,X					;$00DFB1	|
 	LDA #$000D					;$00DFB4	|
 	JMP CODE_FL_00E181			;$00DFB7	
 CODE_FL_00DFBA:					;```````````|
 	LDX $39						;$00DFBA	|
-	DEC $6436,X					;$00DFBC	|
+	DEC.W Obj_Pose,X					;$00DFBC	|
 	LDA #$000E					;$00DFBF	|
 	JMP CODE_FL_00E181			;$00DFC2	|
 CODE_FL_00DFC5:					;```````````|
 	LDX $39						;$00DFC5	|
-	DEC $6436,X					;$00DFC7	|
+	DEC.W Obj_Pose,X					;$00DFC7	|
 	LDA #$000F					;$00DFCA	|
 	JMP CODE_FL_00E181			;$00DFCD	|
 CODE_FL_00DFD0:					;```````````|
 	LDX $39						;$00DFD0	|
-	DEC $6436,X					;$00DFD2	|
+	DEC.W Obj_Pose,X					;$00DFD2	|
 	LDA #$0010					;$00DFD5	|
 	JMP CODE_FL_00E181			;$00DFD8	|
 CODE_FL_00DFDB:					;```````````|
 	LDX $39						;$00DFDB	|
-	STA $6436,X					;$00DFDD	|
+	STA.W Obj_Pose,X					;$00DFDD	|
 	LDA #$0001					;$00DFE0	|
 	JMP CODE_FL_00E181			;$00DFE3	|
 CODE_FL_00DFE6:					;```````````|
 	LDX $39						;$00DFE6	|
-	STA $6436,X					;$00DFE8	|
+	STA.W Obj_Pose,X					;$00DFE8	|
 	LDA #$0002					;$00DFEB	|
 	JMP CODE_FL_00E181			;$00DFEE	|
 CODE_FL_00DFF1:					;```````````|
 	LDX $39						;$00DFF1	|
-	STA $6436,X					;$00DFF3	|
+	STA.W Obj_Pose,X					;$00DFF3	|
 	LDA #$0003					;$00DFF6	|
 	JMP CODE_FL_00E181			;$00DFF9	|
 CODE_FL_00DFFC:					;```````````|
 	LDX $39						;$00DFFC	|
-	STA $6436,X					;$00DFFE	|
+	STA.W Obj_Pose,X					;$00DFFE	|
 	LDA #$0004					;$00E001	|
 	JMP CODE_FL_00E181			;$00E004	|
 CODE_FL_00E007:					;```````````|
 	LDX $39						;$00E007	|
-	STA $6436,X					;$00E009	|
+	STA.W Obj_Pose,X					;$00E009	|
 	LDA #$0005					;$00E00C	|
 	JMP CODE_FL_00E181			;$00E00F	|
 CODE_FL_00E012:					;```````````|
 	LDX $39						;$00E012	|
-	STA $6436,X					;$00E014	|
+	STA.W Obj_Pose,X					;$00E014	|
 	LDA #$0006					;$00E017	|
 	JMP CODE_FL_00E181			;$00E01A	|
 CODE_FL_00E01D:					;```````````|
 	LDX $39						;$00E01D	|
-	STA $6436,X					;$00E01F	|
+	STA.W Obj_Pose,X					;$00E01F	|
 	LDA #$0007					;$00E022	|
 	JMP CODE_FL_00E181			;$00E025	|
 CODE_FL_00E028:					;```````````|
 	LDX $39						;$00E028	|
-	STA $6436,X					;$00E02A	|
+	STA.W Obj_Pose,X					;$00E02A	|
 	LDA #$0008					;$00E02D	|
 	JMP CODE_FL_00E181			;$00E030	|
 CODE_FL_00E033:					;```````````|
 	LDX $39						;$00E033	|
-	STA $6436,X					;$00E035	|
+	STA.W Obj_Pose,X					;$00E035	|
 	LDA #$0009					;$00E038	|
 	JMP CODE_FL_00E181			;$00E03B	|
 CODE_FL_00E03E:					;```````````|
 	LDX $39						;$00E03E	|
-	STA $6436,X					;$00E040	|
+	STA.W Obj_Pose,X					;$00E040	|
 	LDA #$000A					;$00E043	|
 	JMP CODE_FL_00E181			;$00E046	|
 CODE_FL_00E049:					;```````````|
 	LDX $39						;$00E049	|
-	STA $6436,X					;$00E04B	|
+	STA.W Obj_Pose,X					;$00E04B	|
 	LDA #$000B					;$00E04E	|
 	JMP CODE_FL_00E181			;$00E051	|
 CODE_FL_00E054:					;```````````|
 	LDX $39						;$00E054	|
-	STA $6436,X					;$00E056	|
+	STA.W Obj_Pose,X					;$00E056	|
 	LDA #$000C					;$00E059	|
 	JMP CODE_FL_00E181			;$00E05C	|
 CODE_FL_00E05F:					;```````````|
 	LDX $39						;$00E05F	|
-	STA $6436,X					;$00E061	|
+	STA.W Obj_Pose,X					;$00E061	|
 	LDA #$000D					;$00E064	|
 	JMP CODE_FL_00E181			;$00E067	|
 CODE_FL_00E06A:					;```````````|
 	LDX $39						;$00E06A	|
-	STA $6436,X					;$00E06C	|
+	STA.W Obj_Pose,X					;$00E06C	|
 	LDA #$000E					;$00E06F	|
 	JMP CODE_FL_00E181			;$00E072	|
 CODE_FL_00E075:					;```````````|
 	LDX $39						;$00E075	|
-	STA $6436,X					;$00E077	|
+	STA.W Obj_Pose,X					;$00E077	|
 	LDA #$000F					;$00E07A	|
 	JMP CODE_FL_00E181			;$00E07D	|
 CODE_FL_00E080:					;```````````|
 	LDX $39						;$00E080	|
-	STA $6436,X					;$00E082	|
+	STA.W Obj_Pose,X					;$00E082	|
 	LDA #$0010					;$00E085	|
 	JMP CODE_FL_00E181			;$00E088	|
 CODE_FL_00E08B:					;```````````|
@@ -12585,7 +12582,7 @@ CODE_FL_00E169:					;```````````|
 	BNE CODE_FL_00E177			;$00E172	|
 	LDA #$FFFF					;$00E174	|
 CODE_FL_00E177:					;			|
-	STA $6436,X					;$00E177	|
+	STA.W Obj_Pose,X					;$00E177	|
 	TYA							;$00E17A	|
 	AND #$FF00					;$00E17B	|
 	XBA							;$00E17E	|
@@ -12593,61 +12590,61 @@ CODE_FL_00E17F:					;			|
 	LDX $39						;$00E17F	|
 CODE_FL_00E181:					;			|
 	DEC A						;$00E181	|
-	STA $6724,X					;$00E182	|
+	STA.W Obj_ScriptSleepTimer,X					;$00E182	|
 	PLA							;$00E185	|
 	INC A						;$00E186	|
-	STA $679E,X					;$00E187	|
+	STA.W Obj_ScriptProgramCounter,X					;$00E187	|
 	SEP #$20					;$00E18A	|
 	PLA							;$00E18C	|
-	STA $6818,X					;$00E18D	|
+	STA.W Obj_ScriptProgramBank,X					;$00E18D	|
 	REP #$20					;$00E190	|
 	RTL							;$00E192	|
 
 
 CODE_FL_00E193:
-	STA $6436,Y					;$00E193	|
+	STA.W Obj_Pose,Y					;$00E193	|
 	TXA							;$00E196	|
 	TYX							;$00E197	|
 	JMP CODE_FL_00E181			;$00E198	|
 
 
 CODE_FL_00E19B:
-	INC $3D						;$00E19B	|
-	CMP [$3D]					;$00E19D	|\ Hardlock the game if byte 2 >= byte 1?
+	INC.B AS_PC						;$00E19B	|
+	CMP.B [AS_PC]					;$00E19D	|\ Hardlock the game if byte 2 >= byte 1?
   - BCS -						;$00E19F	|/
-	INC $3D						;$00E1A1	|
-	INC $3D						;$00E1A3	|
+	INC.B AS_PC						;$00E1A1	|
+	INC.B AS_PC						;$00E1A3	|
 	STA $28						;$00E1A5	|
 	ASL A						;$00E1A7	|
 	ADC $28						;$00E1A8	|
 	TAY							;$00E1AA	|
-	LDA [$3D],Y					;$00E1AB	|
+	LDA.B [AS_PC],Y					;$00E1AB	|
 	DEC A						;$00E1AD	|
 	TAX							;$00E1AE	|
 	INY							;$00E1AF	|
-	LDA [$3D],Y					;$00E1B0	|
+	LDA.B [AS_PC],Y					;$00E1B0	|
 	STA $3E						;$00E1B2	|
-	STX $3D						;$00E1B4	|
+	STX.B AS_PC						;$00E1B4	|
 	RTL							;$00E1B6	|
 
 CODE_FL_00E1B7:
-	STA $633C,Y					;$00E1B7	|
+	STA.W Obj_TickCallbackAddr,Y					;$00E1B7	|
 	TXA							;$00E1BA	|
-	STA $63B6,Y					;$00E1BB	|
+	STA.W Obj_TickCallbackBank,Y					;$00E1BB	|
 	RTL							;$00E1BE	|
 
 CODE_FL_00E1BF:
 	LDA #$8F63					;$00E1BF	|
-	STA $633C,Y					;$00E1C2	|
+	STA.W Obj_TickCallbackAddr,Y					;$00E1C2	|
 	LDA #$0000					;$00E1C5	|
-	STA $63B6,Y					;$00E1C8	|
+	STA.W Obj_TickCallbackBank,Y					;$00E1C8	|
 	RTL							;$00E1CB	|
 
 CODE_FL_00E1CC:
-	STA $6536,Y					;$00E1CC	|
+	STA.W Obj_SpriteMapAddr,Y					;$00E1CC	|
 	TXA							;$00E1CF	|
 	AND #$00FF					;$00E1D0	|
-	STA $65B0,Y					;$00E1D3	|
+	STA.W Obj_SpriteMapBank,Y					;$00E1D3	|
 	RTL							;$00E1D6	|
 
 CODE_FL_00E1D7:
@@ -12655,7 +12652,7 @@ CODE_FL_00E1D7:
 	BEQ CODE_FL_00E1DD			;$00E1DA	|
 	INC A						;$00E1DC	|
 CODE_FL_00E1DD:					;			|
-	STA $6436,Y					;$00E1DD	|
+	STA.W Obj_Pose,Y					;$00E1DD	|
 	RTL							;$00E1E0	|
 
 CODE_FL_00E1E1:
@@ -12664,35 +12661,35 @@ CODE_FL_00E1E1:
 	TXA							;$00E1E6	|
 	XBA							;$00E1E7	|
 	AND #$00FF					;$00E1E8	|
-	STA $6436,Y					;$00E1EB	|
+	STA.W Obj_Pose,Y					;$00E1EB	|
 	RTL							;$00E1EE	|
 CODE_FL_00E1EF:					;			|
 	TXA							;$00E1EF	|
 	AND #$00FF					;$00E1F0	|
-	STA $6436,Y					;$00E1F3	|
+	STA.W Obj_Pose,Y					;$00E1F3	|
 	RTL							;$00E1F6	|
 
 CODE_FL_00E1F7:
-	LDX $6DD0,Y					;$00E1F7	|
+	LDX.W Obj_VAR1,Y					;$00E1F7	|
 	BPL CODE_FL_00E1FD			;$00E1FA	|
 	INC A						;$00E1FC	|
 CODE_FL_00E1FD:					;			|
-	STA $6436,Y					;$00E1FD	|
+	STA.W Obj_Pose,Y					;$00E1FD	|
 	RTL							;$00E200	|
 
 CODE_FL_00E201:
-	LDX $6DD0,Y					;$00E201	|
+	LDX.W Obj_VAR1,Y					;$00E201	|
 	BMI $F7						;$00E204	|
 	INC A						;$00E206	|
-	STA $6436,Y					;$00E207	|
+	STA.W Obj_Pose,Y					;$00E207	|
 	RTL							;$00E20A	|
 
 CODE_FL_00E20B:
-	LDX $6DD0,Y					;$00E20B	|
+	LDX.W Obj_VAR1,Y					;$00E20B	|
 	BMI CODE_FL_00E211			;$00E20E	|
 	INC A						;$00E210	|
 CODE_FL_00E211:					;			|
-	STA $6436,Y					;$00E211	|
+	STA.W Obj_Pose,Y					;$00E211	|
 	RTL							;$00E214	|
 
 CODE_FL_00E215:
@@ -12702,7 +12699,7 @@ CODE_FL_00E215:
 	BEQ CODE_FL_00E21F			;$00E21C	|
 	INC A						;$00E21E	|
 CODE_FL_00E21F:					;			|
-	STA $6436,Y					;$00E21F	|
+	STA.W Obj_Pose,Y					;$00E21F	|
 	PLA							;$00E222	|
 	AND #$FF00					;$00E223	|
 	XBA							;$00E226	|
@@ -12711,11 +12708,11 @@ CODE_FL_00E21F:					;			|
 CODE_FL_00E22A:
 	PHA							;$00E22A	|
 	AND #$00FF					;$00E22B	|
-	LDX $6DD0,Y					;$00E22E	|
+	LDX.W Obj_VAR1,Y					;$00E22E	|
 	BPL CODE_FL_00E234			;$00E231	|
 	INC A						;$00E233	|
 CODE_FL_00E234:					;			|
-	STA $6436,Y					;$00E234	|
+	STA.W Obj_Pose,Y					;$00E234	|
 	PLA							;$00E237	|
 	AND #$FF00					;$00E238	|
 	XBA							;$00E23B	|
@@ -12724,11 +12721,11 @@ CODE_FL_00E234:					;			|
 CODE_FL_00E23F:
 	PHA							;$00E23F	|
 	AND #$00FF					;$00E240	|
-	LDX $6DD0,Y					;$00E243	|
+	LDX.W Obj_VAR1,Y					;$00E243	|
 	BMI CODE_FL_00E249			;$00E246	|
 	INC A						;$00E248	|
 CODE_FL_00E249:					;			|
-	STA $6436,Y					;$00E249	|
+	STA.W Obj_Pose,Y					;$00E249	|
 	PLA							;$00E24C	|
 	AND #$FF00					;$00E24D	|
 	XBA							;$00E250	|
@@ -12737,11 +12734,11 @@ CODE_FL_00E249:					;			|
 CODE_FL_00E254:
 	PHA							;$00E254	|
 	AND #$00FF					;$00E255	|
-	LDX $6DD0,Y					;$00E258	|
+	LDX.W Obj_VAR1,Y					;$00E258	|
 	BMI CODE_FL_00E25E			;$00E25B	|
 	INC A						;$00E25D	|
 CODE_FL_00E25E:					;			|
-	STA $6436,Y					;$00E25E	|
+	STA.W Obj_Pose,Y					;$00E25E	|
 	PLA							;$00E261	|
 	AND #$FF00					;$00E262	|
 	XBA							;$00E265	|
@@ -12749,18 +12746,18 @@ CODE_FL_00E25E:					;			|
 
 CODE_FL_00E269:
 	TYX							;$00E269	|
-	INC $6436,X					;$00E26A	|
-	INC $6436,X					;$00E26D	|
+	INC.W Obj_Pose,X					;$00E26A	|
+	INC.W Obj_Pose,X					;$00E26D	|
 	JMP CODE_FL_00E17F			;$00E270	|
 
 CODE_FL_00E273:
 	TYX							;$00E273	|
-	DEC $6436,X					;$00E274	|
-	DEC $6436,X					;$00E277	|
+	DEC.W Obj_Pose,X					;$00E274	|
+	DEC.W Obj_Pose,X					;$00E277	|
 	JMP CODE_FL_00E17F			;$00E27A	|
 
 CODE_FL_00E27D:
-	LDX $6DD0,Y					;$00E27D	|
+	LDX.W Obj_VAR1,Y					;$00E27D	|
 	BRA CODE_FL_00E285			;$00E280	|
 	LDX $778C					;$00E282	|
 CODE_FL_00E285:					;			|
@@ -12782,7 +12779,7 @@ CODE_FL_00E298:
 
 CODE_FL_00E2A2:
 	STA $6986,Y					;$00E2A2	|
-	LDA $6DD0,Y					;$00E2A5	|
+	LDA.W Obj_VAR1,Y					;$00E2A5	|
 	CMP #$4000					;$00E2A8	|
 	BEQ CODE_FL_00E2B1			;$00E2AB	|
 	TXA							;$00E2AD	|
@@ -12794,7 +12791,7 @@ CODE_FL_00E2B1:					;			|
 
 CODE_FL_00EDB8:
 	STA $6986,Y					;$00E2B8	|
-	LDA $6DD0,Y					;$00E2BB	|
+	LDA.W Obj_VAR1,Y					;$00E2BB	|
 	CMP #$4000					;$00E2BE	|
 	BNE CODE_FL_00E2C7			;$00E2C1	|
 	TXA							;$00E2C3	|
@@ -12807,7 +12804,7 @@ CODE_FL_00E2C7:					;			|
 CODE_FL_00E2CE:
 	PHX							;$00E2CE	|
 	TYX							;$00E2CF	|
-	LDY $6DD0,X					;$00E2D0	|
+	LDY.W Obj_VAR1,X					;$00E2D0	|
 	PLX							;$00E2D3	|
 	BRA CODE_FL_00E2D9			;$00E2D4	|
 
@@ -12871,7 +12868,7 @@ CODE_FL_00E333:					;			|
 	LDA #$A744					;$00E335	|
 	BRA CODE_FL_00E33A			;$00E338	|
 CODE_FL_00E33A:					;			|
-	STA $66AA,Y					;$00E33A	|
+	STA.W Obj_UnknownCallback,Y					;$00E33A	|
 	RTL							;$00E33D	|
 
 CODE_FL_00E33E:
@@ -12943,7 +12940,7 @@ CODE_FL_00E397:
 	LDX $39						;$00E3B4	|
 	LDY #$0000					;$00E3B6	|
 	LDA [$14],Y					;$00E3B9	|
-	STA $6DD0,X					;$00E3BB	|
+	STA.W Obj_VAR1,X					;$00E3BB	|
 	INY							;$00E3BE	|
 	INY							;$00E3BF	|
 	LDA [$14],Y					;$00E3C0	|
@@ -13011,7 +13008,7 @@ CODE_FL_00E41E:
 	STY $00						;$00E43C	|
 	STA $02						;$00E43E	|
 	LDY $39						;$00E440	|
-	LDA $6DD0,Y					;$00E442	|
+	LDA.W Obj_VAR1,Y					;$00E442	|
 	CLC							;$00E445	|
 	ADC $00						;$00E446	|
 	STA $6B6E,Y					;$00E448	|
@@ -13021,8 +13018,8 @@ CODE_FL_00E41E:
 	STA $6BE8,Y					;$00E451	|
 	RTL							;$00E454	|
 	CLC							;$00E455	|
-	ADC $6DD0,Y					;$00E456	|
-	STA $6DD0,Y					;$00E459	|
+	ADC.W Obj_VAR1,Y					;$00E456	|
+	STA.W Obj_VAR1,Y					;$00E459	|
 	TXA							;$00E45C	|
 	CLC							;$00E45D	|
 	ADC $781E,Y					;$00E45E	|
@@ -13126,7 +13123,7 @@ CODE_FL_00E4E7:
 	JMP CODE_FL_00E17F			;$00E4EF	|
 
 CODE_FL_00E4F2:
-	LDX $6DD0,Y					;$00E4F2	|
+	LDX.W Obj_VAR1,Y					;$00E4F2	|
 	BRA CODE_FL_00E4FA			;$00E4F5	|
 CODE_FL_00E4F7:					;			|
 	LDX $778C					;$00E4F7	|
@@ -13140,7 +13137,7 @@ CODE_FL_00E503:					;			|
 	RTL							;$00E506	|
 
 CODE_FL_00E507:
-	LDX $6DD0,Y					;$00E507	|
+	LDX.W Obj_VAR1,Y					;$00E507	|
 	CPX #$8000					;$00E50A	|
 	BEQ CODE_FL_00E513			;$00E50D	|
 	EOR #$FFFF					;$00E50F	|
@@ -13159,7 +13156,7 @@ CODE_FL_00E517:
 CODE_FL_00E523:
 	PHX							;$00E523	|
 	TYX							;$00E524	|
-	LDY $6DD0,X					;$00E525	|
+	LDY.W Obj_VAR1,X					;$00E525	|
 	PLX							;$00E528	|
 	BRA CODE_FL_00E52E			;$00E529	|
 
@@ -13180,7 +13177,7 @@ CODE_FL_00E539:
 CODE_FL_00E541:
 	PHX							;$00E541	|
 	TYX							;$00E542	|
-	LDY $6DD0,X					;$00E543	|
+	LDY.W Obj_VAR1,X					;$00E543	|
 	PLX							;$00E546	|
 	BRA CODE_FL_00E54C			;$00E547	|
 
@@ -13208,7 +13205,7 @@ CODE_FL_00E565:
 	PHX							;$00E566	|
 	LDX $39						;$00E567	|
 	TYA							;$00E569	|
-	ORA $6DD0,X					;$00E56A	|
+	ORA.W Obj_VAR1,X					;$00E56A	|
 	TAY							;$00E56D	|
 	PLX							;$00E56E	|
 	PLA							;$00E56F	|
@@ -13236,7 +13233,7 @@ CODE_FL_00E582:					;			|
 	JMP CODE_FL_00E17F			;$00E590	|
 
 CODE_FL_00E593:
-	LDX $6DD0,Y					;$00E593	|
+	LDX.W Obj_VAR1,Y					;$00E593	|
 	BRA CODE_FL_00E59B			;$00E596	|
 
 CODE_FL_00E598:
@@ -13251,7 +13248,7 @@ CODE_FL_00E5A4:					;			|
 	RTL							;$00E5A7	|
 
 CODE_FL_00E5A8:
-	LDX $6DD0,Y					;$00E5A8	|
+	LDX.W Obj_VAR1,Y					;$00E5A8	|
 	CPX #$8000					;$00E5AB	|
 	BEQ CODE_FL_00E5B4			;$00E5AE	|
 	EOR #$FFFF					;$00E5B0	|
@@ -13263,7 +13260,7 @@ CODE_FL_00E5B4:					;			|
 CODE_FL_00E5B8:
 	PHX							;$00E5B8	|
 	TYX							;$00E5B9	|
-	LDY $6DD0,X					;$00E5BA	|
+	LDY.W Obj_VAR1,X					;$00E5BA	|
 	PLX							;$00E5BD	|
 	BRA CODE_FL_00E5C3			;$00E5BE	|
 
@@ -13285,7 +13282,7 @@ CODE_FL_00E5CE:
 CODE_FL_00E5D6:
 	PHX							;$00E5D6	|
 	TYX							;$00E5D7	|
-	LDY $6DD0,X					;$00E5D8	|
+	LDY.W Obj_VAR1,X					;$00E5D8	|
 	PLX							;$00E5DB	|
 	BRA CODE_FL_00E5E1			;$00E5DC	|
 
@@ -13313,7 +13310,7 @@ CODE_FL_00E5FA:
 	PHX							;$00E5FB	|
 	LDX $39						;$00E5FC	|
 	TYA							;$00E5FE	|
-	ORA $6DD0,X					;$00E5FF	|
+	ORA.W Obj_VAR1,X					;$00E5FF	|
 	TAY							;$00E602	|
 	PLX							;$00E603	|
 	PLA							;$00E604	|
@@ -13368,7 +13365,7 @@ CODE_FL_00E648:
 
 CODE_FL_00E650:
 	PHA							;$00E650	|
-	LDA $6DD0,Y					;$00E651	|
+	LDA.W Obj_VAR1,Y					;$00E651	|
 	TAY							;$00E654	|
 	PLA							;$00E655	|
 	BRA CODE_FL_00E65B			;$00E656	|
@@ -13436,7 +13433,7 @@ CODE_FL_00E6AA:
 DestroyUsedObject:				;			| Destroy an object in the instance where it has been "used"
 	LDX $39						;$00E6B2	| e.g. food was eaten, boss was already defeated, etc.
 	LDA #$A6EC					;$00E6B4	|
-	STA $66AA,X					;$00E6B7	|
+	STA.W Obj_UnknownCallback,X					;$00E6B7	|
 	JSL RemoveTickCallback_L	;$00E6BA	|
 	JML DestroyObject_L			;$00E6BE	|
 
@@ -13479,28 +13476,28 @@ CODE_FL_00E6F3:
 	JMP CODE_FL_00E6CC			;$00E702	|
 
 CODE_FL_00E705:
-	STA $6FB8,Y					;$00E705	|
+	STA.W Obj_VAR5,Y					;$00E705	|
 	TXA							;$00E708	|
 	XBA							;$00E709	|
-	STA $6F3E,Y					;$00E70A	|
+	STA.W Obj_VAR4,Y					;$00E70A	|
 	RTL							;$00E70D	|
 
 CODE_FL_00E70E:
-	LDA $6F3E,Y					;$00E70E	|
+	LDA.W Obj_VAR4,Y					;$00E70E	|
 	CMP #$FFFF					;$00E711	|
 	BEQ CODE_FL_00E736			;$00E714	|
 	AND #$00FF					;$00E716	|
 	DEC A						;$00E719	|
 	PHP							;$00E71A	|
 	SEP #$20					;$00E71B	|
-	STA $6F3E,Y					;$00E71D	|
+	STA.W Obj_VAR4,Y					;$00E71D	|
 	REP #$20					;$00E720	|
 	PLP							;$00E722	|
 	BPL CODE_FL_00E736			;$00E723	|
-	LDA $6F3E,Y					;$00E725	|
+	LDA.W Obj_VAR4,Y					;$00E725	|
 	XBA							;$00E728	|
 	STA $602A					;$00E729	|
-	LDA $6FB8,Y					;$00E72C	|
+	LDA.W Obj_VAR5,Y					;$00E72C	|
 	STA $6028					;$00E72F	|
 	JSL LongCall_6028			;$00E732	|
 CODE_FL_00E736:					;			|
@@ -13510,11 +13507,11 @@ CODE_FL_00E737:
 	DEC A						;$00E737	|
 	LDY $39						;$00E738	|
 	SEP #$20					;$00E73A	|
-	STA $6F3E,Y					;$00E73C	|
+	STA.W Obj_VAR4,Y					;$00E73C	|
 	REP #$20					;$00E73F	|
 	PLA							;$00E741	|
 	INC A						;$00E742	|
-	STA $6FB8,Y					;$00E743	|
+	STA.W Obj_VAR5,Y					;$00E743	|
 	SEP #$20					;$00E746	|
 	PLA							;$00E748	|
 	STA $6F3F,Y					;$00E749	|
@@ -13522,28 +13519,28 @@ CODE_FL_00E737:
 	RTL							;$00E74E	|
 
 CODE_FL_00E74F:
-	STA $71A0,Y					;$00E74F	|
+	STA.W Obj_VAR9,Y					;$00E74F	|
 	TXA							;$00E752	|
 	XBA							;$00E753	|
-	STA $70AC,Y					;$00E754	|
+	STA.W Obj_VAR7,Y					;$00E754	|
 	RTL							;$00E757	|
 
 CODE_FL_00E758:
-	LDA $70AC,Y					;$00E758	|
+	LDA.W Obj_VAR7,Y					;$00E758	|
 	CMP #$FFFF					;$00E75B	|
 	BEQ CODE_FL_00E780			;$00E75E	|
 	AND #$00FF					;$00E760	|
 	DEC A						;$00E763	|
 	PHP							;$00E764	|
 	SEP #$20					;$00E765	|
-	STA $70AC,Y					;$00E767	|
+	STA.W Obj_VAR7,Y					;$00E767	|
 	REP #$20					;$00E76A	|
 	PLP							;$00E76C	|
 	BPL CODE_FL_00E780			;$00E76D	|
-	LDA $70AC,Y					;$00E76F	|
+	LDA.W Obj_VAR7,Y					;$00E76F	|
 	XBA							;$00E772	|
 	STA $602A					;$00E773	|
-	LDA $71A0,Y					;$00E776	|
+	LDA.W Obj_VAR9,Y					;$00E776	|
 	STA $6028					;$00E779	|
 	JSL LongCall_6028			;$00E77C	|
 CODE_FL_00E780:					;			|
@@ -13553,11 +13550,11 @@ CODE_FL_00E781:
 	DEC A						;$00E781	|
 	LDY $39						;$00E782	|
 	SEP #$20					;$00E784	|
-	STA $70AC,Y					;$00E786	|
+	STA.W Obj_VAR7,Y					;$00E786	|
 	REP #$20					;$00E789	|
 	PLA							;$00E78B	|
 	INC A						;$00E78C	|
-	STA $71A0,Y					;$00E78D	|
+	STA.W Obj_VAR9,Y					;$00E78D	|
 	SEP #$20					;$00E790	|
 	PLA							;$00E792	|
 	STA $70AD,Y					;$00E793	|
@@ -13595,7 +13592,7 @@ CODE_FL_00E7C5:
 	RTL							;$00E7CB	|
 
 CODE_FL_00E7CC:
-	LDX $6DD0,Y					;$00E7CC	|
+	LDX.W Obj_VAR1,Y					;$00E7CC	|
 	BPL CODE_FL_00E7D5			;$00E7CF	|
 	EOR #$FFFF					;$00E7D1	|
 	INC A						;$00E7D4	|
@@ -13604,7 +13601,7 @@ CODE_FL_00E7D5:					;			|
 	RTL							;$00E7D8	|
 
 CODE_FL_00E7D9:
-	LDX $6DD0,Y					;$00E7D9	|
+	LDX.W Obj_VAR1,Y					;$00E7D9	|
 	BPL CODE_FL_00E7E2			;$00E7DC	|
 	EOR #$FFFF					;$00E7DE	|
 	INC A						;$00E7E1	|
@@ -13640,13 +13637,13 @@ CODE_FL_00E80C:
 	RTL							;$00E80E	|
 
 CODE_FL_00E80F:
-	STA $679E,Y					;$00E80F	|
+	STA.W Obj_ScriptProgramCounter,Y					;$00E80F	|
 	TXA							;$00E812	|
 	SEP #$20					;$00E813	|
-	STA $6818,Y					;$00E815	|
+	STA.W Obj_ScriptProgramBank,Y					;$00E815	|
 	REP #$20					;$00E818	|
 	TYX							;$00E81A	|
-	STZ $6724,X					;$00E81B	|
+	STZ.W Obj_ScriptSleepTimer,X					;$00E81B	|
 	RTL							;$00E81E	|
 
 CODE_FL_00E81F:
@@ -13707,7 +13704,7 @@ CODE_FL_00E883:
 	RTL							;$00E886	|
 CODE_FL_00E887:					;			|
 	LDY $39						;$00E887	|
-	LDX $6E4A,Y					;$00E889	|
+	LDX.W Obj_VAR2,Y					;$00E889	|
 	LDA $6892,Y					;$00E88C	|
 	CLC							;$00E88F	|
 	ADC $76A7,X					;$00E890	|
@@ -13723,7 +13720,7 @@ CODE_FL_00E8A1:
 	RTL							;$00E8A4	|
 CODE_FL_00E8A5:					;			|
 	LDY $39						;$00E8A5	|
-	LDX $6E4A,Y					;$00E8A7	|
+	LDX.W Obj_VAR2,Y					;$00E8A7	|
 	LDA $37A6,X					;$00E8AA	|
 	STA $6892,Y					;$00E8AD	|
 	STA $6986,Y					;$00E8B0	|
@@ -13737,7 +13734,7 @@ CODE_FL_00E8BD:
 	RTL							;$00E8C0	|
 CODE_FL_00E8C1:					;			|
 	LDY $39						;$00E8C1	|
-	LDX $6E4A,Y					;$00E8C3	|
+	LDX.W Obj_VAR2,Y					;$00E8C3	|
 	LDA $6892,X					;$00E8C6	|
 	CLC							;$00E8C9	|
 	ADC $76A7,X					;$00E8CA	|
@@ -13762,7 +13759,7 @@ CODE_FL_00E8F2:
 	RTL							;$00E8F5	|
 CODE_FL_00E8F6:					;			|
 	LDY $39						;$00E8F6	|
-	LDX $6E4A,Y					;$00E8F8	|
+	LDX.W Obj_VAR2,Y					;$00E8F8	|
 	LDA $6B6E,Y					;$00E8FB	|
 	CLC							;$00E8FE	|
 	ADC $6892,X					;$00E8FF	|
@@ -13785,8 +13782,8 @@ CODE_FL_00E91A:					;			|
 	BNE CODE_FL_00E951			;$00E923	|
 	JSR CODE_FL_00E952			;$00E925	|
 	BCC CODE_FL_00E951			;$00E928	|
-	LDX $6E4A,Y					;$00E92A	|
-	LDA $6DD0,X					;$00E92D	|
+	LDX.W Obj_VAR2,Y					;$00E92A	|
+	LDA.W Obj_VAR1,X					;$00E92D	|
 	BMI CODE_FL_00E937			;$00E930	|
 	LDA #$FFF6					;$00E932	|
 	BRA CODE_FL_00E93A			;$00E935	|
@@ -13895,12 +13892,12 @@ CODE_FL_00E9DE:
 	RTL							;$00E9E1	|
 CODE_FL_00E9E2:					;			|
 	LDA $6B6E,Y					;$00E9E2	|
-	LDX $6DD0,Y					;$00E9E5	|
+	LDX.W Obj_VAR1,Y					;$00E9E5	|
 	BPL CODE_FL_00E9EE			;$00E9E8	|
 	EOR #$FFFF					;$00E9EA	|
 	INC A						;$00E9ED	|
 CODE_FL_00E9EE:					;			|
-	LDX $6E4A,Y					;$00E9EE	|
+	LDX.W Obj_VAR2,Y					;$00E9EE	|
 	CLC							;$00E9F1	|
 	ADC $6892,X					;$00E9F2	|
 	STA $6892,Y					;$00E9F5	|

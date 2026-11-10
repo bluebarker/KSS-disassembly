@@ -1,36 +1,36 @@
 ; Compiler macros for KSS ActionScript commands
 ; For the complete list of ActionScript commands, see here: https://github.com/CataLatas/hal-actionscript-extractor/blob/main/KSS/DOCUMENTATION.txt
 
-macro AS_END()
+macro AS_End()
     db $00
 endmacro
 
-macro AS_HALT()
+macro AS_Halt()
     db $01
 endmacro
 
-macro AS_WAIT(imm8)    ; wait time is in frames (e.g. 3 = 3 frames)
+macro AS_Wait(imm8)    ; wait time is in frames (e.g. 3 = 3 frames)
     db $02, <imm8>
 endmacro
 
-macro AS_ONTICK(long)
+macro AS_OnTickCallback(long)
     db $03
     dl <long>
 endmacro
 
-macro AS_ENDTICK()
+macro AS_EndTick()
     db $04
 endmacro
 
-macro AS_LOOP_IMM8(imm8)
+macro AS_Loop_imm8(imm8)
     db $05, <imm8>
 endmacro
 
-macro AS_LOOP_REG()
+macro AS_Loop_reg()
     db $06
 endmacro
 
-macro AS_ENDLOOP()
+macro AS_EndLoop()
     db $07
 endmacro
 
@@ -48,7 +48,7 @@ macro AS_JSR(abs_addr)
     dw <abs_addr>
 endmacro
 
-macro AS_MULTIJSR(...)
+macro AS_MultiJSR(...)
     db $0B
     db sizeof(...)
 
@@ -73,7 +73,7 @@ macro AS_JMP(abs)
     dw <abs>
 endmacro
 
-macro AS_MULTIJMP(...)
+macro AS_MultiJMP(...)
     db $0F
     db sizeof(...)
 
@@ -94,55 +94,55 @@ macro AS_JNE(abs)
     dw <abs>
 endmacro
 
-macro AS_BREAKEQ(abs)
+macro AS_BEQ(abs)
     db $12
     dw <abs>
 endmacro
 
-macro AS_BREAKNE(abs)
+macro AS_BNE(abs)
     db $13
     dw <abs>
 endmacro
 
-macro AS_SPRITEMAP(long)
+macro AS_SpriteMap(long)
     db $14
     dl <long>
 endmacro
 
-macro AS_ONDRAW(abs)
+macro AS_OnDraw(abs)
     db $15
     dw <abs>
 endmacro
 
-macro AS_UNK16(abs)
+macro AS_SetTickLoop(abs)
     db $16
     dw <abs>
 endmacro
 
 ; Probably should combine all MOV routines into its own routine at some point, for the sake of convenience. Doing this for now because it seems very complex.
-macro AS_MOV_REG_IMM16(imm16)
+macro AS_MOV_reg_imm16(imm16)
     db $17
     dw <imm16>
 endmacro
 
-macro AS_MOV_REG_ABS(abs)
+macro AS_MOV_reg_abs(abs)
     db $18
     dw <abs>
 endmacro
 
-macro AS_MOV_VAR_IMM16(var, imm16)
+macro AS_MOV_var_imm16(var, imm16)
     db $19
     db <var>
     dw <imm16>
 endmacro
 
-macro AS_MOV_ABS_IMM8(abs, imm8)
+macro AS_MOV_abs_imm8(abs, imm8)
     db $1A
     dw <abs>
     db <imm8>
 endmacro
 
-macro AS_MOV_ABS_IMM16(abs, imm16)
+macro AS_MOV_abs_imm16(abs, imm16)
     db $1B
     dw <abs>, <imm16>
 endmacro
@@ -176,11 +176,11 @@ macro AS_BinOp_reg(op, imm16)
     dw <imm16>
 endmacro
 
-macro AS_Mov_var_reg(var)
+macro AS_MOV_var_reg(var)
     db $20, <var>
 endmacro
 
-macro AS_Mov_reg_var(var)
+macro AS_MOV_reg_var(var)
     db $21, <var>
 endmacro
 

@@ -824,7 +824,7 @@ skip 7
 ; Unknown if any other values are used.
 IRQ_Routine_Pointer: skip 3
 
-; Unidentified
+; Unidentified (unused?)
 skip 1
 
 ; === $00309F ===
@@ -1037,6 +1037,7 @@ Camera_TargetX: skip 2
 Camera_TargetY: skip 2
 
 ; === $00334E ===
+; 2 bytes
 ; Influences the Camera Y position in some way.
 ; Usually set to zero? Is this a Y offset value?
 skip 2
@@ -1095,7 +1096,7 @@ skip $3372-$3368
 
 ; === $003372 ===
 ; 2 bytes
-; Maximum X tile scroll of the given room
+; Maximum X tile scroll of the given room?
 skip 2
 
 ; Unidentified
@@ -1297,10 +1298,18 @@ skip $3731-$3700
 ; $3737 - 16-bit destination VRAM address
 DMA_Buffer_TempStorage: skip 8
 
+; Undefined
+skip 4
+
 ; 3739 is labeled as "Track" in the music debug text thing.
 
+; === $00373D ===
+; 3 bytes
+; Current location of the program counter for executing ActionScript
+AS_PC: skip 3
+
 ; Unidentified
-skip 10
+skip 3
 
 ; === $003743 ===
 ; 2 bytes
@@ -1340,7 +1349,7 @@ ObjVar4_Temp: skip 2
 
 ; === $00600A ===
 ; 2 bytes
-; Unsure: 623C,X
+; Unsure, reads from undocumented table $623C
 skip 2
 
 ; === $00600C - $00600E ===
@@ -1403,7 +1412,7 @@ skip 2
 
 ; === $0060BC ===
 ; Undocumented table
-skip !Max_Obj_Count*2
+Obj_Table60BC: skip !Max_Obj_Count*2
 ; 6136  ?
 skip 2
 ; 6138  ?
@@ -1413,7 +1422,7 @@ skip 2
 
 ; === $00613C ===
 ; Undocumented table
-skip !Max_Obj_Count*2
+Obj_Table613C: skip !Max_Obj_Count*2
 ; 61B6  ?
 skip 2
 ; 61B8  ?
@@ -1423,7 +1432,7 @@ skip 2
 
 ; === $0061BC ===
 ; Undocumented table
-skip !Max_Obj_Count*2
+Obj_Table61BC: skip !Max_Obj_Count*2
 ; 6236  ?
 skip 2
 ; 6238  ?
@@ -1433,7 +1442,8 @@ skip 2
 
 ; === $00623C ===
 ; Undocumented table
-skip !Max_Obj_Count*2
+; Part of the object variable pointer table at $008D6F
+Obj_Table623C: skip !Max_Obj_Count*2
 ; 62B6  ?
 skip 2
 ; 62B8  ?
@@ -1443,7 +1453,7 @@ skip 2
 
 ; === $0062BC ===
 ; Set to 8000 if object is invalid?
-skip !Max_Obj_Count*2
+Obj_Table62BC: skip !Max_Obj_Count*2
 ; 6336  ?
 skip 2
 ; 6338  ?
@@ -1478,8 +1488,9 @@ skip 2
 skip 2
 
 ; === $0064B6 ===
-; Undocumented table
-skip !Max_Obj_Count*2
+; Object Z-layering priority
+; A lower number indicates a higher priority
+Obj_ZLayer: skip !Max_Obj_Count*2
 ; 6530  ?
 skip 2
 ; 6532  ?
@@ -1511,15 +1522,15 @@ Obj_DrawCallback: skip !Max_Obj_Count*2
 Obj_UnknownCallback: skip !Max_Obj_Count*2
 
 ; === $006724 ===
-; Script sleep timer for the indexed object
+; Script sleep timer
 Obj_ScriptSleepTimer: skip !Max_Obj_Count*2
 
 ; === $00679E ===
-; Script program counter for the indexed object
+; Script program counter
 Obj_ScriptProgramCounter: skip !Max_Obj_Count*2
 
 ; === $006818 ===
-; Script program bank for the indexed object
+; Script program bank
 ; Extra flags in high byte: 
 ; - 80: skip a bunch of processing
 ; - 40: "Script" is actually "native ASM" (directly calls routines to wait/yield, etc)
@@ -1560,49 +1571,55 @@ Obj_YPositionFraction: skip !Max_Obj_Count*2
 
 ; === $006B6E ===
 ; Object X Speed
-skip !Max_Obj_Count*2
+Obj_XSpeed: skip !Max_Obj_Count*2
 
 ; === $006BE8 ===
-; Undocumented table
-skip !Max_Obj_Count*2
+; Object Y Speed
+Obj_YSpeed: skip !Max_Obj_Count*2
 
 ; === $006C62 ===
 ; Object X Acceleration
-skip !Max_Obj_Count*2
+Obj_XAcceleration: skip !Max_Obj_Count*2
 
 ; === $006CDC ===
-; Undocumented table
-skip !Max_Obj_Count*2
+; Object Y Acceleration
+Obj_YAcceleration: skip !Max_Obj_Count*2
 
 ; === $006D56 - $0071A0 ===
 ; All object variable tables
-; $006D56
+; == $006D56 ==
 Obj_VAR0: skip !Max_Obj_Count*2
-; $006DD0
+; == $006DD0 ==
+; Used exclusively for determining facing direction of all objects.
+; 0xC0 = facing left 
+; 0x40 = facing right
 Obj_VAR1: skip !Max_Obj_Count*2
-; $006E4A
+; == $006E4A ==
+; Animation timers/frames?
 Obj_VAR2: skip !Max_Obj_Count*2
-; $006EC4
+; == $006EC4 ==
 Obj_VAR3: skip !Max_Obj_Count*2
-; $006F3E
+; == $006F3E ==
 Obj_VAR4: skip !Max_Obj_Count*2
-; $006FB8
+; == $006FB8 ==
 Obj_VAR5: skip !Max_Obj_Count*2
-; $007032
+; == $007032 ==
 Obj_VAR6: skip !Max_Obj_Count*2
-; $0070AC
+; == $0070AC ==
 Obj_VAR7: skip !Max_Obj_Count*2
-; $007126
+; == $007126 ==
 Obj_VAR8: skip !Max_Obj_Count*2
-; $0071A0
+; == $0071A0 ==
 Obj_VAR9: skip !Max_Obj_Count*2
 
-; Unidentified
+; === $00721A ===
+; Unidentified table?
 skip 48
 
 ; === $00724A ===
 Obj_ScriptWorkRegister: skip !Max_Obj_Count*2
 
+; Unidentified
 skip $7368-$72C4
 
 ; === $007368 ===
@@ -1791,14 +1808,46 @@ RoMK_Timer: skip 2
 ; Main RoMK timer slows down once it is below 0x00BF as noted at $00C278.
 RoMK_SlowTimer: skip 2
 
+; 744B 2b state when you are intangible to items/cant fully pause the game
+; 744D 2b state above but for helper
+
+; 749f 2b kirby ability
+; 74a1 2b helper ability 
+
+; 7569 2b wheelie rider
+
+; $7577: 2byte shmup if anything greater than 0000
+
+; 757B: obtained an ability? (this doesn't increment/decrement in every circumstance though?)
+; when this is set to 1 while an ability hat or ability star is in play, the hat/star will disappear
+; (in mww, if you swallow an enemy with a hat in play, the hat will die)
+
+; 75CD: 2byte if set higher than 0000 it breaks plasma somehow (particles dont spawn and you cant charge it)
+; it also makes you go through enemies when you dash attack with yoyo?
+
 
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life
 
+; $7838: object script action timer?? controls ninja enemy in gco wind room. Managed near code $D32E1F
+
 ; 7a04: count of enemies defeated before rolling a food drop
 ; corkboard:
+; 7a19: 2b boss hp
+; 7a1b: 2b boss max hp
+; 7a1d: 2b current boss hp
+; 7a1f: 2b boss hp meter
+; 7a23: 1 byte, MetaKnight cutscene portrait (only used in RoMK). Next byte is frame copy
+; 7a28: 1b controls the HUD visibility and layering
 ; 7a65: current dyna blade level (may be limited to map? double check)
 ; 7a85: number of games unlocked
 ; 7a87: last frame subgame selection (used to trigger sfx)
 ; 7a91: current subgame selected
 ; 7a93: flags for which subgames have been cleared
+; 7A97: 2b freeze cam if above 0000
+; 7AA7: giant table of kirby's x coordinate history?
+; 7AC0: table for helper AI?
+; 7AC1: setting to 0000 makes 2P a CPU
+; 7ACB: 2b ducking timer?
+; 7AD1: 2b timer for shielding, or also holding up on the Dpad? (influenced by 7AC3: 08 shield, 05 up, )
+; 7B0F: 4b treasure count
