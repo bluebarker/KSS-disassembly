@@ -5681,7 +5681,7 @@ CODE_15DC48:
 
     JSL.L CODE_FL_00D883          ;$CADCF1 |
     LDA.W #$A8FC                  ;$CADCF5 |
-    STA.W Obj_UnknownCallback,Y   ;$CADCF8 |
+    STA.W Obj_TickLoopCallback,Y   ;$CADCF8 |
     LDA.W #$AB90                  ;$CADCFB |
     STA.W Obj_DrawCallback,Y      ;$CADCFE |
     JSL.L CODE_FL_00E1BF          ;$CADD01 |

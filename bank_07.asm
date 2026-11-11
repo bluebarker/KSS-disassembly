@@ -467,7 +467,7 @@ AS_07895F:
 
 CODE_8789C5:
     LDA.W #$A6EC                  ;$0789C5 |
-    STA.W Obj_UnknownCallback,Y   ;$0789C8 |
+    STA.W Obj_TickLoopCallback,Y   ;$0789C8 |
     LDA.W #$AB90                  ;$0789CB |
     STA.W Obj_DrawCallback,Y      ;$0789CE |
     LDA.W #$96AF                  ;$0789D1 |
@@ -522,7 +522,7 @@ CODE_8789F5:
     JSL.L CODE_FL_078FB2          ;$078A6F |
     JML.L DestroyUsedObject       ;$078A73 |
     LDA.W #$A6F1                  ;$078A77 |
-    STA.W Obj_UnknownCallback,Y   ;$078A7A |
+    STA.W Obj_TickLoopCallback,Y   ;$078A7A |
     LDA.W #$AB72                  ;$078A7D |
     STA.W Obj_DrawCallback,Y      ;$078A80 |
     LDA.W #$9AEA                  ;$078A83 |
@@ -585,7 +585,7 @@ DATA16_078B31:
     dw $0000,$0200,$0400,$0600    ;$078B39 |
     dw $0800                      ;$078B41 |
     LDA.W #$A6FB                  ;$078B43 |
-    STA.W Obj_UnknownCallback,Y   ;$078B46 |
+    STA.W Obj_TickLoopCallback,Y   ;$078B46 |
     LDA.W #$AB72                  ;$078B49 |
     STA.W Obj_DrawCallback,Y      ;$078B4C |
     LDA.W #$9AEA                  ;$078B4F |
@@ -677,7 +677,7 @@ DATA16_078C3D:
     dw $0034,$0060,$0048,$0050    ;$078C6D |
     dw $0054                      ;$078C75 |
     LDA.W #$A6F1                  ;$078C77 |
-    STA.W Obj_UnknownCallback,Y   ;$078C7A |
+    STA.W Obj_TickLoopCallback,Y   ;$078C7A |
     LDA.W #$AB72                  ;$078C7D |
     STA.W Obj_DrawCallback,Y      ;$078C80 |
     LDA.W #$9AEA                  ;$078C83 |
@@ -700,7 +700,7 @@ DATA16_078C3D:
     JSL.L CODE_FL_00E091          ;$078CB5 |
     JML.L DestroyUsedObject       ;$078CB9 |
     LDA.W #$A6F1                  ;$078CBD |
-    STA.W Obj_UnknownCallback,Y   ;$078CC0 |
+    STA.W Obj_TickLoopCallback,Y   ;$078CC0 |
     LDA.W #$AB72                  ;$078CC3 |
     STA.W Obj_DrawCallback,Y      ;$078CC6 |
     LDA.W #$9AEA                  ;$078CC9 |
@@ -747,7 +747,7 @@ CODE_878CE5:
 DATA16_078D49:
     dw $00AA,$0056,$0080          ;$078D49 |
     LDA.W #$A6FB                  ;$078D4F |
-    STA.W Obj_UnknownCallback,Y   ;$078D52 |
+    STA.W Obj_TickLoopCallback,Y   ;$078D52 |
     LDA.W #$AB72                  ;$078D55 |
     STA.W Obj_DrawCallback,Y      ;$078D58 |
     LDA.W #$9AEA                  ;$078D5B |
@@ -3164,7 +3164,7 @@ DATA8_07E060:
     LDX.W #$00CC                  ;$07E06C |
     JSL.L CODE_FL_00E1CC          ;$07E06F |
     LDA.W #$A89D                  ;$07E073 |
-    STA.W Obj_UnknownCallback,Y   ;$07E076 |
+    STA.W Obj_TickLoopCallback,Y   ;$07E076 |
     LDA.W Obj_VAR0,Y              ;$07E079 |
     CMP.W #$0009                  ;$07E07C |
 
@@ -3550,7 +3550,7 @@ CODE_07E383:
     LDA.W #$FFFF                  ;$07E38D |
     STA.W Obj_Pose,Y              ;$07E390 |
     LDA.W #$A8BA                  ;$07E393 |
-    STA.W Obj_UnknownCallback,Y   ;$07E396 |
+    STA.W Obj_TickLoopCallback,Y   ;$07E396 |
     LDA.W Current_SubGame         ;$07E399 |
     CMP.W #$0007                  ;$07E39C |
 
@@ -4092,7 +4092,7 @@ CODE_07E857:
     LDA.W #$AB78                  ;$07E857 |
     STA.W Obj_DrawCallback,Y      ;$07E85A |
     LDA.W #$A6FB                  ;$07E85D |
-    STA.W Obj_UnknownCallback,Y   ;$07E860 |
+    STA.W Obj_TickLoopCallback,Y   ;$07E860 |
     LDA.W #$93A1                  ;$07E863 |
     LDX.W #$00CC                  ;$07E866 |
     JSL.L CODE_FL_00E1CC          ;$07E869 |
@@ -4137,7 +4137,7 @@ CODE_07E8BC:
     LDA.W #$AB90                  ;$07E8C2 |
     STA.W Obj_DrawCallback,Y      ;$07E8C5 |
     LDA.W #$A8BA                  ;$07E8C8 |
-    STA.W Obj_UnknownCallback,Y   ;$07E8CB |
+    STA.W Obj_TickLoopCallback,Y   ;$07E8CB |
     LDA.W #$FFFF                  ;$07E8CE |
     LDX.W #$00FF                  ;$07E8D1 |
     JSL.L CODE_FL_00E1CC          ;$07E8D4 |
@@ -4162,7 +4162,7 @@ CODE_07E8BC:
     LDA.W #$AB90                  ;$07E90F |
     STA.W Obj_DrawCallback,Y      ;$07E912 |
     LDA.W #$A6EC                  ;$07E915 |
-    STA.W Obj_UnknownCallback,Y   ;$07E918 |
+    STA.W Obj_TickLoopCallback,Y   ;$07E918 |
     LDA.W #$FFFF                  ;$07E91B |
     LDX.W #$00FF                  ;$07E91E |
     JSL.L CODE_FL_00E1CC          ;$07E921 |
@@ -4248,7 +4248,7 @@ CODE_07E8BC:
     LDA.W #$AB90                  ;$07EA15 |
     STA.W Obj_DrawCallback,Y      ;$07EA18 |
     LDA.W #$A6EC                  ;$07EA1B |
-    STA.W Obj_UnknownCallback,Y   ;$07EA1E |
+    STA.W Obj_TickLoopCallback,Y   ;$07EA1E |
     LDA.W #$FFFF                  ;$07EA21 |
     LDX.W #$00FF                  ;$07EA24 |
     JSL.L CODE_FL_00E1CC          ;$07EA27 |
@@ -4491,7 +4491,7 @@ CODE_07ECBA:
     LDA.W #$AB78                  ;$07ECBA |
     STA.W Obj_DrawCallback,Y      ;$07ECBD |
     LDA.W #$A6FB                  ;$07ECC0 |
-    STA.W Obj_UnknownCallback,Y   ;$07ECC3 |
+    STA.W Obj_TickLoopCallback,Y   ;$07ECC3 |
     LDA.W #$9457                  ;$07ECC6 |
     LDX.W #$00CC                  ;$07ECC9 |
     JSL.L CODE_FL_00E1CC          ;$07ECCC |
@@ -4967,7 +4967,7 @@ CODE_07F1CC:
 
 CODE_07F207:
     LDA.W #$A72A                  ;$07F207 |
-    STA.W Obj_UnknownCallback,Y   ;$07F20A |
+    STA.W Obj_TickLoopCallback,Y   ;$07F20A |
     LDA.W #$AB90                  ;$07F20D |
     STA.W Obj_DrawCallback,Y      ;$07F210 |
     LDA.W #$FFFF                  ;$07F213 |
@@ -5015,7 +5015,7 @@ CODE_07F272:
 
 CODE_07F276:
     LDA.W #$A72A                  ;$07F276 |
-    STA.W Obj_UnknownCallback,Y   ;$07F279 |
+    STA.W Obj_TickLoopCallback,Y   ;$07F279 |
     LDA.W #$AB72                  ;$07F27C |
     STA.W Obj_DrawCallback,Y      ;$07F27F |
     LDA.W #$FFFF                  ;$07F282 |
@@ -5336,7 +5336,7 @@ CODE_07F5F0:
     LDA.W #$AB90                  ;$07F5F0 |
     STA.W Obj_DrawCallback,Y      ;$07F5F3 |
     LDA.W #$A6EC                  ;$07F5F6 |
-    STA.W Obj_UnknownCallback,Y   ;$07F5F9 |
+    STA.W Obj_TickLoopCallback,Y   ;$07F5F9 |
     LDA.W #$FFFF                  ;$07F5FC |
     LDX.W #$00FF                  ;$07F5FF |
     JSL.L CODE_FL_00E1CC          ;$07F602 |
@@ -5396,7 +5396,7 @@ CODE_07F67B:
     LDA.W #$AB90                  ;$07F67B |
     STA.W Obj_DrawCallback,Y      ;$07F67E |
     LDA.W #$A6EC                  ;$07F681 |
-    STA.W Obj_UnknownCallback,Y   ;$07F684 |
+    STA.W Obj_TickLoopCallback,Y   ;$07F684 |
     LDA.W #$FFFF                  ;$07F687 |
     LDX.W #$00FF                  ;$07F68A |
     JSL.L CODE_FL_00E1CC          ;$07F68D |
@@ -5435,7 +5435,7 @@ CODE_07F6C7:
     LDA.W #$AB90                  ;$07F6C7 |
     STA.W Obj_DrawCallback,Y      ;$07F6CA |
     LDA.W #$A6EC                  ;$07F6CD |
-    STA.W Obj_UnknownCallback,Y   ;$07F6D0 |
+    STA.W Obj_TickLoopCallback,Y   ;$07F6D0 |
     LDA.W #$FFFF                  ;$07F6D3 |
     LDX.W #$00FF                  ;$07F6D6 |
     JSL.L CODE_FL_00E1CC          ;$07F6D9 |
@@ -5474,7 +5474,7 @@ CODE_07F713:
     LDA.W #$AB90                  ;$07F713 |
     STA.W Obj_DrawCallback,Y      ;$07F716 |
     LDA.W #$A6EC                  ;$07F719 |
-    STA.W Obj_UnknownCallback,Y   ;$07F71C |
+    STA.W Obj_TickLoopCallback,Y   ;$07F71C |
     LDA.W #$FFFF                  ;$07F71F |
     LDX.W #$00FF                  ;$07F722 |
     JSL.L CODE_FL_00E1CC          ;$07F725 |
@@ -5502,7 +5502,7 @@ CODE_07F74C:
     LDA.W #$AB90                  ;$07F74C |
     STA.W Obj_DrawCallback,Y      ;$07F74F |
     LDA.W #$A6EC                  ;$07F752 |
-    STA.W Obj_UnknownCallback,Y   ;$07F755 |
+    STA.W Obj_TickLoopCallback,Y   ;$07F755 |
     LDA.W #$FFFF                  ;$07F758 |
     LDX.W #$00FF                  ;$07F75B |
     JSL.L CODE_FL_00E1CC          ;$07F75E |
@@ -5613,7 +5613,7 @@ CODE_07F823:
     LDA.W #$AB90                  ;$07F823 |
     STA.W Obj_DrawCallback,Y      ;$07F826 |
     LDA.W #$A6EC                  ;$07F829 |
-    STA.W Obj_UnknownCallback,Y   ;$07F82C |
+    STA.W Obj_TickLoopCallback,Y   ;$07F82C |
     LDA.W #$FFFF                  ;$07F82F |
     LDX.W #$00FF                  ;$07F832 |
     JSL.L CODE_FL_00E1CC          ;$07F835 |
@@ -5660,7 +5660,7 @@ CODE_FL_07F87C:
 
 CODE_07F89A:
     LDA.W #$A6EC                  ;$07F89A |
-    STA.W Obj_UnknownCallback,Y   ;$07F89D |
+    STA.W Obj_TickLoopCallback,Y   ;$07F89D |
     LDA.W #$FFFF                  ;$07F8A0 |
     LDX.W #$00FF                  ;$07F8A3 |
     JSL.L CODE_FL_00E1CC          ;$07F8A6 |

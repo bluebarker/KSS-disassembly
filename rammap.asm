@@ -1519,7 +1519,7 @@ Obj_DrawCallback: skip !Max_Obj_Count*2
 
 ; === $0066AA ===
 ; Unknown callback. Move callback?
-Obj_UnknownCallback: skip !Max_Obj_Count*2
+Obj_TickLoopCallback: skip !Max_Obj_Count*2
 
 ; === $006724 ===
 ; Script sleep timer

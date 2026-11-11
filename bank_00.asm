@@ -1930,7 +1930,7 @@ InitializeNewObject:			; X = Object slot
 	LDA #CODE_FL_00AB78			;$008E9E	|
 	STA.W Obj_DrawCallback,X					;$008EA1	|
 	LDA #CODE_FL_00A6FB			;$008EA4	|
-	STA.W Obj_UnknownCallback,X					;$008EA7	|
+	STA.W Obj_TickLoopCallback,X					;$008EA7	|
 	LDA $6000					;$008EAA	|
 	STA.W Obj_VAR0,X					;$008EAD	|
 	LDA $6002					;$008EB0	|
@@ -2612,7 +2612,7 @@ AS_OpPointers:					;$0092E4	| Pointers to all of the ActionScript routines. Simi
 	dw AS_Unk31					; 31
 AS_OpWaitPointers:					;````
 	dw AS_Unk32					; 32 / 0x
-	dw AS_Unk33					; 33 / 1x
+	dw AS_SetZLayer					; 33 / 1x
 	dw AS_Unk34					; 34 / 2x
 	dw AS_SetPoseImm16			; 35 / 3x
 	dw AS_SetPoseImm8			; 36 / 4x
@@ -2729,7 +2729,7 @@ AS_AltOpPointers:				;$0093E1	| Alternate pointer table to ActionScript routines
 	dw CODE_FL_009668			; 15
 	dw AS_MovVarReg				; 16
 	dw AS_MovRegVar				; 17
-	dw AS_Unk33					; 18
+	dw AS_SetZLayer					; 18
 	dw AS_Unk34					; 19
 	dw AS_StopMove				; 1A
 	dw AS_SetXSpeed				; 1B
@@ -2769,7 +2769,7 @@ AS_End:							;-----------| ActionScript instruction 00
 	TYX							;$009453	|
 	INC.W Obj_ScriptSleepTimer,X					;$009454	|
 	LDA #$A6EC					;$009457	|
-	STA.W Obj_UnknownCallback,X					;$00945A	|
+	STA.W Obj_TickLoopCallback,X					;$00945A	|
 	JSR RemoveTickCallback		;$00945D	|
 	JMP DestroyObject			;$009460	|
 
@@ -3030,7 +3030,7 @@ AS_OnDraw:						;-----------| ActionScript instruction 15
 AS_SetTickLoop:						;-----------| ActionScript instruction 16
 	INC.B AS_PC					;$0095E3	|
 	LDA.B [AS_PC]				;$0095E5	|
-	STA.W Obj_UnknownCallback,Y					;$0095E7	|
+	STA.W Obj_TickLoopCallback,Y					;$0095E7	|
 	INC.B AS_PC					;$0095EA	|
 	INC.B AS_PC					;$0095EC	|
 	RTS							;$0095EE	|
@@ -3594,7 +3594,7 @@ AS_PresetCall:					;-----------| ActionScript instruction Dx
 	STA $602A					;$00999B	|
 	BRA CODE_FL_009973			;$00999E	|
 
-AS_Unk33:						;-----------| ActionScript instruction 33
+AS_SetZLayer:						;-----------| ActionScript instruction 33
 	INC.B AS_PC						;$0099A0	|
 	LDA.B [AS_PC]					;$0099A2	|
 	STA.W Obj_ZLayer,Y					;$0099A4	|
@@ -5568,7 +5568,7 @@ CODE_FL_00A6F7:					;-----------|
 	JSR CODE_FL_00A6FB			;$00A6F7	|
 	RTL							;$00A6FA	|
 CODE_FL_00A6FB:					;			|
-	JSR CODE_FL_00A81B			;$00A6FB	|
+	JSR UpdateObjectSpeed			;$00A6FB	|
 	JSR CODE_FL_00A7B8			;$00A6FE	|
 	JMP CODE_FL_00A89D			;$00A701	|
 
@@ -5576,7 +5576,7 @@ CODE_FL_00A704:					;-----------|
 	JSR CODE_FL_00A708			;$00A704	|
 	RTL							;$00A707	|
 CODE_FL_00A708:					;			|
-	JSR CODE_FL_00A81B			;$00A708	|
+	JSR UpdateObjectSpeed			;$00A708	|
 	JSR CODE_FL_00A7B8			;$00A70B	|
 	RTS							;$00A70E	|
 
@@ -5591,7 +5591,7 @@ CODE_FL_00A719:					;-----------|
 	JSR CODE_FL_00A71D			;$00A719	|
 	RTL							;$00A71C	|
 CODE_FL_00A71D:					;			|
-	JSR CODE_FL_00A81B			;$00A71D	|
+	JSR UpdateObjectSpeed			;$00A71D	|
 	JSR CODE_FL_00A832			;$00A720	|
 	JMP CODE_FL_00A89D			;$00A723	|
 
@@ -5599,7 +5599,7 @@ CODE_FL_00A726:					;-----------|
 	JSR CODE_FL_00A72A			;$00A726	|
 	RTL							;$00A729	|
 CODE_FL_00A72A:					;			|
-	JSR CODE_FL_00A81B			;$00A72A	|
+	JSR UpdateObjectSpeed			;$00A72A	|
 	JSR CODE_FL_00A7B8			;$00A72D	|
 	JMP CODE_FL_00A87F			;$00A730	|
 
@@ -5608,7 +5608,7 @@ CODE_FL_00A733:					;-----------|
 	JSR CODE_FL_00A737			;$00A733	|
 	RTL							;$00A736	|
 CODE_FL_00A737:					;			|
-	JSR CODE_FL_00A81B			;$00A737	|
+	JSR UpdateObjectSpeed			;$00A737	|
 	JSR CODE_FL_00A832			;$00A73A	|
 	JMP CODE_FL_00A87F			;$00A73D	|
 
@@ -5616,7 +5616,7 @@ CODE_FL_00A740:					;-----------|
 	JSR CODE_FL_00A744			;$00A740	|
 	RTL							;$00A743	|
 CODE_FL_00A744:					;			|
-	JSR CODE_FL_00A81B			;$00A744	|
+	JSR UpdateObjectSpeed			;$00A744	|
 	JSR CODE_FL_00A7B8			;$00A747	|
 	LDY $39						;$00A74A	|
 	LDX.W Obj_VAR2,Y					;$00A74C	|
@@ -5631,7 +5631,7 @@ CODE_FL_00A75F:					;-----------|
 	JSR CODE_FL_00A763			;$00A75F	|
 	RTL							;$00A762	|
 CODE_FL_00A763:					;			|
-	JSR CODE_FL_00A81B			;$00A763	|
+	JSR UpdateObjectSpeed			;$00A763	|
 	JSR CODE_FL_00A7B8			;$00A766	|
 	LDY $39						;$00A769	|
 	LDX.W Obj_VAR2,Y					;$00A76B	|
@@ -5649,7 +5649,7 @@ CODE_FL_00A784:					;-----------|
 	JSR CODE_FL_00A788			;$00A784	|
 	RTL							;$00A787	|
 CODE_FL_00A788:					;			|
-	JSR CODE_FL_00A81B			;$00A788	|
+	JSR UpdateObjectSpeed			;$00A788	|
 	LDA.W Obj_VAR1,Y			;$00A78B	|
 	BMI CODE_FL_00A796			;$00A78E	|
 	JSR CODE_FL_00A7B8			;$00A790	|
@@ -5663,7 +5663,7 @@ CODE_FL_00A79C:					;-----------|
 	JSR CODE_FL_00A7A0			;$00A79C	|
 	RTL							;$00A79F	|
 CODE_FL_00A7A0:					;			|
-	JSR CODE_FL_00A81B			;$00A7A0	|
+	JSR UpdateObjectSpeed			;$00A7A0	|
 	LDA.W Obj_VAR1,Y			;$00A7A3	|
 	BMI CODE_FL_00A7AE			;$00A7A6	|
 	JSR CODE_FL_00A7B8			;$00A7A8	|
@@ -5726,10 +5726,10 @@ CODE_FL_00A802:					;```````````|
 	ADC $6986,Y					;$00A810	|
 	STA $6986,Y					;$00A813	|
 	RTS							;$00A816	|
-	JSR CODE_FL_00A81B			;$00A817	|
+	JSR UpdateObjectSpeed		;$00A817	|
 	RTL							;$00A81A	|
 
-CODE_FL_00A81B:					;```````````| Something related to controlling object speed
+UpdateObjectSpeed:					;```````````| Something related to controlling object speed
 	LDY $39						;$00A81B	|
 	LDA $6C62,Y					;$00A81D	|
 	CLC							;$00A820	|
@@ -5856,7 +5856,7 @@ CODE_FL_00A8FC:					;			|
 	STA $6986,Y					;$00A901	|
 	LDA $303D					;$00A904	|
 	STA $6A00,Y					;$00A907	|
-	JSR CODE_FL_00A81B			;$00A90A	|
+	JSR UpdateObjectSpeed			;$00A90A	|
 	JSR CODE_FL_00A7DA			;$00A90D	|
 	LDA $6986,Y					;$00A910	|
 	STA $3037					;$00A913	|
@@ -5874,7 +5874,7 @@ CODE_FL_00A921:					;			|
 	STA $6986,Y					;$00A927	|
 	LDA $303D,X					;$00A92A	|
 	STA $6A00,Y					;$00A92D	|
-	JSR CODE_FL_00A81B			;$00A930	|
+	JSR UpdateObjectSpeed			;$00A930	|
 	JSR CODE_FL_00A7DA			;$00A933	|
 	PLX							;$00A936	|
 	LDA $6986,Y					;$00A937	|
@@ -12868,7 +12868,7 @@ CODE_FL_00E333:					;			|
 	LDA #$A744					;$00E335	|
 	BRA CODE_FL_00E33A			;$00E338	|
 CODE_FL_00E33A:					;			|
-	STA.W Obj_UnknownCallback,Y					;$00E33A	|
+	STA.W Obj_TickLoopCallback,Y					;$00E33A	|
 	RTL							;$00E33D	|
 
 CODE_FL_00E33E:
@@ -13433,7 +13433,7 @@ CODE_FL_00E6AA:
 DestroyUsedObject:				;			| Destroy an object in the instance where it has been "used"
 	LDX $39						;$00E6B2	| e.g. food was eaten, boss was already defeated, etc.
 	LDA #$A6EC					;$00E6B4	|
-	STA.W Obj_UnknownCallback,X					;$00E6B7	|
+	STA.W Obj_TickLoopCallback,X					;$00E6B7	|
 	JSL RemoveTickCallback_L	;$00E6BA	|
 	JML DestroyObject_L			;$00E6BE	|
 
@@ -13867,7 +13867,7 @@ CODE_FL_00E9B3:
 	JSR CODE_FL_00E9B7			;$00E9B3	|
 	RTL							;$00E9B6	|
 CODE_FL_00E9B7:					;			|
-	JSR CODE_FL_00A81B			;$00E9B7	|
+	JSR UpdateObjectSpeed			;$00E9B7	|
 	JSR CODE_FL_00A7B8			;$00E9BA	|
 	JMP CODE_FL_00E9C4			;$00E9BD	|
 

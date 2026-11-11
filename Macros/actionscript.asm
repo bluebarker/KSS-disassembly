@@ -264,7 +264,7 @@ macro AS_UNK32(imm8, imm16)
     dw <imm16>
 endmacro
 
-macro AS_UNK33(imm16)
+macro AS_SetZLayer(imm16)
     db $33
     dw <imm16>
 endmacro
