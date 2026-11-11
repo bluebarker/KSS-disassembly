@@ -1286,7 +1286,17 @@ Helper_FacingDirection: skip 2
 ; $003700 is the start of several temp RAM addresses that the SA-1 uses
 
 ; Unidentified
-skip $3731-$3700
+skip $3714-$3700
+
+; === $003714 - $00371C ===
+; 4 bytes each
+; Scrap RAM for, in most use cases, indirect pointers to other tables.
+SA1_ScrapPointer1: skip 4
+SA1_ScrapPointer2: skip 4
+SA1_ScrapPointer3: skip 4
+
+; Unidentified
+skip $3731-$3720
 
 ; === $003731 ===
 ; 8 bytes
@@ -1825,6 +1835,8 @@ RoMK_SlowTimer: skip 2
 ; 75CD: 2byte if set higher than 0000 it breaks plasma somehow (particles dont spawn and you cant charge it)
 ; it also makes you go through enemies when you dash attack with yoyo?
 
+; 75BB,X if set to D088, Kirby's sprite flashes in a similar way to shielding
+
 
 ; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
 ; $77E6  :   2 Byte :  Enemy's life
@@ -1839,12 +1851,17 @@ RoMK_SlowTimer: skip 2
 ; 7a1f: 2b boss hp meter
 ; 7a23: 1 byte, MetaKnight cutscene portrait (only used in RoMK). Next byte is frame copy
 ; 7a28: 1b controls the HUD visibility and layering
+; 7a31: 38byte/48byte??? arena boss order, 2 bytes for each boss number
+; 7a59: arena timer milliseconds
+; 7a5B: arena timer seconds
+; 7a5d: arena timer minutes
 ; 7a65: current dyna blade level (may be limited to map? double check)
 ; 7a85: number of games unlocked
 ; 7a87: last frame subgame selection (used to trigger sfx)
 ; 7a91: current subgame selected
 ; 7a93: flags for which subgames have been cleared
 ; 7A97: 2b freeze cam if above 0000
+; 7AA1: current arena round
 ; 7AA7: giant table of kirby's x coordinate history?
 ; 7AC0: table for helper AI?
 ; 7AC1: setting to 0000 makes 2P a CPU

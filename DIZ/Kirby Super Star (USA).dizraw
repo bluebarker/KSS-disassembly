@@ -1771,7 +1771,7 @@
           <Value exs:type="ns1:Label" Name="AS_WaitImm" Comment="Actionscript instruction 02&#xA;" />
         </sys:Item>
         <sys:Item Key="38010">
-          <Value exs:type="ns1:Label" Name="AS_OnTickCallback" Comment="Actionscript instruction 03&#xA;" />
+          <Value exs:type="ns1:Label" Name="AS_OnTick" Comment="Actionscript instruction 03&#xA;" />
         </sys:Item>
         <sys:Item Key="38033">
           <Value exs:type="ns1:Label" Name="AS_EndTick" Comment="Actionscript instruction 04&#xA;" />
