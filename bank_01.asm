@@ -505,6 +505,7 @@ CODE_818478:
 	RTS
 
 ; Giant list of DMA tables
+DATA8_018479:
     db $83                        ;$018479 |
     dw $1400                      ;$01847A |
     dl DATA8_E12E30               ;$01847C |

@@ -73,7 +73,7 @@ AS_InitializeFileSelect:
         dw $0002
         dw CODE_8789C5
     %AS_ASMCall(CODE_078E59, $00)
-    %AS_OnTickCallback(CODE_079103)
+    %AS_OnTickCallback(CODE_079103)     ; Responsible for scrolling the file UI element in
     %AS_UNK30($00, $F800)
     %AS_Wait($1D)
     %AS_UNK30($00, $0000)
@@ -725,16 +725,16 @@ CODE_878F68:
     RTL                           ;$078F69 |
 
 CODE_078F6A:
-    LDA.W #$8F75                  ;$078F6A |
-    LDX.W #$0007                  ;$078F6D |
+    %LoadLongToAX(DATA8_078F75)
     JSL.L LoadDMATable            ;$078F70 |
     RTL                           ;$078F74 |
-    db $06,$00,$08                ;$078F75 |
-    dl DATA8_078F7E               ;$078F78 |
-    db $00,$58,$FF                ;$078F7B |
 
+DATA8_078F75:
+    db $06 : dw $0800 : dl DATA8_078F7E : dw $5800
+    db $FF
 DATA8_078F7E:
-    db $00,$00                    ;$078F7E |
+    dw $0000                      ;$078F7E |
+
 CODE_878F80:
     LDA.W #$000F                  ;$078F80 |
     LDX.W #$000F                  ;$078F83 |
@@ -827,7 +827,7 @@ CODE_87901B:
     STA.B $32                     ;$079025 |
     LDA.W DecompressedDataDest    ;$079027 |
     STA.B $34                     ;$07902A |
-    STA.B SNES_WaitForCommand_waitForMessage;$07902C |
+    STA.B SNES_WaitForCommand_waitForMessage    ;$07902C |
     CLC                           ;$07902E |
     ADC.W #$000C                  ;$07902F |
     STA.W DecompressedDataDest    ;$079032 |
@@ -839,10 +839,10 @@ CODE_87901B:
     ASL A                         ;$079041 |
     TAX                           ;$079042 |
     LDA.L DATA8_0790D1,X          ;$079043 |
-    STA.B CameraX_TileMirror                     ;$079047 |
-    LDA.W #$9053                  ;$079049 |
-    LDX.W #$0007                  ;$07904C |
+    STA.B CameraX_TileMirror      ;$079047 |
+    %LoadLongToAX(CODE_879053)
     JML.L SA1_ExecuteSNES         ;$07904F |
+CODE_879053:
     LDY.W #$0006                  ;$079053 |
     LDA.B DSP_SRCN                ;$079056 |
     BNE CODE_879061               ;$079058 |
@@ -856,48 +856,48 @@ CODE_879061:
     LDA.W #$AFAE                  ;$079066 |
 
 CODE_879069:
-    STA.B [SNES_WaitForCommand_waitForMessage],Y;$079069 |
-    INC.B SNES_WaitForCommand_waitForMessage;$07906B |
-    INC.B SNES_WaitForCommand_waitForMessage;$07906D |
-    SEP #$20                      ;$07906F |
-    LDX.B DSP_P                   ;$079071 |
-    LDA.L DATA8_0790D7,X          ;$079073 |
-    STA.B [SNES_WaitForCommand_waitForMessage];$079077 |
-    LDA.L DATA8_0790E2,X          ;$079079 |
-    STA.B [SNES_WaitForCommand_waitForMessage],Y;$07907D |
-    REP #$20                      ;$07907F |
-    INC.B SNES_WaitForCommand_waitForMessage;$079081 |
-    SEP #$20                      ;$079083 |
-    LDA.L DATA8_0790ED,X          ;$079085 |
-    STA.B [SNES_WaitForCommand_waitForMessage];$079089 |
-    LDA.L DATA8_0790F8,X          ;$07908B |
-    STA.B [SNES_WaitForCommand_waitForMessage],Y;$07908F |
-    REP #$20                      ;$079091 |
-    INC.B SNES_WaitForCommand_waitForMessage;$079093 |
-    SEP #$20                      ;$079095 |
-    LDX.B IdentifySNES            ;$079097 |
-    LDA.L DATA8_0790D7,X          ;$079099 |
-    STA.B [SNES_WaitForCommand_waitForMessage];$07909D |
-    LDA.L DATA8_0790E2,X          ;$07909F |
-    STA.B [SNES_WaitForCommand_waitForMessage],Y;$0790A3 |
-    REP #$20                      ;$0790A5 |
-    INC.B SNES_WaitForCommand_waitForMessage;$0790A7 |
-    SEP #$20                      ;$0790A9 |
-    LDA.L DATA8_0790ED,X          ;$0790AB |
-    STA.B [SNES_WaitForCommand_waitForMessage];$0790AF |
-    LDA.L DATA8_0790F8,X          ;$0790B1 |
-    STA.B [SNES_WaitForCommand_waitForMessage],Y;$0790B5 |
-    REP #$20                      ;$0790B7 |
-    JSL.L WriteToDMABuffer        ;$0790B9 |
-    LDA.B $34                     ;$0790BD |
-    CLC                           ;$0790BF |
-    ADC.W #$0006                  ;$0790C0 |
-    STA.B $34                     ;$0790C3 |
-    LDA.B CameraX_TileMirror                     ;$0790C5 |
-    CLC                           ;$0790C7 |
-    ADC.W #$0020                  ;$0790C8 |
-    STA.B CameraX_TileMirror                     ;$0790CB |
-    JML.L WriteToDMABuffer        ;$0790CD |
+    STA.B [SNES_WaitForCommand_waitForMessage],Y    ;$079069 |
+    INC.B SNES_WaitForCommand_waitForMessage        ;$07906B |
+    INC.B SNES_WaitForCommand_waitForMessage        ;$07906D |
+    SEP #$20                                        ;$07906F |
+    LDX.B DSP_P                                     ;$079071 |
+    LDA.L DATA8_0790D7,X                            ;$079073 |
+    STA.B [SNES_WaitForCommand_waitForMessage]      ;$079077 |
+    LDA.L DATA8_0790E2,X                            ;$079079 |
+    STA.B [SNES_WaitForCommand_waitForMessage],Y    ;$07907D |
+    REP #$20                                        ;$07907F |
+    INC.B SNES_WaitForCommand_waitForMessage        ;$079081 |
+    SEP #$20                                        ;$079083 |
+    LDA.L DATA8_0790ED,X                            ;$079085 |
+    STA.B [SNES_WaitForCommand_waitForMessage]      ;$079089 |
+    LDA.L DATA8_0790F8,X                            ;$07908B |
+    STA.B [SNES_WaitForCommand_waitForMessage],Y    ;$07908F |
+    REP #$20                                        ;$079091 |
+    INC.B SNES_WaitForCommand_waitForMessage        ;$079093 |
+    SEP #$20                                        ;$079095 |
+    LDX.B IdentifySNES                              ;$079097 |
+    LDA.L DATA8_0790D7,X                            ;$079099 |
+    STA.B [SNES_WaitForCommand_waitForMessage]      ;$07909D |
+    LDA.L DATA8_0790E2,X                            ;$07909F |
+    STA.B [SNES_WaitForCommand_waitForMessage],Y    ;$0790A3 |
+    REP #$20                                        ;$0790A5 |
+    INC.B SNES_WaitForCommand_waitForMessage        ;$0790A7 |
+    SEP #$20                                        ;$0790A9 |
+    LDA.L DATA8_0790ED,X                            ;$0790AB |
+    STA.B [SNES_WaitForCommand_waitForMessage]      ;$0790AF |
+    LDA.L DATA8_0790F8,X                            ;$0790B1 |
+    STA.B [SNES_WaitForCommand_waitForMessage],Y    ;$0790B5 |
+    REP #$20                                        ;$0790B7 |
+    JSL.L WriteToDMABuffer                          ;$0790B9 |
+    LDA.B $34                                       ;$0790BD |
+    CLC                                             ;$0790BF |
+    ADC.W #$0006                                    ;$0790C0 |
+    STA.B $34                                       ;$0790C3 |
+    LDA.B CameraX_TileMirror                        ;$0790C5 |
+    CLC                                             ;$0790C7 |
+    ADC.W #$0020                                    ;$0790C8 |
+    STA.B CameraX_TileMirror                        ;$0790CB |
+    JML.L WriteToDMABuffer                          ;$0790CD |
 
 DATA8_0790D1:
     db $22,$42,$2C,$42,$36,$42    ;$0790D1 |
@@ -922,16 +922,14 @@ CODE_079103:
     JSL.L CODE_FL_00A8D2          ;$079103 |
     LDA.W #$2200                  ;$079107 |
     SEC                           ;$07910A |
-    SBC.W CameraY_TileMirror                   ;$07910B |
+    SBC.W CameraY_TileMirror      ;$07910B |
     LDX.W #$0012                  ;$07910E |
-
-CODE_879111:
+  .loop:
     STA.W $7BD4,X                 ;$079111 |
     DEX                           ;$079114 |
     DEX                           ;$079115 |
-    BPL CODE_879111               ;$079116 |
-    LDA.W #$9174                  ;$079118 |
-    LDX.W #$0007                  ;$07911B |
+    BPL .loop                     ;$079118 |
+    %LoadLongToAX(DATA16_079174)
     JSL.L LoadDMATable            ;$07911E |
     RTL                           ;$079122 |
 
@@ -953,9 +951,9 @@ CODE_879123:
 
 CODE_879143:
     STA.W $778C                   ;$079143 |
-    LDA.W #$9150                  ;$079146 |
-    LDX.W #$0007                  ;$079149 |
+    %LoadLongToAX(CODE_879150)
     JML.L SA1_ExecuteSNES         ;$07914C |
+CODE_879150:
     LDX.W $778C                   ;$079150 |
     LDA.L DATA16_079168,X         ;$079153 |
     STA.W $0608                   ;$079157 |
@@ -970,9 +968,12 @@ DATA16_079168:
     dw $031F,$7F80,$7C16          ;$079168 |
 
 DATA16_07916E:
-    dw $0000,$7FFF,$7C1F,$8003    ;$07916E |
-    dw $8000,$007B,$5800          ;$079176 |
+    dw $0000,$7FFF,$7C1F          ;$07916E |
+
+DATA16_079174:
+    dw $8003,$8000,$007B,$5800    ;$079174 |
     db $FF                        ;$07917C |
+
     LDA.W Obj_VAR0,Y              ;$07917D |
     ASL A                         ;$079180 |
     TAX                           ;$079181 |
@@ -980,7 +981,7 @@ DATA16_07916E:
     STA.B IdentifySNES            ;$079186 |
     LDA.L DATA16_0791E7,X         ;$079188 |
     STA.W Obj_XPositionMirror,Y   ;$07918C |
-    LDA.W CameraY_TileMirror                   ;$07918F |
+    LDA.W CameraY_TileMirror      ;$07918F |
     CPX.W #$0002                  ;$079192 |
     BEQ CODE_87919B               ;$079195 |
     EOR.W #$FFFF                  ;$079197 |
@@ -1161,6 +1162,7 @@ CODE_FN_07920F:
 GFX_MainTitleScreenBackgroundCompressed:
     incbin "Graphics/MainTitleBackground (0794FE).bin"
 
+; Also unsure what this data could be. Are these all pointers? Some of this was also never hit after extensive playtime.
     db $F8,$7C,$BF,$7F,$FF,$7F,$BB,$7E;$07BE3D |
     db $DB,$7E,$DB,$7E,$DB,$7E,$DB,$7E;$07BE45 |
     db $DB,$7E,$DB,$7E,$DB,$7E,$DB,$7E;$07BE4D |
@@ -1911,6 +1913,7 @@ GFX_MainTitleScreenBackgroundCompressed:
     db $08,$54,$1A,$14,$00,$5E,$00,$55;$07D595 |
     db $E0,$06,$D7,$02,$E0,$5E,$40,$5E;$07D59D |
     db $A5,$5D,$0A,$5D,$91,$58,$09,$34;$07D5A5 |
+DATA8_07D5AD:
     db $5F,$1A,$FF,$7F,$00,$10,$04,$18;$07D5AD |
     db $08,$54,$1A,$14,$00,$5E,$00,$55;$07D5B5 |
     db $E0,$06,$B7,$02,$E0,$5E,$40,$5E;$07D5BD |
@@ -1975,15 +1978,14 @@ CODE_87D63F:
     STA.W $307A                   ;$07D657 |
     REP #$20                      ;$07D65A |
     LDX.W Current_SubGame_x2      ;$07D65C |
-    LDA.L DATA8_07DC01,X          ;$07D65F |
+    LDA.L PTR16_07DC01,X          ;$07D65F |
     LDX.W #$0007                  ;$07D663 |
     JSL.L LoadDMATable            ;$07D666 |
     LDX.W Current_SubGame_x2      ;$07D66A |
-    LDA.L DATA8_07DC0F,X          ;$07D66D |
+    LDA.L PTR16_07DC0F,X          ;$07D66D |
     LDX.W #$0007                  ;$07D671 |
     JSL.L CODE_FL_D3E412          ;$07D674 |
-    LDA.W #$DDDE                  ;$07D678 |
-    LDX.W #$0007                  ;$07D67B |
+    %LoadLongToAX(DATA8_07DDDE)
     JSL.L CODE_FL_D3E412          ;$07D67E |
     LDY.B $39                     ;$07D682 |
     TYX                           ;$07D684 |
@@ -2085,10 +2087,10 @@ CODE_87D774:
     AND.W #$00FF                  ;$07D77A |
     BNE CODE_87D7C2               ;$07D77D |
     STZ.W $7B25                   ;$07D77F |
-    LDA.W #$D7E3                  ;$07D782 |
+    LDA.W #DMA_07D7E3             ;$07D782 |
     LDX.W $7B23                   ;$07D785 |
     BEQ CODE_07D790               ;$07D788 |
-    LDA.W #$D7EC                  ;$07D78A |
+    LDA.W #DMA_07D7EC             ;$07D78A |
     INC.W $7B25                   ;$07D78D |
 
 CODE_07D790:
@@ -2131,9 +2133,13 @@ CODE_87D7D9:
 CODE_87D7DD:
     JSL.L CODE_FL_00E091          ;$07D7DD |
     BRA CODE_87D7DD               ;$07D7E1 |
-    dw $C083,$A900,$EFCD,$3E20    ;$07D7E3 |
-    dw $83FF,$0180,$F500,$00EE    ;$07D7EB |
-    dw $FF3E                      ;$07D7F3 |
+
+DMA_07D7E3:
+    db $83 : dw $00C0 : dl $EFCDA9 : dw $3E20
+    db $FF
+DMA_07D7EC:
+    db $83 : dw $0180 : dl $EEF500 : dw $3E00
+    db $FF
 
 CODE_07D7F5:
     JSL.L CODE_FL_07E217          ;$07D7F5 |
@@ -2141,11 +2147,11 @@ CODE_07D7F5:
     AND.W #$00FF                  ;$07D7FC |
     BNE CODE_87D837               ;$07D7FF |
     STZ.W $7B25                   ;$07D801 |
-    LDX.W #$D879                  ;$07D804 |
+    LDX.W #DMA_87D879             ;$07D804 |
     LDA.W $7A63                   ;$07D807 |
     AND.W #$00FF                  ;$07D80A |
     BEQ CODE_87D815               ;$07D80D |
-    LDX.W #$D882                  ;$07D80F |
+    LDX.W #DMA_87D882             ;$07D80F |
     INC.W $7B25                   ;$07D812 |
 
 CODE_87D815:
@@ -2188,30 +2194,32 @@ CODE_87D866:
     TYX                           ;$07D866 |
     STZ.W Obj_VAR3,X              ;$07D867 |
     LDA.W #$001A                  ;$07D86A |
-    JSL.L PlayMusic          ;$07D86D |
+    JSL.L PlayMusic               ;$07D86D |
     LDY.B $39                     ;$07D871 |
 
 CODE_87D873:
     JSL.L CODE_FL_00E091          ;$07D873 |
     BRA CODE_87D873               ;$07D877 |
-    dw $C083,$CD00,$EFDC,$3E80    ;$07D879 |
-    dw $83FF,$00C0,$CD03,$80EF    ;$07D881 |
-    dw $FF3E                      ;$07D889 |
+
+DMA_87D879:
+    db $83 : dw $00C0 : dl $EFDCCD : dw $3E80
+    db $FF
+DMA_87D882:
+    db $83 : dw $00C0 : dl $EFCD03 : dw $3E80
+    db $FF
 
 CODE_07D88B:
     JSL.L CODE_FL_07E217          ;$07D88B |
     LDA.W TitleDemo_Flag          ;$07D88F |
     AND.W #$00FF                  ;$07D892 |
     BEQ CODE_07D8A5               ;$07D895 |
-    LDA.W #$D92A                  ;$07D897 |
-    LDX.W #$0007                  ;$07D89A |
+    %LoadLongToAX(DMA_07D92A)
     JSL.L LoadDMATable            ;$07D89D |
     LDY.B $39                     ;$07D8A1 |
     BRA CODE_07D8F9               ;$07D8A3 |
 
 CODE_07D8A5:
-    LDA.W #$D91A                  ;$07D8A5 |
-    LDX.W #$0007                  ;$07D8A8 |
+    %LoadLongToAX(CODE_07D91A)
     JSL.L SA1_ExecuteSNES         ;$07D8AB |
     LDA.W #$0000                  ;$07D8AF |
     JSR.W CODE_FN_07E74C          ;$07D8B2 |
@@ -2260,15 +2268,23 @@ CODE_07D910:
 CODE_07D914:
     JSL.L CODE_FL_00E091          ;$07D914 |
     BRA CODE_07D914               ;$07D918 |
+CODE_07D91A:
     LDA.W $00E7                   ;$07D91A |
     STA.W $7B25                   ;$07D91D |
     RTL                           ;$07D920 |
-    dw $1403,$5200,$7E24,$3E28    ;$07D921 |
-    dw $06FF,$0028,$D94B,$2807    ;$07D929 |
-    dw $063E,$0028,$D94B,$6807    ;$07D931 |
-    dw $063E,$0028,$D94B,$8807    ;$07D939 |
-    dw $063E,$0028,$D94B,$A807    ;$07D941 |
-    dw $FF3E,$2000                ;$07D949 |
+
+DMA_07D921:
+    db $03 : dw $0014 : dl $7E2452 : dw $3E28
+    db $FF
+DMA_07D92A:
+    db $06 : dw $0028 : dl DATA16_07D949 : dw $3E28
+    db $06 : dw $0028 : dl DATA16_07D949 : dw $3E68
+    db $06 : dw $0028 : dl DATA16_07D949 : dw $3E88
+    db $06 : dw $0028 : dl DATA16_07D949 : dw $3EA8
+    db $FF
+
+DATA16_07D949:
+    dw $2000                       ;$07D949 |
 
 CODE_JP_07D94D:
     JSL.L CODE_FL_009BEF          ;$07D94D |
@@ -2277,7 +2293,7 @@ CODE_JP_07D94D:
     BEQ CODE_07D966               ;$07D958 |
     STZ.W $7A8B                   ;$07D95A |
     LDA.W #$002B                  ;$07D95D |
-    JSL.L PlayMusic          ;$07D960 |
+    JSL.L PlayMusic               ;$07D960 |
     LDY.B $39                     ;$07D964 |
 
 CODE_07D966:
@@ -2318,10 +2334,10 @@ CODE_JP_07D9AB:
     AND.W #$00FF                  ;$07D9B8 |
     BNE CODE_07D9E8               ;$07D9BB |
     STZ.W $7B25                   ;$07D9BD |
-    LDA.W #$D9F2                  ;$07D9C0 |
+    LDA.W #DMA_07D9F2             ;$07D9C0 |
     LDX.W $7B0D                   ;$07D9C3 |
     BEQ CODE_07D9CE               ;$07D9C6 |
-    LDA.W #$D9FB                  ;$07D9C8 |
+    LDA.W #DMA_07D9FB             ;$07D9C8 |
     INC.W $7B25                   ;$07D9CB |
 
 CODE_07D9CE:
@@ -2342,14 +2358,18 @@ CODE_07D9E8:
 CODE_07D9EC:
     JSL.L CODE_FL_00E091          ;$07D9EC |
     BRA CODE_07D9EC               ;$07D9F0 |
-    db $83,$80,$00,$5E,$CF,$EF,$20,$42;$07D9F2 |
-    db $FF,$83,$00,$01,$5E,$99,$EF,$00;$07D9FA |
-    db $42,$FF                    ;$07DA02 |
+
+DMA_07D9F2:
+    db $83 : dw $0080 : dl $EFCF5E : dw $4220
+    db $FF
+DMA_07D9FB:
+    db $83 : dw $0100 : dl $EF995E : dw $4200
+    db $FF
 
 CODE_07DA04:
     JSL.L CODE_FL_07E217          ;$07DA04 |
     LDA.W #$0000                  ;$07DA08 |
-    JSL.L PlayMusic          ;$07DA0B |
+    JSL.L PlayMusic               ;$07DA0B |
     LDY.B $39                     ;$07DA0F |
     LDA.W #$0000                  ;$07DA11 |
     JSL.L PlaySFX                 ;$07DA14 |
@@ -2357,7 +2377,7 @@ CODE_07DA04:
     LDA.W #$0005                  ;$07DA1A |
     JSL.L CODE_FL_00D2FD          ;$07DA1D |
     LDA.W #$0039                  ;$07DA21 |
-    JSL.L PlayMusic          ;$07DA24 |
+    JSL.L PlayMusic               ;$07DA24 |
     LDY.B $39                     ;$07DA28 |
     LDA.W TitleDemo_Flag          ;$07DA2A |
     AND.W #$00FF                  ;$07DA2D |
@@ -2379,10 +2399,10 @@ CODE_07DA42:
 
 CODE_07DA50:
     STZ.W $7B25                   ;$07DA50 |
-    LDY.W #$DAD5                  ;$07DA53 |
+    LDY.W #DMA_07DAD5             ;$07DA53 |
     LDA.W $7A69                   ;$07DA56 |
     BEQ CODE_07DA61               ;$07DA59 |
-    LDY.W #$DADE                  ;$07DA5B |
+    LDY.W #DMA_07DADE             ;$07DA5B |
     INC.W $7B25                   ;$07DA5E |
 
 CODE_07DA61:
@@ -2439,9 +2459,13 @@ CODE_07DACB:
 CODE_07DACF:
     JSL.L CODE_FL_00E091          ;$07DACF |
     BRA CODE_07DACF               ;$07DAD3 |
-    db $83,$80,$00,$2F,$CF,$EF,$60,$3E;$07DAD5 |
-    db $FF,$83,$00,$01,$68,$F0,$ED,$40;$07DADD |
-    db $3E,$FF                    ;$07DAE5 |
+
+DMA_07DAD5:
+    db $83 : dw $0080 : dl $EFCF2F : dw $3E60
+    db $FF
+DMA_07DADE:
+    db $83 : dw $0100 : dl $EDF068 : dw $3E40
+    db $FF
 
 CODE_JP_07DAE7:
     JSL.L CODE_FL_009BEF          ;$07DAE7 |
@@ -2458,14 +2482,11 @@ CODE_JP_07DAE7:
     JMP.W CODE_JP_07EA97          ;$07DB0A |
 
 CODE_07DB0D:
-    LDA.W #$DD7C                  ;$07DB0D |
-    LDX.W #$0007                  ;$07DB10 |
+    %LoadLongToAX(DMA_07DD7C)
     JSL.L LoadDMATable            ;$07DB13 |
-    LDA.W #$DE2B                  ;$07DB17 |
-    LDX.W #$0007                  ;$07DB1A |
+    %LoadLongToAX(DATA8_07DE2B)
     JSL.L CODE_FL_D3E412          ;$07DB1D |
-    LDA.W #$D5AD                  ;$07DB21 |
-    LDX.W #$0007                  ;$07DB24 |
+    %LoadLongToAX(DATA8_07D5AD)
     LDY.W #$5010                  ;$07DB27 |
     JSL.L WritePal                ;$07DB2A |
     LDY.B $39                     ;$07DB2E |
@@ -2514,10 +2535,10 @@ CODE_07DB71:
 
 CODE_FL_07DB8D:
     STZ.W $7B25                   ;$07DB8D |
-    LDA.W #$DBC1                  ;$07DB90 |
+    LDA.W #DMA_07DBC1             ;$07DB90 |
     LDX.W $7A6B                   ;$07DB93 |
     BEQ CODE_07DB9E               ;$07DB96 |
-    LDA.W #$DBCA                  ;$07DB98 |
+    LDA.W #DMA_07DBCA             ;$07DB98 |
     INC.W $7B25                   ;$07DB9B |
 
 CODE_07DB9E:
@@ -2536,9 +2557,13 @@ CODE_07DBB0:
     STA.W Obj_VAR1,X              ;$07DBBB |
     LDY.B $39                     ;$07DBBE |
     RTL                           ;$07DBC0 |
-    db $83,$C0,$00,$D2,$CB,$EF,$20,$4A;$07DBC1 |
-    db $FF,$83,$80,$01,$9E,$FB,$EE,$20;$07DBC9 |
-    db $4A,$FF                    ;$07DBD1 |
+
+DMA_07DBC1:
+    db $83 : dw $00C0 : dl $EFCBD2 : dw $4A20
+    db $FF
+DMA_07DBCA:
+    db $83 : dw $0180 : dl $EEFB9E : dw $4A20
+    db $FF
 
 CODE_07DBD3:
     JSL.L CODE_FL_07E217          ;$07DBD3 |
@@ -2564,81 +2589,130 @@ CODE_07DBFB:
     JSL.L CODE_FL_00E091          ;$07DBFB |
     BRA CODE_07DBFB               ;$07DBFF |
 
-DATA8_07DC01:
+PTR16_07DC01:
     db $1F,$DC,$60,$DC,$B1,$DC,$F2,$DC;$07DC01 |
     db $3B,$DD,$7C,$DD,$B5,$DD    ;$07DC09 |
 
-DATA8_07DC0F:
-    db $E5,$DD,$F1,$DD,$FD,$DD,$0E,$DE;$07DC0F |
-    db $1F,$DE,$2B,$DE,$32,$DE,$00,$00;$07DC17 |
-    db $83,$60,$01,$6C,$C1,$EB,$00,$60;$07DC1F |
-    db $83,$40,$01,$A6,$21,$EC,$00,$61;$07DC27 |
-    db $83,$00,$1D,$0E,$7A,$E1,$00,$00;$07DC2F |
-    db $83,$20,$00,$EE,$FF,$EE,$00,$30;$07DC37 |
-    db $89,$00,$04,$79,$F6,$EE,$00,$50;$07DC3F |
-    db $0F,$00,$04,$00,$24,$7E,$00,$50;$07DC47 |
-    db $89,$00,$04,$09,$29,$EC,$00,$3C;$07DC4F |
-    db $0F,$00,$04,$00,$24,$7E,$00,$3C;$07DC57 |
-    db $FF,$83,$60,$01,$6C,$C1,$EB,$00;$07DC5F |
-    db $60,$83,$40,$01,$A6,$21,$EC,$00;$07DC67 |
-    db $61,$06,$00,$10,$1D,$DC,$07,$00;$07DC6F |
-    db $3C,$06,$00,$20,$1D,$DC,$07,$00;$07DC77 |
-    db $50,$89,$00,$04,$6C,$2F,$EA,$00;$07DC7F |
-    db $50,$0F,$00,$04,$00,$24,$7E,$00;$07DC87 |
-    db $50,$89,$00,$04,$4C,$A5,$EC,$00;$07DC8F |
-    db $3C,$0F,$00,$04,$00,$24,$7E,$00;$07DC97 |
-    db $3C,$83,$40,$08,$0C,$40,$E8,$00;$07DC9F |
-    db $30,$83,$E0,$1E,$6F,$8B,$DF,$00;$07DCA7 |
-    db $00,$FF,$83,$60,$01,$6C,$C1,$EB;$07DCAF |
-    db $00,$60,$83,$40,$01,$A6,$21,$EC;$07DCB7 |
-    db $00,$61,$89,$00,$04,$5A,$41,$EA;$07DCBF |
-    db $00,$48,$0F,$00,$04,$00,$24,$7E;$07DCC7 |
-    db $00,$48,$89,$00,$04,$02,$BF,$EA;$07DCCF |
-    db $00,$3C,$0F,$00,$04,$00,$24,$7E;$07DCD7 |
-    db $00,$3C,$83,$40,$11,$B6,$15,$E7;$07DCDF |
-    db $00,$20,$83,$60,$24,$00,$00,$DD;$07DCE7 |
-    db $00,$00,$FF,$83,$40,$1E,$00,$00;$07DCEF |
-    db $E0,$00,$62,$83,$A0,$25,$9D,$1C;$07DCF7 |
-    db $DC,$00,$00,$06,$00,$08,$1D,$DC;$07DCFF |
-    db $07,$00,$40,$89,$00,$04,$4C,$FC;$07DD07 |
-    db $EA,$00,$40,$0F,$00,$04,$00,$24;$07DD0F |
-    db $7E,$00,$40,$89,$00,$04,$67,$BD;$07DD17 |
-    db $E7,$00,$48,$0F,$00,$04,$00,$28;$07DD1F |
-    db $7E,$00,$48,$09,$00,$04,$00,$24;$07DD27 |
-    db $7E,$00,$4C,$0F,$00,$04,$00,$2C;$07DD2F |
-    db $7E,$00,$4C,$FF,$83,$00,$05,$32;$07DD37 |
-    db $F9,$E9,$00,$60,$83,$00,$01,$02;$07DD3F |
-    db $E4,$ED,$00,$63,$83,$40,$36,$B0;$07DD47 |
-    db $71,$DA,$00,$00,$83,$00,$24,$35;$07DD4F |
-    db $70,$DC,$00,$20,$89,$00,$04,$5B;$07DD57 |
-    db $68,$EA,$00,$3C,$0F,$00,$04,$00;$07DD5F |
-    db $24,$7E,$00,$3C,$89,$00,$04,$95;$07DD67 |
-    db $A6,$E9,$00,$40,$0F,$00,$04,$00;$07DD6F |
-    db $24,$7E,$00,$40,$FF,$89,$00,$04;$07DD77 |
-    db $19,$C6,$EB,$00,$48,$0F,$00,$04;$07DD7F |
-    db $00,$24,$7E,$00,$48,$89,$00,$04;$07DD87 |
-    db $69,$BC,$E8,$00,$58,$0F,$00,$04;$07DD8F |
-    db $00,$24,$7E,$00,$58,$89,$00,$04;$07DD97 |
-    db $C0,$23,$E9,$00,$5C,$0F,$00,$04;$07DD9F |
-    db $00,$24,$7E,$00,$5C,$83,$60,$25;$07DDA7 |
-    db $83,$D1,$DB,$00,$10,$FF,$83,$00;$07DDAF |
-    db $05,$32,$F9,$E9,$00,$60,$83,$00;$07DDB7 |
-    db $01,$02,$E4,$ED,$00,$63,$89,$00;$07DDBF |
-    db $04,$57,$92,$EA,$00,$3C,$0F,$00;$07DDC7 |
-    db $04,$00,$24,$7E,$00,$3C,$83,$40;$07DDCF |
-    db $20,$0A,$A6,$DC,$00,$00,$FF,$18;$07DDD7 |
-    db $DE,$EF,$0F,$91,$FF,$FF,$A0,$55;$07DDDF |
-    db $ED,$50,$00,$2D,$D6,$EF,$10,$80;$07DDE7 |
-    db $FF,$FF,$7D,$BE,$07,$10,$00,$6D;$07DDEF |
-    db $D7,$EF,$10,$80,$FF,$FF,$6D,$D8;$07DDF7 |
-    db $EF,$10,$80,$52,$B9,$EF,$20,$00;$07DDFF |
-    db $4D,$D8,$EF,$10,$30,$FF,$FF,$25;$07DE07 |
-    db $9C,$EB,$80,$80,$52,$BA,$EF,$20;$07DE0F |
-    db $00,$5D,$C3,$07,$30,$50,$FF,$FF;$07DE17 |
-    db $AD,$DA,$EF,$10,$80,$8D,$DA,$EF;$07DE1F |
-    db $10,$70,$FF,$FF,$AD,$DB,$EF,$10;$07DE27 |
-    db $00,$FF,$FF,$2D,$D2,$EF,$10,$80;$07DE2F |
-    db $A0,$47,$EF,$30,$10,$FF,$FF;$07DE37 |
+PTR16_07DC0F:
+    dw DATA8_07DDE5               ;$07DC0F |
+    dw DATA8_07DDF1               ;$07DC11 |
+    dw DATA8_07DDFD               ;$07DC13 |
+    dw DATA8_07DE0E               ;$07DC15 |
+    dw DATA8_07DE1F               ;$07DC17 |
+    dw DATA8_07DE2B               ;$07DC19 |
+    dw DATA8_07DE32               ;$07DC1B |
+
+DATA16_07DC1D:
+    dw $0000                      ;$07DC1D |
+
+DMA_07DC1F:
+    db $83 : dw $0160 : dl $EBC16C : dw $6000
+    db $83 : dw $0140 : dl $EC21A6 : dw $6100
+    db $83 : dw $1D00 : dl $E17A0E : dw $0000
+    db $83 : dw $0020 : dl $EEFFEE : dw $3000
+    db $89 : dw $0400 : dl $EEF679 : dw $5000
+    db $0F : dw $0400 : dl $7E2400 : dw $5000
+    db $89 : dw $0400 : dl $EC2909 : dw $3C00
+    db $0F : dw $0400 : dl $7E2400 : dw $3C00
+    db $FF
+
+DMA_07DC60:
+    db $83 : dw $0160 : dl $EBC16C : dw $6000
+    db $83 : dw $0140 : dl $EC21A6 : dw $6100
+    db $06 : dw $1000 : dl $07DC1D : dw $3C00
+    db $06 : dw $2000 : dl $07DC1D : dw $5000
+    db $89 : dw $0400 : dl $EA2F6C : dw $5000
+    db $0F : dw $0400 : dl $7E2400 : dw $5000
+    db $89 : dw $0400 : dl $ECA54C : dw $3C00
+    db $0F : dw $0400 : dl $7E2400 : dw $3C00
+    db $83 : dw $0840 : dl $E8400C : dw $3000
+    db $83 : dw $1EE0 : dl $DF8B6F : dw $0000
+    db $FF
+
+DMA_07DCB1:
+    db $83 : dw $0160 : dl $EBC16C : dw $6000
+    db $83 : dw $0140 : dl $EC21A6 : dw $6100
+    db $89 : dw $0400 : dl $EA415A : dw $4800
+    db $0F : dw $0400 : dl $7E2400 : dw $4800
+    db $89 : dw $0400 : dl $EABF02 : dw $3C00
+    db $0F : dw $0400 : dl $7E2400 : dw $3C00
+    db $83 : dw $1140 : dl $E715B6 : dw $2000
+    db $83 : dw $2460 : dl $DD0000 : dw $0000
+    db $FF
+
+DMA_07DCF2:
+    db $83 : dw $1E40 : dl $E00000 : dw $6200
+    db $83 : dw $25A0 : dl $DC1C9D : dw $0000
+    db $06 : dw $0800 : dl DATA16_07DC1D : dw $4000
+    db $89 : dw $0400 : dl $EAFC4C : dw $4000
+    db $0F : dw $0400 : dl $7E2400 : dw $4000
+    db $89 : dw $0400 : dl $E7BD67 : dw $4800
+    db $0F : dw $0400 : dl $7E2800 : dw $4800
+    db $09 : dw $0400 : dl $7E2400 : dw $4C00
+    db $0F : dw $0400 : dl $7E2C00 : dw $4C00
+    db $FF
+
+DMA_07DD3B:
+    db $83 : dw $0500 : dl $E9F932 : dw $6000
+    db $83 : dw $0100 : dl $EDE402 : dw $6300
+    db $83 : dw $3640 : dl $DA71B0 : dw $0000
+    db $83 : dw $2400 : dl $DC7035 : dw $2000
+    db $89 : dw $0400 : dl $EA685B : dw $3C00
+    db $0F : dw $0400 : dl $7E2400 : dw $3C00
+    db $89 : dw $0400 : dl $E9A695 : dw $4000
+    db $0F : dw $0400 : dl $7E2400 : dw $4000
+    db $FF 
+
+DMA_07DD7C:
+    db $89 : dw $0400 : dl $EBC619 : dw $4800
+    db $0F : dw $0400 : dl $7E2400 : dw $4800
+    db $89 : dw $0400 : dl $E8BC69 : dw $5800
+    db $0F : dw $0400 : dl $7E2400 : dw $5800
+    db $89 : dw $0400 : dl $E923C0 : dw $5C00
+    db $0F : dw $0400 : dl $7E2400 : dw $5C00
+    db $83 : dw $2560 : dl $DBD183 : dw $1000
+    db $FF
+
+DMA_07DDB5:
+    db $83 : dw $0500 : dl $E9F932 : dw $6000
+    db $83 : dw $0100 : dl $EDE402 : dw $6300
+    db $89 : dw $0400 : dl $EA9257 : dw $3C00
+    db $0F : dw $0400 : dl $7E2400 : dw $3C00
+    db $83 : dw $2040 : dl $DCA60A : dw $0000
+    db $FF
+
+DATA8_07DDDE:
+    db $18,$DE,$EF,$0F,$91,$FF,$FF;$07DDDE |
+
+DATA8_07DDE5:
+    db $A0,$55,$ED,$50,$00,$2D,$D6,$EF;$07DDE5 |
+    db $10,$80,$FF,$FF            ;$07DDED |
+
+DATA8_07DDF1:
+    db $7D,$BE,$07,$10,$00,$6D,$D7,$EF;$07DDF1 |
+    db $10,$80,$FF,$FF            ;$07DDF9 |
+
+DATA8_07DDFD:
+    db $6D,$D8,$EF,$10,$80,$52,$B9,$EF;$07DDFD |
+    db $20,$00,$4D,$D8,$EF,$10,$30,$FF;$07DE05 |
+    db $FF                        ;$07DE0D |
+
+DATA8_07DE0E:
+    db $25,$9C,$EB,$80,$80,$52,$BA,$EF;$07DE0E |
+    db $20,$00,$5D,$C3,$07,$30,$50,$FF;$07DE16 |
+    db $FF                        ;$07DE1E |
+
+DATA8_07DE1F:
+    db $AD,$DA,$EF,$10,$80,$8D,$DA
+    db $EF,$10,$70,$FF,$FF
+
+DATA8_07DE2B:
+    db $AD,$DB,$EF,$10,$00,$FF,$FF;$07DE2B |
+
+DATA8_07DE32:
+    db $2D,$D2,$EF,$10,$80,$A0,$47,$EF;$07DE32 |
+    db $30,$10,$FF,$FF            ;$07DE3A |
+
     JSL.L CODE_FL_00E70E          ;$07DE3E |
     LDA.W TitleDemo_Flag          ;$07DE42 |
     AND.W #$00FF                  ;$07DE45 |
@@ -2798,10 +2872,10 @@ CODE_07DF58:
 
 CODE_07DF67:
     STA.W Current_Level           ;$07DF67 |
-    LDA.W #$DF77                  ;$07DF6A |
-    LDX.W #$0007                  ;$07DF6D |
+    %LoadLongToAX(CODE_07DF77)
     JSL.L SA1_ExecuteSNES         ;$07DF70 |
     JMP.W CODE_JP_07E040          ;$07DF74 |
+CODE_07DF77:
     LDA.W $7B25                   ;$07DF77 |
     STA.W $00E7                   ;$07DF7A |
     RTL                           ;$07DF7D |
@@ -2899,10 +2973,10 @@ CODE_JP_07E040:
 
 CODE_JP_07E04D:
     JSL.L CODE_FL_00EF86          ;$07E04D |
-    LDA.W #$E05C                  ;$07E051 |
-    LDX.W #$0007                  ;$07E054 |
+    %LoadLongToAX(CODE_JP_07E05C)
     JSL.L SA1_ExecuteSNES         ;$07E057 |
     RTL                           ;$07E05B |
+CODE_JP_07E05C:
     INC.W ReloadRoom              ;$07E05C |
     RTL                           ;$07E05F |
 
@@ -3412,8 +3486,7 @@ CODE_FL_07E46F:
     LDX.W Obj_VAR0,Y              ;$07E46F |
     LDA.L DATA16_07E483,X         ;$07E472 |
     STA.B $49                     ;$07E476 |
-    LDA.W #$E495                  ;$07E478 |
-    LDX.W #$0007                  ;$07E47B |
+    %LoadLongToAX(CODE_FL_07E495)
     JSL.L SA1_ExecuteSNES         ;$07E47E |
     RTL                           ;$07E482 |
 
@@ -3421,6 +3494,8 @@ DATA16_07E483:
     dw $7FFF,$0000,$7CF8,$7FFF    ;$07E483 |
     dw $0000,$7CF8,$7FFF,$0000    ;$07E48B |
     dw $7CF8                      ;$07E493 |
+
+CODE_FL_07E495:
     LDA.B $49                     ;$07E495 |
     STA.W Standard_Palette        ;$07E497 |
     RTL                           ;$07E49A |
@@ -3741,17 +3816,14 @@ CODE_JP_07E766:
     JSL.L CODE_FL_07E81C          ;$07E777 |
     LDA.W #$0001                  ;$07E77B |
     JSL.L CODE_FL_07E81C          ;$07E77E |
-    LDA.W #$DE0E                  ;$07E782 |
-    LDX.W #$0007                  ;$07E785 |
+    %LoadLongToAX(DATA8_07DE0E)
     JSL.L CODE_FL_D3E412          ;$07E788 |
-    LDA.W #$DCF2                  ;$07E78C |
-    LDX.W #$0007                  ;$07E78F |
+    %LoadLongToAX(DMA_07DCF2)
     JSL.L LoadDMATable            ;$07E792 |
     LDY.B $39                     ;$07E796 |
     STZ.W $7B2B                   ;$07E798 |
     JSL.L CODE_FL_00E091          ;$07E79B |
-    LDA.W #$E809                  ;$07E79F |
-    LDX.W #$0007                  ;$07E7A2 |
+    %LoadLongToAX(CODE_07E809)
     JSL.L CODE_FL_00E1B7          ;$07E7A5 |
     LDA.W #$0010                  ;$07E7A9 |
     STA.W Obj_VAR8,Y              ;$07E7AC |
@@ -3798,6 +3870,7 @@ CODE_07E7E7:
     STA.W $303F                   ;$07E803 |
     JMP.W CODE_JP_07D94D          ;$07E806 |
 
+CODE_07E809:
     LDA.W P1_Frame                ;$07E809 |
     AND.W #$D0C0                  ;$07E80C |
     BEQ CODE_07E81B               ;$07E80F |
@@ -4049,8 +4122,7 @@ CODE_JP_07EA97:
     JSL.L LoadDMATable            ;$07EAA7 |
     LDY.B $39                     ;$07EAAB |
     JSL.L CODE_FL_07EC1C          ;$07EAAD |
-    LDA.W #$EBE0                  ;$07EAB1 |
-    LDX.W #$0007                  ;$07EAB4 |
+    %LoadLongToAX(CODE_07EBE0)
     JSL.L SA1_ExecuteSNES         ;$07EAB7 |
     SEP #$20                      ;$07EABB |
     LDA.B #$12                    ;$07EABD |
@@ -4158,8 +4230,10 @@ CODE_07EBAE:
 
 CODE_07EBDF:
     RTL                           ;$07EBDF |
+CODE_07EBE0:
     STZ.W Standard_Palette        ;$07EBE0 |
     RTL                           ;$07EBE3 |
+
     db $25,$21,$EB,$80,$80,$FF,$FF,$83;$07EBE4 |
     db $80,$1A,$15,$42,$E0,$00,$66,$89;$07EBEC |
     db $00,$08,$BB,$2D,$EA,$00,$48,$0F;$07EBF4 |

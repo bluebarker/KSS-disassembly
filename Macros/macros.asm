@@ -2,9 +2,25 @@
 
 ; Macro for simply writing a long address to the A and X registers
 ; This pattern is used for passing between the S-CPU and SA-1, and for loading DMA tables
-macro LoadLongToAX(addr)
-    LDA.W #<addr>
-    LDX.W #<addr>>>16
+;  For some reason there are rare circumstances where the code writes X first instead of A.
+;  Even though these two fundamentally do the same thing, this is accounted for to get a ROM match.
+macro LoadLongToAX(addr, ...)
+    if sizeof(...) > 0
+        !swap = <...[0]>
+        if !swap == 1
+            LDX.W #<addr>>>16
+            LDA.W #<addr>
+        elseif !swap == 0
+            LDA.W #<addr>
+            LDX.W #<addr>>>16
+        else
+            warn "Macro LoadLongToAX has invalid first instruction parameter."
+        endif
+    ; Default
+    else
+        LDA.W #<addr>
+        LDX.W #<addr>>>16
+    endif
 endmacro
 
 ; Macro for building the corkboard panels on the corkboard screen

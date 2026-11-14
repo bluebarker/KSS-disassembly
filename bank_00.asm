@@ -478,11 +478,11 @@ Sprite_Pals:					;$008404	| Pointer table to various palettes in RAM for sprites
 	dl $000660					; 7 - Standard
 
 Brightness_HDMA:				;$00841C	| Indirect HDMA table used on screen brightness.
-	db $60 : dw $30A2						; Specifically, this is used for the "fade to black" effect at the bottom of the level.
-	db $3B : dw $30A2
+	db $60 : dw Screen_Brightness_Mirror  ; Specifically, this is used for the "fade to black" effect at the bottom of the level.
+	db $3B : dw Screen_Brightness_Mirror
 	db $8C : dw $003E
 	db $03 : dw $8B89
-	db $02 : dw $30A2
+	db $02 : dw Screen_Brightness_Mirror
 	db $00
 
 
@@ -8815,9 +8815,8 @@ CODE_FL_00C05E:
 
 CODE_FL_00C095:
 	JSL CODE_FL_00D87F			;$00C095	|
-	LDX #$0001					;$00C099	|\ 
-	LDA #$8479					;$00C09C	|| Load the DMA table at $018479.
-	JSL LoadDMATable			;$00C09F	|/
+	%LoadLongToAX(DATA8_018479, 1)
+	JSL LoadDMATable			;$00C09F	|
 	LDA #$00!SUBGAME_DYNABLADE			;$00C0A3	|
 	STA Current_SubGame			;$00C0A6	|
 	JMP CODE_FL_00BFC8			;$00C0A9	|
@@ -9068,37 +9067,32 @@ CODE_FL_00C2DF:
 	LDX #$0000					;$00C2E2	|
 	LDY #$0200					;$00C2E5	|
 	JSL CODE_FL_00A240			;$00C2E8	|
-	LDA #$C385					;$00C2EC	|\ 
-	LDX #$0000					;$00C2EF	|| Load the DMA table at $00C385.
-	JSL LoadDMATable			;$00C2F2	|/
+	%LoadLongToAX(DATA_00C385)
+	JSL LoadDMATable			;$00C2F2	|
 	JSL $D4FB90					;$00C2F6	|
-	LDA #$E921					;$00C2FA	|\ 
-	LDX #$0001					;$00C2FD	|| Execute $01E921 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C300	|/
-	LDA #$EA69					;$00C304	|\ 
-	LDX #$0001					;$00C307	|| Execute $01EA69 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C30A	|/
+	%LoadLongToAX(SetupStatusBar_L)
+	JSL SA1_ExecuteSNES			;$00C300	|
+	%LoadLongToAX(HandleStatusBar_L)
+	JSL SA1_ExecuteSNES			;$00C30A	|
 	LDA #$0001					;$00C30E	|
 	STA $33C6					;$00C311	|
 	LDA #$0600					;$00C314	|
 	STA $7A27					;$00C317	|
 	LDX #$03A6					;$00C31A	|
 	LDA #$0013					;$00C31D	|
-	JSL CODE_FL_01DE76				;$00C320	|
+	JSL CODE_FL_01DE76			;$00C320	|
 	JSL CODE_FL_00C36C			;$00C324	|
 	JSL CODE_FL_00C36C			;$00C328	|
 	LDA #$000F					;$00C32C	|
 	JSL CODE_FL_0085C7			;$00C32F	|
 CODE_FL_00C333:
 	JSL UpdtLyrsCtrl			;$00C333	|
-	LDA #$DFC6					;$00C337	|\ 
-	LDX #$0001					;$00C33A	|| Execute $01DFC6 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C33D	|/
+	%LoadLongToAX(VWF_TextLoopEntry)
+	JSL SA1_ExecuteSNES			;$00C33D	|
 	LDA $33C6					;$00C341	|
 	BNE CODE_FL_00C352			;$00C344	|
-	LDA #$EA69					;$00C346	|\ 
-	LDX #$0001					;$00C349	|| Execute $01EA69 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C34C	|/
+	%LoadLongToAX(HandleStatusBar_L)
+	JSL SA1_ExecuteSNES			;$00C34C	|
 	BRA CODE_FL_00C333			;$00C350	|
 
 CODE_FL_00C352:
@@ -9113,12 +9107,10 @@ CODE_FL_00C365:					;			|
 
 CODE_FL_00C36C:
 	JSL UpdtLyrsCtrl			;$00C36C	|
-	LDA #$DFC6					;$00C370	|\ 
-	LDX #$0001					;$00C373	|| Execute $01DFC6 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C376	|/
-	LDA #$EA69					;$00C37A	|\ 
-	LDX #$0001					;$00C37D	|| Execute $01EA69 on the SNES.
-	JSL SA1_ExecuteSNES			;$00C380	|/
+	%LoadLongToAX(VWF_TextLoopEntry)
+	JSL SA1_ExecuteSNES			;$00C376	|
+	%LoadLongToAX(HandleStatusBar_L)
+	JSL SA1_ExecuteSNES			;$00C380	|
 	RTL							;$00C384	|
 
 DATA_00C385:					;$00C385	| DMA table used above, presumably to clear VRAM data.
@@ -10111,9 +10103,8 @@ CheckStartErrs:					;-----------| Routine to check for controller/system errors 
 	JSL ConfigureLayer3			;$00CD03	|/
 	LDA #$0009					;$00CD07	|\ Mode 1 with BG3 priority.
 	JSL UpdateSNESMode			;$00CD0A	|/
-	LDX.w #.ErrorDMAs>>16		;$00CD0E	|\ 
-	LDA.w #.ErrorDMAs			;$00CD11	|| Load the DMA table at $00CD70.
-	JSL LoadDMATable			;$00CD14	|/
+	%LoadLongToAX(.ErrorDMAs, 1)
+	JSL LoadDMATable			;$00CD14	|
 	LDA #$B360					;$00CD18	|\ 
 	LDX #$00ED					;$00CD1B	|| Write a palette data from $EDB360
 	LDY #$3050					;$00CD1E	||  to colors $30-$7F in the standard palette.
@@ -10123,7 +10114,7 @@ CheckStartErrs:					;-----------| Routine to check for controller/system errors 
 	STA $30A1					;$00CD2C	|/
 	STZ $39						;$00CD2F	|
 	STZ $3B						;$00CD31	|
-	STZ $3F						;$00CD33	|
+	STZ $3F						;$00CD33	|	
 	STZ $41						;$00CD35	|
 	JSL UpdtLyrsCtrlBrght		;$00CD37	| Transfer screen brightness and fetch controller inputs.
 	PLX							;$00CD3B	|
@@ -12114,9 +12105,8 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	JSR .Debug_VramBG1			;$00DDAA	|\ 
 	JSR .Debug_VramBG2			;$00DDAD	|| Useless?...
 	JSR .Debug_VramBG3			;$00DDB0	|/
-	LDA #$DE12					;$00DDB3	|\ Load the DMA table at $00DE12.
-	LDX #$0000					;$00DDB6	|| This clears out the BG1 tilemap in VRAM.
-	JSL LoadDMATable			;$00DDB9	|/
+	%LoadLongToAX(DATA_00DE12)
+	JSL LoadDMATable			;$00DDB9	| This clears out the BG1 tilemap in VRAM.
 	PHB							;$00DDBD	|
 	PEA $7F7F					;$00DDBE	|\ 
 	PLB							;$00DDC1	||
@@ -12159,9 +12149,8 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	DEC $26						;$00DE02	||\ Loop for each page.
 	BNE .tilePageLoop			;$00DE04	|//
 	PLB							;$00DE06	|
-	LDA #$DE1D					;$00DE07	|\ Load the DMA table at $00DE1D.
-	LDX #$0000					;$00DE0A	|| This table writes $SaveFile_Number00 into the the VRAM tilemap.
-	JSL LoadDMATable			;$00DE0D	|/
+	%LoadLongToAX(DATA_00DE1D)
+	JSL LoadDMATable			;$00DE0D	| This table writes $SaveFile_Number00 into the the VRAM tilemap.
 	RTS							;$00DE11	|
 
 
