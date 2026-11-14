@@ -248,10 +248,10 @@ CODE_JP_018215:
 	LDA.B [$14],Y                 ;$018236	|
 	CLC                           ;$018238	|
 	ADC.B $00                     ;$018239	|
-	STA.W $3037                   ;$01823B	|
+	STA.W CameraX_TileMirror                   ;$01823B	|
 	LDY.W #$000F                  ;$01823E	|
 	LDA.B [$14],Y                 ;$018241	|
-	STA.W $303D                   ;$018243	|
+	STA.W CameraY_TileMirror                   ;$018243	|
 	LDA.W #$0018                  ;$018246	|
 	STA.W $6010                   ;$018249	|
 	LDA.W #$0040                  ;$01824C	|
@@ -639,16 +639,16 @@ CODE_FN_018531:
 	STA.B $32                     ;$01854F	|
 	LDA.W #$007E                  ;$018551	|
 	STA.B $36                     ;$018554	|
-	STX.B $37                     ;$018556	|
+	STX.B CameraX_TileMirror                     ;$018556	|
 	JSL.L WriteToDMABuffer     ;$018558	|
 	LDA.B $34                     ;$01855C	|
 	CLC                           ;$01855E	|
 	ADC.W #$0200                  ;$01855F	|
 	STA.B $34                     ;$018562	|
-	LDA.B $37                     ;$018564	|
+	LDA.B CameraX_TileMirror                     ;$018564	|
 	CLC                           ;$018566	|
 	ADC.W #$0100                  ;$018567	|
-	STA.B $37                     ;$01856A	|
+	STA.B CameraX_TileMirror                     ;$01856A	|
 	JSL.L WriteToDMABuffer     ;$01856C	|
 	RTS                           ;$018570	|
 
@@ -1576,9 +1576,9 @@ CODE_FN_018C74:
 	STZ.W $333A                   ;$018C83	|
 	STZ.W $333C                   ;$018C86	|
 	STZ.W $32E2                   ;$018C89	|
-	LDA.W #$3037                  ;$018C8C	|
+	LDA.W #CameraX_TileMirror                  ;$018C8C	|
 	STA.W $735A                   ;$018C8F	|
-	LDA.W #$303D                  ;$018C92	|
+	LDA.W #CameraY_TileMirror                  ;$018C92	|
 	STA.W $735C                   ;$018C95	|
 	LDA.W #$FF00                  ;$018C98	|
 	STA.W $7384                   ;$018C9B	|
@@ -1803,7 +1803,7 @@ CODE_818E81:
 CODE_FN_018E99:
 	LDA.W #$0001                  ;$018E99	|
 	STA.W $2250                   ;$018E9C	|
-	LDA.W $303D                   ;$018E9F	|
+	LDA.W CameraY_TileMirror                   ;$018E9F	|
 	LSR A                         ;$018EA2	|
 	LSR A                         ;$018EA3	|
 	LSR A                         ;$018EA4	|
@@ -1813,7 +1813,7 @@ CODE_FN_018E99:
 	ASL A                         ;$018EAE	|
 	AND.W #$003E                  ;$018EAF	|
 	STA.W $3380                   ;$018EB2	|
-	LDA.W $303D                   ;$018EB5	|
+	LDA.W CameraY_TileMirror                   ;$018EB5	|
 	STA.W $335C                   ;$018EB8	|
 	ASL A                         ;$018EBB	|
 	ASL A                         ;$018EBC	|
@@ -1828,13 +1828,13 @@ CODE_FN_018E99:
 	STA.W $2251                   ;$018ED1	|
 	LDA.B $57                     ;$018ED4	|
 	STA.W $2253                   ;$018ED6	|
-	LDA.W $3037                   ;$018ED9	|
+	LDA.W CameraX_TileMirror                   ;$018ED9	|
 	CLC                           ;$018EDC	|
 	ADC.W #$0010                  ;$018EDD	|
 	STA.W $3358                   ;$018EE0	|
 	LDA.W $2308                   ;$018EE3	|
 	STA.W $3376                   ;$018EE6	|
-	LDA.W $3037                   ;$018EE9	|
+	LDA.W CameraX_TileMirror                   ;$018EE9	|
 	LSR A                         ;$018EEC	|
 	LSR A                         ;$018EED	|
 	LSR A                         ;$018EEE	|
@@ -1902,7 +1902,7 @@ CODE_818F67:
 	PLB                           ;$018F8C	|
 
 CODE_818F8D:
-	LDA.B $37                     ;$018F8D	|
+	LDA.B CameraX_TileMirror                     ;$018F8D	|
 	CLC                           ;$018F8F	|
 	ADC.B $06                     ;$018F90	|
 	CMP.W #$2000                  ;$018F92	|
@@ -1950,14 +1950,14 @@ CODE_818FC6:
 	LDA.W #$0040                  ;$018FD9	|
 	STA.B $32                     ;$018FDC	|
 	LDA.B $00                     ;$018FDE	|
-	STA.B $37                     ;$018FE0	|
+	STA.B CameraX_TileMirror                     ;$018FE0	|
 	JSL.L WriteToDMABuffer     ;$018FE2	|
 	LDA.B $34                     ;$018FE6	|
 	CLC                           ;$018FE8	|
 	ADC.W #$0040                  ;$018FE9	|
 	STA.B $34                     ;$018FEC	|
 	LDA.W #$0400                  ;$018FEE	|
-	TSB.B $37                     ;$018FF1	|
+	TSB.B CameraX_TileMirror                     ;$018FF1	|
 	JML.L WriteToDMABuffer     ;$018FF3	|
 
 CODE_FL_018FF7:
@@ -1989,7 +1989,7 @@ CODE_819012:
 	LDA.W #$0028                  ;$019026	|
 	STA.B $28                     ;$019029	|
 	LDA.W $2306                   ;$01902B	|
-	STA.B $37                     ;$01902E	|
+	STA.B CameraX_TileMirror                     ;$01902E	|
 	RTL                           ;$019030	|
 
 CODE_FL_019031:
@@ -2070,7 +2070,7 @@ CODE_8190B6:
 	LDA.W #$0040                  ;$0190CA	|
 	STA.B $32                     ;$0190CD	|
 	LDA.B $00                     ;$0190CF	|
-	STA.B $37                     ;$0190D1	|
+	STA.B CameraX_TileMirror                     ;$0190D1	|
 	JML.L WriteToDMABuffer        ;$0190D3	|
 	STZ.B $00                     ;$0190D7	|
 	INC.B $00                     ;$0190D9	|
@@ -2289,26 +2289,26 @@ CODE_819261:
 	DEX                           ;$019264	|
 	DEX                           ;$019265	|
 	BPL CODE_819261               ;$019266	|
-	LDA.W $3037                   ;$019268	|
+	LDA.W CameraX_TileMirror                   ;$019268	|
 	SEC                           ;$01926B	|
 	SBC.W #$0020                  ;$01926C	|
 	TAX                           ;$01926F	|
 	JSR.W CODE_FN_01936F          ;$019270	|
 	STX.B $00                     ;$019273	|
 	STA.B $08                     ;$019275	|
-	LDA.W $3037                   ;$019277	|
+	LDA.W CameraX_TileMirror                   ;$019277	|
 	CLC                           ;$01927A	|
 	ADC.W #$0120                  ;$01927B	|
 	TAX                           ;$01927E	|
 	JSR.W CODE_FN_01936F          ;$01927F	|
 	STX.B $02                     ;$019282	|
-	LDA.W $303D                   ;$019284	|
+	LDA.W CameraY_TileMirror                   ;$019284	|
 	SEC                           ;$019287	|
 	SBC.W #$0020                  ;$019288	|
 	TAX                           ;$01928B	|
 	JSR.W CODE_FN_0193D9          ;$01928C	|
 	STX.B $04                     ;$01928F	|
-	LDA.W $303D                   ;$019291	|
+	LDA.W CameraY_TileMirror                   ;$019291	|
 	CLC                           ;$019294	|
 	ADC.W #$00C8                  ;$019295	|
 	TAX                           ;$019298	|
@@ -2319,9 +2319,9 @@ CODE_819261:
 	JSL.L SA1_ExecuteSNES              ;$0192A4	|
 	JSL.L CODE_FL_D02337          ;$0192A8	|
 	STZ.W $7A14                   ;$0192AC	|
-	LDA.W $3037                   ;$0192AF	|
+	LDA.W CameraX_TileMirror                   ;$0192AF	|
 	STA.W $333E                   ;$0192B2	|
-	LDA.W $303D                   ;$0192B5	|
+	LDA.W CameraY_TileMirror                   ;$0192B5	|
 	STA.W $3340                   ;$0192B8	|
 	RTS                           ;$0192BB	|
 
@@ -2335,13 +2335,13 @@ CODE_8192C6:
 	RTS                           ;$0192C6	|
 
 CODE_8192C7:
-	LDA.W $3037                   ;$0192C7	|
+	LDA.W CameraX_TileMirror                   ;$0192C7	|
 	SEC                           ;$0192CA	|
 	SBC.W $333E                   ;$0192CB	|
 	BPL CODE_8192E7               ;$0192CE	|
 	CMP.W #$FFF6                  ;$0192D0	|
 	BCS CODE_8192FE               ;$0192D3	|
-	LDA.W $3037                   ;$0192D5	|
+	LDA.W CameraX_TileMirror                   ;$0192D5	|
 	SEC                           ;$0192D8	|
 	SBC.W #$0020                  ;$0192D9	|
 	TAY                           ;$0192DC	|
@@ -2357,19 +2357,19 @@ CODE_8192E7:
 	CLC                           ;$0192EF	|
 	ADC.W #$0120                  ;$0192F0	|
 	TAY                           ;$0192F3	|
-	LDA.W $3037                   ;$0192F4	|
+	LDA.W CameraX_TileMirror                   ;$0192F4	|
 	CLC                           ;$0192F7	|
 	ADC.W #$0120                  ;$0192F8	|
 	JMP.W CODE_JP_019336          ;$0192FB	|
 
 CODE_8192FE:
-	LDA.W $303D                   ;$0192FE	|
+	LDA.W CameraY_TileMirror                   ;$0192FE	|
 	SEC                           ;$019301	|
 	SBC.W $3340                   ;$019302	|
 	BPL CODE_81931E               ;$019305	|
 	CMP.W #$FFF6                  ;$019307	|
 	BCS CODE_819335               ;$01930A	|
-	LDA.W $303D                   ;$01930C	|
+	LDA.W CameraY_TileMirror                   ;$01930C	|
 	SEC                           ;$01930F	|
 	SBC.W #$0020                  ;$019310	|
 	TAY                           ;$019313	|
@@ -2385,7 +2385,7 @@ CODE_81931E:
 	CLC                           ;$019326	|
 	ADC.W #$00C0                  ;$019327	|
 	TAY                           ;$01932A	|
-	LDA.W $303D                   ;$01932B	|
+	LDA.W CameraY_TileMirror                   ;$01932B	|
 	CLC                           ;$01932E	|
 	ADC.W #$00C8                  ;$01932F	|
 	JMP.W CODE_JP_0193A0          ;$019332	|
@@ -2416,7 +2416,7 @@ CODE_JP_019336:
 	LDA.W #$93F4                  ;$01935E	|
 	LDX.W #$0001                  ;$019361	|
 	JSL.L SA1_ExecuteSNES              ;$019364	|
-	LDA.W $3037                   ;$019368	|
+	LDA.W CameraX_TileMirror                   ;$019368	|
 	STA.W $333E                   ;$01936B	|
 	RTS                           ;$01936E	|
 
@@ -2473,7 +2473,7 @@ CODE_JP_0193A0:
 	LDA.W #$93F4                  ;$0193C8	|
 	LDX.W #$0001                  ;$0193CB	|
 	JSL.L SA1_ExecuteSNES              ;$0193CE	|
-	LDA.W $303D                   ;$0193D2	|
+	LDA.W CameraY_TileMirror                   ;$0193D2	|
 	STA.W $3340                   ;$0193D5	|
 	RTS                           ;$0193D8	|
 
@@ -2625,10 +2625,10 @@ CODE_0194CA:
 	DEX                           ;$0194CA	|
 	DEX                           ;$0194CB	|
 	BPL CODE_0194A7               ;$0194CC	|
-	LDA.W $3037                   ;$0194CE	|
+	LDA.W CameraX_TileMirror                   ;$0194CE	|
 	CLC                           ;$0194D1	|
 	ADC.B $00                     ;$0194D2	|
-	STA.W $3037                   ;$0194D4	|
+	STA.W CameraX_TileMirror                   ;$0194D4	|
 	LDA.W $3358                   ;$0194D7	|
 	CLC                           ;$0194DA	|
 	ADC.B $00                     ;$0194DB	|
@@ -2709,7 +2709,7 @@ CODE_FN_01956D:
 	BPL CODE_819595               ;$019570	|
 	LDA.B $55                     ;$019572	|
 	ASL A                         ;$019574	|
-	CMP.W $3037                   ;$019575	|
+	CMP.W CameraX_TileMirror                   ;$019575	|
 	BCC CODE_019581               ;$019578	|
 	LDA.B $5B                     ;$01957A	|
 	JSR.W CODE_FN_0194A2          ;$01957C	|
@@ -2719,7 +2719,7 @@ CODE_019581:
 	LDA.W #$8000                  ;$019581	|
 	SEC                           ;$019584	|
 	SBC.B $55                     ;$019585	|
-	CMP.W $3037                   ;$019587	|
+	CMP.W CameraX_TileMirror                   ;$019587	|
 	BCS CODE_819595               ;$01958A	|
 	LDA.B $5B                     ;$01958C	|
 	EOR.W #$FFFF                  ;$01958E	|
@@ -2756,7 +2756,7 @@ CODE_8195C1:
 	JMP.W CODE_8197EE             ;$0195C5	|
 
 CODE_8195C8:
-	LDA.W $3037                   ;$0195C8	|
+	LDA.W CameraX_TileMirror                   ;$0195C8	|
 	SEC                           ;$0195CB	|
 	SBC.W $3358                   ;$0195CC	|
 	BCS CODE_8195D5               ;$0195CF	|
@@ -2765,7 +2765,7 @@ CODE_8195C8:
 
 CODE_8195D5:
 	STA.B $02                     ;$0195D5	|
-	LDA.W $303D                   ;$0195D7	|
+	LDA.W CameraY_TileMirror                   ;$0195D7	|
 	SEC                           ;$0195DA	|
 	SBC.W $335C                   ;$0195DB	|
 	BCS CODE_8195E6               ;$0195DE	|
@@ -2789,7 +2789,7 @@ CODE_8195F9:
 	RTS                           ;$0195F9	|
 
 CODE_8195FA:
-	LDA.W $3037                   ;$0195FA	|
+	LDA.W CameraX_TileMirror                   ;$0195FA	|
 	SEC                           ;$0195FD	|
 	SBC.W $3358                   ;$0195FE	|
 	BPL CODE_819606               ;$019601	|
@@ -2936,7 +2936,7 @@ CODE_8196F8:
 	JMP.W CODE_8195FA             ;$019706	|
 
 CODE_JP_019709:
-	LDA.W $303D                   ;$019709	|
+	LDA.W CameraY_TileMirror                   ;$019709	|
 	SEC                           ;$01970C	|
 	SBC.W $335C                   ;$01970D	|
 	BMI CODE_81978C               ;$019710	|
@@ -3145,7 +3145,7 @@ CODE_FN_019888:
 	ASL A                         ;$0198A8	|
 	ASL A                         ;$0198A9	|
 	ORA.W #$5400                  ;$0198AA	|
-	STA.B $37                     ;$0198AD	|
+	STA.B CameraX_TileMirror                     ;$0198AD	|
 	LDA.W #$0001                  ;$0198AF	|
 	STA.W $2250                   ;$0198B2	|
 	TXA                           ;$0198B5	|
@@ -3252,7 +3252,7 @@ CODE_FN_019941:
 	STX.W $2253                   ;$01996D	|
 	AND.W #$001F                  ;$019970	|
 	ORA.W #$5400                  ;$019973	|
-	STA.B $37                     ;$019976	|
+	STA.B CameraX_TileMirror                     ;$019976	|
 	LDA.W $2308                   ;$019978	|
 	ASL A                         ;$01997B	|
 	STA.B $00                     ;$01997C	|
@@ -4891,9 +4891,9 @@ CODE_81A500:
 	BRA CODE_81A51C               ;$01A50C	|
 
 CODE_01A50E:
-	LDA.W $3037                   ;$01A50E	|
+	LDA.W CameraX_TileMirror      ;$01A50E	|
 	STA.W $3350                   ;$01A511	|
-	LDA.W $303D                   ;$01A514	|
+	LDA.W CameraY_TileMirror      ;$01A514	|
 	STA.W $3354                   ;$01A517	|
 	BRA CODE_81A530               ;$01A51A	|
 
@@ -4902,9 +4902,9 @@ CODE_81A51C:
 	AND.W #$0001                  ;$01A51F	|
 	BEQ CODE_81A530               ;$01A522	|
 	LDA.W $3350                   ;$01A524	|
-	STA.W $3037                   ;$01A527	|
+	STA.W CameraX_TileMirror      ;$01A527	|
 	LDA.W $3354                   ;$01A52A	|
-	STA.W $303D                   ;$01A52D	|
+	STA.W CameraY_TileMirror      ;$01A52D	|
 
 CODE_81A530:
 	LDA.W $332E                   ;$01A530	|
@@ -5657,7 +5657,7 @@ CODE_01AA80:
 CODE_JP_01AA9B:
 	LDA.W #$BA14                  ;$01AA9B	|
 	LDX.W #$0001                  ;$01AA9E	|
-	JSL.L SA1_ExecuteSNES              ;$01AAA1	|
+	JSL.L SA1_ExecuteSNES         ;$01AAA1	|
 	LDY.B $00                     ;$01AAA5	|
 	BMI CODE_81AAED               ;$01AAA7	|
 	STZ.B $08                     ;$01AAA9	|
@@ -5675,7 +5675,7 @@ CODE_01AAC0:
 	STY.B $4D                     ;$01AAC0	|
 	LDA.W #$BA45                  ;$01AAC2	|
 	LDX.W #$0001                  ;$01AAC5	|
-	JSL.L SA1_ExecuteSNES              ;$01AAC8	|
+	JSL.L SA1_ExecuteSNES         ;$01AAC8	|
 	LDX.B $00                     ;$01AACC	|
 	BMI CODE_01AADB               ;$01AACE	|
 	BRA CODE_01AAF0               ;$01AAD0	|
@@ -5782,25 +5782,25 @@ CODE_JP_01AB78:
 	LDA.B $00                     ;$01AB84	|
 	BMI CODE_81AC01               ;$01AB86	|
 	BNE CODE_01ABF5               ;$01AB88	|
-	LDA.W $3037                   ;$01AB8A	|
+	LDA.W CameraX_TileMirror                   ;$01AB8A	|
 	SBC.W #$0080                  ;$01AB8D	|
 	BCC CODE_01AB96               ;$01AB90	|
 	CMP.B $04                     ;$01AB92	|
 	BCS CODE_01ABF5               ;$01AB94	|
 
 CODE_01AB96:
-	LDA.W $3037                   ;$01AB96	|
+	LDA.W CameraX_TileMirror                   ;$01AB96	|
 	ADC.W #$0180                  ;$01AB99	|
 	CMP.B $04                     ;$01AB9C	|
 	BCC CODE_01ABF5               ;$01AB9E	|
-	LDA.W $303D                   ;$01ABA0	|
+	LDA.W CameraY_TileMirror                   ;$01ABA0	|
 	SBC.W #$0080                  ;$01ABA3	|
 	BCC CODE_01ABAC               ;$01ABA6	|
 	CMP.B $06                     ;$01ABA8	|
 	BCS CODE_01ABF5               ;$01ABAA	|
 
 CODE_01ABAC:
-	LDA.W $303D                   ;$01ABAC	|
+	LDA.W CameraY_TileMirror                   ;$01ABAC	|
 	ADC.W #$0128                  ;$01ABAF	|
 	CMP.B $06                     ;$01ABB2	|
 	BCC CODE_01ABF5               ;$01ABB4	|
@@ -8420,7 +8420,7 @@ DATA16_01C23A:
 CODE_FL_01C240:
 	STY.B $76                     ;$01C240	|
 	ADC.B $76                     ;$01C242	|
-	SBC.W $303D                   ;$01C244	|
+	SBC.W CameraY_TileMirror                   ;$01C244	|
 	STA.B $76                     ;$01C247	|
 	LDA.W #$0100                  ;$01C249	|
 	SBC.B $76                     ;$01C24C	|
@@ -11823,7 +11823,7 @@ CODE_FL_01DEA7:					;```````````| Should now be running on the SNES.
 	LDA #$0001					;$01DF20	||
 	STA $36						;$01DF23	||
 	LDA $004F					;$01DF25	||
-	STA $37						;$01DF28	||
+	STA.B CameraX_TileMirror	;$01DF28	||
 	JSL WriteToDMABuffer		;$01DF2A	|/
 	LDA $4B						;$01DF2E	|\ Branch if the tilemap is not supposed to be cleared.
 	BNE CODE_FL_01DF53			;$01DF30	|/
@@ -11832,7 +11832,7 @@ CODE_FL_01DEA7:					;```````````| Should now be running on the SNES.
 	LDA #$0400					;$01DF37	||
 	STA $32						;$01DF3A	|| Set up two 0x400 fixed-transfer DMAs from
 	LDA $004B					;$01DF3C	||  $01DF94 (00,20) to the BG3 tilemap.
-	STA $37						;$01DF3F	|| The first transfer does the low bytes (00 - tile number),
+	STA.B CameraX_TileMirror						;$01DF3F	|| The first transfer does the low bytes (00 - tile number),
 	JSL WriteToDMABuffer		;$01DF41	||  while the second does the high bytes (20 - yxppccct).
 	SEP #$20					;$01DF45	||
 	LDA #$12					;$01DF47	|| In other words, this clears out the tilemap.
@@ -12414,7 +12414,7 @@ CODE_FL_01E386: 				;-----------| Text command 01 - Wait $XX frames
 	STA $36						;$01E3C9	|
 	LDA $004F					;$01E3CB	|
 	ADC #$0008					;$01E3CE	|
-	STA $37						;$01E3D1	|
+	STA.B CameraX_TileMirror						;$01E3D1	|
 	JSL WriteToDMABuffer		;$01E3D3	|
 	SEP #$20					;$01E3D7	|
 	LDA #$12					;$01E3D9	|
@@ -12478,7 +12478,7 @@ CODE_FL_01E434: ;			|
 	LDA $004F					;$01E456	|
 	CLC							;$01E459	|
 	ADC #$0010					;$01E45A	|
-	STA $37						;$01E45D	|
+	STA.B CameraX_TileMirror						;$01E45D	|
 	JSL WriteToDMABuffer		;$01E45F	|
 	JSR CODE_FL_01E756			;$01E463	|
 	JSR CODE_FL_01E737			;$01E466	|
@@ -12915,16 +12915,16 @@ CODE_FL_01E756: 				;-----------| Text subroutine to ???
 	LDA #$007F					;$01E770	||
 	STA $36						;$01E773	||
 	LDA $004D					;$01E775	||
-	STA $37						;$01E778	|/
+	STA.B CameraX_TileMirror						;$01E778	|/
 CODE_FL_01E77A: 				;			|
 	JSL WriteToDMABuffer		;$01E77A	|\ 
 	LDA $34						;$01E77E	||
 	CLC							;$01E780	||
 	ADC #$0040					;$01E781	||
 	STA $34						;$01E784	|| Perform each DMA, incrementing the source by 0x40 each time and destination by 0x20.
-	LDA $37						;$01E786	||
+	LDA.B CameraX_TileMirror						;$01E786	||
 	ADC #$0020					;$01E788	||
-	STA $37						;$01E78B	||
+	STA.B CameraX_TileMirror						;$01E78B	||
 	DEC $2E						;$01E78D	||
 	BNE CODE_FL_01E77A			;$01E78F	|/
 	STZ $0071					;$01E791	|
@@ -12975,7 +12975,7 @@ CODE_FL_01E79B:
 	ASL A						;$01E7DC	|| Set the DMA destionation based on $0075 * 8 + $004F.
 	ASL A						;$01E7DD	||
 	ADC $004F					;$01E7DE	||
-	STA $37						;$01E7E1	|/
+	STA.B CameraX_TileMirror						;$01E7E1	|/
 	JSL WriteToDMABuffer		;$01E7E3	|] Execute the DMA.
 	LDA $0059					;$01E7E7	|\ 
 	AND #$3FF8					;$01E7EA	||
@@ -13031,12 +13031,12 @@ CODE_FL_01E82F: ;-----------|
 	LDA #$0001					;$01E843	||
 	STA $36						;$01E846	||
 	LDA $004D					;$01E848	||
-	STA $37						;$01E84B	|/
+	STA.B CameraX_TileMirror						;$01E84B	|/
 CODE_FL_01E84D: ;			|
 	JSL WriteToDMABuffer		;$01E84D	|\ 
-	LDA $37						;$01E851	||
+	LDA.B CameraX_TileMirror						;$01E851	||
 	ADC #$0020					;$01E853	||
-	STA $37						;$01E856	||
+	STA.B CameraX_TileMirror						;$01E856	||
 	DEC $2E						;$01E858	||
 	BNE CODE_FL_01E84D			;$01E85A	|/
 	STZ $006B					;$01E85C	|
@@ -13138,7 +13138,7 @@ CODE_FL_01E970: 				;			||
 	LDA #$20					;$01E999	|\ Enable IRQ.
 	TSB $3091					;$01E99B	|/
 	REP #$30					;$01E99E	|
-	STZ Boss_HP					;$01E9A0	|
+	STZ BossHP					;$01E9A0	|
 	STZ $7A2D					;$01E9A3	|
 	STZ $7A2F					;$01E9A6	|
 	STZ $7A29					;$01E9A9	|
@@ -13149,7 +13149,7 @@ CODE_FL_01E970: 				;			||
 	STZ $00BF					;$01E9B8	|
 	LDA #$FFFF					;$01E9BB	|
 	STA $00B3					;$01E9BE	|
-	STA Boss_Max_HP					;$01E9C1	|
+	STA HUD_BossHP					;$01E9C1	|
 	STA $00B5					;$01E9C4	|
 	STA $00B7					;$01E9C7	|
 	STA $00B9					;$01E9CA	|
@@ -13220,7 +13220,7 @@ HandleStatusBar_L: 				;-----------| Status bar handler routine.
 	RTL							;$01EA6C	|
 
 HandleStatusBar: 
-	LDA Boss_Max_HP					;$01EA6D	|\ 
+	LDA HUD_BossHP					;$01EA6D	|\ 
 	BPL CODE_FL_01EA75			;$01EA70	|| If a boss isn't active, ???
 	STZ $7A1F					;$01EA72	|/
 CODE_FL_01EA75: 				;			|
@@ -13619,7 +13619,7 @@ CODE_FL_01EDD4: 				;			|
 	STY $34						;$01EDE4	|
 	LDA #$0000					;$01EDE6	|
 	STA $36						;$01EDE9	|
-	STX $37						;$01EDEB	|
+	STX.B CameraX_TileMirror						;$01EDEB	|
 	SEP #$30					;$01EDED	|
 	LDA #$F2					;$01EDEF	|
 	LDY #$02					;$01EDF1	|
@@ -13670,7 +13670,7 @@ CODE_FL_01EE53: 				;			|
 
 
 CODE_FL_01EE5C: 				;-----------| Status bar subroutine.
-	LDA Boss_HP					;$01EE5C	|
+	LDA BossHP					;$01EE5C	|
 	BEQ CODE_FL_01EEAE			;$01EE5F	|
 CODE_FL_01EE61:
 	SEP #$20					;$01EE61	|
@@ -13710,7 +13710,7 @@ CODE_FL_01EE92: 				;			|
 	STA $7A2F					;$01EEA1	|
 	LDA #$3B					;$01EEA4	|
 	STA $7A2E					;$01EEA6	|
-	STZ Boss_HP					;$01EEA9	|
+	STZ BossHP					;$01EEA9	|
 CODE_FL_01EEAC: 				;			|
 	REP #$20					;$01EEAC	|
 CODE_FL_01EEAE: 				;			|
@@ -13773,7 +13773,7 @@ CODE_FL_01EEFB: 				;			|
 	LDA #$0080					;$01EF12	||
 	STA $32						;$01EF15	||
 	LDA.l DATA_01EF26,X			;$01EF17	||
-	STA $37						;$01EF1B	||
+	STA.B CameraX_TileMirror						;$01EF1B	||
 	PHX							;$01EF1D	||
 	JSL WriteToDMABuffer		;$01EF1E	|/
 	PLX							;$01EF22	|
@@ -13801,7 +13801,7 @@ CODE_FL_01EF32: ;-----------| Gourmet Race subroutine.
 	LDA #$0000					;$01EF41	||
 	STA $36						;$01EF44	||
 	LDA #$58AD					;$01EF46	||
-	STA $37						;$01EF49	|/
+	STA.B CameraX_TileMirror						;$01EF49	|/
 	SEP #$30					;$01EF4B	|
 	LDA #$F2					;$01EF4D	|
 	LDY #$02					;$01EF4F	|
@@ -13879,16 +13879,16 @@ CODE_FL_01EFA8: ;			|
 	STA $32						;$01EFC3	|
 	LDA #$00E7					;$01EFC5	|
 	STA $36						;$01EFC8	|
-	STX $37						;$01EFCA	|
+	STX.B CameraX_TileMirror						;$01EFCA	|
 	JSL WriteToDMABuffer		;$01EFCC	|
 	LDA $2E						;$01EFD0	|
 	XBA							;$01EFD2	|
 	LSR A						;$01EFD3	|
 	ADC #$62D2					;$01EFD4	|
 	STA $34						;$01EFD7	|
-	LDA $37						;$01EFD9	|
+	LDA.B CameraX_TileMirror						;$01EFD9	|
 	ADC #$0040					;$01EFDB	|
-	STA $37						;$01EFDE	|
+	STA.B CameraX_TileMirror						;$01EFDE	|
 	JSL WriteToDMABuffer		;$01EFE0	|
 	PLA							;$01EFE4	|
 	SEC							;$01EFE5	|
@@ -13926,7 +13926,7 @@ CODE_FL_01F008: ;-----------| Status bar routine for The Great Cave Offensive.
 	BMI CODE_FL_01F01F			;$01F01A	||
 	ORA #$0004					;$01F01C	|| Get the layout to use.
 CODE_FL_01F01F:					;			|| Start with X = 0;
-	LDY Boss_Max_HP					;$01F01F	||  If a partner is active, add 4.
+	LDY HUD_BossHP					;$01F01F	||  If a partner is active, add 4.
 	BMI CODE_FL_01F027			;$01F022	||  If a boss is active, add 2.
 	ORA #$0002					;$01F024	||
 CODE_FL_01F027: ;			||
@@ -14081,7 +14081,7 @@ CODE_FL_01F15D: ;-----------| Status bar routine for Revenge of Meta-Knight.
 	BMI CODE_FL_01F168			;$01F163	||
 	ORA #$0004					;$01F165	|| Get the layout to use.
 CODE_FL_01F168:					;			|| Start with X = 0;
-	LDY Boss_Max_HP					;$01F168	||  If a partner is active, add 4.
+	LDY HUD_BossHP					;$01F168	||  If a partner is active, add 4.
 	BMI CODE_FL_01F170			;$01F16B	||  If a boss is active, add 2.
 	ORA #$0002					;$01F16D	||
 CODE_FL_01F170: ;			||
@@ -14230,7 +14230,7 @@ CODE_FL_01F27A: ;-----------| Revenge of Meta-Knight status bar routine 4 - Text
 	STA $157B					;$01F29F	|| Set color 0x32 (Kirby's HP bar) to #$0010 (a dark red).
 	LDA #$40E0					;$01F2A2	|| Set color 0x52 (boss HP bar) to #$40E0 (a dark blue).
 	STA $15BB					;$01F2A5	|/
-	LDA Boss_Max_HP					;$01F2A8	|\ 
+	LDA HUD_BossHP					;$01F2A8	|\ 
 	BPL CODE_FL_01F2B8			;$01F2AB	||
 	LDX #$056D					;$01F2AD	||
 	LDA #$00EB					;$01F2B0	|| Load the base tilemap from either
@@ -14249,7 +14249,7 @@ CODE_FL_01F2C1: ;			|
 	LDX #$165D					;$01F2CF	|\ Update Kirby's HP bar.
 	JSR WriteHPBar				;$01F2D2	|/
 CODE_FL_01F2D5: ;			|
-	LDA Boss_Max_HP					;$01F2D5	|\ Branch if a boss is active.
+	LDA HUD_BossHP					;$01F2D5	|\ Branch if a boss is active.
 	BPL CODE_FL_01F2E2			;$01F2D8	|/
 	LDX #$16A8					;$01F2DA	|\ Write the score.
 	JSR CODE_FL_01F947			;$01F2DD	|/
@@ -14308,7 +14308,7 @@ CODE_FL_01F2ED: ;			|
 	LDA #$007E					;$01F355	||
 	STA $36						;$01F358	||
 	LDA #$58E0					;$01F35A	||\ ...to $58E0.
-	STA $37						;$01F35D	||/
+	STA.B CameraX_TileMirror						;$01F35D	||/
 	JSL WriteToDMABuffer		;$01F35F	|/
 	BRA CODE_FL_01F371			;$01F363	|
 
@@ -14443,7 +14443,7 @@ CODE_FL_01F436: ;-----------| Status bar routine for Milky Way Wishes.
 	BMI CODE_FL_01F441			;$01F43C	||
 	ORA #$0004					;$01F43E	|| Get the layout to use.
 CODE_FL_01F441:					;			|| Start with A = 0;
-	LDY Boss_Max_HP					;$01F441	||  If a partner is active, add 4.
+	LDY HUD_BossHP					;$01F441	||  If a partner is active, add 4.
 	BMI CODE_FL_01F449			;$01F444	||  If a boss is active, add 2.
 	ORA #$0002					;$01F446	||
 CODE_FL_01F449: ;			||
@@ -14604,7 +14604,7 @@ CODE_FL_01F55F: ;-----------| Subroutine to get the planet name for the status b
 	LDA #$007E					;$01F593	||
 	STA $36						;$01F596	||
 	LDA #$5C20					;$01F598	||
-	STA $37						;$01F59B	||
+	STA.B CameraX_TileMirror						;$01F59B	||
 	JSL WriteToDMABuffer		;$01F59D	|/
 	RTS							;$01F5A1	|
 
@@ -14632,7 +14632,7 @@ CODE_FL_01F5C9: ;-----------| Status bar routine for The Arena, Sound Test, Guid
 	BMI CODE_FL_01F5D4			;$01F5CF	|| Get the layout to use.
 	ORA #$0004					;$01F5D1	|| Start with A = 0;
 CODE_FL_01F5D4: ;			||  If a partner is active, add 4.
-	LDY Boss_Max_HP					;$01F5D4	||  If a boss is active, add 2.
+	LDY HUD_BossHP					;$01F5D4	||  If a boss is active, add 2.
 	BMI CODE_FL_01F5DC			;$01F5D7	||
 	ORA #$0002					;$01F5D9	|/
 CODE_FL_01F5DC: ;			|
@@ -14677,7 +14677,7 @@ CODE_FL_01F604: ;			|
 	LDA #$007E					;$01F635	|
 	STA $36						;$01F638	|
 	LDA #$5B60					;$01F63A	|
-	STA $37						;$01F63D	|
+	STA.B CameraX_TileMirror						;$01F63D	|
 	JSL WriteToDMABuffer		;$01F63F	|
 CODE_FL_01F643: ;			|
 	LDX $00B3					;$01F643	|
@@ -14934,7 +14934,7 @@ CODE_FL_01F81F: ;-----------| Subroutine used by Spring Breeze/Dyna Blade to get
 	BMI CODE_FL_01F82A			;$01F825	|| If the player has a partner, add 2.
 	ORA #$0002					;$01F827	|/
 CODE_FL_01F82A: ;			|
-	LDY Boss_Max_HP					;$01F82A	|\ 
+	LDY HUD_BossHP					;$01F82A	|\ 
 	BMI CODE_FL_01F832			;$01F82D	|| If a boss is active, add 4.
 	ORA #$0004					;$01F82F	|/
 CODE_FL_01F832: ;			|
@@ -15337,7 +15337,7 @@ CODE_FL_01FA81:					;```````````| All icons join back up to actually draw it. A 
 	LDA #$007E					;$01FAE4	||
 	STA $36						;$01FAE7	||
 	LDA #$58E0					;$01FAE9	||\ Destination is $58E0.
-	STA $37						;$01FAEC	||/
+	STA.B CameraX_TileMirror						;$01FAEC	||/
 	JSL WriteToDMABuffer		;$01FAEE	|/
 	RTS							;$01FAF2	|
 
@@ -15428,7 +15428,7 @@ CODE_FL_01FB34:					;```````````| Partner image is not white.
 	LDA #$007E					;$01FBA2	||
 	STA $36						;$01FBA5	||
 	LDA #$5A20					;$01FBA7	||
-	STA $37						;$01FBAA	||
+	STA.B CameraX_TileMirror						;$01FBAA	||
 	JSL WriteToDMABuffer		;$01FBAC	|/
 	RTS							;$01FBB0	|
 
@@ -15604,7 +15604,7 @@ CODE_FL_01FCD2: 				;			|
 
 
 CODE_FL_01FCD5:					;-----------| Subroutine which most likely checks whether to update the boss's HP bar.
-	LDA Boss_Max_HP				;$01FCD5	|\ Branch if a boss is actually active.
+	LDA HUD_BossHP				;$01FCD5	|\ Branch if a boss is actually active.
 	BPL CODE_FL_01FCE2			;$01FCD8	|/
 CODE_FL_01FCDA: 				;			|
 	STZ $00D3					;$01FCDA	|
@@ -15621,12 +15621,12 @@ CODE_FL_01FCE9:
 	STZ $00DF					;$01FCE9	|
 CODE_FL_01FCEC: 				;			|
 	STX $14						;$01FCEC	|
-	CMP Boss_HP_Meter			;$01FCEE	|
+	CMP HUD_BossMaxHP			;$01FCEE	|
 	BCC CODE_FL_01FCF6			;$01FCF1	|
-	LDA Boss_HP_Meter			;$01FCF3	|
+	LDA HUD_BossMaxHP			;$01FCF3	|
 CODE_FL_01FCF6: 				;			|
 	STA $49						;$01FCF6	|
-	LDA Boss_HP_Meter			;$01FCF8	|
+	LDA HUD_BossMaxHP			;$01FCF8	|
 	STA $4B						;$01FCFB	|
 	LDA #$FD52					;$01FCFD	|\ 
 	LDX #$0001					;$01FD00	|| Wait for the SA-1 chip to execute $01FD52.

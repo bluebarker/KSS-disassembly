@@ -1,6 +1,6 @@
 ; This bank contains mainly pointers to level data and graphics.
-; Although this bank is technically mapped at $BE8000, the Super MMC maps it to the lower half of bank FF.
-;  As KSS always references it in this way, all address values will be treated as such.
+; Although this bank is technically mapped at $BE, the Super MMC maps it to the lower half of bank FF.
+; The Super MMC also maps $BF to the upper half of FF.
 
 ORG $FF0000
 
@@ -26,325 +26,325 @@ ORG $FF0000
     dw $0592                      ;$FF0098 |
 
 LevelLayoutDataPointers:          ; Giant pointer table to level layout data.
-    dl DATA8_F0DACE : db $00      ; Unsure why each one has a $00 following it
-    dl DATA8_F020EF : db $00
-    dl DATA8_F081C4 : db $00
-    dl DATA8_F1E611 : db $00
-    dl DATA8_F1E020 : db $00
-    dl DATA8_F00DF8 : db $00
-    dl DATA8_F09AD3 : db $00
-    dl DATA8_F02972 : db $00
-    dl DATA8_F1CAB4 : db $00
-    dl DATA8_F089F1 : db $00
-    dl DATA8_F1F8F4 : db $00
-    dl DATA8_F07CB5 : db $00
-    dl DATA8_F0947C : db $00
-    dl DATA8_F0980C : db $00
-    dl DATA8_F1C633 : db $00
-    dl DATA8_F09A24 : db $00
-    dl DATA8_F1DC1F : db $00
-    dl DATA8_F0225F : db $00
-    dl DATA8_F06502 : db $00
-    dl DATA8_F15B14 : db $00
-    dl DATA8_F13D6F : db $00
-    dl DATA8_F1D39A : db $00
-    dl DATA8_F2A14B : db $00
-    dl DATA8_F066ED : db $00
-    dl DATA8_F0836C : db $00
-    dl DATA8_F193F0 : db $00
-    dl DATA8_F05E14 : db $00
-    dl DATA8_F19E90 : db $00
-    dl DATA8_F01DFB : db $00
-    dl DATA8_F103D8 : db $00
-    dl DATA8_F25394 : db $00
-    dl DATA8_F433A2 : db $00
-    dl DATA8_F06F58 : db $00
-    dl DATA8_F1A670 : db $00
-    dl DATA8_F0449B : db $00
-    dl DATA8_F3C872 : db $00
-    dl DATA8_F04809 : db $00
-    dl DATA8_F1B0A7 : db $00
-    dl DATA8_F48BC3 : db $00
-    dl DATA8_F3482D : db $00
-    dl DATA8_F258C8 : db $00
-    dl DATA8_F5FED2 : db $00
-    dl DATA8_F07D90 : db $00
-    dl DATA8_F2FB51 : db $00
-    dl DATA8_F09B82 : db $00
-    dl DATA8_F182C9 : db $00
-    dl DATA8_F170D4 : db $00
-    dl DATA8_F21CED : db $00
-    dl DATA8_F330C3 : db $00
-    dl DATA8_F0399E : db $00
-    dl DATA8_F1FAC8 : db $00
-    dl DATA8_F1AE23 : db $00
-    dl DATA8_F1549A : db $00
-    dl DATA8_F3CE9E : db $00
-    dl DATA8_F2632B : db $00
-    dl DATA8_F365E2 : db $00
-    dl DATA8_F4479A : db $00
-    dl DATA8_F12C61 : db $00
-    dl DATA8_F1B594 : db $00
-    dl DATA8_F03450 : db $00
-    dl DATA8_F06AB7 : db $00
-    dl DATA8_F09E23 : db $00
-    dl DATA8_F3F2F8 : db $00
-    dl DATA8_F00000 : db $00
-    dl DATA8_F06D81 : db $00
-    dl DATA8_F0DF63 : db $00
-    dl DATA8_F1BCD3 : db $00
-    dl DATA8_F1C876 : db $00
-    dl DATA8_F21749 : db $00
-    dl DATA8_F4518C : db $00
-    dl DATA8_F63F60 : db $00
-    dl DATA8_F0B3B7 : db $00
-    dl DATA8_F05F14 : db $00
-    dl DATA8_F067E0 : db $00
-    dl DATA8_F16DCE : db $00
-    dl DATA8_F26D64 : db $00
-    dl DATA8_F395D6 : db $00
-    dl DATA8_F072F3 : db $00
-    dl DATA8_F10000 : db $00
-    dl DATA8_F116AD : db $00
-    dl DATA8_F0D0B4 : db $00
-    dl DATA8_F18B79 : db $00
-    dl DATA8_F15E50 : db $00
-    dl DATA8_F1969E : db $00
-    dl DATA8_F176DC : db $00
-    dl DATA8_F0055B : db $00
-    dl DATA8_F2F39B : db $00
-    dl DATA8_F4BA70 : db $00
-    dl DATA8_F40000 : db $00
-    dl DATA8_F07127 : db $00
-    dl DATA8_F48252 : db $00
-    dl DATA8_F2C7C0 : db $00
-    dl DATA8_F157D8 : db $00
-    dl DATA8_F036FB : db $00
-    dl DATA8_F1B802 : db $00
-    dl DATA8_F03C39 : db $00
-    dl DATA8_F00395 : db $00
-    dl DATA8_F1EFAE : db $00
-    dl DATA8_F035A6 : db $00
-    dl DATA8_F008D4 : db $00
-    dl DATA8_F12557 : db $00
-    dl DATA8_F2AE83 : db $00
-    dl DATA8_F02C39 : db $00
-    dl DATA8_F16AC0 : db $00
-    dl DATA8_F11A5B : db $00
-    dl DATA8_F128F1 : db $00
-    dl DATA8_F1648E : db $00
-    dl DATA8_F1D166 : db $00
-    dl DATA8_F1CF2E : db $00
-    dl DATA8_F17CDF : db $00
-    dl DATA8_F1FE69 : db $00
-    dl DATA8_F014C2 : db $00
-    dl DATA8_F1E41B : db $00
-    dl DATA8_F055FD : db $00
-    dl DATA8_F1C3E3 : db $00
-    dl DATA8_F046E5 : db $00
-    dl DATA8_F03D7D : db $00
-    dl DATA8_F032FA : db $00
-    dl DATA8_F026A3 : db $00
-    dl DATA8_F08B81 : db $00
-    dl DATA8_F08ABA : db $00
-    dl DATA8_F065F8 : db $00
-    dl DATA8_F04927 : db $00
-    dl DATA8_F073D9 : db $00
-    dl DATA8_F074BF : db $00
-    dl DATA8_F0165B : db $00
-    dl DATA8_F08F55 : db $00
-    dl DATA8_F0D4A2 : db $00
-    dl DATA8_F085E1 : db $00
-    dl DATA8_F08D0F : db $00
-    dl DATA8_F1C190 : db $00
-    dl DATA8_F2E3FD : db $00
-    dl DATA8_F2EBDD : db $00
-    dl DATA8_F017E6 : db $00
-    dl DATA8_F388B3 : db $00
-    dl DATA8_F031A3 : db $00
-    dl DATA8_F053ED : db $00
-    dl DATA8_F023CD : db $00
-    dl DATA8_F051D5 : db $00
-    dl DATA8_F1CCF2 : db $00
-    dl DATA8_F1F18F : db $00
-    dl DATA8_F01AF6 : db $00
-    dl DATA8_F00FAE : db $00
-    dl DATA8_F167AA : db $00
-    dl DATA8_F36D0D : db $00
-    dl DATA8_F1D5CA : db $00
-    dl DATA8_F1F36E : db $00
-    dl DATA8_F06211 : db $00
-    dl DATA8_F1EDCC : db $00
-    dl DATA8_F0930A : db $00
-    dl DATA8_F08C48 : db $00
-    dl DATA8_F06014 : db $00
-    dl DATA8_F0720D : db $00
-    dl DATA8_F09193 : db $00
-    dl DATA8_F23343 : db $00
-    dl DATA8_F01162 : db $00
-    dl DATA8_F0384F : db $00
-    dl DATA8_F16171 : db $00
-    dl DATA8_F39C4A : db $00
-    dl DATA8_F49E93 : db $00
-    dl DATA8_F054F6 : db $00
-    dl DATA8_F1912A : db $00
-    dl DATA8_F1F547 : db $00
-    dl DATA8_F4CC81 : db $00
-    dl DATA8_F248FC : db $00
-    dl DATA8_F06C95 : db $00
-    dl DATA8_F40A7D : db $00
-    dl DATA8_F00A8B : db $00
-    dl DATA8_F01315 : db $00
-    dl DATA8_F0E034 : db $00
-    dl DATA8_F29CCB : db $00
-    dl DATA8_F1E9F2 : db $00
-    dl DATA8_F107AF : db $00
-    dl DATA8_F28A67 : db $00
-    dl DATA8_F069C5 : db $00
-    dl DATA8_F05702 : db $00
-    dl DATA8_F0D269 : db $00
-    dl DATA8_F28105 : db $00
-    dl DATA8_F4D547 : db $00
-    dl DATA8_F18E58 : db $00
-    dl DATA8_F1E21F : db $00
-    dl DATA8_F2B2D0 : db $00
-    dl DATA8_F4654A : db $00
-    dl DATA8_F06E6D : db $00
-    dl DATA8_F08510 : db $00
-    dl DATA8_FFFF6E : db $00
-    dl DATA8_F27264 : db $00
-    dl DATA8_F20BC5 : db $00
-    dl DATA8_F086B2 : db $00
-    dl DATA8_F07AF1 : db $00
-    dl DATA8_F01970 : db $00
-    dl DATA8_F35E9F : db $00
-    dl DATA8_F06BA7 : db $00
-    dl DATA8_F112F5 : db $00
-    dl DATA8_F03EBF : db $00
-    dl DATA8_F0630E : db $00
-    dl DATA8_F3D4C5 : db $00
-    dl DATA8_F10F3D : db $00
-    dl DATA8_F2DFFC : db $00
-    dl DATA8_F2EFBC : db $00
-    dl DATA8_F21188 : db $00
-    dl DATA8_F0D01D : db $00
-    dl DATA8_F08782 : db $00
-    dl DATA8_F0A0BA : db $00
-    dl DATA8_F09C2C : db $00
-    dl DATA8_F0A015 : db $00
-    dl DATA8_F3A2B2 : db $00
-    dl DATA8_F53CCF : db $00
-    dl DATA8_F25DFA : db $00
-    dl DATA8_F03FF7 : db $00
-    dl DATA8_F090D6 : db $00
-    dl DATA8_F0CF85 : db $00
-    dl DATA8_F09CD5 : db $00
-    dl DATA8_F1DA1C : db $00
-    dl DATA8_F318E4 : db $00
-    dl DATA8_F04FB7 : db $00
-    dl DATA8_F04C77 : db $00
-    dl DATA8_F045C0 : db $00
-    dl DATA8_F050C7 : db $00
-    dl DATA8_F0424F : db $00
-    dl DATA8_F04D8E : db $00
-    dl DATA8_F04375 : db $00
-    dl DATA8_F04B5D : db $00
-    dl DATA8_F2FF29 : db $00
-    dl DATA8_F05806 : db $00
-    dl DATA8_F04EA3 : db $00
-    dl DATA8_F052E3 : db $00
-    dl DATA8_F01C7A : db $00
-    dl DATA8_F5A02C : db $00
-    dl DATA8_F238C9 : db $00
-    dl DATA8_F07040 : db $00
-    dl DATA8_F0CEE8 : db $00
-    dl DATA8_F02AD8 : db $00
-    dl DATA8_F3ECF4 : db $00
-    dl DATA8_F2E7FD : db $00
-    dl DATA8_F1EBE0 : db $00
-    dl DATA8_F34FC3 : db $00
-    dl DATA8_F06113 : db $00
-    dl DATA8_F09250 : db $00
-    dl DATA8_F1889A : db $00
-    dl DATA8_F0D387 : db $00
-    dl DATA8_F02539 : db $00
-    dl DATA8_F338AC : db $00
-    dl DATA8_F30000 : db $00
-    dl DATA8_F3DAD7 : db $00
-    dl DATA8_F1F71E : db $00
-    dl DATA8_F0D9EA : db $00
-    dl DATA8_F08852 : db $00
-    dl DATA8_F1D7F8 : db $00
-    dl DATA8_F2D7F3 : db $00
-    dl DATA8_F3408A : db $00
-    dl DATA8_F243A4 : db $00
-    dl DATA8_F3F8EE : db $00
-    dl DATA8_F8FF32 : db $00
-    dl DATA8_F08922 : db $00
-    dl DATA8_F09974 : db $00
-    dl DATA8_F001CD : db $00
-    dl DATA8_F03AED : db $00
-    dl DATA8_F0DB3B : db $00
-    dl DATA8_F23E4C : db $00
-    dl DATA8_F13338 : db $00
-    dl DATA8_F0DBA6 : db $00
-    dl DATA8_F7FE9C : db $00
-    dl DATA8_F07F42 : db $00
-    dl DATA8_F09ECA : db $00
-    dl DATA8_F00C42 : db $00
-    dl DATA8_F09F70 : db $00
-    dl DATA8_F093C3 : db $00
-    dl DATA8_F068D3 : db $00
-    dl DATA8_F06409 : db $00
-    dl DATA8_F0DC11 : db $00
-    dl DATA8_FAFF93 : db $00
-    dl DATA8_F0D1DA : db $00
-    dl DATA8_F09D7C : db $00
-    dl DATA8_F0D8EE : db $00
-    dl DATA8_F0D2F8 : db $00
-    dl DATA8_F0DA5C : db $00
-    dl DATA8_F0D149 : db $00
-    dl DATA8_F07E69 : db $00
-    dl DATA8_F136A1 : db $00
-    dl DATA8_F096A3 : db $00
-    dl DATA8_F098C0 : db $00
-    dl DATA8_F09758 : db $00
-    dl DATA8_F0DC7C : db $00
-    dl DATA8_F0DFCC : db $00
-    dl DATA8_F0D866 : db $00
-    dl DATA8_F0D52F : db $00
-    dl DATA8_F0D646 : db $00
-    dl DATA8_F0DE8F : db $00
-    dl DATA8_F0D756 : db $00
-    dl DATA8_F0D7DE : db $00
-    dl DATA8_F0DCE7 : db $00
-    dl DATA8_F0D415 : db $00
-    dl DATA8_F0DE25 : db $00
-    dl DATA8_F04A43 : db $00
-    dl DATA8_F0DEF9 : db $00
-    dl DATA8_F0D6CE : db $00
-    dl DATA8_F0DD51 : db $00
-    dl DATA8_F09016 : db $00
-    dl DATA8_F080EF : db $00
-    dl DATA8_F0843E : db $00
-    dl DATA8_F0E4DB : db $00
-    dl DATA8_F0E53E : db $00
-    dl DATA8_F0E5A1 : db $00
-    dl DATA8_F0E604 : db $00
-    dl DATA8_F0E667 : db $00
-    dl DATA8_F0E6CA : db $00
-    dl DATA8_F0E72D : db $00
-    dl DATA8_F0E09A : db $00
-    dl DATA8_F0E0FD : db $00
-    dl DATA8_F0E160 : db $00
-    dl DATA8_F0E1C3 : db $00
-    dl DATA8_F0E226 : db $00
-    dl DATA8_F0E289 : db $00
-    dl DATA8_F0E2EC : db $00
-    dl DATA8_F0E34F : db $00
-    dl DATA8_F0E3B2 : db $00
-    dl DATA8_F0E415 : db $00
-    dl DATA8_F0E478 : db $00
+    dd DATA8_F0DACE
+    dd DATA8_F020EF
+    dd DATA8_F081C4
+    dd DATA8_F1E611
+    dd DATA8_F1E020
+    dd DATA8_F00DF8
+    dd DATA8_F09AD3
+    dd DATA8_F02972
+    dd DATA8_F1CAB4
+    dd DATA8_F089F1
+    dd DATA8_F1F8F4
+    dd DATA8_F07CB5
+    dd DATA8_F0947C
+    dd DATA8_F0980C
+    dd DATA8_F1C633
+    dd DATA8_F09A24
+    dd DATA8_F1DC1F
+    dd DATA8_F0225F
+    dd DATA8_F06502
+    dd DATA8_F15B14
+    dd DATA8_F13D6F
+    dd DATA8_F1D39A
+    dd DATA8_F2A14B
+    dd DATA8_F066ED
+    dd DATA8_F0836C
+    dd DATA8_F193F0
+    dd DATA8_F05E14
+    dd DATA8_F19E90
+    dd DATA8_F01DFB
+    dd DATA8_F103D8
+    dd DATA8_F25394
+    dd DATA8_F433A2
+    dd DATA8_F06F58
+    dd DATA8_F1A670
+    dd DATA8_F0449B
+    dd DATA8_F3C872
+    dd DATA8_F04809
+    dd DATA8_F1B0A7
+    dd DATA8_F48BC3
+    dd DATA8_F3482D
+    dd DATA8_F258C8
+    dd DATA8_F5FED2
+    dd DATA8_F07D90
+    dd DATA8_F2FB51
+    dd DATA8_F09B82
+    dd DATA8_F182C9
+    dd DATA8_F170D4
+    dd DATA8_F21CED
+    dd DATA8_F330C3
+    dd DATA8_F0399E
+    dd DATA8_F1FAC8
+    dd DATA8_F1AE23
+    dd DATA8_F1549A
+    dd DATA8_F3CE9E
+    dd DATA8_F2632B
+    dd DATA8_F365E2
+    dd DATA8_F4479A
+    dd DATA8_F12C61
+    dd DATA8_F1B594
+    dd DATA8_F03450
+    dd DATA8_F06AB7
+    dd DATA8_F09E23
+    dd DATA8_F3F2F8
+    dd DATA8_F00000
+    dd DATA8_F06D81
+    dd DATA8_F0DF63
+    dd DATA8_F1BCD3
+    dd DATA8_F1C876
+    dd DATA8_F21749
+    dd DATA8_F4518C
+    dd DATA8_F63F60
+    dd DATA8_F0B3B7
+    dd DATA8_F05F14
+    dd DATA8_F067E0
+    dd DATA8_F16DCE
+    dd DATA8_F26D64
+    dd DATA8_F395D6
+    dd DATA8_F072F3
+    dd DATA8_F10000
+    dd DATA8_F116AD
+    dd DATA8_F0D0B4
+    dd DATA8_F18B79
+    dd DATA8_F15E50
+    dd DATA8_F1969E
+    dd DATA8_F176DC
+    dd DATA8_F0055B
+    dd DATA8_F2F39B
+    dd DATA8_F4BA70
+    dd DATA8_F40000
+    dd DATA8_F07127
+    dd DATA8_F48252
+    dd DATA8_F2C7C0
+    dd DATA8_F157D8
+    dd DATA8_F036FB
+    dd DATA8_F1B802
+    dd DATA8_F03C39
+    dd DATA8_F00395
+    dd DATA8_F1EFAE
+    dd DATA8_F035A6
+    dd DATA8_F008D4
+    dd DATA8_F12557
+    dd DATA8_F2AE83
+    dd DATA8_F02C39
+    dd DATA8_F16AC0
+    dd DATA8_F11A5B
+    dd DATA8_F128F1
+    dd DATA8_F1648E
+    dd DATA8_F1D166
+    dd DATA8_F1CF2E
+    dd DATA8_F17CDF
+    dd DATA8_F1FE69
+    dd DATA8_F014C2
+    dd DATA8_F1E41B
+    dd DATA8_F055FD
+    dd DATA8_F1C3E3
+    dd DATA8_F046E5
+    dd DATA8_F03D7D
+    dd DATA8_F032FA
+    dd DATA8_F026A3
+    dd DATA8_F08B81
+    dd DATA8_F08ABA
+    dd DATA8_F065F8
+    dd DATA8_F04927
+    dd DATA8_F073D9
+    dd DATA8_F074BF
+    dd DATA8_F0165B
+    dd DATA8_F08F55
+    dd DATA8_F0D4A2
+    dd DATA8_F085E1
+    dd DATA8_F08D0F
+    dd DATA8_F1C190
+    dd DATA8_F2E3FD
+    dd DATA8_F2EBDD
+    dd DATA8_F017E6
+    dd DATA8_F388B3
+    dd DATA8_F031A3
+    dd DATA8_F053ED
+    dd DATA8_F023CD
+    dd DATA8_F051D5
+    dd DATA8_F1CCF2
+    dd DATA8_F1F18F
+    dd DATA8_F01AF6
+    dd DATA8_F00FAE
+    dd DATA8_F167AA
+    dd DATA8_F36D0D
+    dd DATA8_F1D5CA
+    dd DATA8_F1F36E
+    dd DATA8_F06211
+    dd DATA8_F1EDCC
+    dd DATA8_F0930A
+    dd DATA8_F08C48
+    dd DATA8_F06014
+    dd DATA8_F0720D
+    dd DATA8_F09193
+    dd DATA8_F23343
+    dd DATA8_F01162
+    dd DATA8_F0384F
+    dd DATA8_F16171
+    dd DATA8_F39C4A
+    dd DATA8_F49E93
+    dd DATA8_F054F6
+    dd DATA8_F1912A
+    dd DATA8_F1F547
+    dd DATA8_F4CC81
+    dd DATA8_F248FC
+    dd DATA8_F06C95
+    dd DATA8_F40A7D
+    dd DATA8_F00A8B
+    dd DATA8_F01315
+    dd DATA8_F0E034
+    dd DATA8_F29CCB
+    dd DATA8_F1E9F2
+    dd DATA8_F107AF
+    dd DATA8_F28A67
+    dd DATA8_F069C5
+    dd DATA8_F05702
+    dd DATA8_F0D269
+    dd DATA8_F28105
+    dd DATA8_F4D547
+    dd DATA8_F18E58
+    dd DATA8_F1E21F
+    dd DATA8_F2B2D0
+    dd DATA8_F4654A
+    dd DATA8_F06E6D
+    dd DATA8_F08510
+    dd Level_ReactorBoss
+    dd DATA8_F27264
+    dd DATA8_F20BC5
+    dd DATA8_F086B2
+    dd DATA8_F07AF1
+    dd DATA8_F01970
+    dd DATA8_F35E9F
+    dd DATA8_F06BA7
+    dd DATA8_F112F5
+    dd DATA8_F03EBF
+    dd DATA8_F0630E
+    dd DATA8_F3D4C5
+    dd DATA8_F10F3D
+    dd DATA8_F2DFFC
+    dd DATA8_F2EFBC
+    dd DATA8_F21188
+    dd DATA8_F0D01D
+    dd DATA8_F08782
+    dd DATA8_F0A0BA
+    dd DATA8_F09C2C
+    dd DATA8_F0A015
+    dd DATA8_F3A2B2
+    dd DATA8_F53CCF
+    dd DATA8_F25DFA
+    dd DATA8_F03FF7
+    dd DATA8_F090D6
+    dd DATA8_F0CF85
+    dd DATA8_F09CD5
+    dd DATA8_F1DA1C
+    dd DATA8_F318E4
+    dd DATA8_F04FB7
+    dd DATA8_F04C77
+    dd DATA8_F045C0
+    dd DATA8_F050C7
+    dd DATA8_F0424F
+    dd DATA8_F04D8E
+    dd DATA8_F04375
+    dd DATA8_F04B5D
+    dd DATA8_F2FF29
+    dd DATA8_F05806
+    dd DATA8_F04EA3
+    dd DATA8_F052E3
+    dd DATA8_F01C7A
+    dd DATA8_F5A02C
+    dd DATA8_F238C9
+    dd DATA8_F07040
+    dd DATA8_F0CEE8
+    dd DATA8_F02AD8
+    dd DATA8_F3ECF4
+    dd DATA8_F2E7FD
+    dd DATA8_F1EBE0
+    dd DATA8_F34FC3
+    dd DATA8_F06113
+    dd DATA8_F09250
+    dd DATA8_F1889A
+    dd DATA8_F0D387
+    dd DATA8_F02539
+    dd DATA8_F338AC
+    dd DATA8_F30000
+    dd DATA8_F3DAD7
+    dd DATA8_F1F71E
+    dd DATA8_F0D9EA
+    dd DATA8_F08852
+    dd DATA8_F1D7F8
+    dd DATA8_F2D7F3
+    dd DATA8_F3408A
+    dd DATA8_F243A4
+    dd DATA8_F3F8EE
+    dd DATA8_F8FF32
+    dd DATA8_F08922
+    dd DATA8_F09974
+    dd DATA8_F001CD
+    dd DATA8_F03AED
+    dd DATA8_F0DB3B
+    dd DATA8_F23E4C
+    dd DATA8_F13338
+    dd DATA8_F0DBA6
+    dd DATA8_F7FE9C
+    dd DATA8_F07F42
+    dd DATA8_F09ECA
+    dd DATA8_F00C42
+    dd DATA8_F09F70
+    dd DATA8_F093C3
+    dd DATA8_F068D3
+    dd DATA8_F06409
+    dd DATA8_F0DC11
+    dd DATA8_FAFF93
+    dd DATA8_F0D1DA
+    dd DATA8_F09D7C
+    dd DATA8_F0D8EE
+    dd DATA8_F0D2F8
+    dd DATA8_F0DA5C
+    dd DATA8_F0D149
+    dd DATA8_F07E69
+    dd DATA8_F136A1
+    dd DATA8_F096A3
+    dd DATA8_F098C0
+    dd DATA8_F09758
+    dd DATA8_F0DC7C
+    dd DATA8_F0DFCC
+    dd DATA8_F0D866
+    dd DATA8_F0D52F
+    dd DATA8_F0D646
+    dd DATA8_F0DE8F
+    dd DATA8_F0D756
+    dd DATA8_F0D7DE
+    dd DATA8_F0DCE7
+    dd DATA8_F0D415
+    dd DATA8_F0DE25
+    dd DATA8_F04A43
+    dd DATA8_F0DEF9
+    dd DATA8_F0D6CE
+    dd DATA8_F0DD51
+    dd DATA8_F09016
+    dd DATA8_F080EF
+    dd DATA8_F0843E
+    dd DATA8_F0E4DB
+    dd DATA8_F0E53E
+    dd DATA8_F0E5A1
+    dd DATA8_F0E604
+    dd DATA8_F0E667
+    dd DATA8_F0E6CA
+    dd DATA8_F0E72D
+    dd DATA8_F0E09A
+    dd DATA8_F0E0FD
+    dd DATA8_F0E160
+    dd DATA8_F0E1C3
+    dd DATA8_F0E226
+    dd DATA8_F0E289
+    dd DATA8_F0E2EC
+    dd DATA8_F0E34F
+    dd DATA8_F0E3B2
+    dd DATA8_F0E415
+    dd DATA8_F0E478
     dl $000000
 
 TilesetGraphicsDataPointers:
@@ -361,9 +361,9 @@ TilesetGraphicsDataPointers:
     dl DATA8_F6E1DD               ;$FF05B7 |
     dl DATA8_FD0000               ;$FF05BA |
     dl DATA8_F5BAB0               ;$FF05BD |
-    dl DATA8_FFC606               ;$FF05C0 |
+    dl GFX_Tileset_RoMK3          ;$FF05C0 |
     dl DATA8_FC6EF1               ;$FF05C3 |
-    dl DATA8_FF88DB               ;$FF05C6 |
+    dl GFX_Tileset_FF88DB         ;$FF05C6 |
     dl DATA8_FE78B3               ;$FF05C9 |
     dl DATA8_F4DE0C               ;$FF05CC |
     dl DATA8_FB0000               ;$FF05CF |
@@ -376,7 +376,7 @@ TilesetGraphicsDataPointers:
     dl DATA8_FA7A3A               ;$FF05E4 |
     dl DATA8_F90000               ;$FF05E7 |
     dl DATA8_FB921D               ;$FF05EA |
-    dl DATA8_FF4989               ;$FF05ED |
+    dl GFX_Tileset_FF4989         ;$FF05ED |
     dl GFX_Tileset_RoMK1          ;$FF05F0 |
     dl DATA8_F80000               ;$FF05F3 |
     dl DATA8_FAA25D               ;$FF05F6 |
@@ -678,3 +678,13 @@ TilesetGraphicsDataPointers:
 ; I'm not totally sure how I will conventionally name all of these so they will be stupid for now
 GFX_Tileset_RoMK1:
     incbin "Graphics/Tilesets/FF0965.bin"
+GFX_Tileset_FF4989:
+    incbin "Graphics/Tilesets/FF4989.bin"
+GFX_Tileset_FF88DB:
+    incbin "Graphics/Tilesets/FF88DB.bin"
+GFX_Tileset_RoMK3:
+    incbin "Graphics/Tilesets/FFC606.bin"
+
+; Reactor level data
+Level_ReactorBoss:
+    incbin "Levels/Boss/Reactor (FFFF6E).bin"

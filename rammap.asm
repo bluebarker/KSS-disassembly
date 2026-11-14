@@ -514,7 +514,25 @@ Current_NMI_Load: skip 2
 VRAM_DMA_Queue_Length: skip 1
 
 ; Unidentified
-skip 47
+skip $3037-$3020
+
+; === $003037 ===
+; 2 bytes
+; Mirror of address $3350, which is the current camera X position.
+; Used for calculating tile positions on screen.
+CameraX_TileMirror: skip 2
+
+; Unidentified
+skip $303D-$3039
+
+; === $00303D ===
+; 2 bytes
+; Mirror of address $3354, which is the current camera Y position.
+; Used for calculating tile positions on screen.
+CameraY_TileMirror: skip 2
+
+; Unidentified
+skip $304F-$303F
 
 ; === $00304F ===
 ; 2 bytes
@@ -1007,10 +1025,12 @@ Current_Room: skip 2
 Current_Room_x4: skip 2
 
 ; === $0032F6 ===
-; 2 bytes
-; Pointer to room data. 
-; The data written here is read from the start of bank $FF
-skip 2
+; 4 bytes
+; Long pointer to room data. 
+; The address written here is read from the start of bank $FF.
+skip 4
+
+; 32FA - 3308 are all 4-byte-long pointers to data.
 
 ; 3312 respawn room
 ; 3314 x respawn
@@ -1018,7 +1038,7 @@ skip 2
 ; 3318 respawn ram offset position (but why)
 
 ; Unidentified
-skip $3342-$32F8
+skip $3342-$32FA
 
 ; === $003342 - $003348 ===
 ; 2 bytes each
@@ -1217,6 +1237,7 @@ P2_LastXDirectionalInput: skip 2
 ; === $00369C - $00369E ===
 ; 2 bytes each
 ; Same as above, but the current real-time equivalent.
+; If 01, left is being pressed, if 02, right is being pressed.
 P1_CurrentXDirectionalInput: skip 2
 P2_CurrentXDirectionalInput: skip 2
 
@@ -1821,12 +1842,39 @@ RoMK_SlowTimer: skip 2
 ; 744B 2b state when you are intangible to items/cant fully pause the game
 ; 744D 2b state above but for helper
 
-; 749f 2b kirby ability
-; 74a1 2b helper ability 
+; Unidentified
+skip $749F-$73A4
 
-; 7569 2b wheelie rider
+; === $00749F ===
+; 2 bytes
+; Kirby's current ability
+Kirby_Ability: skip 2
 
-; $7577: 2byte shmup if anything greater than 0000
+; === $0074A1 ===
+; 2 bytes
+; Helper's current ability
+Helper_Ability: skip 2
+
+; Unidentified
+skip $7569-$74A3
+
+; === $007569 ===
+; 2 bytes
+; Wheelie Rider state
+; Set higher than 0x0000 to enter Wheelie Rider state
+Wheelie_Rider: skip 2
+
+; Unidentified
+skip $7577-$756B
+
+; === $007577 ===
+; 2 bytes
+; Shooting state (Nova section ability)
+; Set higher than 0x0000 to enter Starship state
+Shooting_State: skip 2
+
+; Unidentified
+skip $7735-$7579
 
 ; 757B: obtained an ability? (this doesn't increment/decrement in every circumstance though?)
 ; when this is set to 1 while an ability hat or ability star is in play, the hat/star will disappear
@@ -1837,14 +1885,60 @@ RoMK_SlowTimer: skip 2
 
 ; 75BB,X if set to D088, Kirby's sprite flashes in a similar way to shielding
 
+; === $007735 ===
+; 32 bytes
+; Food acquisition flags for Gourmet Race
+Gourmet_FoodCollected: skip 32
 
-; $7735  :  32 Byte :  Food acquisition flags for the Gourmet Race (1 bit x 256)
-; $77E6  :   2 Byte :  Enemy's life
+; Unidentified
+skip $7A04-$7755
 
-; $7838: object script action timer?? controls ninja enemy in gco wind room. Managed near code $D32E1F
+; Starting here are several tables related to enemy attributes
+; However for some reason there are a lot of instances where objects share this address space for different functions
+; See $D2D7E9 (object spawn routine?), $D363F9 (another object spawn routine?), $D03D08 (write HP value)
+; Does every object have its own routine for spawning?
 
-; 7a04: count of enemies defeated before rolling a food drop
-; corkboard:
+; === $0077A6 ===
+; 64 bytes
+; Table for object state? (such as GCO save platform)
+;Obj_State: skip 64
+
+; === $0077CE ===
+; ?? bytes?
+; Table for all object HP values
+;Obj_HP: 
+
+; === $0077F6 ===
+; Start of another table? Unsure as this is also used for HP but sometimes data is indexed from that starting location.
+
+; === $007838 ===
+; object script action timer?? controls ninja enemy in gco wind room. Managed near code $D32E1F
+
+; === $007A04 ===
+; 1 byte
+; Number of enemies to be defeated before the chance of rolling a random food drop
+FoodDropCounter: skip 1
+
+; Unidentified
+skip $7A19-$7A05
+
+; === $007A19 ===
+; 2 bytes
+; Current Boss Health
+; This value is not for minibosses, only for actual main bosses.
+BossHP: skip 2
+
+; === $007A1B ===
+; 2 bytes
+; Boss HP Meter. This is shared between all bosses, including minibosses.
+HUD_BossHP: skip 2
+
+; === $007A1D ===
+; 2 bytes
+; Max HP for the Boss HP Meter. This is shared between all bosses, including minibosses.
+HUD_BossMaxHP: skip 2
+
+
 ; 7a19: 2b boss hp
 ; 7a1b: 2b boss max hp
 ; 7a1d: 2b current boss hp

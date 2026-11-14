@@ -759,8 +759,8 @@ CODE_FL_0085D1:					;			|
 	LDA #$0F					;$0085D5	|
 CODE_FL_0085D7:					;			|
 	STA $30A1					;$0085D7	|
-	BIT Screen_Brightness					;$0085DA	|
-	STA Screen_Brightness					;$0085DD	|
+	BIT Screen_Brightness		;$0085DA	|
+	STA Screen_Brightness		;$0085DD	|
 	BMI CODE_FL_0085E5			;$0085E0	|
 	REP #$20					;$0085E2	|
 	RTL							;$0085E4	|
@@ -919,7 +919,7 @@ LoadDMATable:					;-----------| Routine to write DMA data from a table in A/X to
 	INY							;$008708	||
 	INY							;$008709	||
 	LDA [$2E],Y					;$00870A	||
-	STA $37						;$00870C	||
+	STA.B CameraX_TileMirror						;$00870C	||
 	INY							;$00870E	||
 	INY							;$00870F	|/
 	PHY							;$008710	|
@@ -1009,7 +1009,7 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
 	STA $0102,X					;$0087BD	|| Write bytes directly to the VRAM DMA circular buffer.
 	LDA $35						;$0087C0	||
 	STA $0104,X					;$0087C2	||
-	LDA $37						;$0087C5	||
+	LDA.B CameraX_TileMirror						;$0087C5	||
 	STA $0106,X					;$0087C7	|/
 	RTL							;$0087CA	|
 
@@ -1033,7 +1033,7 @@ WriteToDMABuffer:				;-----------| Routine to add $3731-$3738 into the circular 
 	STX $4314					;$0087F1	|/
 	LDA $32						;$0087F4	|\ Write the length.
 	STA $4315					;$0087F6	|/
-	LDA $37						;$0087F9	|\ Write the destination VRAM address.
+	LDA.B CameraX_TileMirror						;$0087F9	|\ Write the destination VRAM address.
 	STA HW_VMADD					;$0087FB	|/
 	LDX #$02					;$0087FE	|\ Enable DMA.
 	STX HW_MDMAEN					;$008800	|/
@@ -1372,7 +1372,7 @@ UpdtLyrsCtrl:					;-----------| Routine to update layer positions and fetch cont
 	PHD							;$008A0C	|
 	LDA #$3000					;$008A0D	|\ Set DP to $30xx.
 	TCD							;$008A10	|/
-	LDA $37						;$008A11	|
+	LDA.B CameraX_TileMirror						;$008A11	|
 	SEC							;$008A13	|
 	SBC $5B						;$008A14	|
 	STA $4F						;$008A16	|
@@ -1753,7 +1753,7 @@ WriteToDMAQueue:				;-----------| Subroutine to write $31-$38 into the VRAM DMA 
 	STA $0902,X					;$008D29	|| Write the data to the queue.
 	LDA $35						;$008D2C	||
 	STA $0904,X					;$008D2E	||
-	LDA $37						;$008D31	||
+	LDA.B CameraX_TileMirror	;$008D31	||
 	STA $0906,X					;$008D33	|/
 	RTL							;$008D36	|
 
@@ -1825,9 +1825,9 @@ InitializeObjects:				;-----------|
 	STA $6024					;$008D94	|
 	LDA #$A96A					;$008D97	|
 	STA $6026					;$008D9A	|
-	LDA #$3037					;$008D9D	|
+	LDA #CameraX_TileMirror					;$008D9D	|
 	STA $735A					;$008DA0	|
-	LDA #$303D					;$008DA3	|
+	LDA #CameraY_TileMirror					;$008DA3	|
 	STA $735C					;$008DA6	|
 	LDX #$007A					;$008DA9	|
 	STX $6138					;$008DAC	|
@@ -1883,11 +1883,11 @@ CODE_FL_008E24:					;			|
 	LDX #$0006					;$008E3A	|
 CODE_FL_008E3D:					;			|
 	STZ $3043,X					;$008E3D	|
-	STZ $3037,X					;$008E40	|
+	STZ.W CameraX_TileMirror,X					;$008E40	|
 	STZ $734A,X					;$008E43	|
 	STZ $733A,X					;$008E46	|
 	STZ $3049,X					;$008E49	|
-	STZ $303D,X					;$008E4C	|
+	STZ.W CameraY_TileMirror,X					;$008E4C	|
 	STZ $7352,X					;$008E4F	|
 	STZ $7342,X					;$008E52	|
 	DEX							;$008E55	|
@@ -3303,7 +3303,7 @@ AS_Unk2A:						;-----------| ActionScript instruction 2A
 	TAX							;$009794	|
 	INC.B AS_PC						;$009795	|
 	LDA.B [AS_PC]					;$009797	|
-	STA $3037,X					;$009799	|
+	STA.W CameraX_TileMirror,X					;$009799	|
 	STZ $3043,X					;$00979C	|
 	INC.B AS_PC						;$00979F	|
 	INC.B AS_PC						;$0097A1	|
@@ -3317,7 +3317,7 @@ AS_Unk2B:						;-----------| ActionScript instruction 2B
 	TAX							;$0097AC	|
 	INC.B AS_PC						;$0097AD	|
 	LDA.B [AS_PC]					;$0097AF	|
-	STA $303D,X					;$0097B1	|
+	STA.W CameraY_TileMirror,X					;$0097B1	|
 	STZ $3049,X					;$0097B4	|
 	INC.B AS_PC						;$0097B7	|
 	INC.B AS_PC						;$0097B9	|
@@ -3332,8 +3332,8 @@ AS_Unk2C:						;-----------| ActionScript instruction 2C
 	INC.B AS_PC						;$0097C5	|
 	LDA.B [AS_PC]					;$0097C7	|
 	CLC							;$0097C9	|
-	ADC $3037,X					;$0097CA	|
-	STA $3037,X					;$0097CD	|
+	ADC.W CameraX_TileMirror,X					;$0097CA	|
+	STA.W CameraX_TileMirror,X					;$0097CD	|
 	INC.B AS_PC						;$0097D0	|
 	INC.B AS_PC						;$0097D2	|
 	RTS							;$0097D4	|
@@ -3347,8 +3347,8 @@ AS_Unk2D:						;-----------| ActionScript instruction 2D
 	INC.B AS_PC						;$0097DE	|
 	LDA.B [AS_PC]					;$0097E0	|
 	CLC							;$0097E2	|
-	ADC $303D,X					;$0097E3	|
-	STA $303D,X					;$0097E6	|
+	ADC.W CameraY_TileMirror,X					;$0097E3	|
+	STA.W CameraY_TileMirror,X					;$0097E6	|
 	INC.B AS_PC						;$0097E9	|
 	INC.B AS_PC						;$0097EB	|
 	RTS							;$0097ED	|
@@ -4038,7 +4038,7 @@ CODE_FL_009C78:					;-----------|
 	JSR AS_ReadByte			;$009C87	|
 	STA $36						;$009C8A	|
 	JSR AS_ReadWord			;$009C8C	|
-	STA $37						;$009C8F	|
+	STA.B CameraX_TileMirror						;$009C8F	|
 	JMP WriteToDMABuffer		;$009C91	|
 
 CODE_FL_009C94:					;-----------|
@@ -4125,9 +4125,9 @@ CODE_FL_009D13:					;			|
 	ASL A						;$009D16	|
 	TAX							;$009D17	|
 	LDA.w DATA_009D2C,X			;$009D18	|
-	STA $3037,Y					;$009D1B	|
+	STA.W CameraX_TileMirror,Y					;$009D1B	|
 	LDA.w DATA_009D34,X			;$009D1E	|
-	STA $303D,Y					;$009D21	|
+	STA.W CameraY_TileMirror,Y					;$009D21	|
 	INY							;$009D24	|
 	INY							;$009D25	|
 	CPY #$0008					;$009D26	|
@@ -5313,9 +5313,9 @@ CODE_FL_00A510:					;-----------|
 	STA.W Obj_VAR0,Y			;$00A513	|
 	TAX							;$00A516	|
 	JSR AS_ReadWord				;$00A517	|
-	STA $3037,X					;$00A51A	|
+	STA.W CameraX_TileMirror,X					;$00A51A	|
 	JSR AS_ReadWord				;$00A51D	|
-	STA $303D,X					;$00A520	|
+	STA.W CameraY_TileMirror,X					;$00A520	|
 	RTL							;$00A523	|
 
 CODE_FL_00A524:					;-----------|
@@ -5836,15 +5836,15 @@ CODE_FL_00A8D2:					;```````````|
 	CLC							;$00A8D5	|
 	ADC $734A,X					;$00A8D6	|
 	STA $3043,X					;$00A8D9	|
-	LDA $3037,X					;$00A8DC	|
+	LDA.W CameraX_TileMirror,X					;$00A8DC	|
 	ADC $733A,X					;$00A8DF	|
-	STA $3037,X					;$00A8E2	|
+	STA.W CameraX_TileMirror,X					;$00A8E2	|
 	LDA $3049,X					;$00A8E5	|
 	ADC $7352,X					;$00A8E8	|
 	STA $3049,X					;$00A8EB	|
-	LDA $303D,X					;$00A8EE	|
+	LDA.W CameraY_TileMirror,X					;$00A8EE	|
 	ADC $7342,X					;$00A8F1	|
-	STA $303D,X					;$00A8F4	|
+	STA.W CameraY_TileMirror,X					;$00A8F4	|
 	RTL							;$00A8F7	|
 
 CODE_FL_00A8F8:					;-----------|
@@ -5852,16 +5852,16 @@ CODE_FL_00A8F8:					;-----------|
 	RTL							;$00A8FB	|
 CODE_FL_00A8FC:					;			|
 	LDY $39						;$00A8FC	|
-	LDA $3037					;$00A8FE	|
+	LDA.W CameraX_TileMirror					;$00A8FE	|
 	STA $6986,Y					;$00A901	|
-	LDA $303D					;$00A904	|
+	LDA.W CameraY_TileMirror					;$00A904	|
 	STA $6A00,Y					;$00A907	|
 	JSR UpdateObjectSpeed			;$00A90A	|
 	JSR CODE_FL_00A7DA			;$00A90D	|
 	LDA $6986,Y					;$00A910	|
-	STA $3037					;$00A913	|
+	STA.W CameraX_TileMirror					;$00A913	|
 	LDA $6A00,Y					;$00A916	|
-	STA $303D					;$00A919	|
+	STA.W CameraY_TileMirror					;$00A919	|
 	RTS							;$00A91C	|
 
 CODE_FL_00A91D:					;-----------|
@@ -5870,17 +5870,17 @@ CODE_FL_00A91D:					;-----------|
 CODE_FL_00A921:					;			|
 	PHX							;$00A921	|
 	LDY $39						;$00A922	|
-	LDA $3037,X					;$00A924	|
+	LDA.W CameraX_TileMirror,X					;$00A924	|
 	STA $6986,Y					;$00A927	|
-	LDA $303D,X					;$00A92A	|
+	LDA.W CameraY_TileMirror,X					;$00A92A	|
 	STA $6A00,Y					;$00A92D	|
 	JSR UpdateObjectSpeed			;$00A930	|
 	JSR CODE_FL_00A7DA			;$00A933	|
 	PLX							;$00A936	|
 	LDA $6986,Y					;$00A937	|
-	STA $3037,X					;$00A93A	|
+	STA.W CameraX_TileMirror,X					;$00A93A	|
 	LDA $6A00,Y					;$00A93D	|
-	STA $303D,X					;$00A940	|
+	STA.W CameraY_TileMirror,X					;$00A940	|
 	RTS							;$00A943	|
 
 CODE_FL_00A944:					;-----------|
@@ -7060,7 +7060,7 @@ CODE_FL_00B0FA:					;-----------|
 	LDA $6438					;$00B0FA	|
 	ASL A						;$00B0FD	|
 	PHA							;$00B0FE	|
-	LDY Kirby_Ability					;$00B0FF	|
+	LDY Kirby_Ability			;$00B0FF	|
 	BEQ CODE_FL_00B10C			;$00B102	|
 	LDA $763F					;$00B104	|
 	BNE CODE_FL_00B110			;$00B107	|
@@ -8978,12 +8978,12 @@ CODE_FL_00C219:					;			|
 	LDA $7B35					;$00C22E	|
 	ORA CameraLock					;$00C231	|
 	BNE CODE_FL_00C26B			;$00C234	|
-	LDA Boss_HP					;$00C236	|
+	LDA BossHP					;$00C236	|
 	PHA							;$00C239	|
-	STZ Boss_HP					;$00C23A	|
+	STZ BossHP					;$00C23A	|
 	JSL ExecuteGamePause		;$00C23D	|
 	PLA							;$00C241	|
-	STA Boss_HP					;$00C242	|
+	STA BossHP					;$00C242	|
 	LDA ReloadMapOnUnpause					;$00C245	|	; This will be set to 0 if the player chooses to leave a level
 	BNE CODE_FL_00C26B			;$00C248	|
 	INC ReloadMapOnUnpause					;$00C24A	|
@@ -11523,8 +11523,8 @@ CODE_FL_00D883:					;			|
 	STA $32DE					;$00D8CD	|
 	LDX #$0004					;$00D8D0	|
 CODE_FL_00D8D3:					;			|
-	STZ $3037,X					;$00D8D3	|
-	STZ $303D,X					;$00D8D6	|
+	STZ.W CameraX_TileMirror,X					;$00D8D3	|
+	STZ.W CameraY_TileMirror,X					;$00D8D6	|
 	DEX							;$00D8D9	|
 	DEX							;$00D8DA	|
 	BPL CODE_FL_00D8D3			;$00D8DB	|
@@ -11939,8 +11939,8 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	STA $30A1					;$00DC5A	|/
 	STZ $3092					;$00DC5D	| Disable all HDMA channels.
 	REP #$20					;$00DC60	|
-	STZ $3037					;$00DC62	|
-	STZ $303D					;$00DC65	|
+	STZ.W CameraX_TileMirror					;$00DC62	|
+	STZ.W CameraY_TileMirror					;$00DC65	|
 	STZ $303B					;$00DC68	|
 	STZ $3041					;$00DC6B	|
 	LDA $20						;$00DC6E	|\ 
@@ -11995,19 +11995,19 @@ Reset_SNES_Debug:				;-----------| Alternative SNES reset vector, used for the d
 	TAY							;$00DCC1	||
 	AND #!BTN_UP					;$00DCC2	||
 	BEQ .notUp					;$00DCC5	|| If up is held, move the page down.
-	LDA $303D					;$00DCC7	||
+	LDA.W CameraY_TileMirror					;$00DCC7	||
 	CLC							;$00DCCA	||
 	ADC #$0004					;$00DCCB	||
-	STA $303D					;$00DCCE	||
+	STA.W CameraY_TileMirror					;$00DCCE	||
 	STA $3041					;$00DCD1	|/
   .notUp:						;			|
 	TYA							;$00DCD4	|\ 
 	AND #!BTN_DOWN				;$00DCD5	|| 
 	BEQ .notDown				;$00DCD8	||
-	LDA $303D					;$00DCDA	|| If down is held, mvoe the page up.
+	LDA.W CameraY_TileMirror					;$00DCDA	|| If down is held, mvoe the page up.
 	SEC							;$00DCDD	||
 	SBC #$0004					;$00DCDE	||
-	STA $303D					;$00DCE1	||
+	STA.W CameraY_TileMirror					;$00DCE1	||
 	STA $3041					;$00DCE4	|/
   .notDown:						;			|
 	JMP .updatePosition			;$00DCE7	|
@@ -13408,14 +13408,14 @@ CODE_FL_00E687:
 
 CODE_FL_00E692:
 	CLC							;$00E692	|
-	ADC $3037					;$00E693	|
-	STA $3037					;$00E696	|
+	ADC.W CameraX_TileMirror					;$00E693	|
+	STA.W CameraX_TileMirror					;$00E696	|
 	RTL							;$00E699	|
 
 CODE_FL_00E69A:
 	CLC							;$00E69A	|
-	ADC $303D					;$00E69B	|
-	STA $303D					;$00E69E	|
+	ADC.W CameraY_TileMirror					;$00E69B	|
+	STA.W CameraY_TileMirror					;$00E69E	|
 	RTL							;$00E6A1	|
 
 CODE_FL_00E6A2:

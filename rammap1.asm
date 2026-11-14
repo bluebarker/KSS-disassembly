@@ -8,21 +8,11 @@ SaveFile_GamesFinished = $7F0A     ; The subgames that have been completed in th
 
 SB_GCO_Boss_Status     = $7AE5
 
-; Status Elements
-Boss_I_Frames      = $78FC
-Boss_HP            = $7A19
-Boss_Max_HP        = $7A1B
-Boss_HP_Meter      = $7A1D     ; Purely for the visual HP bar on the HUD
-Kirby_Ability      = $749F
-Helper_Ability     = $74A1 
-Wheelie_Rider      = $7569     ; Set byte to 01 to be in Wheelie Rider state
-
 Kirby_Inv_Flash    = $75B1
 
 Helper_Inv_Flash   = $75B3
 Kirby_Speed        = $74C8
 Helper_Speed       = $74CA
-Shooting_Ability   = $7577     ; Sidescrolling Nova shmup, byte set to 01 will enable "Shooting"
 
 ; Item Tracking 
 RoMK_Cutscenes_Done    = $771D     ; Persists between rooms, 3 bytes large

@@ -1811,7 +1811,7 @@ CODE_15934D:
 CODE_159E7D:
     RTL                           ;$CA9E7D |
     LDA.W #$0001                  ;$CA9E7E |
-    STA.W Shooting_Ability        ;$CA9E81 |
+    STA.W Shooting_State        ;$CA9E81 |
     LDA.W $7AC1                   ;$CA9E84 |
     BNE CODE_159E92               ;$CA9E87 |
     LDA.W #$FFFF                  ;$CA9E89 |
@@ -3444,7 +3444,7 @@ CODE_95B396:
     STA.B P1_ResetRepeat          ;$CAB3A9 |
     REP #$20                      ;$CAB3AB |
     LDA.B DSP_SRCN                ;$CAB3AD |
-    STA.B $37                     ;$CAB3AF |
+    STA.B CameraX_TileMirror                     ;$CAB3AF |
     JSL.L WriteToDMABuffer     ;$CAB3B1 |
     LDA.B DSP_SRCN                ;$CAB3B5 |
     CLC                           ;$CAB3B7 |
@@ -4101,7 +4101,7 @@ CODE_15B8E1:
     LDA.W #$7000                  ;$CAB91C |
     STA.B $34                     ;$CAB91F |
     LDA.W #$5C00                  ;$CAB921 |
-    STA.B $37                     ;$CAB924 |
+    STA.B CameraX_TileMirror                     ;$CAB924 |
     JML.L WriteToDMABuffer     ;$CAB926 |
 
 CODE_FN_15B92A:
@@ -5064,7 +5064,7 @@ CODE_15CC74:
     STA.W $7495                   ;$CAD121 |
     INC.W $7ADF                   ;$CAD124 |
     STZ.W $7366                   ;$CAD127 |
-    STZ.W Shooting_Ability        ;$CAD12A |
+    STZ.W Shooting_State        ;$CAD12A |
     LDY.B $39                     ;$CAD12D |
     LDA.W #$0000                  ;$CAD12F |
     JSL.L PlayMusic               ;$CAD132 |
@@ -5443,16 +5443,16 @@ CODE_15D625:
     db $9B,$00,$F0,$00,$1B,$26,$60,$6A;$CAD95E |
     db $A9,$C0,$7D,$D9,$CA,$1B,$92,$73;$CAD966 |
     db $01,$00,$01                ;$CAD96E |
-    LDA.W Shooting_Ability        ;$CAD971 |
+    LDA.W Shooting_State        ;$CAD971 |
     BEQ CODE_15D97C               ;$CAD974 |
     STA.W Obj_VAR2,Y              ;$CAD976 |
-    STZ.W Shooting_Ability        ;$CAD979 |
+    STZ.W Shooting_State        ;$CAD979 |
 
 CODE_15D97C:
     RTL                           ;$CAD97C |
     LDA.W Obj_VAR2,Y              ;$CAD97D |
     BEQ CODE_15D993               ;$CAD980 |
-    STA.W Shooting_Ability        ;$CAD982 |
+    STA.W Shooting_State        ;$CAD982 |
     LDA.W $7AC1                   ;$CAD985 |
     BNE CODE_15D993               ;$CAD988 |
     LDA.W #$FFFF                  ;$CAD98A |
@@ -5642,10 +5642,10 @@ CODE_15DABB:
     db $00,$F8,$B0,$20,$00,$02,$40,$00;$CADC19 |
     LDY.B $39                     ;$CADC21 |
     LDA.W Obj_YPosition,Y         ;$CADC23 |
-    STA.W $303D                   ;$CADC26 |
+    STA.W CameraY_TileMirror                   ;$CADC26 |
     LDA.W Obj_VAR3,Y              ;$CADC29 |
     BNE CODE_15DC48               ;$CADC2C |
-    LDA.W $303D                   ;$CADC2E |
+    LDA.W CameraY_TileMirror                   ;$CADC2E |
     CMP.W #$FF00                  ;$CADC31 |
     BPL CODE_15DC48               ;$CADC34 |
     LDA.W #$DCCC                  ;$CADC36 |
@@ -6348,9 +6348,9 @@ CODE_95E457:
     LDX.W #$0007                  ;$CAE48F |
     JSL.L CODE_FL_00A49D          ;$CAE492 |
     RTL                           ;$CAE496 |
-    LDA.W $3037                   ;$CAE497 |
+    LDA.W CameraX_TileMirror                   ;$CAE497 |
     STA.W Mode7_CenterX           ;$CAE49A |
-    LDA.W $303D                   ;$CAE49D |
+    LDA.W CameraY_TileMirror                   ;$CAE49D |
     STA.W Mode7_CenterY           ;$CAE4A0 |
     JSR.W CODE_FN_15E5B3          ;$CAE4A3 |
     LDA.W $307F                   ;$CAE4A6 |
@@ -6366,11 +6366,11 @@ CODE_95E457:
     LDA.W $307D                   ;$CAE4BC |
     JML.L CODE_FL_00A66C          ;$CAE4BF |
     JSR.W CODE_FN_15E5B3          ;$CAE4C3 |
-    LDA.W $3037                   ;$CAE4C6 |
+    LDA.W CameraX_TileMirror                   ;$CAE4C6 |
     CLC                           ;$CAE4C9 |
     ADC.W #$0080                  ;$CAE4CA |
     STA.W Mode7_CenterX           ;$CAE4CD |
-    LDA.W $303D                   ;$CAE4D0 |
+    LDA.W CameraY_TileMirror                   ;$CAE4D0 |
     CLC                           ;$CAE4D3 |
     ADC.W #$00E0                  ;$CAE4D4 |
     STA.W Mode7_CenterY           ;$CAE4D7 |
@@ -7484,11 +7484,11 @@ CODE_95F1B7:
     JML.L DestroyUsedObject       ;$CAF1B7 |
     LDA.W Obj_XPosition,Y         ;$CAF1BB |
     SEC                           ;$CAF1BE |
-    SBC.W $3037                   ;$CAF1BF |
+    SBC.W CameraX_TileMirror                   ;$CAF1BF |
     STA.W Obj_XPositionMirror,Y   ;$CAF1C2 |
     LDA.W Obj_YPosition,Y         ;$CAF1C5 |
     SEC                           ;$CAF1C8 |
-    SBC.W $303D                   ;$CAF1C9 |
+    SBC.W CameraY_TileMirror                   ;$CAF1C9 |
     STA.W Obj_YPositionMirror,Y   ;$CAF1CC |
     RTL                           ;$CAF1CF |
     LDX.W #$01C0                  ;$CAF1D0 |
@@ -7632,8 +7632,8 @@ CODE_95F325:
     JML.L DestroyUsedObject       ;$CAF356 |
 
 CODE_FN_15F35A:
-    STA.W $3037                   ;$CAF35A |
-    STX.W $303D                   ;$CAF35D |
+    STA.W CameraX_TileMirror                   ;$CAF35A |
+    STX.W CameraY_TileMirror                   ;$CAF35D |
     RTS                           ;$CAF360 |
 
 CODE_FN_15F361:
