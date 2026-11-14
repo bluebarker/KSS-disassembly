@@ -12598,42 +12598,42 @@ CODE_FL_00E193:
 
 
 CODE_FL_00E19B:
-	INC.B AS_PC						;$00E19B	|
-	CMP.B [AS_PC]					;$00E19D	|\ Hardlock the game if byte 2 >= byte 1?
+	INC.B AS_PC					;$00E19B	|
+	CMP.B [AS_PC]				;$00E19D	|\ Hardlock the game if byte 2 >= byte 1?
   - BCS -						;$00E19F	|/
-	INC.B AS_PC						;$00E1A1	|
-	INC.B AS_PC						;$00E1A3	|
+	INC.B AS_PC					;$00E1A1	|
+	INC.B AS_PC					;$00E1A3	|
 	STA $28						;$00E1A5	|
 	ASL A						;$00E1A7	|
 	ADC $28						;$00E1A8	|
 	TAY							;$00E1AA	|
-	LDA.B [AS_PC],Y					;$00E1AB	|
+	LDA.B [AS_PC],Y				;$00E1AB	|
 	DEC A						;$00E1AD	|
 	TAX							;$00E1AE	|
 	INY							;$00E1AF	|
-	LDA.B [AS_PC],Y					;$00E1B0	|
+	LDA.B [AS_PC],Y				;$00E1B0	|
 	STA $3E						;$00E1B2	|
-	STX.B AS_PC						;$00E1B4	|
+	STX.B AS_PC					;$00E1B4	|
 	RTL							;$00E1B6	|
 
 CODE_FL_00E1B7:
-	STA.W Obj_TickCallbackAddr,Y					;$00E1B7	|
+	STA.W Obj_TickCallbackAddr,Y;$00E1B7	|
 	TXA							;$00E1BA	|
-	STA.W Obj_TickCallbackBank,Y					;$00E1BB	|
+	STA.W Obj_TickCallbackBank,Y;$00E1BB	|
 	RTL							;$00E1BE	|
 
 CODE_FL_00E1BF:
 	LDA #$8F63					;$00E1BF	|
-	STA.W Obj_TickCallbackAddr,Y					;$00E1C2	|
+	STA.W Obj_TickCallbackAddr,Y;$00E1C2	|
 	LDA #$0000					;$00E1C5	|
-	STA.W Obj_TickCallbackBank,Y					;$00E1C8	|
+	STA.W Obj_TickCallbackBank,Y;$00E1C8	|
 	RTL							;$00E1CB	|
 
 CODE_FL_00E1CC:
-	STA.W Obj_SpriteMapAddr,Y					;$00E1CC	|
+	STA.W Obj_SpriteMapAddr,Y	;$00E1CC	|
 	TXA							;$00E1CF	|
 	AND #$00FF					;$00E1D0	|
-	STA.W Obj_SpriteMapBank,Y					;$00E1D3	|
+	STA.W Obj_SpriteMapBank,Y	;$00E1D3	|
 	RTL							;$00E1D6	|
 
 CODE_FL_00E1D7:
@@ -12641,7 +12641,7 @@ CODE_FL_00E1D7:
 	BEQ CODE_FL_00E1DD			;$00E1DA	|
 	INC A						;$00E1DC	|
 CODE_FL_00E1DD:					;			|
-	STA.W Obj_Pose,Y					;$00E1DD	|
+	STA.W Obj_Pose,Y			;$00E1DD	|
 	RTL							;$00E1E0	|
 
 CODE_FL_00E1E1:

@@ -1928,14 +1928,14 @@ DATA8_07D5AD:
     LDX.W #$0000                  ;$07D5E2 |
     LDY.W #$3C00                  ;$07D5E5 |
     LDA.W Current_SubGame         ;$07D5E8 |
-    CMP.W #$0003                  ;$07D5EB |
+    CMP.W #$00!SUBGAME_GCO        ;$07D5EB |
     BNE CODE_87D5F8               ;$07D5EE |
     LDX.W #$0000                  ;$07D5F0 |
     LDY.W #$4000                  ;$07D5F3 |
     BRA CODE_87D603               ;$07D5F6 |
 
 CODE_87D5F8:
-    CMP.W #$0005                  ;$07D5F8 |
+    CMP.W #$00!SUBGAME_MWW        ;$07D5F8 |
     BNE CODE_87D603               ;$07D5FB |
     LDX.W #$0000                  ;$07D5FD |
     LDY.W #$4800                  ;$07D600 |
@@ -2003,20 +2003,19 @@ CODE_87D63F:
 
 CODE_87D6A5:
     LDA.W Current_SubGame         ;$07D6A5 |
-    CMP.W #$0003                  ;$07D6A8 |
+    CMP.W #$00!SUBGAME_GCO        ;$07D6A8 |
     BEQ CODE_87D6B5               ;$07D6AB |
-    CMP.W #$0005                  ;$07D6AD |
+    CMP.W #$00!SUBGAME_MWW        ;$07D6AD |
     BEQ CODE_87D6B5               ;$07D6B0 |
     STZ.W $7A89                   ;$07D6B2 |
 
 CODE_87D6B5:
-    LDA.W #$DE42                  ;$07D6B5 |
-    LDX.W #$0007                  ;$07D6B8 |
+    %LoadLongToAX(CODE_87DE42)
     JSL.L CODE_FL_00E1B7          ;$07D6BB |
     STZ.W $7B27                   ;$07D6BF |
     STZ.W $7A31                   ;$07D6C2 |
     LDA.W Current_SubGame         ;$07D6C5 |
-    CMP.W #$0007                  ;$07D6C8 |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07D6C8 |
 
 CODE_87D6CB:
     BCS CODE_87D6CB               ;$07D6CB |
@@ -2174,8 +2173,7 @@ CODE_87D837:
     LDA.W #$0005                  ;$07D837 |
     JSR.W CODE_FN_07E74C          ;$07D83A |
     LDY.B $39                     ;$07D83D |
-    LDA.W #$DE42                  ;$07D83F |
-    LDX.W #$0007                  ;$07D842 |
+    %LoadLongToAX(CODE_87DE42)
     JSL.L CODE_FL_00E1B7          ;$07D845 |
     LDA.W #$0000                  ;$07D849 |
     STA.W $73AE                   ;$07D84C |
@@ -2327,8 +2325,7 @@ CODE_JP_07D99A:
     JMP.W CODE_JP_07D99A          ;$07D9A8 |
 
 CODE_JP_07D9AB:
-    LDA.W #$DE42                  ;$07D9AB |
-    LDX.W #$0007                  ;$07D9AE |
+    %LoadLongToAX(CODE_87DE42)
     JSL.L CODE_FL_00E1B7          ;$07D9B1 |
     LDA.W TitleDemo_Flag          ;$07D9B5 |
     AND.W #$00FF                  ;$07D9B8 |
@@ -2714,6 +2711,8 @@ DATA8_07DE32:
     db $30,$10,$FF,$FF            ;$07DE3A |
 
     JSL.L CODE_FL_00E70E          ;$07DE3E |
+
+CODE_87DE42:
     LDA.W TitleDemo_Flag          ;$07DE42 |
     AND.W #$00FF                  ;$07DE45 |
     BEQ CODE_87DE4D               ;$07DE48 |
@@ -2723,7 +2722,7 @@ CODE_87DE4D:
     LDA.W Obj_VAR3,Y              ;$07DE4D |
     BEQ CODE_87DE6D               ;$07DE50 |
     LDA.W Current_SubGame         ;$07DE52 |
-    CMP.W #$0003                  ;$07DE55 |
+    CMP.W #$00!SUBGAME_GCO        ;$07DE55 |
     BNE CODE_87DE6C               ;$07DE58 |
     LDA.W P1_Frame                ;$07DE5A |
     AND.W #$C0C0                  ;$07DE5D |
@@ -2786,7 +2785,7 @@ CODE_87DEC5:
     DEC.W $7B29                   ;$07DEC5 |
     BNE CODE_87DED8               ;$07DEC8 |
     LDA.W Current_SubGame         ;$07DECA |
-    CMP.W #$0006                  ;$07DECD |
+    CMP.W #$00!SUBGAME_ARENA      ;$07DECD |
     BEQ CODE_87DED8               ;$07DED0 |
     LDA.W #$FFFF                  ;$07DED2 |
     STA.W ReloadRoom              ;$07DED5 |
@@ -2795,7 +2794,13 @@ CODE_87DED8:
     RTL                           ;$07DED8 |
 
 DATA8_07DED9:
-    db $32,$32,$32,$32,$6D,$32,$46;$07DED9 |
+    db $32              ; 00 - Spring Breeze
+    db $32              ; 01 - Dyna Blade
+    db $32              ; 02 - Gourmet Race
+    db $32              ; 03 - Great Cave Offensive
+    db $6D              ; 04 - Revenge of Meta Knight
+    db $32              ; 05 - Milky Way Wishes
+    db $46              ; 06 - The Arena
 
 CODE_87DEE0:
     STZ.W ReloadMapOnUnpause      ;$07DEE0 |
@@ -2804,7 +2809,7 @@ CODE_87DEE0:
 
 CODE_87DEE7:
     LDA.W Current_SubGame         ;$07DEE7 |
-    CMP.W #$0007                  ;$07DEEA |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07DEEA |
 
 CODE_87DEED:
     BCS CODE_87DEED               ;$07DEED |
@@ -3011,7 +3016,7 @@ CODE_07E098:
     JSR.W CODE_FN_07E235          ;$07E098 |
     LDY.B $39                     ;$07E09B |
     LDA.W Current_SubGame         ;$07E09D |
-    CMP.W #$0007                  ;$07E0A0 |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07E0A0 |
 
 CODE_87E0A3:
     BCS CODE_87E0A3               ;$07E0A3 |
@@ -3373,9 +3378,9 @@ CODE_07E383:
     LDA.W #$FFFF                  ;$07E38D |
     STA.W Obj_Pose,Y              ;$07E390 |
     LDA.W #$A8BA                  ;$07E393 |
-    STA.W Obj_TickLoopCallback,Y   ;$07E396 |
+    STA.W Obj_TickLoopCallback,Y  ;$07E396 |
     LDA.W Current_SubGame         ;$07E399 |
-    CMP.W #$0007                  ;$07E39C |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07E39C |
 
 CODE_87E39F:
     BCS CODE_87E39F               ;$07E39F |
@@ -3432,7 +3437,7 @@ CODE_07E403:
 
 CODE_07E407:
     LDA.W Current_SubGame         ;$07E407 |
-    CMP.W #$0007                  ;$07E40A |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07E40A |
 
 CODE_87E40D:
     BCS CODE_87E40D               ;$07E40D |
@@ -3710,7 +3715,7 @@ CODE_FL_07E6A3:
     ASL A                         ;$07E6A6 |
     STA.B IdentifySNES            ;$07E6A7 |
     LDA.W Current_SubGame         ;$07E6A9 |
-    CMP.W #$0007                  ;$07E6AC |
+    CMP.W #$00!SUBGAME_SOUNDTEST  ;$07E6AC |
 
 CODE_07E6AF:
     BCS CODE_07E6AF               ;$07E6AF |
